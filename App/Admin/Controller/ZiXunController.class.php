@@ -44,13 +44,14 @@ class ZiXunController extends AuthController {
             $model=D('LanMu');
 
             $name=I('post.name');
+            $is_tongji=I('post.is_tongji');
             if($name=='')
             {
                 $msg=lang('名字不能为空','handle');
                 echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
                 exit();
             }
-            $pname=explode(",",$name);
+            $pname=explode(",",str_replace("，",",",$name));
 
             foreach ($pname as $k=>$v)
             {
@@ -58,7 +59,8 @@ class ZiXunController extends AuthController {
                     'ctime'=>time(),
                     'uuid'=>create_uuid(),
                     'name'=>$v,
-                    'type'=>'zixun'
+                    'type'=>'zixun',
+                    'is_tongji'=>$is_tongji
                 );
             }
 
@@ -77,8 +79,7 @@ class ZiXunController extends AuthController {
 
         }else
         {
-            $rule=M('AdminGroup')->select();
-            $this->assign('rule',$rule);// 赋值数据集
+
             $this->display();
         }
 
@@ -123,8 +124,7 @@ class ZiXunController extends AuthController {
             );
 
             $model   =   M('LanMu')->where($map)->find();
-            $rule=M('AdminGroup')->select();
-            $this->rule=$rule;
+          
             if($model) {
                 $this->data =  $model;// 模板变量赋值
             }else{
@@ -153,7 +153,7 @@ class ZiXunController extends AuthController {
     }
     public function handle($id){
         //权限选择
-        $this->check_group('admin_edit');
+        $this->check_group('zixun');
         $model =M('LanMu');
         $type=I('get.type');
         if($type=='true')

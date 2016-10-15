@@ -16,6 +16,13 @@
                             <span class="input-group-addon">{{ :lang('名称','filed') }}</span>
                             <input class="form-control" name="name" type="text" value="" required placeholder="{{ :lang('批量用,分割',filed) }}">
                         </div>
+                        <div class="input-group m-b" style="margin-bottom:5px;">
+                            <span class="input-group-addon">{{ :lang('是否统计工作量','filed') }}</span>
+                            <select name="is_tongji" class="form-control" required>
+                                <option value="0" selected>否</option>
+                                <option value="1">是</option>
+                            </select>
+                        </div>
 
 
 

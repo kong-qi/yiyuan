@@ -9,29 +9,21 @@ class KeShiZiDianController extends AuthController {
         //权限选择
 
         $this->check_group($type);
-        $model=M('LanMu');
+        $model=M('KeShi');
         $map=array();
         if(IS_GET)
         {
             $map=I('get.');
 
         }
-        
 
-        $count =  $model->where($map)->count();// 查询满足要求的总记录数
-        $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+        $list =  $model->where($map)->order('sort desc,id desc')->select();
+        $list=get_tree_option($list,0);
 
-        $page=1;
-        if(isset($_GET['p']))
-        {
-            $page=$_GET['p'];
-        }
-
-        $list =  $model->where($map)->order('sort desc,id desc')->page( $page.','.$pagesize)->select();
         $this->assign('list',$list);// 赋值数据集
        
 
-        $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
+
         $this->display();
 
     }
@@ -42,16 +34,17 @@ class KeShiZiDianController extends AuthController {
         if(IS_POST)
         {
 
-            $model=D('LanMu');
+            $model=D('KeShi');
 
             $name=I('post.name');
+            $fid=I('post.fid');
             if($name=='')
             {
                 $msg=lang('名字不能为空','handle');
                 echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
                 exit();
             }
-            $pname=explode(",",$name);
+            $pname=explode(",",str_replace("，",",",$name));
 
             foreach ($pname as $k=>$v)
             {
@@ -60,6 +53,7 @@ class KeShiZiDianController extends AuthController {
                     'uuid'=>create_uuid(),
                     'name'=>$v,
                     'type'=>'keshi',
+                    'fid'=>$fid,
                     'admin_id'=>session('admin_id')
                 );
             }
@@ -79,10 +73,15 @@ class KeShiZiDianController extends AuthController {
 
         }else
         {
-            $rule=M('AdminGroup')->select();
+            $rule=get_tree_option($this->getList(),0);
             $this->assign('rule',$rule);// 赋值数据集
             $this->display();
         }
+
+    }
+    public function getList(){
+        $rule=M('KeShi')->where(array('checked'=>1))->select();
+        return $rule;
 
     }
     public function edit(){
@@ -91,7 +90,7 @@ class KeShiZiDianController extends AuthController {
         $this->check_group('keshi');
         if(IS_POST)
         {
-            $model =D('LanMu');
+            $model =D('KeShi');
 
             if($model->create()) {
                 $data=$model->create();
@@ -124,8 +123,8 @@ class KeShiZiDianController extends AuthController {
                 'uuid'=>$id
             );
 
-            $model   =   M('LanMu')->where($map)->find();
-            $rule=M('AdminGroup')->select();
+            $model   =   M('KeShi')->where($map)->find();
+            $rule=get_tree_option($this->getList(),0);
             $this->rule=$rule;
             if($model) {
                 $this->data =  $model;// 模板变量赋值
@@ -142,7 +141,7 @@ class KeShiZiDianController extends AuthController {
         $map=array(
             'uuid'=>$id
         );
-        $model   =   D('LanMu');
+        $model   =   D('KeShi');
         $data=$model->where($map)->find();
         $result=$model->where($map)->delete();
         if($result)
@@ -155,8 +154,8 @@ class KeShiZiDianController extends AuthController {
     }
     public function handle($id){
         //权限选择
-        $this->check_group('admin_edit');
-        $model =M('LanMu');
+        $this->check_group('keshi');
+        $model =M('KeShi');
         $type=I('get.type');
         if($type=='true')
         {

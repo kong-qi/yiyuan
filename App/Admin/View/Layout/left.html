@@ -26,8 +26,8 @@
                 <div class="logo-element"><i class="icon icon-plus"></i></div>
             </li>
             <li>
-                <a class="J_menuItem" href="/index.php/addzixun/add.html"><i class="fa icon-paste"></i> <span
-                        class="nav-label">{{ :lang('添加','handle') }}咨询</span></a>
+                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}"><i class="fa icon-paste"></i> <span
+                        class="nav-label">{{ :lang('添加咨询','handle') }}</span></a>
             </li>
             <li>
                 <a href="#">
@@ -122,37 +122,20 @@
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
+
                     <li>
-                        <a class="J_menuItem" href="/index.php/useradmin/system_zh.html">账号管理</a>
-                        <!--4-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/system_site/system_bz.html">病种管理</a>
-                        <!--6-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/system_site/system_zxfs.html">咨询方式</a>
-                        <!--7-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/system_site/system_xx.html">信息来源</a>
-                        <!--8-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/system_site/system_message.html">短信模版设置</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/Sms/index') }}">短信模版设置</a>
                         <!--34-->
                     </li>
+
                     <li>
-                        <a class="J_menuItem" href="/index.php/role/system_role.html">权限组设置</a>
-                        <!--9-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/role/system_auth.html">系统功能设置</a>
+                        <a class="J_menuItem" href="/index.php/role/system_auth.html">优惠券</a>
                     </li>
 
                 </ul>
             </li>
             <if condition=" check_group('admin') OR check_group('group') OR check_group('rule')">
+
             <li>
                 <a href="#">
                     <i class="fa icon-cogs"></i>

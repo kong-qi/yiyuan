@@ -180,11 +180,11 @@ class AjaxController extends AuthController
                 }
             }else
             {
-                if(file_exists($abfile))
-                {
+
+
                     $file_url=WEB_URL."/Public/Admin/images/file.png";
                     $str.= '<li><img data-root="'.$abdir.pic_url($v["name"]).'" src="'.$file_url.'" data-src="'.$v['name'].'"><p>'.$v['name'].'</p></li>';
-                }
+                
             }
           
 

@@ -235,7 +235,11 @@ function lang($cn,$type){
             '内容'=>'Nội dung',
             '英文名'=>'Anh',
             '上级'=>'cha mẹ',
-            '批量用,分割'=>'Với chia lô'
+            '批量用,分割'=>'Với chia lô',
+            '预约号前缀'=>'',
+            '是否付费'=>'',
+            '预约号前缀'=>'',
+            '是否统计到工作量'=>''
 
         ),
     );
@@ -259,10 +263,12 @@ function zidian_nav(){
     $rule=array(
         'keshi'=>'科室',
         'bingren'=>'病人来源',
-        'zixun'=>'咨询工具',
+
         'area'=>'区域字典',
-        'yuyuezl'=>'预约评定',
         'yushen'=>'医生字典',
+        'pricezd'=>'收费项目',
+        'yuyuezl'=>'预约评定',
+        'zixun'=>'咨询工具',
         'danzhen'=>'到诊评定',
         'shuofei'=>'收费字典',
         'jiesuan'=>'结算字典',
@@ -271,11 +277,11 @@ function zidian_nav(){
         'website'=>'网站字典'
     );
     $url=array(
-        'keshi'=>U('Admin/ZiXun/index'),
-        'bingren'=>'病人来源',
-
-        'area'=>'区域字典',
-        'yushen'=>'医生字典',
+        'keshi'=>U('Admin/KeShiZiDian/index',array('type'=>'keshi')),
+        'bingren'=>U('Admin/BingRenLaiYuanZiDian/index',array('type'=>'bingren')),
+        'pricezd'=>U('Admin/PriceZiDian/index'),
+        'area'=>U('Admin/AreaZiDian/index',array('type'=>'area')),
+        'yushen'=>U('Admin/YuShenZiDian/index',array('type'=>'yushen')),
         'yuyuezl'=>U('Admin/YuYueZiDian/index',array('type'=>'yuyuezl')),
         'danzhen'=>U('Admin/DaoZhengZiDian/index',array('type'=>'daozhen')),
         'zixun'=>U('Admin/ZiXun/index',array('type'=>'zixun')),

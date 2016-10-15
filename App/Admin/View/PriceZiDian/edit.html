@@ -1,0 +1,120 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="animated fadeInUp">
+        <form action="" method="post" id="validate">
+            <input type="hidden" name="id" value="{{ $data.id }}">
+            <div class="ibox float-e-margins" style="margin-bottom:0px;">
+                <div class="ibox-content">
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+
+                        <span class="input-group-addon">{{ :lang('名称','filed') }}</span>
+                        <input class="form-control" name="name" type="text" value="{{ $data.name }}" required  />
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('票据名称','filed') }}</span>
+                        <input class="form-control" name="ticket_name" type="text" value="{{ $data.ticket_name }}" required placeholder="">
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('单价','filed') }}</span>
+                        <input class="form-control" name="price" type="text" value="{{ $data.price }}" required min="0" placeholder="">
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('单位','filed') }}</span>
+                        <input class="form-control" name="danwei" type="text" value="{{ $data.danwei }}" required placeholder="">
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('快速检索','filed') }}</span>
+                        <input class="form-control" name="code" type="text" value="{{ $data.code }}" required placeholder="">
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('价格是否可修改','filed') }}</span>
+                        <select name="is_update" class="form-control" required>
+                            <option value="0" {{ :($data['is_update']==0?"selected='selected'":"") }}>否</option>
+                            <option value="1" {{ :($data['is_update']==1?"selected='selected'":"") }}>是</option>
+
+                        </select>
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('所属科室','filed') }}</span>
+                        <select name="fid" id="fid" class="form-control" required>
+
+
+                            <if condition="$rule">
+
+
+                                <foreach name="rule" item="lv_v" key="k">
+                                    <?php
+						      					    $space=str_repeat("&nbsp;", $lv_v['depth'] * 4);
+						      			            ?>
+                                    <option {{ :($data['fid']==$lv_v['id']?"selected='selected'":"") }}   value="{{ $lv_v['id'] }}">{{ $space }}|-{{ $lv_v['name']
+                                    }}
+                                    </option>
+                                    ;
+                                </foreach>
+                            </if>
+                        </select>
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('所属二级科室','filed') }}</span>
+                        <select name="tfid" id="tfid" class="form-control" required>
+
+                        </select>
+                    </div>
+
+
+
+                    <div class="form-group" align="center" style="margin-bottom:5px;">
+                        <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('确定','handle') }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script>
+
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.parents(".ibox-content"));
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function() {
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $().ready(function () {
+                $("#validate").validate();
+            });
+        });
+
+        $("#fid").change(function (e,a) {
+
+            $id=$(this).val();
+            if(a)
+            {
+                $id=a;
+            }
+
+            $url="{{ :U('Admin/PriceZiDian/ajaxList/') }}?id="+ $id+"&tfid={{ $data.tfid }}";
+
+            $.getJSON($url,function (data) {
+                console.log(data);
+                $("#tfid").empty().append(data);
+            })
+        }).triggerHandler('change',"{{ $data.fid }}");;
+
+
+    </script>
+</block>

@@ -28,7 +28,7 @@ class YuYueZiDianController extends AuthController {
 
         $list =  $model->where($map)->order('sort desc,id desc')->page( $page.','.$pagesize)->select();
         $this->assign('list',$list);// 赋值数据集
-       
+
 
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
         $this->display();
@@ -50,7 +50,7 @@ class YuYueZiDianController extends AuthController {
                 echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
                 exit();
             }
-            $pname=explode(",",$name);
+            $pname=explode(",",str_replace("，",",",$name));
 
             foreach ($pname as $k=>$v)
             {
@@ -78,8 +78,7 @@ class YuYueZiDianController extends AuthController {
 
         }else
         {
-            $rule=M('AdminGroup')->select();
-            $this->assign('rule',$rule);// 赋值数据集
+
             $this->display();
         }
 
@@ -124,8 +123,7 @@ class YuYueZiDianController extends AuthController {
             );
 
             $model   =   M('LanMu')->where($map)->find();
-            $rule=M('AdminGroup')->select();
-            $this->rule=$rule;
+       
             if($model) {
                 $this->data =  $model;// 模板变量赋值
             }else{
@@ -154,7 +152,7 @@ class YuYueZiDianController extends AuthController {
     }
     public function handle($id){
         //权限选择
-        $this->check_group('admin_edit');
+        $this->check_group('yuyuezl');
         $model =M('LanMu');
         $type=I('get.type');
         if($type=='true')

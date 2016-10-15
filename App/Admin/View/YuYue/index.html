@@ -1,0 +1,340 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+        <div class="wrapper wrapper-content">
+            <form action="/index.php/addzixun/add_insert" method="post" id="signupForm" enctype="multipart/form-data" class="form-horizontal">
+                <div class="col-sm-6" style="padding:0px;">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">基本信息</a></h5>
+                                <div class="ibox-tools" style="margin-top:-8px;">
+                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">保存内容</button>
+                                    <button class="btn btn-white" type="reset" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">重置</button>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                    <label class="col-sm-12">客户姓名</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">联系手机</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="sjjc" name="shouji">
+                                        <textarea id="shouji_cf" name="tel" style="position:fixed;top:-200px;width:0px;height:0px;"></textarea>
+                                        <span id="userinfosjjc"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">科室</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');">
+                                            <option>请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');">
+                                            <option>请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="seachdistrict" name="seachdistrict">
+                                            <option>请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">来源区域</label>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');">
+                                            <option>请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');">
+                                            <option>请选择</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="seachdistrict" name="seachdistrict">
+                                            <option>请选择</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">咨询方式
+                                        <font color="#F3060A" style=" font-size:12px;"> &nbsp;*(必填)</font>
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="zxfs_ID" id="userinfo0">
+                                            <option value="">请先选择医院</option>
+                                        </select>
+                                        <input name="zxfs_IDpd" type="text" id="zxfs_IDpd" style="position:fixed;top:-200px;width:0px;height:0px;">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group">
+                                    <label class="col-sm-12">咨询客服</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="userID" id="userinfoZxy">
+                                            <option value="">请先选择医院</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">初复诊</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="userID" id="userinfoZxy">
+                                            <option value="">请先选择医院</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">意向评定</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="userID" id="userinfoZxy">
+                                            <option value="">请先选择医院</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">预约小结</label>
+                                    <div class="col-sm-12">
+                                        <textarea class="ibox-content" style="width:100%; border:1px #E5E6E7 solid" name="yuyueBeizhu" id="editor"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">详细聊天</label>
+                                    <div class="col-sm-12">
+                                        <textarea class="ibox-content" style="width:100%; border:1px #E5E6E7 solid" name="yuyueBeizhu" id="editor"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins" id="shoujisf1">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">详细信息</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" id="shoujisf3">
+                                <div class="form-group">
+                                    <label class="col-sm-12">QQ号码</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="QQhaoma">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">性别</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="xingbie">
+                                            <option value="1">男</option>
+                                            <option value="2" selected="selected">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">婚姻</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="hunyin">
+                                            <option value="1">未婚</option>
+                                            <option value="0">已婚</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">年龄</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="age">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">生日</label>
+                                    <div class="col-sm-12">
+                                        <input class="form-control layer-date" placeholder="YYYY-MM-DD" id="shengri">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">职业</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="zhiye">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" style="padding:0px;">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins" id="shoujisf1">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">预约信息</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" id="shoujisf3">
+                                <div class="form-group">
+                                    <label class="col-sm-12">预约时间</label>
+                                    <div class="col-sm-12">
+                                        <input name="yuyueTime" class="form-control layer-date" id="yuyuepd" placeholder="YYYY-MM-DD hh:mm">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">咨询时间</label>
+                                    <div class="col-sm-7">
+                                        <input name="zx_time" type="text" class="form-control" id="userinfozxtime" placeholder="YYYY-MM-DD" onClick="laydate({istime: true, format: 'YYYY-MM-DD', min:laydate.now()})" value='' readonly/>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <input name="zx_timee" type="text" class="form-control clockpicker" placeholder="hh:mm" value='' />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-12">预约号</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="yuyuehao" value="W161009009" id="yyhm" style="width:79%; float:left;">
+                                        <input id="zidongshengcheng" type="button" value="生成" class="btn btn-warning" style="width:20%;float:right;" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins" id="shoujisf1">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">聊天信息</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" id="shoujisf3">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="no-padding">
+                                            <textarea class="summernote" name="liaotianjilu" id="editor"></textarea>
+                                        </div>
+                                        <input type="file" id="File1" name="fujian" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins" id="shoujisf1">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">来源信息</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" id="shoujisf3">
+                                <div class="form-group">
+                                    <label class="col-sm-12">来源网站</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="laiyuanwangzhan" id="userinfoWz">
+                                            <option>请先选择医院</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">信息来源</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="xx_ID" id="userinfoXxly">
+                                            <option>请先选择医院</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-12">访问入口</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="fangwenrukou">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">咨询页面</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="faqizixun">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">搜索关键词</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="guanjianci">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="hidden" name="chongfutijiao" value="1476008580">
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="500000000">
+                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao">保存内容</button>
+                                    <button class="btn btn-white" type="reset">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script>
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            },
+            success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success");
+            },
+            errorElement: "span",
+            errorPlacement: function (e, r) {
+                //e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+                e.insertBefore(r.parents(".ibox-content"));
+            },
+            errorClass: "error",
+            validClass: "no-error"
+
+        });
+        $().ready(function () {
+            $("#validate").validate();
+        });
+
+    </script>
+</block>

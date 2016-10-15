@@ -140,7 +140,7 @@ class Page{
             }
         }
         $link_page2='';
-        $link_page2.="  <select style='width:36px' onchange='location.href=this.options[this.selectedIndex].value;'>";
+        $link_page2.="  <select style='width:60px' onchange='location.href=this.options[this.selectedIndex].value;'>";
         for($i=1;$i<=$this->rollPage;$i++){
             if(($this->nowPage - $now_cool_page) <= 0 ){
                 $page = $i;
