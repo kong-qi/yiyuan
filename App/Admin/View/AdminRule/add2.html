@@ -1,0 +1,127 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="box">
+            <div class="box-title">
+                {{ :lang($onname,'menu') }}
+                <h3 class="pull-right ">
+                    <a href="__CONTROLLER__/" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                </h3>
+            </div>
+            <div class="box-content">
+                <div class="form-warp">
+
+                    <form action="" method="post" id="validate">
+                        <div class="tab-box">
+                        <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                            <tbody>
+                            <tr>
+                                <th width="131">{{ :lang('名称','filed') }}</th>
+                                <th>{{ :lang('内容','filed') }}</th>
+                            </tr>
+
+                            <tr>
+                                <td align="right">{{ :lang('名称','filed') }}</td>
+                                <td>
+                                    <input type="text" name="name" value="" size="80" class="input">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="right">{{ :lang('英文名','filed') }}</td>
+                                <td>
+                                    <input type="text" name="ename" value="" size="80" class="input">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">{{ :lang('上级','filed') }}</td>
+                                <td>
+                                    <input type="hidden" name="path" id="select_lm_path">
+                                    <select name="fid" id="select_lm" class="form-control ">
+                                        <option value="0">根目录</option>
+                                        <if condition="$data ">
+                                            <foreach name="data" item="lv_v" key="k">
+                                                <?php
+						      					    $space=str_repeat("&nbsp;", $lv_v['depth'] * 4);
+						      			            ?>
+                                                <option {{ :($lv_v['last']==1?'disabled':'') }} value="{{ $lv_v['id'] }}">{{ $space }}|-{{ $lv_v['name']
+                                                }}
+                                                </option>
+                                                ;
+                                            </foreach>
+
+                                        </if>
+
+
+
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="right">{{ :lang('备注','filed') }}</td>
+                                <td>
+                                    <textarea name="mark" cols="83" rows="8" class="textarea"></textarea>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfooter>
+                                <tr>
+                                    <td></td>
+                                    <td >
+                                        <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
+                                    </td>
+                                </tr>
+                            </tfooter>
+
+                        </table>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+    <script>
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function() {
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+                rules: {
+                    name: "required",
+                    ename:"required"
+
+                },
+                messages: {
+                    name:e + "必填",
+                    ename:e + "必填",
+
+                }
+            });
+        });
+
+    </script>
+</block>

@@ -1,0 +1,40 @@
+<div class="kq-left pull-left">
+    <div class="left-menu">
+        <ul class="top">
+            <li>
+                <a href="">
+                    <i class="fa fa-home"></i>
+                    <em>首页管理</em>
+                </a>
+            </li>
+        </ul>
+        <ul>
+            <li {{ :left_menu_on('Config') }} ><a href="{{ :U('Admin/Config/index') }}"><i class="fa fa-gear"></i><em>系统设置</em></a></li>
+            <li {{ :left_menu_on('Admin') }} ><a href="{{ :U('Admin/Admin/index') }}"><i class="fa fa-user"></i><em>管理员</em></a></li>
+            <li {{ :left_menu_on('AdminGroup') }} ><a href="{{ :U('Admin/AdminGroup/index') }}"><i class="fa fa-users"></i><em>管理组</em></a></li>
+            <li {{ :left_menu_on('AdminRule') }} ><a href="{{ :U('Admin/AdminRule/index') }}"><i class="fa fa-tags"></i><em>权限规则</em></a></li>
+        </ul>
+        <ul>
+            <li {{ :left_menu_on('LanMu') }} ><a href="{{ :U('Admin/LanMu/index') }}"><i class="fa fa-heart"></i><em>栏目管理</em></a></li>
+            <li {{ :left_menu_on('LanMuExtends') }} ><a href="{{ :U('Admin/LanMuExtends/index') }}"><i class="fa fa-heart"></i><em>内容分类</em></a></li>
+            <li {{ :left_menu_on('ManBan') }} ><a href="{{ :U('Admin/ManBan/index') }}"><i class="fa fa-file-text"></i><em>模板管理</em></a></li>
+            <li {{ :left_menu_on('News') }} ><a href="{{ :U('Admin/News/index') }}"><i class="fa fa-align-justify"></i><em>信息管理</em></a></li>
+            <li {{ :left_menu_on('Seting') }} ><a href="{{ :U('Admin/Seting/index') }}"><i class="fa fa-paragraph"></i><em>调用管理</em></a></li>
+
+
+
+        </ul>
+        <ul>
+            <li {{ :left_menu_on('Adv') }} ><a href="{{ :U('Admin/Adv/index') }}"><i class="fa fa-area-chart"></i><em>广告管理</em></a></li>
+            <li {{ :left_menu_on('LiuYan') }} ><a href="{{ :U('Admin/LiuYan/index') }}"><i class="fa fa-comment"></i><em>留言管理</em></a></li>
+            <li {{ :left_menu_on('Link') }} ><a href="{{ :U('Admin/Link/index') }}"><i class="fa fa-chain"></i><em>友链管理</em></a></li>
+            <li {{ :left_menu_on('OneKey') }} ><a href="{{ :U('Admin/OneKey/index') }}"><i class="fa fa-star-half-empty"></i><em>预约管理</em></a></li>
+
+        </ul>
+        <ul>
+            <li {{ :left_menu_on('User') }} ><a href="{{ :U('Admin/User/index') }}"><i class="fa fa-user"></i><em>会员管理</em></a></li>
+
+            <li {{ :left_menu_on('Order') }} ><a href="{{ :U('Admin/Order/index') }}"><i class="fa fa-shopping-bag"></i><em>订单管理</em></a></li>
+        </ul>
+    </div>
+</div>

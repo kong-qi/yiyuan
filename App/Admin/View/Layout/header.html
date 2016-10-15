@@ -1,0 +1,38 @@
+<!-- 头部开始 -->
+
+
+<div class="row border-bottom visible-xs">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header" style="width:60px;"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary" href="#" style="padding:6px 15px;"><i class="fa icon-bars"></i></a></div>
+        <ul class="nav navbar-top-links navbar-right">
+            <li>
+                <a href="home.html" class="J_menuItem" data-index="0"><i class="fa icon-home" style="font-size:16px"></i>医院CRM网络管理系统<font color="#ED5565">v1.0</font></a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="row content-tabs">
+    <button class="roll-nav roll-left J_tabLeft"><i class="fa icon-backward"></i>
+    </button>
+    <nav class="page-tabs J_menuTabs">
+        <div class="page-tabs-content">
+            <a href="javascript:;" class="active J_menuTab" data-id="home.html">首页</a>
+        </div>
+    </nav>
+    <button class="roll-nav roll-right J_tabRight"><i class="fa icon-forward"></i>
+    </button>
+    <div class="btn-group roll-nav roll-right">
+        <button class="dropdown J_tabClose" data-toggle="dropdown">关闭{{ :lang('操作','handle') }}<span class="caret"></span>
+        </button>
+        <ul role="menu" class="dropdown-menu dropdown-menu-right">
+            <li class="J_tabShowActive"><a>定位当前选项卡</a>
+            </li>
+            <li class="divider"></li>
+            <li class="J_tabCloseAll"><a>关闭全部选项卡</a>
+            </li>
+            <li class="J_tabCloseOther"><a>关闭其他选项卡</a>
+            </li>
+        </ul>
+    </div>
+    <a href="{{ :U('Admin/Login/outlogin') }}" onClick="if(confirm('确认退出?')) return true;else return false;" class="roll-nav roll-right J_tabExit"><i class="fa icon-signout"></i> 退出</a>
+</div>

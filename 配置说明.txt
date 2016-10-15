@@ -1,0 +1,20 @@
+//数据库配置文件
+/App/Common/Conf/db.php
+<?php
+return array(
+    'DB_TYPE'   => 'mysql', // 数据库类型
+    'DB_HOST'   => 'localhost', // 服务器地址
+    'DB_NAME'   => 'mjmh', // 数据库名
+    'DB_USER'   => 'mjmh', // 用户名
+    'DB_PWD'    => 'mjmh4836789760', // 密码
+    'DB_PORT'   => 3306, // 端口
+    'DB_PREFIX' => 'tp_', // 数据库表前缀
+);
+我已经配置好了；
+如果重写apache无法使用，请更改如下
+/App/Common/Conf/config.php
+找到
+'URL_MODEL'=>2,
+更改为：
+'URL_MODEL'=>0,
+即可

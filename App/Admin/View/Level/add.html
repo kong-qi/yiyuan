@@ -1,0 +1,151 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+    <script src="__JS__/layer/layer.js"></script>
+</block>
+<block name="right">
+
+    <div class="right-box">
+
+
+        <div class="box">
+            <div class="box-title">
+                {{ $onname }}{{ :lang('添加','handle') }}
+                <h3 class="pull-right ">
+                    <a href="__CONTROLLER__/" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                </h3>
+            </div>
+            <div class="box-content">
+                <div class="form-warp">
+                    <div class="tab">
+                        <ul>
+                            <li class="active">{{ $onname }}</li>
+
+                        </ul>
+                    </div>
+                    <form action="" method="post" id="validate">
+                        <input type="hidden" name="source" value="sale">
+                        <div class="tab-box">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">中文级别名字</td>
+                                    <td>
+                                        <input type="text" name="name" value="" size="80" class="input">
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td align="right">级别</td>
+                                    <td>
+                                        <input type="text" name="level" value="" size="80" class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">等级条件</td>
+                                    <td>
+
+                                        <input type="text" name="min_num" value="" size="20" placeholder="开始" class="input">—<input type="text" name="max_num" placeholder="结束条件" value="" size="20" class="input">
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td align="right">折扣类型</td>
+                                    <td>
+                                        <label for="site_closed_0">
+                                            <input type="radio"  name="type" id="site_closed_0" value="jian"> 满减金额
+                                        </label>
+                                        <label for="site_closed_1">
+                                            <input type="radio" name="type" id="site_closed_1" value="zhe" checked="checked"> 打折
+                                        </label>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right">折扣</td>
+                                    <td>
+                                        <input type="text" name="discount" value="" size="80" class="input">
+                                        <p class="error">
+                                            满减表示：会员到达这个等级，就减这个金额。<br/>
+                                            打折：会员打折，例如：打折9折，请输入0.9.以此类推。
+                                        </p>
+                                    </td>
+
+                                </tr>
+
+
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td >
+                                            <input type="submit" value="提交" class="btn">
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+    <script>
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function() {
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+                rules: {
+                    name:{
+                        required:1,
+                    },
+                   level:{
+                        required:1,
+                        number:1
+                    },
+                    discount:{
+                        required:1,
+                        number:1
+                    },
+                    min_num:
+                    {
+                        required:1,
+                        number:1
+                    },
+                    max_num:
+                    {
+                        required:1,
+                        number:1
+                    }
+
+
+                },
+
+            });
+        });
+
+    </script>
+</block>

@@ -1,0 +1,451 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+    <script src="__JS__/layer/layer.js"></script>
+    <script src="__JS__/layer/laydate/laydate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="box">
+            <div class="box-title">
+                {{ $lmmsg['name'] }}更新
+                <h3 class="pull-right ">
+                    <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/index",array('lmid'=>$data['lmid'])) }}" class="btn btn-xs
+                    btn-success"><span class="fa fa-mail-reply"></span>
+                    {{ :lang('返回','handle') }}</a>
+                </h3>
+            </div>
+            <div class="box-content">
+                <div class="form-warp">
+                    <div class="tab">
+                        <ul>
+                            <li class="active">基本信息</li>
+                            <if condition="C('MORE_LANG')">
+
+                                <li>英文基本信息</li>
+                            </if>
+                            <li>SEO设置</li>
+
+
+                        </ul>
+                    </div>
+                    <form action="" method="post" id="validate">
+                        <input type="hidden" name="id" value="{{ $data.id }}">
+                        <input type="hidden" name="lmid" value="{{ $data.lmid }}">
+                        <div class="tab-box">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+
+                                <tr>
+                                    <td align="right">标题</td>
+                                    <td>
+                                        <input type="text" name="title" value="{{ $data.title }}" size="80"
+                                               class="input">
+                                    </td>
+                                </tr>
+                                
+                               
+
+                                <!-- <tr>
+                                    <td align="right">作者</td>
+                                    <td>
+                                        <input type="text" name="author" value="{{ $data.author }}" size="80"
+                                               class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">来源</td>
+                                    <td>
+                                        <input type="text" name="source" value="{{ $data.source }}" size="80"
+                                               class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">外部URL</td>
+                                    <td>
+                                        <input type="text" name="wburl" value="{{ $data.wburl }}" size="80"
+                                               class="input">
+                                    </td>
+                                </tr> -->
+                               
+                                <tr>
+                                    <td align="right">缩略图片</td>
+                                    <td class="insert_file">
+                                        <input type="text" name="picurl" value="{{ $data.picurl }}" size="80"
+                                               class="input insert_input">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                                onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.insert_file')">
+                                        <span class="fa fa-image"></span> 上传图片</button>
+                                        <div class="insert_img">
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                   <td align="right">相册图片</td>
+                                   <td class="moreinsert_file">
+                                       <input type="hidden" name="thumbs"
+                                              value="{{ :htmlspecialchars_decode($data['thumbs']) }}" size="80"
+                                              class="input insert_input">
+                                       <button type="button" class="btn btn-xs btn-success"
+                                               onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.moreinsert_file','2')">
+                                       <span class="fa fa-image"></span> 上传相册</button>
+                                       <div class="insert_img_more insert_img_more_cn">
+                               
+                                           <?php
+                                               $picurl=json_decode(htmlspecialchars_decode($data['thumbs']),true);
+                               
+                                           if($picurl)
+                                           {
+                                         
+                                           foreach($picurl as $v)
+                                           {
+                                           echo '
+                                           <li class="itempic"><img data-url="'.$v['path'].'"
+                                                                    src="'.pic_url($v['path']).'" alt="">
+                                               <p class="m_t_10"><a href="javascript:void(0)"
+                                                                    class="btn btn-white btn-xs js_left_pic"><i
+                                                       class="fa fa-angle-left"></i>上移</a>
+                                                   <a href="javascript:void(0)"
+                                                      class="btn btn-white btn-xs js_right_pic"><i
+                                                           class="fa fa-angle-right"></i>下移</a>
+                                                   <a href="javascript:void(0)"
+                                                      class="btn btn-danger btn-xs js_remove_pic"><i
+                                                           class="fa fa-trash"></i>删除</a></p></li>
+                                           ';
+                                           }
+                                          
+                                           }
+                                           ?>
+                                       </div>
+                                   </td>
+                               </tr>
+                              <tr>
+                                  <td align="right">简介介绍</td>
+                                  <td>
+                                      <textarea name="intro" id="intro" cols="80" rows="10"
+                                                class="textarea no-border">{{ $data.intro }}</textarea>
+
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="right">特点</td>
+                                  <td>
+                                      <textarea name="tedian" id="tedian" cols="80" rows="10"
+                                                class="textarea no-border">{{ $data.tedian }}</textarea>
+
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="right">参数</td>
+                                  <td>
+                                      <textarea name="cansu" id="cansu" cols="80" rows="10"
+                                                class="textarea no-border">{{ $data.cansu }}</textarea>
+
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td align="right">功能</td>
+                                  <td>
+                                      <textarea name="gongneng" id="gongneng" cols="80" rows="10"
+                                                class="textarea no-border">{{ $data.gongneng }}</textarea>
+
+                                  </td>
+                              </tr>
+                              <tr>
+                                    <td align="right">产品安装尺寸</td>
+                                    <td>
+                                        <div class="ueditor_width">
+                                            <textarea name="content" id="content" cols="80" rows="10"
+                                                      class="textarea no-border">{{ :htmlspecialchars_decode($data['content']) }}</textarea>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                        <if condition="C('MORE_LANG')">
+                            <div class="tab-box none">
+                                <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th width="131">名称</th>
+                                        <th>内容</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right">英文标题</td>
+                                        <td>
+                                            <input type="text" name="entitle" value="{{ $data.entitle }}" size="80"
+                                                   class="input">
+                                        </td>
+                                    </tr>
+
+                                  
+                                    <tr>
+                                        <td align="right">英文外部URL</td>
+                                        <td>
+                                            <input type="text" name="enwburl" value="{{ $data.enwburl }}" size="80"
+                                                   class="input">
+                                        </td>
+                                    </tr>
+                                   
+                                    <tr>
+                                        <td align="right">缩略图片</td>
+                                        <td class="eninsert_file">
+                                            <input type="text" name="enpicurl" value="{{ $data.enpicurl }}" size="80"
+                                                   class="input insert_input">
+                                            <button type="button" class="btn btn-xs btn-success" \
+                                                    onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.eninsert_file')">
+                                            <span class="fa fa-image"></span> 上传图片</button>
+                                            <div class="insert_img">
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    <td align="right">相册图片</td>
+                                    <td class="enmoreinsert_file">
+                                        <input type="hidden" name="enthumbs"
+                                               value="{{ :htmlspecialchars_decode($data['ebthumbs']) }}" size="80"
+                                               class="input insert_input">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                                onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.enmoreinsert_file','2')">
+                                        <span class="fa fa-image"></span> 上传相册</button>
+                                        <div class="insert_img_more insert_img_more_en">
+
+                                            <?php
+                                                $picurl=json_decode(htmlspecialchars_decode($data['enthumbs']),true);
+
+                                            if($picurl)
+                                            {
+                                                  
+                                            foreach($picurl as $v)
+                                            {
+                                            echo '
+                                            <li class="itempic"><img data-url="'.$v['path'].'"
+                                                                     src="'.pic_url($v['path']).'" alt="">
+                                                <p class="m_t_10"><a href="javascript:void(0)"
+                                                                     class="btn btn-white btn-xs js_left_pic"><i
+                                                        class="fa fa-angle-left"></i>上移</a>
+                                                    <a href="javascript:void(0)"
+                                                       class="btn btn-white btn-xs js_right_pic"><i
+                                                            class="fa fa-angle-right"></i>下移</a>
+                                                    <a href="javascript:void(0)"
+                                                       class="btn btn-danger btn-xs js_remove_pic"><i
+                                                            class="fa fa-trash"></i>删除</a></p></li>
+                                            ';
+                                            }
+                                          
+                                            }
+                                            ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">简介介绍</td>
+                                    <td>
+                                        <textarea name="enintro" id="enintro" cols="80" rows="10"
+                                                  class="textarea no-border">{{ $data.enintro }}</textarea>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">特点</td>
+                                    <td>
+                                        <textarea name="entedian" id="entedian" cols="80" rows="10"
+                                                  class="textarea no-border">{{ $data.entedian }}</textarea>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">参数</td>
+                                    <td>
+                                        <textarea name="encansu" id="encansu" cols="80" rows="10"
+                                                  class="textarea no-border">{{ $data.encansu }}</textarea>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">功能</td>
+                                    <td>
+                                        <textarea name="engongneng" id="engongneng" cols="80" rows="10"
+                                                  class="textarea no-border">{{ $data.engongneng }}</textarea>
+
+                                    </td>
+                                </tr>
+                                    <tr>
+                                        <td align="right">产品安装尺寸</td>
+                                        <td>
+                                            <textarea name="encontent" id="encontent" cols="80" rows="10" class="textarea no-border">{{ :htmlspecialchars_decode($data['encontent']) }}</textarea>
+
+                                        </td>
+                                    </tr>
+
+
+                                    </tbody>
+
+
+                                </table>
+                            </div>
+                        </if>
+                        <div class="tab-box none">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">SEO标题</td>
+                                    <td>
+                                        <input type="text" name="seotitle" value="{{ $data.seotitle }}" size="80"
+                                               class="input">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right">SEO关键词</td>
+                                    <td>
+                                        <input type="text" name="keyword" value="{{ $data.keyword }}" size="80"
+                                               class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">SEO描述</td>
+                                    <td>
+
+                                        <textarea name="description" id="" cols="80" rows="10" class="textarea">{{ $data.description }}</textarea>
+                                    </td>
+                                </tr>
+                                <if condition="C('MORE_LANG')">
+                                    <tr>
+                                        <td align="right">英文SEO标题</td>
+                                        <td>
+                                            <input type="text" name="enseotitle" value="{{ $data.enseotitle }}"
+                                                   size="80"
+                                                   class="input">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right">英文SEO关键词</td>
+                                        <td>
+                                            <input type="text" name="enkeyword" value="{{ $data.enkeyword }}" size="80"
+                                                   class="input">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">英文SEO描述</td>
+                                        <td>
+                                            <textarea name="endescription" id="" cols="80" rows="10" class="textarea">{{ $data.endescription }}</textarea>
+
+                                        </td>
+                                    </tr>
+                                </if>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <table class="table">
+                            <tfooter>
+                                <tr>
+                                    <td width="143">&nbsp;</td>
+                                    <td>
+                                        <input type="submit" value="提交" class="btn goadd">
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+    {{ :load_ueditor() }}
+    <script>
+
+        bd_ueditor('content');
+        bd_ueditor('tedian');
+        bd_ueditor('gongneng');
+        bd_ueditor('xinghao');
+        bd_ueditor('cansu');
+        bd_ueditor('intro');
+        $en = "{{ C('MORE_LANG') }}";
+        if ($en) {
+            bd_ueditor('encontent');
+            bd_ueditor('entedian');
+            bd_ueditor('engongneng');
+            bd_ueditor('encansu');
+            bd_ueditor('enintro');
+            bd_ueditor('enxinghao');;
+        }
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function () {
+
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+                rules: {
+                    title: "required",
+                    entitle: "required",
+                    yunfei:{
+                        required:1,
+                       
+                    },
+                    price:{
+                        required:1,
+                       
+                    },
+                    baoyou:
+                    {
+                        number:1
+                    }
+                        
+                    
+
+
+                },
+                submitHandler: function (form) {
+                    return_pic_json(".insert_img_more_cn .itempic", "thumbs", 1);
+                    return_pic_json(".insert_img_more_en .itempic", "enthumbs", 1);
+                    form.submit();
+                }
+
+            });
+        });
+         laydate({
+            elem: '#zzdate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+        });
+
+    </script>
+</block>

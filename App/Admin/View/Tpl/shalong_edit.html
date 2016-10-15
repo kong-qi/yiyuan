@@ -1,0 +1,167 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+    <script src="__JS__/layer/layer.js"></script>
+    <script src="__JS__/layer/laydate/laydate.js"></script>
+
+</block>
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="box">
+            <div class="box-title">
+                 {{ $lmmsg['name'] }}更新
+                <h3 class="pull-right ">
+                    <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/index") }}" class="btn btn-xs
+                    btn-success"><span class="fa fa-mail-reply"></span>
+                    {{ :lang('返回','handle') }}</a>
+                </h3>
+            </div>
+            <div class="box-content">
+                <div class="form-warp">
+                    <div class="tab">
+                        <ul>
+                            <li class="active">基本信息</li>
+                            <if condition="C('MORE_LANG')">
+
+                                <li>英文基本信息</li>
+                            </if>
+
+
+
+                        </ul>
+                    </div>
+                    <form action="{{ :U('Admin/News/edit') }}" method="post" id="validate">
+                        <input type="hidden" name="id" value="{{ $data.id }}">
+                        <input type="hidden" name="lmid" value="{{ $data.lmid }}">
+                        <div class="tab-box">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+
+                                <tr>
+                                    <td align="right">标题</td>
+                                    <td>
+                                        <input type="text" name="title" value="{{ $data.title }}" size="80"
+                                               class="input">
+                                    </td>
+                                </tr>
+                                
+                               
+
+                            
+                                <tr>
+                                    <td align="right">活动简介</td>
+                                    <td>
+
+                                        <textarea name="intro" id="" cols="80" rows="5" class="textarea">{{ $data.intro }}</textarea>
+                                    </td>
+                                </tr>
+                               
+                                
+
+
+                                </tbody>
+
+
+                            </table>
+                        </div>
+                        <if condition="C('MORE_LANG')">
+                            <div class="tab-box none">
+                                <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th width="131">名称</th>
+                                        <th>内容</th>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right">英文标题</td>
+                                        <td>
+                                            <input type="text" name="entitle" value="{{ $data.entitle }}" size="80"
+                                                   class="input">
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td align="right">英文简介</td>
+                                        <td>
+
+                                            <textarea name="enintro" id="" cols="80" rows="5" class="textarea">{{ $data.enintro }}</textarea>
+                                        </td>
+                                    </tr>
+                               
+                                  
+                                    </tbody>
+
+
+                                </table>
+                            </div>
+                        </if>
+
+                        <table class="table">
+                            <tfooter>
+                                <tr>
+                                    <td width="143">&nbsp;</td>
+                                    <td>
+                                        <input type="submit" value="提交" class="btn goadd">
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+    
+    <script>
+
+       
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function () {
+
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+                rules: {
+                    title: "required",
+                    entitle: "required"
+
+
+                },
+                submitHandler: function (form) {
+
+                    form.submit();
+                }
+
+            });
+        });
+         laydate({
+            elem: '#zzdate', //目标元素。由于laydate.js封装了一个轻量级的选择器引擎，因此elem还允许你传入class、tag但必须按照这种方式 '#id .class'
+            event: 'focus' //响应事件。如果没有传入event，则按照默认的click
+        });
+
+    </script>
+</block>

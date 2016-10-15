@@ -1,0 +1,347 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+    <script src="__JS__/layer/layer.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="box">
+            <div class="box-title">
+                {{ $onname }}更新
+                <h3 class="pull-right ">
+                    <a href="__CONTROLLER__/" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                </h3>
+            </div>
+            <div class="box-content">
+                <div class="form-warp">
+                    <div class="tab">
+                        <ul>
+                            
+                            <li>文字</li>
+                            <li>编辑器</li>
+                            <li>图片</li>
+                            <li>图文</li>
+
+                        </ul>
+                    </div>
+                   
+
+                        <div class="tab-box none">
+                            <form action="" method="post" class="validate1">
+                            <input type="hidden" name="type" value="text">
+                            <input type="hidden" name="id" value="{{ $data.id }}">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">名称</td>
+                                    <td>
+                                        <input type="text" name="name" value="{{ $data.name }}" size="80" class="input">
+                                    </td>
+                                </tr>
+                               
+                                <tr  >
+                                    <td align="right">文字</td>
+                                    <td>
+                                        
+                                        <textarea name="content" cols="80" class="textarea js-name" rows="10">{{ $data.content }}</textarea>
+                                    </td>
+                                </tr>
+                               
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td >
+                                            <input type="submit" value="提交" class="btn">
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            </form>
+                        </div>
+                        
+                        <div class="tab-box none">
+                            <form action="" method="post" class="validate2">
+                                <input type="hidden" name="id" value="{{ $data.id }}">
+                                <input type="hidden" name="type" value="fuben">
+                                <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">名称</td>
+                                    <td>
+                                        <input type="text" name="name" value="{{ $data.name }}" size="80" class="input">
+                                    </td>
+                                </tr>
+
+                                <tr  >
+                                    <td align="right">内容1</td>
+                                    <td>
+                                        
+                                        <textarea name="content"  id="content" cols="80" class="textarea js-name" rows="10">{{ $data.content }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr  >
+                                    <td align="right">内容2</td>
+                                    <td>
+
+                                        <textarea name="encontent"  id="encontent" cols="80" class="textarea js-name" rows="10">{{ $data.encontent }}</textarea>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td >
+                                            <input type="submit" value="提交" class="btn">
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            </form>
+                        </div>
+                        <div class="tab-box none">
+                            <form action="" method="post" class="validate3">
+                            <input type="hidden" name="type" value="pic">
+                            <input type="hidden" name="id" value="{{ $data.id }}">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">名称</td>
+                                    <td>
+                                        <input type="text" name="name" value="{{ $data.name }}" size="80" class="input">
+                                    </td>
+                                </tr>
+                               
+                                <tr class="js-type">
+                                        <td align="right">图片</td>
+                                        <td class="moreinsert_file">
+                                           <input type="hidden" name="content" id="pic-content">
+                                            <button type="button" class="btn btn-xs btn-success"
+                                                    onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.moreinsert_file','2')">
+                                            <span class="fa fa-image"></span> 上传相册</button>
+                                            <div class="insert_img_more insert_img_more_one">
+                                            <?php
+                                                $picurl=json_decode(htmlspecialchars_decode($data['content']),true);
+
+                                                if($picurl)
+                                                {
+                                                  
+                                                foreach($picurl as $v)
+                                                {
+                                                echo '
+                                                <li class="itempic"><img data-url="'.$v['path'].'"
+                                                                         src="'.pic_url($v['path']).'" alt="">
+                                                    <p class="m_t_10"><a href="javascript:void(0)"
+                                                                         class="btn btn-white btn-xs js_left_pic"><i
+                                                            class="fa fa-angle-left"></i>上移</a>
+                                                        <a href="javascript:void(0)"
+                                                           class="btn btn-white btn-xs js_right_pic"><i
+                                                                class="fa fa-angle-right"></i>下移</a>
+                                                        <a href="javascript:void(0)"
+                                                           class="btn btn-danger btn-xs js_remove_pic"><i
+                                                                class="fa fa-trash"></i>删除</a></p></li>
+                                                ';
+                                                }
+                                               
+                                                }
+                                            ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                
+                               
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td >
+                                            <input type="submit" value="提交" class="btn">
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            </form>
+                        </div>
+                        <div class="tab-box none">
+                            <form action="" method="post" class="validate4">
+                            <input type="hidden" name="id" value="{{ $data.id }}">
+                            <input type="hidden" name="type" value="pic-text">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">名称</td>
+                                    <td>
+                                        <input type="text" name="name" value="{{ $data.name }}" size="80" class="input">
+                                    </td>
+                                </tr>
+                               
+                                
+                                <tr  >
+                                    <td align="right">图文</td>
+                                    <td class="moreinsert_file2">
+                                        <input type="hidden" name="content" id="text-pic-content">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                                onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.moreinsert_file2','2','2')">
+                                        <span class="fa fa-image"></span> 上传相册</button>
+                                        <div class="insert_img_more insert_img_more_two">
+                                            <?php
+                                                $picurl=json_decode(htmlspecialchars_decode($data['content']),true);
+
+                                                if($picurl)
+                                                {
+                                                  
+                                            foreach($picurl as $v)
+                                            {
+                                            echo '
+                                            <li class="itempic"><img data-url="'.$v['path'].'"
+                                                                     src="'.pic_url($v['path']).'" alt="">
+                                                <p class="m_t_10"> <input class="input js_name" value="'.urldecode($v['name']).'" id="name" placeholder="名称" type="text"> </p>
+                                                <p class="m_t_10"> <textarea  class="input js_intro" placeholder="介绍文字">'.urldecode($v['intro']).'</textarea> </p>
+                                                <p class="m_t_10"> <input class="input js_url" value="'.$v['url'].'"  id="name" placeholder="网址" type="text"> </p>
+                                                <p class="m_t_10"><a href="javascript:void(0)"
+                                                                     class="btn btn-white btn-xs js_left_pic"><i
+                                                        class="fa fa-angle-left"></i>上移</a>
+                                                    <a href="javascript:void(0)"
+                                                       class="btn btn-white btn-xs js_right_pic"><i
+                                                            class="fa fa-angle-right"></i>下移</a>
+                                                    <a href="javascript:void(0)"
+                                                       class="btn btn-danger btn-xs js_remove_pic"><i
+                                                            class="fa fa-trash"></i>删除</a></p></li>
+                                            ';
+                                            }
+                                           
+                                            }
+                                            ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                               
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td >
+                                            <input type="submit" value="提交" class="btn">
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                            </form>
+                        </div>
+                    
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+    {{ :load_ueditor() }}
+    <script>
+         ue=bd_ueditor('content');
+         ue2=bd_ueditor('encontent');
+         $type="{{ $data.type }}";
+         if($type=='text')
+         {  
+            $(".tab li").eq(0).addClass('active').siblings('.tab li').removeClass('active');
+            $(".tab-box").eq(0).show().siblings('tab-box').hide();
+         }
+         if($type=='fuben')
+         {
+             $(".tab li").eq(1).addClass('active').siblings('.tab li').removeClass('active');
+            $(".tab-box").eq(1).show().siblings('tab-box').hide();
+         }
+         if($type=='pic')
+         {
+            $(".tab li").eq(2).addClass('active').siblings('.tab li').removeClass('active');
+            $(".tab-box").eq(2).show().siblings('tab-box').hide();
+         }
+         if($type=='pic-text')
+         {
+            $(".tab li").eq(3).addClass('active').siblings('.tab li').removeClass('active');
+            $(".tab-box").eq(3).show().siblings('tab-box').hide();
+         }
+        
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function() {
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $(".validate4").validate({
+                rules: {
+                    name: "required",
+                },
+                 submitHandler: function (form) {
+                    return_pic_json2(".insert_img_more_one .itempic", "#pic-content", 1);
+                    return_pic_json2(".insert_img_more_two .itempic", "#text-pic-content", 1);
+                   
+                    form.submit();
+                }
+            });
+            $(".validate3").validate({
+                rules: {
+                    name: "required",
+                },
+                 submitHandler: function (form) {
+                    return_pic_json2(".insert_img_more_one .itempic", "#pic-content", 1);
+                    return_pic_json2(".insert_img_more_two .itempic", "#text-pic-content", 1);
+                   
+                    form.submit();
+                }
+            });
+            $(".validate2").validate({
+                rules: {
+                    name: "required",
+                },
+                 submitHandler: function (form) {
+                 
+                   
+                    form.submit();
+                }
+            });
+            $(".validate1").validate({
+                rules: {
+                    name: "required",
+                },
+                 submitHandler: function (form) {
+                 
+                   
+                    form.submit();
+                }
+            });
+        });
+
+    </script>
+</block>

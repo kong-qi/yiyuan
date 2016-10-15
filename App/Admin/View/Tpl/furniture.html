@@ -1,0 +1,177 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+    <script src="__JS__/layer/layer.js"></script>
+
+</block>
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="box">
+            <div class="box-title">
+                {{ $onname }}{{ :lang('添加','handle') }}
+                <h3 class="pull-right ">
+                    <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/index") }}" class="btn btn-xs
+                    btn-success"><span class="fa fa-mail-reply"></span>
+                    {{ :lang('返回','handle') }}</a>
+                </h3>
+            </div>
+            <div class="box-content">
+                <div class="form-warp">
+                    <div class="tab">
+                        <ul>
+                            <li class="active">基本信息</li>
+                            <if condition="C('MORE_LANG')">
+                                <li>英文基本信息</li>
+                            </if>
+                           <!-- <li>SEO设置</li>-->
+
+
+                        </ul>
+                    </div>
+                    <form action="{{ :U('Admin/News/add',array('lmid'=>I('get.lmid'))) }}" method="post" id="validate">
+                        <input type="hidden" name="lmid" value="{{ :I('get.lmid') }}">
+                        <input type="hidden" name="title" value="{{ $lmmsg['name'] }}" size="80" class="input">
+                        <div class="tab-box">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">家具展示</td>
+                                    <td class="moreinsert_file">
+                                        <input type="hidden" name="thumbs" value="" size="80"
+                                               class="input insert_input">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                                onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.moreinsert_file','2')">
+                                        <span class="fa fa-image"></span> 上传图片</button>
+                                        <div class="insert_img_more insert_img_more_cn">
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+
+
+                            </table>
+                        </div>
+
+                        <div class="tab-box none">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">SEO标题</td>
+                                    <td>
+                                        <input type="text" name="seotitle" value="{{ $lmmsg['name'] }}" size="80" class="input">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td align="right">SEO关键词</td>
+                                    <td>
+                                        <input type="text" name="keyword" value="" size="80" class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">SEO描述</td>
+                                    <td>
+
+                                        <textarea name="description" id="" cols="80" rows="10"
+                                                  class="textarea"></textarea>
+                                    </td>
+                                </tr>
+                                <if condition="C('MORE_LANG')">
+                                    <tr>
+                                        <td align="right">英文SEO标题</td>
+                                        <td>
+                                            <input type="text" name="enseotitle" value="" size="80" class="input">
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td align="right">英文SEO关键词</td>
+                                        <td>
+                                            <input type="text" name="enkeyword" value="" size="80" class="input">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right">英文SEO描述</td>
+                                        <td>
+                                        <textarea name="endescription" id="" cols="80" rows="10"
+                                                  class="textarea"></textarea>
+
+                                        </td>
+                                    </tr>
+                                </if>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <table class="table">
+                            <tfooter>
+                                <tr>
+                                    <td width="143">&nbsp;</td>
+                                    <td>
+                                        <input type="submit" value="提交" class="btn goadd">
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+
+    <script>
+
+
+
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function () {
+
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+                rules: {
+                    title: "required",
+                    entitle: "required"
+
+
+                },
+                submitHandler: function (form) {
+                    return_pic_json(".insert_img_more_cn .itempic", "thumbs", 1);
+                    form.submit();
+                }
+
+            });
+        });
+
+    </script>
+</block>

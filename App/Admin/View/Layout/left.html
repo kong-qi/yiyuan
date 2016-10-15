@@ -1,0 +1,189 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="nav-close"><i class="fa icon-remove-sign"></i></div>
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span><img alt="image" class="img-circle" src="__IMG__/a6.jpg"/></span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="">
+                                <span class="clear">
+                               <span class="block m-t-xs"><strong class="font-bold">{{ :session('name')
+                                   }}</strong></span>
+                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                                </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <!--<li><a href="" onClick="xiugaiimg('1')">修改头像</a>
+                        </li>-->
+                        <li><a href="javascript:xiugaizh('67')">修改密码</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="{{ :U('Admin/Login/outlogin') }}"
+                               onClick="if(confirm('确认退出?')) return true;else return false;">安全退出</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="logo-element"><i class="icon icon-plus"></i></div>
+            </li>
+            <li>
+                <a class="J_menuItem" href="/index.php/addzixun/add.html"><i class="fa icon-paste"></i> <span
+                        class="nav-label">{{ :lang('添加','handle') }}咨询</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa icon-newspaper-o"></i>
+                    <span class="nav-label">查看咨询</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?zx_timeStart=2015-10-10&zx_timeEnd=2016-10-09&">全部咨询</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-10-09&zx_timeEnd=2016-10-09&">今日咨询</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-10-09&zx_timeEnd=2016-10-09&shifoudaozhen=2">今日预约</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?daozhen_timeStart=2016-10-09&daozhen_timeEnd=2016-10-09&shifoudaozhen=3">今日已到诊</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?yuyueTimeStart=2016-10-09&yuyueTimeEnd=2016-10-09&shifoudaozhen=2">今日应到诊</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-10-08&zx_timeEnd=2016-10-08&">昨日咨询</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-10-08&zx_timeEnd=2016-10-08&shifoudaozhen=2">昨日预约</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?daozhen_timeStart=2016-10-08&daozhen_timeEnd=2016-10-08&shifoudaozhen=3">昨日到诊</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?yuyueTimeStart=2016-10-10&yuyueTimeEnd=2016-10-10&shifoudaozhen=2">明日应到诊</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem"
+                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-08-10&zx_timeEnd=2016-10-08&yuyueTimeEnd=2016-10-08&shifoudaozhen=4">待跟踪回访</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa icon-bar-chart-alt"></i>
+                    <span class="nav-label">统计报表</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_tongji.html">数据报表</a>
+                        <!--15-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_bingzhong.html">病种报表</a>
+                        <!--16-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_qudao.html">推广渠道报表</a>
+                        <!--53-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_fangshi.html">咨询方式报表</a>
+                        <!--52-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_zixunyuan.html">咨询员报表</a>
+                        <!--54-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_guanjianci.html">关键词报表</a>
+                        <!--54-->
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="J_menuItem" href="/index.php/system_site/system_yy.html"><i class="fa icon-paste"></i> <span
+                        class="nav-label">医院管理</span></a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa icon-cogs"></i>
+                    <span class="nav-label">系统设置</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="/index.php/useradmin/system_zh.html">账号管理</a>
+                        <!--4-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/system_site/system_bz.html">病种管理</a>
+                        <!--6-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/system_site/system_zxfs.html">咨询方式</a>
+                        <!--7-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/system_site/system_xx.html">信息来源</a>
+                        <!--8-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/system_site/system_message.html">短信模版设置</a>
+                        <!--34-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/role/system_role.html">权限组设置</a>
+                        <!--9-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/role/system_auth.html">系统功能设置</a>
+                    </li>
+
+                </ul>
+            </li>
+            <if condition=" check_group('admin') OR check_group('group') OR check_group('rule')">
+            <li>
+                <a href="#">
+                    <i class="fa icon-cogs"></i>
+                    <span class="nav-label">权限设置</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <if condition=" check_group('admin')">
+                    <li><a href="{{ :U('Admin/Admin/index') }}" class="J_menuItem">管理员</a>
+                    </if>
+                    <if condition=" check_group('group')">
+                    <li><a href="{{ :U('Admin/AdminGroup/index') }}" class="J_menuItem">管理组</a></li>
+                    </if>
+                    <if condition=" check_group('rule')">
+                    <li><a href="{{ :U('Admin/AdminRule/index') }}" class="J_menuItem">权限规则</a></li>
+                    </if>
+                </ul>
+            </li>
+            </if>
+            <if condition="check_group('zidian') ">
+                <li>
+                    <a href="#">
+                        <i class="fa icon-cogs"></i>
+                        <span class="nav-label">字典设置</span>
+                        <span class="fa icon-chevron-left arrow"></span>
+                    </a>
+                    <ul class="nav nav-second-level">
+                        {{ :zidian_nav() }}
+                    </ul>
+                </li>
+            </if>
+        </ul>
+    </div>
+</nav>

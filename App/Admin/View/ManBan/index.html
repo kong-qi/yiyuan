@@ -1,0 +1,181 @@
+<extend name="Layout:index"/>
+<block name="add_css">
+    <link rel="stylesheet" href="__CSS__/sweetalert.css">
+</block>
+<block name="add_js">
+    <script src="__JS__/sweetalert.min.js"></script>
+
+</block>
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="box">
+            <div class="box-title">
+                {{ $onname }}
+                <h3 class="pull-right">
+                    <a href="__CONTROLLER__/add" class="btn btn-xs btn-success"> <span
+                            class="fa fa-pencil-square-o"></span> {{ :lang('添加','handle') }}</a>
+                </h3>
+            </div>
+            <div class="box-content">
+
+                <div class="list-box">
+
+                    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+
+                        <tbody>
+
+                        <tr>
+                            <th width="22" align="center"><input name="chkall" type="checkbox" id="chkall"
+                                                                 value="0"></th>
+                            <th width="40" align="center">编号</th>
+                            <th >名称</th>
+                            <th width="150" align="center">英文名</th>
+                            <th  width="150" align="center">审核状态</th>
+                            <th width="150" align="center">{{ :lang('操作','handle') }}</th>
+                        </tr>
+                        <if condition="$list">
+                            <volist name="list" id="v">
+                                <tr>
+
+                                    <td align="center"><input type="checkbox" class="checkbox-select" name="checkbox[]"
+                                                              value="{{ $v.uuid }}"></td>
+                                    <td align="center">{{ $v.id }}</td>
+                                    <td>{{ $v.name }}</td>
+                                    <td align="center">{{ $v.ename }}</td>
+                                    <td align="center">{{ :checked_str($v['checked']) }}</td>
+
+                                    <td align="center">
+
+                                        <div class="box">
+                                            <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/",array('uuid'=>$v['uuid'])) }}"
+                                            class="btn btn-xs btn-white"><span
+                                                class="fa fa-pencil-square "></span> 编辑</a>
+
+                                            <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/del/",array('uuid'=>$v['uuid'])) }}"
+                                            class="btn btn-xs btn-white" date-del="1">
+                                            <span class="fa fa-trash "></span>
+                                            删除</a></div>
+                                    </td>
+                                </tr>
+                            </volist>
+
+                            <else/>
+                            <tr>
+                                <td colspan="6" class="text-center">{{ :C('NOTTHING') }}</td>
+                            </tr>
+                        </if>
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+                <div class="box">
+                    <a href="javascript:void(0)" class="btn btn-xs" data-model="{{ :CONTROLLER_NAME }}"
+                       data-handle="del" data-handle-check="1" data-handle-value=""><span class="fa fa-trash"></span> 删除</a>
+                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
+                       data-model="{{ :CONTROLLER_NAME }}"
+                       data-handle="checked" data-handle-check="1" data-handle-value="1"><span
+                            class="fa fa-check"></span> 审核通过</a>
+                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
+                       data-model="{{ :CONTROLLER_NAME }}"
+                       data-handle="checked" data-handle-check="1" data-handle-value="0"><span
+                            class="fa fa-ban"></span> 取消审核</a>
+                </div>
+                <div class="box text-center">
+
+                    <div class="pager">{{ $page }}</div>
+
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+    <script>
+        $(function () {
+            select_all();
+            del_confirm();
+            $(document).on("click", "[data-handle-check='1']", function () {
+                $uuid = checked_box_id();
+                $model = $(this).attr('data-model');
+                $type = $(this).attr('data-handle');
+                $value = $(this).attr('data-handle-value');
+                $filed = $(this).attr('data-handle-filed');
+                $sort = checked_sort_id();
+                console.log($uuid);
+                console.log($sort);
+
+                if ($uuid) {
+                    switch ($type) {
+
+                        default:
+
+                            swal({
+                                        title: "你确定批量{{ :lang('操作','handle') }}吗?",
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "确定",
+                                        cancelButtonText: '取消',
+                                        closeOnConfirm: false,
+                                        showLoaderOnConfirm: true,
+                                    },
+                                    function () {
+                                        setTimeout(function () {
+                                            $.ajax({
+                                                'url': '{{ :U("Admin/Ajax/handle") }}',
+                                                type: 'post',
+                                                data: {
+                                                    'uuid': $uuid,
+                                                    'model': $model,
+                                                    'value': $value,
+                                                    'type': $type,
+                                                    'filed': $filed,
+                                                    'sort':$sort,
+                                                    'token': '{{ :token() }}'
+                                                },
+                                                cache: false,
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    console.log(data);
+                                                    if (data.error == 0) {
+                                                        swal({
+                                                            title: data.msg,
+                                                            confirmButtonText: "确定",
+                                                            type: "success",
+                                                            timer: 1000,
+                                                        });
+                                                        window.location.reload();
+                                                    } else {
+                                                        swal({
+                                                            title: data.msg,
+                                                            confirmButtonText: "确定",
+                                                            type: "warning",
+                                                            timer: 1000,
+                                                        });
+
+                                                    }
+                                                    ;
+                                                }
+                                            })
+                                        }, 2000);
+                                    }
+                            );
+                            break;
+                    }
+
+                } else {
+                    swal('没有选择');
+                }
+
+            });
+
+        })
+    </script>
+</block>

@@ -1,0 +1,55 @@
+<extend name="Layout:danye"/>
+<block name="body_name">
+    <body class="gray-bg">
+</block>
+<block name="body">
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div style="margin-bottom:20px;">
+                <h1 class="logo-name"><img src="__IMG__/logo.png"></h1>
+            </div>
+            <h3>{{ :C('SYSTEM_NAME') }}<font color="#ED5565">{{ :C('SYSTEM_V') }}</font></h3>
+            <form action="" method="post">
+                <div class="form-group">
+                    <input type="name" class="form-control" placeholder="用户名/Tên đăng nhập" required="required" name="name"
+                           value="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="密码/mật khẩu" required="required" name="pwd"
+                           value="">
+                </div>
+                <div class="form-group">
+
+                    <select name="lang" id=""  class="form-control">
+                        <option value="cn">中文/Trung Quốc</option>
+                        <option value="yuenan">越南语/tiếng Việt</option>
+                    </select>
+                </div>
+                <if condition="C('CHECK_YZM')">
+                    <div class="form-group" id="captcha-container">
+                        <input type="text" class="form-control" placeholder="验证码/Codes" id="code" name="yzm"
+                               style="display:inline-block;width:195px;" required="required">
+                        <img src="{{ :U('Admin/Code/index') }}" alt="验证码/Codes" title="点击刷新/Bấm Refresh"
+                             style="width:100px; height:35px;">
+                    </div>
+                </if>
+                <button name="dl" type="submit" class="btn btn-danger block full-width m-b">登 录/
+                    đăng nhập</button>
+            </form>
+            <!--<button name="dl" type="submit" class="btn btn-warning block full-width m-b"><i class="icon icon-qq"></i> QQ快速登录</button>-->
+        </div>
+    </div>
+
+    <script language="javascript">
+        var captcha_img = $('#captcha-container').find('img')
+        var verifyimg = captcha_img.attr("src");
+        captcha_img.attr('title', '点击刷新');
+        captcha_img.click(function () {
+            if (verifyimg.indexOf('?') > 0) {
+                $(this).attr("src", verifyimg + '&random=' + Math.random());
+            } else {
+                $(this).attr("src", verifyimg.replace(/\?.*$/, '') + '?' + Math.random());
+            }
+        });
+    </script>
+</block>
