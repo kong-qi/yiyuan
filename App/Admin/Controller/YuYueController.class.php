@@ -19,7 +19,7 @@ class YuYueController extends AuthController {
         //自己查看自己的
         if(!check_group('root'))
         {
-            $map['admin_id']=session('admin_id');
+            $map['y1.admin_id']=session('admin_id');
         }
         if(IS_GET)
         {
