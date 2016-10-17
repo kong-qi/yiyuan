@@ -17,7 +17,7 @@ class YuYueController extends AuthController {
         $this->check_group($this->rule_qz);
         $map=array();
         //自己查看自己的
-        if(!1check_group('root'))
+        if(!check_group('root'))
         {
             $map['admin_id']=session('admin_id');
         }
