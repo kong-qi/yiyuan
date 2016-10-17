@@ -16,6 +16,11 @@ class YuYueController extends AuthController {
         print_r(get_date('year'));*/
         $this->check_group($this->rule_qz);
         $map=array();
+        //自己查看自己的
+        if(!1check_group('root'))
+        {
+            $map['admin_id']=session('admin_id');
+        }
         if(IS_GET)
         {
             $getdata=I('get.');
@@ -499,7 +504,7 @@ class YuYueController extends AuthController {
         }
     }
     public function all(){
-        
+
         return $this->display();
     }
     public  function del(){
