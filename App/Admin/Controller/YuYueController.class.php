@@ -260,7 +260,15 @@ class YuYueController extends AuthController {
                         $has_user_id='';
                     }
                 }
+                //清楚空的
+                foreach ($data as $ak=>$av)
+                {
+                    if($av=='')
+                    {
+                        unset($data[$ak]);
+                    }
 
+                }
                 //用户存在时
                 if($has_user_id!='')
                 {
