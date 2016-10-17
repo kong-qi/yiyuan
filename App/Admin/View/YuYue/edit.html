@@ -1,0 +1,578 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+        <div class="wrapper wrapper-content">
+            <form action="" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
+                <div class="col-sm-6" style="padding:0px;">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">基本信息</a></h5>
+                                <div class="ibox-tools" style="margin-top:-8px;">
+                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">保存内容</button>
+                                    <button class="btn btn-white" type="reset" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">重置</button>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                    <label class="col-sm-12">客户姓名</label>
+                                    <input type="hidden" name="user_id" id="user_id">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" required name="name" id="telname">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">联系手机</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control"   name="tel" id="phone">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">科室</label>
+                                    <div class="col-sm-4" >
+                                        <input type="hidden" name="ksall_id" id="ksall_id">
+                                        <select class="form-control"  required="required" id="ks_id" data-all="ksall_id"  name="ks_id" data-datachenge='1' data-close="#kst_id,#kstt_id"  data-type="ks"  data-next="kst_id"  data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
+                                            <option value="">请选择科室</option>
+                                            {{ :get_keshi() }}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4" >
+
+                                        <select class="form-control"  required="required" id="kst_id" data-all="ksall_id"   name="kst_id" data-datachenge='1' data-close="#kstt_id"  data-type="ks"  data-next="kstt_id"  data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
+                                            <option value="">请选择二级科室</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4" >
+
+                                        <select class="form-control"  required="required" id="kstt_id" data-all="ksall_id"   name="kstt_id" data-datachenge='1' data-close=""  data-type="ks"    data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
+                                            <option value="">请选择具体病种</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">病人来源</label>
+                                    <div class="col-sm-4">
+                                        <input type="hidden" name="lyall_id" id="lyall_id">
+                                        <select class="form-control"  required="required" id="ly_id"   name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id"  data-type="ly"  data-next="lyt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+
+                                        <option value="">请选择</option>
+                                            <?php
+                                                if(check_group('root'))
+                                                {
+                                                    echo get_lanmu_onelist('bingren',1,'first');
+                                                }else
+                                                {
+                                                    echo get_lanmu_onelist('bingren',1,'first',session('brid'));
+                                                }
+                                            ?>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4" >
+
+                                        <select class="form-control"   id="lyt_id"  name="lyt_id" data-datachenge='1' data-close="#lytt_id"  data-type="ly"  data-next="lytt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+                                            <option value="">请选择</option>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4" >
+
+                                        <select class="form-control"  id="lytt_id"   name="lytt_id" data-datachenge='1' data-close=""  data-type="ly"  data-next="lytt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+                                            <option value="">请选择</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">区域来源</label>
+                                    <div class="col-sm-4">
+                                        <input type="hidden" name="areaall_id" id="areaall_id">
+                                        <select class="form-control"  required="required" id="area_id"   name="area_id" data-datachenge='1' data-close="#areat_id"  data-type="area"  data-next="areat_id"  data-url="{{ :U('Admin/Ajax/ajaxAreaList') }}" >
+
+                                            <option value="">请选择</option>
+                                            <?php
+
+                                                    echo get_area_list(1,'first');
+
+                                            ?>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4" >
+
+                                        <select class="form-control" required="required"  id="areat_id"  name="areat_id" data-next=""   >
+                                            <option value="">请选择</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">咨询方式
+                                        <font color="#F3060A" style=" font-size:12px;"> &nbsp;*(必填)</font>
+                                    </label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" required name="zx_id" id="userinfo0">
+                                            <option value="">请先选择咨询方式</option>
+                                            {{ :get_lanmu_onelist() }}
+                                        </select>
+
+                                    </div>
+                                </div>
+
+
+                               {{ :onkefu() }}
+
+                                <div class="form-group">
+                                    <label class="col-sm-12">初复诊</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="is_fz" id="">
+                                            <option value="0">初诊</option>
+                                            <option value="1">复诊</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">意向评定</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="yx_id" id="">
+                                            <option value="">请先选择意向评定</option>
+                                            {{ :get_lanmu_onelist('yuyuezl') }}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">预约小结</label>
+                                    <div class="col-sm-12">
+                                        <textarea class="ibox-content" style="width:100%; height: 100px; border:1px #E5E6E7 solid" name="zx_mark" ></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">其他联系方式</label>
+                                    <div class="col-sm-12">
+                                        <textarea class="ibox-content" style="width:100%; height: 100px; border:1px #E5E6E7 solid" name="othetel" ></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">详细聊天</label>
+                                    <div class="col-sm-12">
+
+                                         <textarea class=""  name="zx_content" id="content"></textarea>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6" style="padding:0px;">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">预约信息</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" ></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" >
+                                <div class="form-group">
+                                    <label class="col-sm-12">预约日期</label>
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-7"><input required name="ydate" type="text" id="ydate" class="form-control"
+                                                                     placeholder="YYYY-MM-DD"
+                                                                     onclick="laydate({istime: true, format: 'YYYY-MM-DD', min:laydate.now()})"
+                                                                     value="">
+                                            <p class="m-t">
+
+                                                <label for="" data-setdate="1" data-set="0" class="label label-success">今天</label>
+                                                <label for=""  data-setdate="1" data-set="1" class="label label-success">明天</label>
+                                                <label for=""  data-setdate="1" data-set="2" class="label label-success">后天</label>
+                                                <label for=""  data-setdate="1" data-set="7" class="label label-success">下周左右</label>
+                                                <label for=""  data-setdate="1" data-set="30" class="label label-success">下月左右</label>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-5"><input name="ytime" id="ytime" type="text"
+                                                                     class="form-control clockpicker"
+                                                                     placeholder="hh:mm" value="{{ :date('H:i',time()) }}" required>
+                                            <p class="m-t">
+
+                                                <label for=""  data-settime="1" data-set="00:00" class="label label-info">时间不定</label>
+                                                <label for="" data-settime="1" data-set="09:00" class="label label-info">9点</label>
+                                                <label for="" data-settime="1" data-set="10:00" class="label label-info">10点</label>
+                                                <label for="" data-settime="1" data-set="11:00" class="label label-info">11点</label>
+                                                <label for="" data-settime="1" data-set="14:00" class="label label-info">14点</label>
+                                                <label for="" data-settime="1" data-set="15:00" class="label label-info">15点</label>
+                                                <label for="" data-settime="1" data-set="16:00" class="label label-info">16点</label>
+                                                <label for="" data-settime="1" data-set="17:00" class="label label-info">17点</label>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins" >
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">详细信息</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" id="shoujisf3">
+                                <div class="form-group">
+                                    <label class="col-sm-12">QQ号码</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="qq">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">email</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="email">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-12">性别</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="sex">
+                                            <option value="男">男</option>
+                                            <option value="女" selected="selected">女</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">婚姻</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="is_jiehun">
+                                            <option value="0">未婚</option>
+                                            <option value="1">已婚</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">年龄</label>
+                                    <div class="col-sm-12">
+                                        <select name="age" id="age" class="form-control">
+                                         {{ :echo_age() }}
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">生日</label>
+                                    <div class="col-sm-12">
+                                        <input class="form-control layer-date" name="birthday" placeholder="YYYY-MM-DD" id="shengri">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins" >
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">来源信息</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" >
+
+                                <div class="form-group">
+                                    <label class="col-sm-12">网站来源</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="web_id" id="">
+                                            <option>请先选择网站</option>
+                                            <php>echo get_lanmu_onelist('website',1,'first');</php>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-12">访问入口</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="web_url">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">咨询页面</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="web_onname">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">搜索关键词</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="web_key">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input type="hidden" name="chongfutijiao" value="1476008580">
+                                    <input type="hidden" name="MAX_FILE_SIZE" value="500000000">
+                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao">保存内容</button>
+                                    <button class="btn btn-white" type="reset">重置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    {{ :load_ueditor() }}
+    <script>
+        bd_ueditor('content');
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            },
+            success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success");
+            },
+            errorElement: "span",
+            errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+                //e.insertBefore(r.parents(".ibox-content"));
+            },
+            errorClass: "error",
+            validClass: "no-error"
+
+        });
+        $().ready(function () {
+            $("#validate").validate(
+                {
+
+
+                    submitHandler:function(form) {
+                        //设置表单参数
+                        //最终来源
+                        $lyaid=$("#lyall_id");
+                        $ly1=$("#ly_id").val();
+                        $ly2=$("#lyt_id").val();
+                        $ly3=$("#lytt_id").val();
+
+                        if($ly3!='')
+                        {
+                            $lyaid.val($ly3);
+                        }else
+                        {
+                            if($ly2!='')
+                            {
+                                $lyaid.val($ly2);
+                            }else
+                            {
+                                if($ly1!='')
+                                {
+                                    $lyaid.val($ly1);
+                                }
+                            }
+                        }
+                        //
+                        //最终科室
+                        $ksaid=$("#ksall_id");
+                        $ks1=$("#ks_id").val();
+                        $ks2=$("#kst_id").val();
+                        $ks3=$("#kstt_id").val();
+
+                        if($ks3!='')
+                        {
+                            $ksaid.val($ks3);
+                        }else
+                        {
+                            if($ks2!='')
+                            {
+                                $ksaid.val($ks2);
+                            }else
+                            {
+                                if($ks1!='')
+                                {
+                                    $ksaid.val($ks1);
+                                }
+                            }
+                        }
+                        //最终区域
+                        $areaaid=$("#areaall_id");
+                        $area1=$("#area_id").val();
+                        $area2=$("#areat_id").val();
+                        if( $area2!='')
+                        {
+                            $areaaid.val($area2);
+                        }else
+                        {
+                            if( $area1!='')
+                            {
+                                $ksaid.val( $area1);
+                            }
+                        }
+                        $(form).ajaxSubmit();
+                    }
+                }
+            );
+            //手机号码和姓名用户检测，
+            $telname=$("#telname");
+            $phone=$("#phone");
+            //keydown
+            $phone.blur(function () {
+                $url='{{ :U("Admin/Ajax/check_phone") }}';
+                if($telname.val()!='' && $phone.val()!='')
+                {
+                    $.get($url,{'name':$telname.val(),'phone':$phone.val()},function (data) {
+                        console.log(data);
+                        if(data)
+                        {
+                            $("#user_id").val(data[0].id);
+                            $admin_name=data[0].realname==''?data[0].name:data[0].realname;
+                            $msg='已被 <span style="color: #0000cc;">'+$admin_name+"</span> 客服于 <span >"+data[0].ydatetime+'</span><br/>登记 '+data[0].ksname+" 科室 "+data[0].kstname+" 疾病项目";
+                            layer.alert($msg, {
+                                skin: 'layui-layer-lan'
+                                ,closeBtn: 0
+                                ,shift: 4 //动画类型
+                            });
+                        }
+
+                    })
+                }
+
+            });
+            //快捷预约时间
+            $("[data-settime='1'],[data-setdate='1']").css({
+                'cursor':'pointer'
+            });
+            $("[data-settime='1']").click(function () {
+
+                $v=$(this).attr('data-set');
+                $("#ytime").val($v);
+            });
+            $("[data-setdate='1']").click(function () {
+
+                $v=$(this).attr('data-set');
+                console.log($v);
+                $("#ydate").val(get_date($v));
+            });
+
+            var shengri = {
+                elem: '#shengri',
+                format: 'YYYY-MM-DD',
+                max: laydate.now(-365*10),
+                istime: false,
+                oclear: false,
+                choose: function(dates){ //选择好日期的回调
+
+                        $v=$("#shengri").val();
+                        if($v!='')
+                        {
+                            $("#age").val(get_age($v));
+                        }
+                }
+            };
+
+            laydate(shengri);
+
+            //生日变化
+            $("#age").change(function(){
+                $year=$("#age").val();
+                $birthday=get_age_date("-"+$year);
+                $("#shengri").val($birthday);
+            }).trigger('change');
+
+        });
+
+
+        
+        $("[data-datachenge='1']").change(function () {
+            $url=$(this).attr('data-url');
+            $ks=$(this).attr('data-type');
+            $next_id=$(this).attr('data-next');
+            $id=$(this).val();
+            $closeid=$(this).attr('data-close');
+            $str="<option value=''>无</option>";
+            if($id=='')
+            {
+                $($closeid).empty().append($str);
+
+                return false;
+
+
+            }
+            $.ajax({
+                    'url': $url,
+                    type: 'get',
+                    data: {
+                        'id': $id,
+                    },
+                    cache: false,
+
+                    dataType: 'json',
+                    success: function (data) {
+
+                        if(data.content!='')
+                        {
+
+                            $str='<option value="">请选择</option>';
+                            $str+=data.content;
+
+                            $("#"+$next_id).empty().append($str);
+
+                        }else
+                        {
+                            $str="<option value=''>无</option>";
+                            $("#"+$next_id).empty();
+                            $($closeid).empty().append($str);
+
+                            console.log('没有拉'+$closeid);
+
+                        }
+
+                    }
+                });
+        }).trigger("click");
+        function lj_ajax(){
+
+        }
+        function yuyue_hao(){
+            $url="{{ :U('Admin/Ajax/create_number') }}";
+            $.get($url,function ($data) {
+                $(".ynumber").val($data);
+            })
+        }
+
+    </script>
+</block>
