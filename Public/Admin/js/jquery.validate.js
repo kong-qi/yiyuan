@@ -1561,3 +1561,4 @@ jQuery.validator.addMethod("ename", function(value, element) {
     var tel = /^[a-zA-Z|_|-]{1,}[^\u4e00-\u9fa5]/;
     return this.optional(element) || (tel.test(value));
 }, "请输入英文字符");
+

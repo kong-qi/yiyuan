@@ -21,7 +21,7 @@ class KeShiZiDianController extends AuthController {
         $list=get_tree_option($list,0);
 
         $this->assign('list',$list);// 赋值数据集
-       
+
 
 
         $this->display();
@@ -82,7 +82,7 @@ class KeShiZiDianController extends AuthController {
     public function getList(){
         $rule=M('KeShi')->where(array('checked'=>1))->select();
         return $rule;
-
+        
     }
     public function edit(){
         //权限选择

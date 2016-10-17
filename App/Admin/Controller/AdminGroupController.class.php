@@ -63,6 +63,7 @@ class AdminGroupController extends AuthController {
         if(IS_POST)
         {
             $model =D(CONTROLLER_NAME);
+           
             if($data=$model->create()) {
                 $result =   $model->save();
 

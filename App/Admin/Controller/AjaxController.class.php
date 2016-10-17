@@ -201,4 +201,213 @@ class AjaxController extends AuthController
     function anli(){
        
     }
+    public function ajaxKeShiList($id=''){
+        if($id=='')
+        {
+            return false;
+        }
+        $first_id=$id;
+        $tfid=I('get.tfid');
+
+        $rule=M('KeShi')->where(array('checked'=>1,'type'=>'keshi','fid'=>$id))->select();
+        $str='';
+        $checked='';
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($k==0)
+                {
+                    $first_id=$v['id'];
+                }
+                if($tfid==$v['id'])
+                {
+                    $checked="selected='selected'";
+                }else
+                {
+                    $checked='';
+                    if($checked=='')
+                    {
+                        if($k==0)
+                        {
+                            $checked="selected='selected'";
+                        }
+                        $checked='';
+                    }
+
+                }
+                $str.="<option ".$checked." value='".$v['id']."'>".$v['name']."</option>";
+
+            }
+        }
+        $arr=array(
+            'first_id'=>$first_id,
+            'content'=>$str,
+            'code'=>''
+
+        );
+        return $this->ajaxReturn($arr);
+    }
+    public function ajaxKeShiJson($id=0){
+        $first_id=$id;
+        $tfid=I('get.tfid');
+        $data=array();
+        $rule=M('KeShi')->where(array('checked'=>1,'type'=>'keshi','fid'=>$id))->select();
+        if(count($rule)>0)
+        {
+            foreach ($rule as $key => $v) {
+                
+                
+                $rule2=M('KeShi')->where(array('checked'=>1,'type'=>'keshi','fid'=> $v['id']))->select();
+                if(count($rule2)>0)
+                {
+                   foreach ($rule2 as $key => $v2) {
+                        
+                        $rule3=M('KeShi')->where(array('checked'=>1,'type'=>'keshi','fid'=> $v2['id']))->select();
+                        if(count($rule3)>0)
+                        {
+                            foreach ($rule3 as $key => $v3) {
+                              $data[]=array(
+                                    'sf'=>array(
+                                        'id'=>$v['id'],
+                                        'name'=>$v['name'],
+                                        'city'=>array(
+                                                'id'=>$v2['id'],
+                                                'name'=>$v2['name'],
+                                            )
+                                        )
+                                );
+                              
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+        print_r($data);
+        return $this->ajaxReturn($data);
+    }
+    public function ajaxLaiYuanList($id){
+        if($id=='')
+        {
+            return false;
+        }
+        $first_id=$id;
+        $tfid=I('get.tfid');
+        
+        $rule=M('LanMu')->where(array('checked'=>1,'type'=>'bingren','fid'=>$id))->select();
+        $str='';
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($k==0)
+                {
+                    $first_id=$v['id'];
+                }
+                if($tfid==$v['id'])
+                {
+                    $checked="selected='selected'";
+                }else
+                {
+                    $checked='';
+                    if($checked=='')
+                    {
+                        if($k==0)
+                        {
+                            $checked="selected='selected'";
+                        }
+                        $checked='';
+                    }
+
+                }
+                $str.="<option ".$checked." value='".$v['id']."'>".$v['name']."</option>";
+              
+
+            }
+        }
+        $arr=array(
+            'first_id'=>$first_id,
+            'content'=>$str
+
+        );
+        return $this->ajaxReturn($arr);
+    }
+    public function ajaxAreaList($id=''){
+        if($id=='')
+        {
+            return false;
+        }
+        $first_id=$id;
+        $tfid=I('get.tfid');
+
+        $rule=M('Area')->where(array('checked'=>1,'fid'=>$id))->select();
+        $str='';
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($k==0)
+                {
+                    $first_id=$v['id'];
+                }
+                if($tfid==$v['id'])
+                {
+                    $checked="selected='selected'";
+                }else
+                {
+                    $checked='';
+                    if($checked=='')
+                    {
+                        if($k==0)
+                        {
+                            $checked="selected='selected'";
+                        }
+                        $checked='';
+                    }
+
+                }
+                $str.="<option ".$checked." value='".$v['id']."'>".$v['name']."</option>";
+
+
+            }
+        }
+        $arr=array(
+            'first_id'=>$first_id,
+            'content'=>$str
+
+        );
+        return $this->ajaxReturn($arr);
+    }
+
+    public  function check_phone(){
+        $name=I('get.name');
+        $phone=I("get.phone");
+        $Model = new \Think\Model();
+        $result=$Model->query("SELECT u1.id,u1.name,y1.ydatetime,y1.admin_id,a1.name as admin_name,a1.realname,y1.ks_id,k1.name 
+        as ksname,y1.kstt_id,k2.`name` as kstname from __PREFIX__user as u1 LEFT JOIN __PREFIX__yu_yue 
+        as y1 on y1.user_id=u1.id  LEFT JOIN __PREFIX__admin as a1 on a1.id=y1.admin_id LEFT JOIN 
+        __PREFIX__ke_shi as k1 on k1.id=y1.ks_id LEFT JOIN __PREFIX__ke_shi as k2 on k2.id=y1.kstt_id  where u1.name='".$name."' and u1.tel='".$phone."'");
+
+
+        if(count($result)>0)
+        {
+            $this->ajaxReturn($result);
+        }else
+        {
+            return false;
+        }
+    }
+    /*
+     * 生产预约码
+     */
+    public function create_number($qz=''){
+        $number=$number=date('Ymdhis').rand(1000,9999);
+        $number=$qz.$number;
+        return $this->ajaxReturn( $number);
+        
+    }
+   
+
 }

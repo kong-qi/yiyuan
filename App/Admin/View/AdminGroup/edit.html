@@ -32,6 +32,56 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td align="right">是否是咨询人员</td>
+                                <td align="right">
+                                    <select name="is_zixun" class="form-control" id="">
+                                        <option value="0" {{ :$data['is_zixun']=='0'?'selected="selected"':'' }}>否</option>
+                                        <option value="1" {{ :$data['is_zixun']=='1'?'selected="selected"':'' }}>是</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">是否是市场人员</td>
+                                <td align="right">
+                                    <select name="is_sc" class="form-control" id="">
+                                        <option value="0" {{ :$data['is_sc']=='0'?'selected="selected"':'' }}>否</option>
+                                        <option value="1" {{ :$data['is_sc']=='1'?'selected="selected"':'' }}>是</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">对应病人来源</td>
+                                <td>
+                                    <div class="form-group" style="">
+
+                                        <div class="col-sm-12">
+                                            <?php
+                                                $br=get_lanmu_onelist('bingren','',"first");
+                                                $brlyarr=array();
+                                                $brlyarr= explode(",",$data['brly_id']);
+                                                ?>
+
+                                            <if condition="$br">
+                                                <foreach name="br" item="bv">
+
+                                                    <label class="checkbox-inline f-label">
+                                                       <php>
+                                                            if(in_array($bv['id'],$brlyarr)){
+
+                                                       </php>
+                                                        <input  checked="checked" type="checkbox" name="brly_id[]" value="{{ $bv.id }}">{{ $bv.name }}&nbsp;&nbsp;</label>
+                                                    <php>}else{</php>
+
+                                                        <input  type="checkbox" name="brly_id[]" value="{{ $bv.id }}">{{ $bv.name }}&nbsp;&nbsp;</label>
+                                                    <php>}</php>
+                                                </foreach>
+                                            </if>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td align="right">{{ :lang('权限选择','filed') }}</td>
                                 <td>
                                     <div class="rule">

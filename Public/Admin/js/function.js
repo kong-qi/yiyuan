@@ -282,15 +282,17 @@ function jqtable($id,$col,$close){
 function bd_ueditor($id){
     var ue = UE.getEditor($id, {
             toolbars: [
-                ['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontborder','fontfamily', 
-        'fontsize',  'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'map', //Baidu地图
-        'gmap', 'insertvideo',  'insertorderedlist', 'insertunorderedlist', 'insertimage', 'selectall', 'cleardoc','preview', ]
+                ['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontborder','fontfamily',  'forecolor',
+        'fontsize',  'strikethrough',  'pasteplain', '|', 'backcolor', 'map', //Baidu地图
+        'gmap',  'insertorderedlist', 'insertunorderedlist', 'insertimage', 'preview', ]
             ],
            
-            initialFrameHeight:350,
-            initialFrameWidth:'80%',
+            initialFrameHeight:200,
+            initialFrameWidth:'100%',
             autoHeightEnabled: true,
             autoFloatEnabled: true,
+            wordCount:false,
+            elementPathEnabled:false,
             fontfamily:[ {
                 label: '',
                 name: 'yahei',
@@ -420,3 +422,49 @@ $("#select_lm").click(function(event) {
    // $("#select_lm_path").val(v);
     
 });
+//昨天，今天，明天
+function get_date(day) {
+    var today = new Date();
+
+    var targetday_milliseconds=today.getTime() + 1000*60*60*24*day;
+
+    today.setTime(targetday_milliseconds); //注意，这行是关键代码
+
+    var tYear = today.getFullYear();
+    var tMonth = today.getMonth();
+    var tDate = today.getDate();
+    tMonth = doHandleMonth(tMonth + 1);
+    tDate = doHandleMonth(tDate);
+    return tYear+"-"+tMonth+"-"+tDate;
+}
+function doHandleMonth(month){
+    var m = month;
+    if(month.toString().length == 1){
+        m = "0" + month;
+    }
+    return m;
+}
+function  log($str) {
+    console.log($str);
+}
+//出生年月算出年龄
+function   get_age(str)
+{
+    var   r   =   str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+    if(r==null)return   false;
+    var   d=   new   Date(r[1],   r[3]-1,   r[4]);
+    if   (d.getFullYear()==r[1]&&(d.getMonth()+1)==r[3]&&d.getDate()==r[4])
+    {
+        var   Y   =   new   Date().getFullYear();
+        return  (Y-r[1]);
+    }
+    return("输入的日期格式错误！");
+}
+//根据年龄算出出生年月
+function get_age_date(year){
+    var dd = new Date();
+    y=parseInt(dd.getFullYear());
+
+    y=y+parseInt(year);
+    return y+"-01-01";
+}

@@ -18,7 +18,7 @@
 
                     <form action="" method="post" id="validate">
                         <div class="tab-box">
-                        <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                        <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table " style="background: #fff">
                             <tbody>
                             <tr>
                                 <th width="131">{{ :lang('名称','filed') }}</th>
@@ -30,6 +30,48 @@
                                     <input type="text" name="name" value="" size="80" class="input">
                                 </td>
                             </tr>
+                            <tr>
+                                <td align="right">是否是咨询人员</td>
+                                <td align="right">
+                                    <select name="is_zixun" class="form-control" id="">
+                                        <option value="0">否</option>
+                                        <option value="1">是</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">是否是市场人员</td>
+                                <td align="right">
+                                    <select name="is_sc" class="form-control" id="">
+                                        <option value="0">否</option>
+                                        <option value="1">是</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">对应病人来源</td>
+                                <td>
+                                    <div class="form-group" style="">
+
+                                        <div class="col-sm-12">
+                                            <?php
+                                                $br=get_lanmu_onelist('bingren','',"first");
+
+                                                ?>
+
+                                            <if condition="$br">
+                                                <foreach name="br" item="bv">
+
+                                                    <label class="checkbox-inline f-label">
+                                                        <input type="checkbox" name="brly_id[]" value="{{ $bv.id }}">{{ $bv.name }}&nbsp;&nbsp;</label>
+                                                </foreach>
+                                            </if>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
 
 
                             <tr>
@@ -65,7 +107,7 @@
                                                                 <label class="checkbox-inline f-label">
                                                                     <input type="checkbox" name="ruleid[]" value="{{ $sv.ename }}">{{ $sv.name }}&nbsp;&nbsp;</label>
                                                                 </foreach>
-                                                            </if>
+                                                        </if>
                                                     </div>
                                                 </div>
 

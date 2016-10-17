@@ -26,7 +26,7 @@
                 <div class="logo-element"><i class="icon icon-plus"></i></div>
             </li>
             <li>
-                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}"><i class="fa icon-paste"></i> <span
+                <a class="J_menuItem" href="{{ :U('Admin/YuYue/add') }}"><i class="fa icon-paste"></i> <span
                         class="nav-label">{{ :lang('添加咨询','handle') }}</span></a>
             </li>
             <li>
@@ -38,11 +38,11 @@
                 <ul class="nav nav-second-level">
                     <li>
                         <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?zx_timeStart=2015-10-10&zx_timeEnd=2016-10-09&">全部咨询</a>
+                           href="{{ :U('Admin/YuYue/index') }}">全部预约</a>
                     </li>
                     <li>
                         <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-10-09&zx_timeEnd=2016-10-09&">今日咨询</a>
+                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :date('Y-m-d') }}&yetime={{ :date('Y-m-d') }}">今日预约</a>
                     </li>
                     <li>
                         <a class="J_menuItem"
@@ -111,10 +111,7 @@
                     </li>
                 </ul>
             </li>
-            <li>
-                <a class="J_menuItem" href="/index.php/system_site/system_yy.html"><i class="fa icon-paste"></i> <span
-                        class="nav-label">医院管理</span></a>
-            </li>
+
             <li>
                 <a href="#">
                     <i class="fa icon-cogs"></i>

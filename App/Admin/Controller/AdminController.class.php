@@ -64,7 +64,7 @@ class AdminController extends AuthController {
             }
         }else
         {
-            $rule=M('AdminGroup')->select();
+            $rule=M('AdminGroup')->where(array('checked'=>1))->select();
             $this->assign('rule',$rule);// 赋值数据集
             $this->display();
         }
@@ -111,7 +111,7 @@ class AdminController extends AuthController {
             );
 
             $model   =   M(CONTROLLER_NAME)->where($map)->find();
-            $rule=M('AdminGroup')->select();
+            $rule=M('AdminGroup')->where(array('checked'=>1))->select();
             $this->rule=$rule;
             if($model) {
                 $this->data =  $model;// 模板变量赋值

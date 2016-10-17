@@ -56,7 +56,7 @@
                                                             $n++;
 
                                                           ?>
-                                                        <option value="{{ $v.id }}" {{ :$k==I('get.subtype')?"selected='selected'":'' }}>{{ $v.name }}</option>
+                                                        <option value="{{ $v.id }}" {{ :$v['id']==I('get.fid')?"selected='selected'":'' }}>{{ $v.name }}</option>
                                                     </foreach>
                                                 </if>
 

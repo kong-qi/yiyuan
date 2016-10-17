@@ -67,6 +67,21 @@ function get_group_rule($groupid){
     }
     return $grouparr;
 }
+/**
+ * @param $groupid
+ * @return array
+ * 取得权限组
+ */
+function get_brly_rule($groupid){
+    //算出权限组
+    $model=M('AdminGroup');
+    $model=$model->where(array('id'=>array('in',$groupid)))->field('brly_id')->find();
+    if(count($model)>0)
+    {
+        return $model['brly_id'];
+    }
+
+}
 function load_ueditor($str="content"){
     $dir=WEB_URL.'/Public/ueditor/';
     $str=' <script type="text/javascript" charset="utf-8" src="'.$dir.'ueditor.config.js"></script>
@@ -303,4 +318,262 @@ function zidian_nav(){
         }
     }
     echo $str;
+}
+function get_keshi($id=0,$echo=1,$checkid=''){
+    $rule=M('KeShi')->where(array('checked'=>1,'fid'=>0,'type'=>'keshi'))->select();
+    $str='';
+    $check='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checkid==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option ". $check." value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+
+/**
+ * 取得单个栏目信息
+ * @param string $type
+ * @param int $echo
+ * @param string $fid
+ * @param string $sid
+ * @return mixed|string
+ */
+function get_lanmu_onelist($type="zixun",$echo=1,$fid="",$sid='',$checked=''){
+    $check='';
+    $map=array();
+    $map['checked']=1;
+    $map['type']=$type;
+    if($fid!='')
+    {
+        if($fid=='first')
+        {
+            $map['fid']=0;
+        }else
+        {
+            $map['fid']=array('in',$fid);
+        }
+
+    }
+    if($sid!='')
+    {
+        $map['id']=array('in',$sid);
+    }
+
+
+
+    $rule=M('LanMu')->where($map)->select();
+    $str='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checked==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option $check value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+function get_area_list($echo=1,$fid="",$sid='',$checked=''){
+    $check='';
+    $map=array();
+    $map['checked']=1;
+    if($fid!='')
+    {
+        if($fid=='first')
+        {
+            $map['fid']=0;
+        }else
+        {
+            $map['fid']=array('in',$fid);
+        }
+
+    }
+    if($sid!='')
+    {
+        $map['id']=array('in',$sid);
+    }
+
+
+
+    $rule=M('Area')->where($map)->select();
+    $str='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checked==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option $check value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+
+
+//在线客户
+function onkefu($type='is_zixun',$merg=0){
+    $str='';
+    if(check_group('root'))
+    {
+        //
+        $option='';
+        //查询组
+        $Model = new \Think\Model();
+        $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1')");
+        if(count($admin_arr)>0)
+        {
+            foreach ($admin_arr as $key=>$v)
+            {
+                $option.="<option value='".$v['id']."'>".$v['name']."(".$v['realname'].")</option>";
+            }
+        }
+
+        $str='
+            <div class="form-group">
+                                    <label class="col-sm-12">咨询客服</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="admin_id" required id="userinfoZxy">
+                                            <option value="">请先选择咨询客户</option>
+                                            '.  $option.'
+                                        </select>
+                                    </div>
+           </div>
+        ';
+    }else
+    {
+        $str=' <input type="hidden" name="admin_id" value="'.session('admin_id').'">';
+    }
+    return $str;
+}
+//在线客户
+function onkefu2($type='is_zixun',$merg=0){
+    $str='';
+    $admin_id=I('request.admin_id');
+    if(check_group('root'))
+    {
+        //
+        $option='';
+        //查询组
+        $Model = new \Think\Model();
+        $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1')");
+        if(count($admin_arr)>0)
+        {
+            foreach ($admin_arr as $key=>$v)
+            {
+                if($admin_id==$v['id'])
+                {
+                    $checked="selected='selsected'";
+                }else
+                {
+                    $checked="";
+                }
+                $option.="<option value='".$v['id']."'  ".$checked." >".$v['name']."(".$v['realname'].")</option>";
+            }
+        }
+
+        $str='<div class="col-sm-3">
+             <div class="input-group m-b">
+                                    <span class="input-group-addon">咨询客服</span>
+                                   
+                                        <select class="form-control" name="admin_id" id="userinfoZxy">
+                                            <option value="">全部</option>
+                                            '.  $option.'
+                                        </select>
+                                   
+           </div></div>
+        ';
+    }else
+    {
+
+    }
+    return $str;
+}
+//年龄设置
+function echo_age(){
+    $str='';
+
+    for($i=10;$i<=80;$i++)
+    {
+        if($i==25)
+        {
+            $checked="selected='selsected'";
+        }else
+        {
+            $checked='';
+        }
+        $str.='<option '.$checked.' value="'.$i.'">'.$i.'</option>';
+
+
+    }
+    return $str;
+}
+
+//预约生成
+function create_ynumber(){
+    $model=M('YuYueNumber');
+
+    $data['ctime']=time();
+    $data['admin_id']=session('admin_id');
+
+    $result=$model->data($data)->add();
+
+    if($result){
+        // 如果主键是自动增长型 成功后返回值就是最新插入的值
+
+        return ($result);
+    }else
+    {
+        return false;
+    }
+
+
+};
+
+//select选中
+function set_on($str2,$v){
+    $str=I("request.".$str2);
+    if($str=='')
+    {
+        return false;
+    }
+    if($str==$v)
+    {
+        echo "selected='selected'";
+    }
 }
