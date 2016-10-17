@@ -213,7 +213,7 @@ class YuYueController extends AuthController {
                 $data=$model->create();
                 //写入数据拉
                 //预约好前缀获取
-                $yy_qz=M('LanMu')->where(array('type'=>'bingren','id'=>$data['lyall_id']))->find();
+                $yy_qz=M('LanMu')->where(array('type'=>'bingren','id'=>$data['ly_id']))->find();
                 $data['ynumber']=$yy_qz['card'].create_ynumber();
                 $data['yx_name']=$data['name'];
                 $data['ytime']=  $data['ytime'].":00";
@@ -535,7 +535,7 @@ class YuYueController extends AuthController {
         }else{
             return $this->error(lang('数据错误','handle'));
         }
-        
+
         return $this->display();
     }
     public  function del(){
