@@ -4,8 +4,22 @@
 </block>
 <block name="right">
     <div class="right-box">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+
+                            <div class="ibox-tools" style="margin-top:0px;"> <a class="btn btn-w-m btn-primary" href="{{ $burl }}" id="xibox-tools"> <i class="icon icon-exchange"></i> 返回 </a> </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="wrapper wrapper-content">
             <form action="" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
+                <input type="hidden" name="id" value="{{ $data.id }}">
                 <div class="col-sm-6" style="padding:0px;">
                     <div class="col-sm-12">
                         <div class="ibox float-e-margins">
@@ -19,15 +33,15 @@
                             <div class="ibox-content">
                                 <div class="form-group">
                                     <label class="col-sm-12">客户姓名</label>
-                                    <input type="hidden" name="user_id" id="user_id">
+                                    <input type="hidden" name="user_id" value="{{ $data.User.id }}" id="user_id">
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" required name="name" id="telname">
+                                        <input type="text" class="form-control" required name="name" value="{{ $data.User.name }}" id="telname">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-12">联系手机</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control"   name="tel" id="phone">
+                                        <input type="text" class="form-control" value="{{ $data.User.tel }}"    name="tel"  id="phone">
 
                                     </div>
                                 </div>
@@ -35,21 +49,21 @@
                                     <label class="col-sm-12">科室</label>
                                     <div class="col-sm-4" >
                                         <input type="hidden" name="ksall_id" id="ksall_id">
-                                        <select class="form-control"  required="required" id="ks_id" data-all="ksall_id"  name="ks_id" data-datachenge='1' data-close="#kst_id,#kstt_id"  data-type="ks"  data-next="kst_id"  data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
+                                        <select class="form-control" name="ks_id" id="ks_id" onchange="get_tks(this.value)">
                                             <option value="">请选择科室</option>
-                                            {{ :get_keshi() }}
+                                            {{ :get_keshi('0','1',$data['ks_id'] ) }}
                                         </select>
                                     </div>
                                     <div class="col-sm-4" >
 
-                                        <select class="form-control"  required="required" id="kst_id" data-all="ksall_id"   name="kst_id" data-datachenge='1' data-close="#kstt_id"  data-type="ks"  data-next="kstt_id"  data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
+                                        <select class="form-control" id="kst_id" name="kst_id" onchange="get_tks2(this.value)">
                                             <option value="">请选择二级科室</option>
 
                                         </select>
                                     </div>
                                     <div class="col-sm-4" >
 
-                                        <select class="form-control"  required="required" id="kstt_id" data-all="ksall_id"   name="kstt_id" data-datachenge='1' data-close=""  data-type="ks"    data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
+                                        <select class="form-control" id="kstt_id" name="kstt_id">
                                             <option value="">请选择具体病种</option>
 
                                         </select>
@@ -64,27 +78,28 @@
 
                                         <option value="">请选择</option>
                                             <?php
-                                                if(check_group('root'))
-                                                {
-                                                    echo get_lanmu_onelist('bingren',1,'first');
-                                                }else
-                                                {
-                                                    echo get_lanmu_onelist('bingren',1,'first',session('brid'));
-                                                }
-                                            ?>
+                                                    if(check_group('root'))
+                                                    {
+                                                        echo get_lanmu_onelist('bingren',1,'first','',$data['ly_id']);
+                                                    }else
+                                                    {
+                                                        echo get_lanmu_onelist('bingren',1,'first',session('brid'),$data['ly_id']);
+                                                    }
+                                                ?>
 
                                         </select>
                                     </div>
                                     <div class="col-sm-4" >
 
-                                        <select class="form-control"   id="lyt_id"  name="lyt_id" data-datachenge='1' data-close="#lytt_id"  data-type="ly"  data-next="lytt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+                                        <select class="form-control" id="lyt_id" name="lyt_id" onchange="get_ly2(this.value)">
                                             <option value="">请选择</option>
 
                                         </select>
                                     </div>
                                     <div class="col-sm-4" >
 
-                                        <select class="form-control"  id="lytt_id"   name="lytt_id" data-datachenge='1' data-close=""  data-type="ly"  data-next="lytt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+                                        <select class="form-control" id="lytt_id" name="lytt_id"
+                                                data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
                                             <option value="">请选择</option>
 
                                         </select>
@@ -95,20 +110,20 @@
                                     <label class="col-sm-12">区域来源</label>
                                     <div class="col-sm-4">
                                         <input type="hidden" name="areaall_id" id="areaall_id">
-                                        <select class="form-control"  required="required" id="area_id"   name="area_id" data-datachenge='1' data-close="#areat_id"  data-type="area"  data-next="areat_id"  data-url="{{ :U('Admin/Ajax/ajaxAreaList') }}" >
+                                        <select class="form-control" id="area_id" name="area_id" onchange="get_area(this.value)" >
 
                                             <option value="">请选择</option>
                                             <?php
 
-                                                    echo get_area_list(1,'first');
+                                                    echo get_area_list(1,'first','',$data['area_id']);
 
-                                            ?>
+                                                    ?>
 
                                         </select>
                                     </div>
                                     <div class="col-sm-4" >
 
-                                        <select class="form-control" required="required"  id="areat_id"  name="areat_id" data-next=""   >
+                                        <select class="form-control" id="areat_id" name="areat_id" data-next="">
                                             <option value="">请选择</option>
 
                                         </select>
@@ -122,21 +137,21 @@
                                     <div class="col-sm-12">
                                         <select class="form-control" required name="zx_id" id="userinfo0">
                                             <option value="">请先选择咨询方式</option>
-                                            {{ :get_lanmu_onelist() }}
+                                            {{ :get_lanmu_onelist('zixun',1,'','',$data['zx_id']) }}
                                         </select>
 
                                     </div>
                                 </div>
 
 
-                               {{ :onkefu() }}
+                                {{ :onkefu('is_zixun',0,$data['admin_id']) }}
 
                                 <div class="form-group">
                                     <label class="col-sm-12">初复诊</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" name="is_fz" id="">
-                                            <option value="0">初诊</option>
-                                            <option value="1">复诊</option>
+                                            <option value="0" {{ :set_on($data['is_fz'],'0') }}>初诊</option>
+                                            <option value="1" {{ :set_on($data['is_fz'],'1') }}>复诊</option>
                                         </select>
                                     </div>
                                 </div>
@@ -152,20 +167,22 @@
                                 <div class="form-group">
                                     <label class="col-sm-12">预约小结</label>
                                     <div class="col-sm-12">
-                                        <textarea class="ibox-content" style="width:100%; height: 100px; border:1px #E5E6E7 solid" name="zx_mark" ></textarea>
+                                        <textarea class="ibox-content" style="width:100%; height: 100px; border:1px #E5E6E7 solid" name="zx_mark" >
+                                            {{ :htmlspecialchars_decode($data['zx_mark']) }}
+                                        </textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-12">其他联系方式</label>
                                     <div class="col-sm-12">
-                                        <textarea class="ibox-content" style="width:100%; height: 100px; border:1px #E5E6E7 solid" name="othetel" ></textarea>
+                                        <textarea class="ibox-content" value="{{ $data.User.othetel }}" style="width:100%; height: 100px; border:1px #E5E6E7 solid" name="othetel" ></textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-12">详细聊天</label>
                                     <div class="col-sm-12">
 
-                                         <textarea class=""  name="zx_content" id="content"></textarea>
+                                         <textarea class=""  name="zx_content" id="content"> {{ :htmlspecialchars_decode($data['zx_content']) }}</textarea>
 
                                     </div>
                                 </div>
@@ -190,7 +207,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-12">预约日期</label>
                                     <div class="col-sm-12">
-                                        <div class="col-sm-7"><input required name="ydate" type="text" id="ydate" class="form-control"
+                                        <div class="col-sm-7"><input required name="ydate" type="text" value="{{ $data.ydate }}" id="ydate" class="form-control"
                                                                      placeholder="YYYY-MM-DD"
                                                                      onclick="laydate({istime: true, format: 'YYYY-MM-DD', min:laydate.now()})"
                                                                      value="">
@@ -204,7 +221,7 @@
                                             </p>
                                         </div>
                                         <div class="col-sm-5"><input name="ytime" id="ytime" type="text"
-                                                                     class="form-control clockpicker"
+                                                                     class="form-control clockpicker" value="{{ $data.ytime }}"
                                                                      placeholder="hh:mm" value="{{ :date('H:i',time()) }}" required>
                                             <p class="m-t">
 
@@ -239,13 +256,13 @@
                                 <div class="form-group">
                                     <label class="col-sm-12">QQ号码</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="qq">
+                                        <input type="text" class="form-control" name="qq" value="{{ $data.User.qq }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-12">email</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="email">
+                                        <input type="text" class="form-control" name="email" value="{{ $data.User.email }}">
                                     </div>
                                 </div>
 
@@ -253,8 +270,8 @@
                                     <label class="col-sm-12">性别</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" name="sex">
-                                            <option value="男">男</option>
-                                            <option value="女" selected="selected">女</option>
+                                            <option value="男" {{ :set_on2($data['User']['sex'],'男') }}>男</option>
+                                            <option value="女" {{ :set_on2($data['User']['sex'],'女') }}>女</option>
                                         </select>
                                     </div>
                                 </div>
@@ -262,8 +279,8 @@
                                     <label class="col-sm-12">婚姻</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" name="is_jiehun">
-                                            <option value="0">未婚</option>
-                                            <option value="1">已婚</option>
+                                            <option value="0" {{ :set_on2($data['User']['is_jiehun'],1) }}>未婚</option>
+                                            <option value="1"　{{ :set_on2($data['User']['is_jiehun'],0) }}>已婚</option>
                                         </select>
                                     </div>
                                 </div>
@@ -271,7 +288,7 @@
                                     <label class="col-sm-12">年龄</label>
                                     <div class="col-sm-12">
                                         <select name="age" id="age" class="form-control">
-                                         {{ :echo_age() }}
+                                         {{ :echo_age($data['User']['age']) }}
 
                                         </select>
                                     </div>
@@ -279,7 +296,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-12">生日</label>
                                     <div class="col-sm-12">
-                                        <input class="form-control layer-date" name="birthday" placeholder="YYYY-MM-DD" id="shengri">
+                                        <input class="form-control layer-date" name="birthday" placeholder="YYYY-MM-DD" value="{{ :($data['User']['birthday']) }}" id="shengri">
                                     </div>
                                 </div>
 
@@ -304,7 +321,7 @@
                                     <div class="col-sm-12">
                                         <select class="form-control" name="web_id" id="">
                                             <option>请先选择网站</option>
-                                            <php>echo get_lanmu_onelist('website',1,'first');</php>
+                                            <php>echo get_lanmu_onelist('website',1,'first','',$data['web_id']);</php>
                                         </select>
                                     </div>
                                 </div>
@@ -312,19 +329,19 @@
                                 <div class="form-group">
                                     <label class="col-sm-12">访问入口</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="web_url">
+                                        <input type="text" class="form-control" name="web_url" value="{{ $data.web_url }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-12">咨询页面</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="web_onname">
+                                        <input type="text" class="form-control" name="web_onname" value="{{ $data.webname }}">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-12">搜索关键词</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="web_key">
+                                        <input type="text" class="form-control" name="web_key" value="{{ $data.web_key }}">
                                     </div>
                                 </div>
 
@@ -515,7 +532,110 @@
 
         });
 
+        <?php
+        if($data['ks_id']!='')
+        {
+            echo "get_tks('".$data['ks_id']."');";
+        }
+        if($data['kst_id']!='')
+        {
+            echo "get_tks2('".$data['kst_id']."');";
+        }
+        if($data['ly_id']!='')
+        {
+            echo "get_ly('".$data['ly_id']."');";
+        }
+        if($data['lyt_id']!='')
+        {
+            echo "get_ly2('".$data['lyt_id']."');";
+        }
+        if($data['area_id']!='')
+        {
+            echo "get_area('".$data['area_id']."');";
+        }
+        ?>
+        function get_tks($id){
+            $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
+            $tfid='{{ :I("get.kst_id") }}';
+            log($tfid);
+            $str = "<option value=''>无</option>";
+            if($id=='')
+            {
+                $("#kstt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                $("#kst_id").show().empty().append(json.content);
+            });
+            get_tks2('');
+        }
+        function get_tks2($id){
+            $str = "<option value=''>无</option>";
+            $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
+            $tfid='{{ :I("get.kstt_id") }}';
+            log($tfid);
+            if($id=='')
+            {
+                $("#kstt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                if(json.content!='')
+                {
 
+                    $("#kstt_id").show().empty().append(json.content);
+                }else
+                {
+                    $("#kstt_id").empty().append( $str);
+                }
+            });
+        }
+        function get_ly($id){
+            $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
+            $tfid='{{ :I("get.lyt_id") }}';
+            log($tfid);
+            $str = "<option value=''>无</option>";
+            if($id=='')
+            {
+                $("#lyt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                $("#lyt_id").show().empty().append(json.content);
+            });
+            get_ly2('');
+        }
+        function get_ly2($id){
+            $str = "<option value=''>无</option>";
+            $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
+            $tfid='{{ :I("get.lytt_id") }}';
+            log($tfid);
+            if($id=='')
+            {
+                $("#lytt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                if(json.content!='')
+                {
+
+                    $("#lytt_id").show().empty().append(json.content);
+                }else
+                {
+                    $("#lytt_id").empty().append( $str);
+                }
+            });
+        }
+        function get_area($id){
+            $url="{{ :U('Admin/Ajax/ajaxAreaList') }}";
+            $tfid='{{ :I("get.areat_id") }}';
+            log($tfid);
+            $str = "<option value=''>无</option>";
+            if($id=='')
+            {
+                $("#areat_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                $("#areat_id").show().empty().append(json.content);
+            });
+
+        }
         
         $("[data-datachenge='1']").change(function () {
             $url=$(this).attr('data-url');

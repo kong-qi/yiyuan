@@ -447,7 +447,7 @@ function get_area_list($echo=1,$fid="",$sid='',$checked=''){
 
 
 //在线客户
-function onkefu($type='is_zixun',$merg=0){
+function onkefu($type='is_zixun',$merg=0,$aid=''){
     $str='';
     if(check_group('root'))
     {
@@ -460,7 +460,14 @@ function onkefu($type='is_zixun',$merg=0){
         {
             foreach ($admin_arr as $key=>$v)
             {
-                $option.="<option value='".$v['id']."'>".$v['name']."(".$v['realname'].")</option>";
+                if($v['id']==$aid)
+                {
+                    $checked="selected='selsected'";
+                }else
+                {
+                    $checked="";
+                }
+                $option.="<option value='".$v['id']."' ".$checked." >".$v['name']."(".$v['realname'].")</option>";
             }
         }
 
@@ -482,7 +489,7 @@ function onkefu($type='is_zixun',$merg=0){
     return $str;
 }
 //在线客户
-function onkefu2($type='is_zixun',$merg=0){
+function onkefu2($type='is_zixun',$merg=0,$aid=''){
     $str='';
     $admin_id=I('request.admin_id');
     if(check_group('root'))
@@ -496,7 +503,7 @@ function onkefu2($type='is_zixun',$merg=0){
         {
             foreach ($admin_arr as $key=>$v)
             {
-                if($admin_id==$v['id'])
+                if($admin_id==$v['id'] or $v['id']==$aid)
                 {
                     $checked="selected='selsected'";
                 }else
@@ -525,18 +532,19 @@ function onkefu2($type='is_zixun',$merg=0){
     return $str;
 }
 //年龄设置
-function echo_age(){
+function echo_age($checked=''){
     $str='';
 
     for($i=10;$i<=80;$i++)
     {
-        if($i==25)
+        if($i==25 or $checked==$i)
         {
             $checked="selected='selsected'";
         }else
         {
             $checked='';
         }
+
         $str.='<option '.$checked.' value="'.$i.'">'.$i.'</option>';
 
 
@@ -576,4 +584,88 @@ function set_on($str2,$v){
     {
         echo "selected='selected'";
     }
+}
+function set_on2($str,$v){
+
+    if($str=='')
+    {
+        return false;
+    }
+    if($str==$v)
+    {
+        echo "selected='selected'";
+    }
+}
+/*
+ * 取得日俄
+ */
+function get_date($type, $num = 1,$field='')
+{
+    $array = array();
+    switch ($type) {
+        case 'sw':
+            $fistday = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1 - 7, date("Y")));
+            $lastday = date("Y-m-d H:i:s", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7 - 7, date("Y")));
+            break;
+        case 'bw':
+            //如果是星期天则返回上周，
+            if (date("w", time()) == 0) {
+                $fistday = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1 - 7, date("Y")));
+                $lastday = date("Y-m-d H:i:s", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7 - 7, date("Y")));
+            } else {
+                $fistday = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1, date("Y")));
+                $lastday = date("Y-m-d H:i:s", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7, date("Y")));
+            }
+
+            break;
+        case 'sm':
+            $fistday = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m") - 1, 1, date("Y")));
+            $lastday = date("Y-m-d  H:i:s", mktime(23, 59, 59, date("m"), 0, date("Y")));
+            break;
+
+        case 'bm':
+            $fistday = date("Y-m-d  H:i:s", mktime(0, 0, 0, date("m"), 1, date("Y")));
+            $lastday = date("Y-m-d  H:i:s", mktime(23, 59, 59, date("m"), date("t"), date("Y")));
+            break;
+        case 'bjd':
+            $season = ceil((date('n')) / 3);//当月是第几季度
+            $fistday = date('Y-m-d H:i:s', mktime(0, 0, 0, $season * 3 - 3 + 1, 1, date('Y')));
+            $lastday = date('Y-m-d H:i:s', mktime(23, 59, 59, $season * 3, date('t', mktime(0, 0, 0, $season * 3, 1, date("Y"))), date('Y')));
+            break;
+        case 'diy':
+            $fistday = date("Y-m-d H:i:s", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+            $lastday = date("Y-m-d", strtotime($num . " day"))." 00:00:00";
+            break;
+        case 'diy2':
+            $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+            $lastday = date("Y-m-d", strtotime($num . " day"));
+            break;
+
+        case 'year':
+            $fistday = date("Y-m-d H:i:s",strtotime(date("Y",time())."-1"."-1")); //本年开始
+            $lastday = date("Y-m-d H:i:s",strtotime(date("Y",time())."-12"."-31")); //本年结束
+            break;
+
+
+    }
+    return $array = array(
+        'firstday' => $fistday,
+        'lastday' => $lastday
+    );
+}
+function get_days($num){
+    $day=date("Y-m-d", strtotime($num . " day"));
+    return $day;
+
+
+}
+function yuyue_status(){
+    $arr=array(
+        '1'=>'已预约',
+        '2'=>'已到院',
+        '3'=>'已确诊',
+        '4'=>'已改期',
+        '5'=>'逾期未到'
+    );
+    return $arr;
 }

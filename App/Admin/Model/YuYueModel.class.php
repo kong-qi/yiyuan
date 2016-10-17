@@ -1,7 +1,8 @@
 <?php
 namespace Admin\Model;
 use Think\Model;
-class YuYueModel extends Model {
+use Think\Model\RelationModel;
+class YuYueModel extends RelationModel {
     protected $_validate = array(
         array('name','require','名称为必须'), //默认情况下用正则进行验证
         //array('ename','require','英文名为必须',), // 在新增的时候验证name字段是否唯一
@@ -14,4 +15,14 @@ class YuYueModel extends Model {
         
 
     );
+    //关联用户
+    protected $_link = array(
+        'User'=>array(
+            'mapping_type'      => self::BELONGS_TO,
+            'class_name'        => 'User',
+            'foreign_key'=>'user_id',
+
+
+            ),
+        );
 }

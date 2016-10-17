@@ -6,13 +6,20 @@ class YuYueController extends AuthController {
 
 
     public function index(){
+        ;
         //权限选择
-
+       /* print_r( get_date('bw'));
+        print_r(get_date('sw'));
+        print_r(get_date('sm'));
+        print_r(get_date('by'));
+        print_r(get_date('diy',-1));
+        print_r(get_date('year'));*/
         $this->check_group($this->rule_qz);
         $map=array();
         if(IS_GET)
         {
             $getdata=I('get.');
+
             $y_arr=array(
                     'ks_id',
                     'kst_id',
@@ -27,13 +34,15 @@ class YuYueController extends AuthController {
                     'zx_id',
                     'user_id',
                     'admin_id',
+                    'status'
                     
                 );
-            
+            //print_r($getdata);
             foreach ($getdata as $key => $v) {
                 if($v!='')
                 {
-                    if(array_key_exists($key, $y_arr))
+
+                    if(in_array($key, $y_arr))
                     {
 
                      $map["y1.".$key]=$v;
@@ -45,7 +54,7 @@ class YuYueController extends AuthController {
             if($getdata['djstime']!='' && $getdata['djetime'] !='')
             {
                 $getdata['djstime'].=" 00:00:00";
-               echo strtotime('2016-10-18 00:00:00')."\n";
+
                 $getdata['djetime'].=" 23:59:59";
                
                 $timestr = strtotime($getdata['djstime']) . "," . strtotime($getdata['djetime']);
@@ -84,7 +93,7 @@ class YuYueController extends AuthController {
             y1.uuid as yuuid,
             y1.zx_mark,
             y1.ynumber,y1.id as yid,y1.user_id,y1.admin_id,y1.status as ystatus,y1.ydatetime,y1.ctime as yuctime,y1.zx_content,y1.mark as ymark,
-            u1.name as user_name,u1.sex,
+            u1.name as user_name,u1.sex,u1.uuid as user_uuid,
             ly1.name as ly_name,ly2.name as lyt_name, ly3.name as lytt_name,
             a1.name as admin_name,
             k1.name as ks_name,
@@ -182,6 +191,9 @@ class YuYueController extends AuthController {
         $this->display();
 
     }
+    public function getDetail(){
+
+    }
     public function add(){
 
         //权限选择
@@ -203,7 +215,7 @@ class YuYueController extends AuthController {
                 $data['ydatetime']=$data['ydate'].' '.$data['ytime'];
                 $data['ydatetime']=strtotime($data['ydatetime']);
 
-                $data['status']='已预约';
+                $data['status']='1';
 
                 //插入到用户里面
                $user_arr=array(
@@ -215,7 +227,8 @@ class YuYueController extends AuthController {
                    'tel',
                    'is_jiehun',
                    'admin_id',
-                   'email'
+                   'email',
+                   'othetel'
 
                );
                 $user=array();
@@ -251,13 +264,13 @@ class YuYueController extends AuthController {
                         M()->commit();
                         add_log($this->onname.'：'.$data['name'].'添加成功');
                         $msg=lang('添加成功','handle');
-                        return $this->success($msg."预约号为：". $data['ynumber']);
+                        return $this->success($msg."预约号为：". $data['ynumber'],'/Admin/YuYue/add');
                         //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
 
 
                     }else{
                         M()->rollback();
-                        add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
+                        add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/YuYue/add');
                         $msg=lang('添加失败','handle');
                         return $this->success($msg);
                     }
@@ -413,24 +426,49 @@ class YuYueController extends AuthController {
 
     public function edit(){
         //权限选择
+        $base=I('get.base');
+        $this->burl=U('Admin/YuYue/index')."?".base64_decode($base);
 
         $this->check_group('yushen');
         if(IS_POST)
         {
-            $model =D('Price');
-
+            $model =D('YuYue');
+            $postdata=I('post.');
             if($model->create()) {
                 $data=$model->create();
-                $id=$data['id'];
-                if(($data['pwd'])!='')
-                {
-                    $data['pwd']=sha1($data['pwd']);
-                }else
-                {
-                    unset($data['pwd']);
-                }
 
-                $result =   $model->save($data);
+                $user_arr=array(
+                    'name',
+                    'qq',
+                    'sex',
+                    'birthday',
+                    'age',
+                    'tel',
+                    'is_jiehun',
+                    'admin_id',
+                    'email',
+                    'othetel'
+
+                );
+                $user=array();
+                foreach ($user_arr as $uv)
+                {
+                    $user[$uv]=$postdata[$uv];
+                }
+                //如果为空，则返回null
+
+                $user['id']=$data['user_id'];
+
+                $id=$data['id'];
+                foreach ($data as $k=>$v)
+                {
+                    if($v=='')
+                    {
+                        unset($data[$k]);
+                    }
+                }
+                M("User")->save($user);
+                $result =   $model->where(array('id'=>$id))->save($data);
 
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
@@ -445,14 +483,13 @@ class YuYueController extends AuthController {
                 return $this->error($model->getError());
             }
         }else{
-            $id=I('get.uuid');
+            $id=I('get.id');
             $map=array(
                 'uuid'=>$id
             );
 
-            $model   =   M('Price')->where($map)->find();
-            $rule=get_tree_option($this->getList(),0);
-            $this->rule=$rule;
+            $model   = D('YuYue')->relation(true)->where($map)->find();
+
             if($model) {
                 $this->data =  $model;// 模板变量赋值
             }else{
@@ -460,6 +497,10 @@ class YuYueController extends AuthController {
             }
             $this->display();
         }
+    }
+    public function all(){
+        
+        return $this->display();
     }
     public  function del(){
         //权限选择

@@ -38,44 +38,46 @@
                 <ul class="nav nav-second-level">
                     <li>
                         <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index') }}">全部预约</a>
+                           href="{{ :U('Admin/YuYue/index') }}">{{ :lang('全部预约','menu') }}</a>
                     </li>
                     <li>
                         <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :date('Y-m-d') }}&yetime={{ :date('Y-m-d') }}">今日预约</a>
+                           href="{{ :U('Admin/YuYue/index') }}?djstime={{ :date('Y-m-d') }}&djetime={{ :date('Y-m-d') }}&status=1&show=none">{{ :lang('今日登记预约','menu') }}</a>
                     </li>
                     <li>
                         <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-10-09&zx_timeEnd=2016-10-09&shifoudaozhen=2">今日预约</a>
+                           href="{{ :U('Admin/YuYue/index') }}?djstime={{ :get_days(-1) }}&djetime={{ :get_days(-1) }}&status=1&show=none">{{ :lang('昨日登记预约','menu') }}</a>
+                    </li>
+
+                    <li>
+                        <a class="J_menuItem"
+                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :date('Y-m-d') }}&yetime={{ :date('Y-m-d') }}&status=1&show=none">{{ :lang('今日应到诊','menu') }}</a>
                     </li>
                     <li>
                         <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?daozhen_timeStart=2016-10-09&daozhen_timeEnd=2016-10-09&shifoudaozhen=3">今日已到诊</a>
+                        href="{{ :U('Admin/YuYue/index') }}?ystime={{ :date('Y-m-d') }}&yetime={{ :date('Y-m-d') }}&status=3&show=none">{{ :lang('今日已确诊','menu') }}</a>
                     </li>
                     <li>
                         <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?yuyueTimeStart=2016-10-09&yuyueTimeEnd=2016-10-09&shifoudaozhen=2">今日应到诊</a>
+                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :get_days(-1) }}&yetime={{ :get_days(-1) }}&status=2&show=none">{{ :lang('昨日已确诊','menu') }}</a>
                     </li>
                     <li>
                         <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-10-08&zx_timeEnd=2016-10-08&">昨日咨询</a>
+                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :date('Y-m-d') }}&yetime={{ :date('Y-m-d') }}&status=2&show=none">{{ :lang('今日已到院','menu') }}</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}?ystime={{ :get_days(-1) }}&yetime={{ :get_days(-1) }}&status=2&show=none">{{ :lang('昨日已到院','menu') }}</a>
+                    </li>
+
+                    <li>
+                        <a class="J_menuItem"
+                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :get_days(-1) }}&yetime={{ :get_days(-1) }}&status=1&show=none">{{ :lang('昨日应到诊','menu') }}</a>
                     </li>
                     <li>
                         <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-10-08&zx_timeEnd=2016-10-08&shifoudaozhen=2">昨日预约</a>
+                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :get_days(1) }}&yetime={{ :get_days(1) }}&status=1&show=none">{{ :lang('明日应到诊','menu') }}</a>
                     </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?daozhen_timeStart=2016-10-08&daozhen_timeEnd=2016-10-08&shifoudaozhen=3">昨日到诊</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?yuyueTimeStart=2016-10-10&yuyueTimeEnd=2016-10-10&shifoudaozhen=2">明日应到诊</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="/index.php/manage_zx/manage.html?zx_timeStart=2016-08-10&zx_timeEnd=2016-10-08&yuyueTimeEnd=2016-10-08&shifoudaozhen=4">待跟踪回访</a>
-                    </li>
+
                 </ul>
             </li>
             <li>

@@ -7,11 +7,14 @@
 
 </block>
 <block name="right">
+    <php>$status=yuyue_status()</php>
     <div class="right-box">
-
+        <if condition="I('get.show')">
+        <else/>
         <div class="box">
             <div class="col-sm-12">
                 <form action="" method="get" id="contact-form">
+
                     <div class="col-sm-12" style="padding:0px;">
                         <div class="ibox float-e-margins" id="shoujisf1">
                             <div class="ibox-title">
@@ -94,7 +97,7 @@
                                             <input type="hidden" name="areaall_id" id="areaall_id">
                                             <select class="form-control" id="area_id" name="area_id" onchange="get_area(this.value)" >
 
-                                                <option value="">请选择{{ :I('get.area_id') }}</option>
+                                                <option value="">请选择</option>
                                                 <?php
 
                                                     echo get_area_list(1,'first','',I('get.area_id'));
@@ -129,12 +132,12 @@
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon">意向评定</span>
-                                            <div class="col-sm-12">
+
                                                 <select class="form-control" name="yx_id" id="yx_id">
                                                     <option value="">全部</option>
                                                     {{ :get_lanmu_onelist('yuyuezl',1,'','',I('get.yx_id')) }}
                                                 </select>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -146,6 +149,24 @@
                                                 <option value="">全部</option>
                                                 {{ :get_lanmu_onelist('zixun',1,'','',I('get.zx_id')) }}
                                             </select>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">{{ :lang('预约状态') }}</span>
+
+
+                                            <select class="form-control" name="status" >
+                                                <option value="">全部</option>
+                                                <if condition="$status">
+                                                    <foreach name="status" item="lv" key="lkey">
+                                                        <option value="{{ $lkey }}" {{ :$lkey==I('get.status')?"selected='selected'":'' }}>{{ $lv }}</option>
+                                                    </foreach>
+                                                </if>
+                                            </select>
+
 
 
                                         </div>
@@ -165,19 +186,6 @@
                                                    placeholder="姓名/手机/预约号" class="form-control">
                                         </div>
                                     </div>
-                                    <!--<div class="col-sm-3">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="red">排序方式</font></span>
-                                            <input type="hidden" name="sorttype" id="sorttype">
-                                            <select name="sort" id="sort" class="form-control">
-                                                <option value="none" data-type="" {{ :I('get.sort')=='none'?'selected="selected"':'' }}>默认</option>
-                                                <option value="desc" data-type="yid"　{{ :I('get.sort')=='desc'?'selected="selected"':'' }}>编号从高到底</option>
-                                                <option value="desc" data-type="yid"　{{ :I('get.sort')=='desc'?'selected="selected"':'' }}>编号从底到高</option>
-                                                <option value="desc" data-type="ytime"　{{ :I('get.sort')=='desc'?'selected="selected"':'' }}>登记时间从高到底</option>
-                                                <option value="desc" data-type="ytime"　{{ :I('get.sort')=='desc'?'selected="selected"':'' }}>登记时间从底到高</option>
-                                            </select>
-                                        </div>
-                                    </div>-->
 
 
                                 </div>
@@ -230,8 +238,9 @@
 
                                     <div class="col-sm-3">
                                         <label class="col-sm-12 control-label">&nbsp;</label>
-                                        <button class="btn btn-primary" type="submit">确定筛选</button>
-                                        <button class="btn btn-success" type="reset">清空</button>
+                                        <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
+                                        <a href="{{ :U('Admin/YuYue/index') }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
+
                                     </div>
                                 </div>
                             </div>
@@ -240,6 +249,7 @@
                 </form>
             </div>
         </div>
+        </if>
         <div class="box">
 
             <div class="box-content">
@@ -341,47 +351,55 @@
 
                                     <td id="tdd11">
                                         <select name="" id="js-chenage" disabled>
-                                            {{ $v.ystatus }}
-                                            <option value="已预约" {{ :$v[
-                                            'ystatus']=='已预约'?"selected='selected'":'' }}>已预约</option>
-                                            <option value="已到院" {{ :$v[
-                                            'ystatus']=='已到院'?"selected='selected'":'' }}>已到院</option>
-                                            <option value="已确诊" {{ :$v[
-                                            'ystatus']=='已确诊'?"selected='selected'":'' }}>已确诊</option>
-                                            <option value="已改期" {{ :$v[
-                                            'ystatus']=='已改期'?"selected='selected'":'' }}>已改期</option>
-                                            <option value="逾期未到" {{ :$v[
-                                            'ystatus']=='逾期未到'?"selected='selected'":'' }}>逾期未到</option>
+
+                                            <if condition="$status">
+                                                <foreach name="status" item="lv" key="lkey">
+                                                    <option value="{{ $lkey }}" {{ :$lkey==$v['ystatus']?"selected='selected'":'' }}>{{ $lv }}</option>
+                                                </foreach>
+                                            </if>
                                         </select>
 
                                     </td>
                                     <td id="tdd11">
 
                                         <div class="box">
-                                            <if condition=" check_group($rule_qz)">
-                                                <a href="#" id="xiugaizh" data-uuid="{{ $v.uuid }}"
+
+                                            <if condition=" check_group('huifang')">
+                                                <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/list') }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                    class="btn btn-xs btn-white"><span
-                                                        class="fa fa-pencil-square "></span> {{ :lang('编辑','handle') }}</a>
+                                                        class="fa fa-pencil-square "></span> {{ :lang('回访','handle') }}</a>
                                             </if>
+
                                             <if condition=" check_group($rule_qz)">
+                                                <a href="javascript:void(0)" data-url="{{ :U('Admin/Sms/send') }}" data-title="发送短信" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                   class="btn btn-xs btn-white"><span
+                                                        class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
+                                            </if>
+                                            <if condition=" check_group($rule_qz.'_edit')">
+                                                <a href="{{ :U("__CONTROLLER__/edit/",array('id'=>$v['yuuid'])) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                class="btn btn-xs btn-white" >
+                                                <span class="fa fa-trash "></span>
+                                                {{ :lang('修改','handle') }}</a>
+                                            </if>
+                                            <!--<if condition=" check_group($rule_qz.'_del')">
                                                 <a href="{{ :U(" __CONTROLLER__/del/",array('id'=>$v['uuid'])) }}"
                                                 class="btn btn-xs btn-white" date-del="1">
                                                 <span class="fa fa-trash "></span>
                                                 {{ :lang('删除','handle') }}</a>
-                                            </if>
+                                            </if>-->
                                         </div>
                                     </td>
                                 </tr>
                                 <tr class="js-tr" style="display: none">
-                                    <td colspan="11">
-                                        <div class="box">
+                                    <td colspan="12">
+                                        <div class="box m-t" style="border-bottom: 1px solid #ccc">
                                             <label for="" class="badge badge-info">咨询小结</label> {{ $v.zx_mark }}
                                         </div>
-                                        <div class="box">
+                                        <div class="box m-t" style="border-bottom: 1px solid #ccc">
                                             <label for="" class="badge badge-info">备注</label> {{ $v.mark }}
                                         </div>
-                                        <div class="box text-center">
-                                            <a href="javascript:void(0)" class="btn btn-success">{{ :lang('查看更多','handle') }}</a>
+                                        <div class="box text-center"  >
+                                            <a href="javascript:void(0)" class="btn btn-success js-show-url">{{ :lang('查看更多','handle') }}</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -399,7 +417,7 @@
                     </table>
 
                 </div>
-                <div class="row">
+                <!--<div class="row">
                     <div class="col-xs-6">
                         <div class="m-b">
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
@@ -425,7 +443,7 @@
 
                         <div class="pagee">{{ $page }}</div>
                     </div>
-                </div>
+                </div>-->
 
             </div>
             <div class="cl"></div>
@@ -599,7 +617,7 @@
             $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
                    $("#areat_id").show().empty().append(json.content);
             });
-            
+
         }
        
     </script>
@@ -783,8 +801,7 @@
                 shijian11.max = datas; //结束日选好后，重置开始日的最大日期
             }
         };
-        laydate(shijian11);
-        laydate(shijian12);
+
         var shijian21 = {
             elem: '#shijian21',
             format: 'YYYY-MM-DD',
@@ -804,8 +821,7 @@
                 shijian21.max = datas; //结束日选好后，重置开始日的最大日期
             }
         };
-        laydate(shijian21);
-        laydate(shijian22);
+
         var shijian31 = {
             elem: '#shijian31',
             format: 'YYYY-MM-DD',
@@ -825,8 +841,32 @@
                 shijian31.max = datas; //结束日选好后，重置开始日的最大日期
             }
         };
-        laydate(shijian31);
-        laydate(shijian32);
+        $(".js-show-url").click(function(){
+            layer.open({
+                type: 2,
+                title: "{{ :lang('修改','handle') }}",
+                shadeClose: true,
+                shade: 0.8,
+                area: ['500px', '500px'],
+                content: "{{ :U(MODULE_NAME." / ".CONTROLLER_NAME." / edit / ") }}",
+                cancel: function (index) {
+
+
+                }
+            });
+        })
+
 
     </script>
+    <if condition="I('get.show')">
+        <else/>
+        <script>
+            laydate(shijian11);
+            laydate(shijian12);
+            laydate(shijian21);
+            laydate(shijian22);
+            laydate(shijian31);
+            laydate(shijian32);
+        </script>
+    </if>
 </block>
