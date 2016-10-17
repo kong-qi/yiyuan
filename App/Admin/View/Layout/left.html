@@ -83,36 +83,125 @@
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">统计报表</span>
+                    <span class="nav-label">工作量录入</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_tongji.html">数据报表</a>
-                        <!--15-->
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">咨询工具录入</a>
+                        </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">咨询方式录入</a>
+                    </li>
+                    </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa icon-bar-chart-alt"></i>
+                    <span class="nav-label">机构录入</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">机构录入</a>
+
                     </li>
                     <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_bingzhong.html">病种报表</a>
-                        <!--16-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_qudao.html">推广渠道报表</a>
-                        <!--53-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_fangshi.html">咨询方式报表</a>
-                        <!--52-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_zixunyuan.html">咨询员报表</a>
-                        <!--54-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_guanjianci.html">关键词报表</a>
-                        <!--54-->
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">机构查询</a>
                     </li>
                 </ul>
             </li>
+            <li>
+                <a href="#">
+                    <i class="fa icon-bar-chart-alt"></i>
+                    <span class="nav-label">竞价</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">更正信息</a>
+
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">录入消费</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa icon-bar-chart-alt"></i>
+                    <span class="nav-label">前台</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">接诊</a>
+
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">查询病人</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">复诊列表</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa icon-bar-chart-alt"></i>
+                    <span class="nav-label">医生</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">接待</a>
+
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">开单列表</a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">
+                    <i class="fa icon-bar-chart-alt"></i>
+                    <span class="nav-label">收银</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">结账</a>
+
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">结算</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">退定金</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa icon-bar-chart-alt"></i>
+                    <span class="nav-label">回访</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">回访列表</a>
+
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">任务列表</a>
+                    </li>
+
+                </ul>
+            </li>
+
+
 
             <li>
                 <a href="#">
@@ -166,6 +255,39 @@
                     </ul>
                 </li>
             </if>
+            <li>
+                <a href="#">
+                    <i class="fa icon-bar-chart-alt"></i>
+                    <span class="nav-label">统计报表</span>
+                    <span class="fa icon-chevron-left arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_tongji.html">数据报表</a>
+                        <!--15-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_bingzhong.html">病种报表</a>
+                        <!--16-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_qudao.html">推广渠道报表</a>
+                        <!--53-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_fangshi.html">咨询方式报表</a>
+                        <!--52-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_zixunyuan.html">咨询员报表</a>
+                        <!--54-->
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index.php/tongji/report_guanjianci.html">关键词报表</a>
+                        <!--54-->
+                    </li>
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>

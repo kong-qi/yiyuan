@@ -497,6 +497,11 @@ class YuYueController extends AuthController {
             }
         }else{
             $id=I('get.id');
+            //自己查看自己的
+            if(!check_group('root'))
+            {
+                $map['admin_id']=session('admin_id');
+            }
             $map=array(
                 'uuid'=>$id
             );
@@ -513,6 +518,24 @@ class YuYueController extends AuthController {
     }
     public function all(){
 
+        $id=I('get.id');
+        //自己查看自己的
+        if(!check_group('root'))
+        {
+            $map['admin_id']=session('admin_id');
+        }
+        $map=array(
+            'uuid'=>$id
+        );
+
+        $model   = D('YuYue')->relation(true)->where($map)->find();
+
+        if($model) {
+            $this->data =  $model;// 模板变量赋值
+        }else{
+            return $this->error(lang('数据错误','handle'));
+        }
+        
         return $this->display();
     }
     public  function del(){

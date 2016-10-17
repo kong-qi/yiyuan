@@ -447,7 +447,7 @@ function get_area_list($echo=1,$fid="",$sid='',$checked=''){
 
 
 //在线客户
-function onkefu($type='is_zixun',$merg=0,$aid=''){
+function onkefu($type='is_zixun',$merg=0,$aid='',$ready=''){
     $str='';
     if(check_group('root'))
     {
@@ -470,12 +470,16 @@ function onkefu($type='is_zixun',$merg=0,$aid=''){
                 $option.="<option value='".$v['id']."' ".$checked." >".$v['name']."(".$v['realname'].")</option>";
             }
         }
-
+        $real='';
+        if($ready!='')
+        {
+            $real='disabled';
+        }
         $str='
             <div class="form-group">
                                     <label class="col-sm-12">咨询客服</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" name="admin_id" required id="userinfoZxy">
+                                        <select class="form-control" '.$real.' name="admin_id" required id="userinfoZxy">
                                             <option value="">请先选择咨询客户</option>
                                             '.  $option.'
                                         </select>
@@ -659,7 +663,7 @@ function get_days($num){
 
 
 }
-function yuyue_status(){
+function yuyue_status($checked=''){
     $arr=array(
         '1'=>'已预约',
         '2'=>'已到院',
@@ -667,5 +671,38 @@ function yuyue_status(){
         '4'=>'已改期',
         '5'=>'逾期未到'
     );
+    if($checked!='')
+    {
+        return $arr[$checked];
+    }
     return $arr;
+}
+
+function get_yushen($id=0,$echo=1,$checkid=''){
+    $rule=M('KeShi')->where(array('checked'=>1,'fid'=>0,'type'=>'yushen'))->select();
+    $str='';
+    $check='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checkid==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option ". $check." value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+function to_time($time,$f='Y-m-d H:i:s'){
+    return date($f,$time);
 }

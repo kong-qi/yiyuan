@@ -408,6 +408,66 @@ class AjaxController extends AuthController
         return $this->ajaxReturn( $number);
         
     }
-   
+   public function getHuifang(){
+       $uid=I('request.uid');
+       $page=I('request.page');
+       $pagesize=1;
+       $map=array('user_id'=>$uid);
+       $total=M('HuiFang')->where($map)->count();
+       $pages=ceil($total/$pagesize);
+       $hf=M('HuiFang')->where($map)->page($page,$pagesize)->select();
+       $content='';
+       if($total)
+       {
+           foreach ($hf as $k=>$v)
+           {
+               $content.="<tr>";
+               $content.="
+               <td>".$v['name']."</td>
+                <td>".$v['type']."</td>
+                <td>".$v['ways']."</td>
+                <td>".$v['status']."</td>
+                <td>".$v['goplace']."</td>
+                <td>".to_time($v['nctime'])."</td>
+               ";
+               $content.="</tr>";
+           }
+       }
+       $data=array(
+           'pages'=>$pages,
+           'content'=>$content
+       );
+       return $this->ajaxReturn($data);
+   }
+   public function getHuifangRenWu(){
+        $uid=I('request.uid');
+        $page=I('request.page');
+        $pagesize=1;
+        $map=array('user_id'=>$uid);
+        $total=M('RenWu')->where($map)->count();
+        $pages=ceil($total/$pagesize);
+        $hf=M('HuiFang')->where($map)->page($page,$pagesize)->select();
+        $content='';
+        if($total)
+        {
+            foreach ($hf as $k=>$v)
+            {
+                $content.="<tr>";
+                $content.="
+               <td>".$v['name']."</td>
+              
+                <td>".$v['status']."</td>
+          
+                <td>".to_time($v['rctime'])."</td>
+               ";
+                $content.="</tr>";
+            }
+        }
+        $data=array(
+            'pages'=>$pages,
+            'content'=>$content
+        );
+        return $this->ajaxReturn($data);
+    }
 
 }

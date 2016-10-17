@@ -399,7 +399,7 @@
                                             <label for="" class="badge badge-info">备注</label> {{ $v.mark }}
                                         </div>
                                         <div class="box text-center"  >
-                                            <a href="javascript:void(0)" class="btn btn-success js-show-url">{{ :lang('查看更多','handle') }}</a>
+                                            <a href="javascript:void(0)" class="btn btn-success js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.yuuid }}" data->{{ :lang('查看更多','handle') }}</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -842,13 +842,16 @@
             }
         };
         $(".js-show-url").click(function(){
+            uid=$(this).attr('data-userid');
+            yid=$(this).attr('data-yid');
+            uuid=$(this).attr('data-uuid');
             layer.open({
                 type: 2,
-                title: "{{ :lang('修改','handle') }}",
+                title: "{{ :lang('查看','handle') }}",
                 shadeClose: true,
                 shade: 0.8,
-                area: ['500px', '500px'],
-                content: "{{ :U(MODULE_NAME." / ".CONTROLLER_NAME." / edit / ") }}",
+                area: ['100%', '100%'],
+                content: "{{ :U('Admin/YuYue/all') }}?id="+uuid+"&uid="+uid,
                 cancel: function (index) {
 
 
