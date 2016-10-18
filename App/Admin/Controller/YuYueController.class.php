@@ -215,7 +215,6 @@ class YuYueController extends AuthController {
                 //预约好前缀获取
                 $yy_qz=M('LanMu')->where(array('type'=>'bingren','id'=>$data['ly_id']))->find();
                 $data['ynumber']=$yy_qz['card'].create_ynumber();
-                $data['yx_name']=$data['name'];
                 $data['ytime']=  $data['ytime'].":00";
                 $data['ydatetime']=$data['ydate'].' '.$data['ytime'];
                 $data['ydatetime']=strtotime($data['ydatetime']);
