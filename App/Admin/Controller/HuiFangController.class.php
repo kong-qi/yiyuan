@@ -1,22 +1,66 @@
 <?php
 namespace Admin\Controller;
-class SmsController extends AuthController {
-    protected $onname='短信模版';
-    protected $rule_qz='sms';
+class HuiFangController extends AuthController {
+    protected $onname='回访';
+    protected $rule_qz='huifangset';
+    protected $subjg=array(
 
+        'hf_way'=>'回访方式',
+        'hf_type'=>'回访类型',
+        'hf_theme'=>'回访主题',
+        'hf_status'=>'回访状态',
+        'hf_go'=>'客户流向'
+    );
+    public function look(){
+        
+        return $this->display();
+    }
+    public function getlist($uid){
+        $this->data=get_user($uid);
+        return $this->display();
+    }
+    public function getlistadd(){
+        if(IS_POST)
+        {
+            $this->onname='回访任务';
+            $tabid=I('post.bktab');
+            $model=D(CONTROLLER_NAME);
 
-    public function index(){
+            if($model->create())
+            {
+                $result =    $model->add();
+                $data=$model->create();
+                if($result) {
+                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    $url=U('Admin/HuiFang/getlist',array('uid'=>$data['user_id'],'bktab'=>$tabid));
+                    return $this->success(lang('添加成功','handle'),$url);
+                }else{
+                    add_log($this->onname.'：'.$data['name'].'添加失败');
+                    return $this->error(lang('添加失败','handle'));
+                }
+            }else
+            {
+                $this->error($model->getError());
+            }
+        }
+    }
+
+    public function index($type){
         //权限选择
 
-        $this->check_group($this->rule_qz);
-        $model=M('Sms');
+        $this->check_group($type);
+        $model=M('LanMu');
         $map=array();
         if(IS_GET)
         {
             $map=I('get.');
 
+        };
+        if($map['subtype']=='')
+        {
+            unset($map['subtype']);
         }
-        
+
 
         $count =  $model->where($map)->count();// 查询满足要求的总记录数
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
@@ -29,8 +73,8 @@ class SmsController extends AuthController {
 
         $list =  $model->where($map)->order('sort desc,id desc')->page( $page.','.$pagesize)->select();
         $this->assign('list',$list);// 赋值数据集
-       
 
+        $this->assign('subcategory',$this->subjg);
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
         $this->display();
 
@@ -38,33 +82,52 @@ class SmsController extends AuthController {
 
     public function add(){
         //权限选择
-        $this->check_group($this->rule_qz);
+        $this->check_group('huifang');
         if(IS_POST)
         {
 
-            $model=D(CONTROLLER_NAME);
+            $model=D('LanMu');
 
-            if($model->create())
+            $name=I('post.name');
+
+            $subtype=I('post.subtype');
+            if($name=='')
             {
-                $data=$model->create();
-                $result =    $model->add();
-                if($result) {
-                    add_log($this->onname.'：'.$data['name'].'添加成功');
-                    $msg=lang('添加成功','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
-                }else{
-                    add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
-                    $msg=lang('添加失败','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
-                }
-            }else
-            {
-                $this->error($model->getError());
+                $msg=lang('名字不能为空','handle');
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                exit();
             }
+
+            $pname=explode(",",str_replace("，",",",$name));
+
+            foreach ($pname as $k=>$v)
+            {
+                $dataList[]=array(
+                    'ctime'=>time(),
+                    'uuid'=>create_uuid(),
+                    'name'=>$v,
+                    'type'=>'huifang',
+                    'subtype'=>$subtype,
+                    'admin_id'=>session('admin_id')
+                );
+            }
+
+            $result = $model->addAll($dataList);
+
+            if($result) {
+                add_log($this->onname.'：'.$name.'添加成功');
+                $msg=lang('添加成功','handle');
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+            }else{
+                $msg=lang('添加失败','handle');
+                add_log($this->onname.'：'.$name.'添加失败','/Admin/add');
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+            }
+
+
         }else
         {
-            $rule=M('AdminGroup')->select();
-            $this->assign('rule',$rule);// 赋值数据集
+            $this->assign('subcategory',$this->subjg);
             $this->display();
         }
 
@@ -72,10 +135,10 @@ class SmsController extends AuthController {
     public function edit(){
         //权限选择
 
-        $this->check_group('website');
+        $this->check_group('huifang');
         if(IS_POST)
         {
-            $model =D('Sms');
+            $model =D('LanMu');
 
             if($model->create()) {
                 $data=$model->create();
@@ -108,25 +171,26 @@ class SmsController extends AuthController {
                 'uuid'=>$id
             );
 
-            $model   =   M('Sms')->where($map)->find();
-            $rule=M('AdminGroup')->select();
-            $this->rule=$rule;
+            $model   =   M('LanMu')->where($map)->find();
+
             if($model) {
                 $this->data =  $model;// 模板变量赋值
+
             }else{
                 return $this->error(lang('数据错误','handle'));
             }
+            $this->assign('subcategory',$this->subjg);
             $this->display();
         }
     }
     public  function del(){
         //权限选择
-        $this->check_group('website');
+        $this->check_group('huifang');
         $id=I('get.id');
         $map=array(
             'uuid'=>$id
         );
-        $model   =   D('Sms');
+        $model   =   D('LanMu');
         $data=$model->where($map)->find();
         $result=$model->where($map)->delete();
         if($result)
@@ -139,8 +203,8 @@ class SmsController extends AuthController {
     }
     public function handle($id){
         //权限选择
-        $this->check_group('website');
-        $model =M('Sms');
+        $this->check_group('admin_edit');
+        $model =M('LanMu');
         $type=I('get.type');
         if($type=='true')
         {
@@ -161,15 +225,5 @@ class SmsController extends AuthController {
             add_log($this->onname.'：设置状态失败');
             return $this->error(lang('更新失败','handle'));
         }
-    }
-    public function send($uid=''){
-       
-        $user=M('User')->find($uid);
-        if(count($user)>0)
-        {
-            $this->data=$user;
-        }
-        
-        $this->display();
     }
 }

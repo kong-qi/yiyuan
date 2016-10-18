@@ -411,24 +411,41 @@ class AjaxController extends AuthController
    public function getHuifang(){
        $uid=I('request.uid');
        $page=I('request.page');
-       $pagesize=1;
-       $map=array('user_id'=>$uid);
-       $total=M('HuiFang')->where($map)->count();
+       $pagesize=50;
+       $map=array('h1.user_id'=>$uid);
+
+       $hf=M('HuiFang');
+       $join[] = 'LEFT JOIN __LAN_MU__ l1 ON l1.id = h1.name';
+       $join[] = 'LEFT JOIN __LAN_MU__ l2 ON l2.id = h1.type';
+       $join[] = 'LEFT JOIN __LAN_MU__ l3 ON l3.id = h1.ways';
+       $join[] = 'LEFT JOIN __LAN_MU__ l4 ON l4.id = h1.status';
+       $join[] = 'LEFT JOIN __LAN_MU__ l5 ON l5.id = h1.goplace';
+       $filed = '
+          h1.ntime,
+          l1.name as hf_name,
+          l2.name as hf_type,
+          l3.name as hf_ways,
+          l4.name as hf_status,
+          l5.name as hf_fangxiang
+          
+        ';
+       $total=$hf->alias('h1')->join($join)->where($map)->count();// 查询满足要求的总记录数
        $pages=ceil($total/$pagesize);
-       $hf=M('HuiFang')->where($map)->page($page,$pagesize)->select();
+       $hf=$hf->alias('h1')->field($filed)->join($join)->where($map)->page($page,$pagesize)->select();
+
        $content='';
        if($total)
        {
            foreach ($hf as $k=>$v)
            {
-               $content.="<tr>";
+               $content.="<tr style='background: #fff'>";
                $content.="
-               <td>".$v['name']."</td>
-                <td>".$v['type']."</td>
-                <td>".$v['ways']."</td>
-                <td>".$v['status']."</td>
-                <td>".$v['goplace']."</td>
-                <td>".to_time($v['nctime'])."</td>
+               <td>".$v['hf_name']."</td>
+                <td>".$v['hf_type']."</td>
+                <td>".$v['hf_ways']."</td>
+                <td>".$v['hf_status']."</td>
+                <td>".$v['hf_fangxiang']."</td>
+                <td>".($v['ntime'])."</td>
                ";
                $content.="</tr>";
            }
@@ -437,26 +454,44 @@ class AjaxController extends AuthController
            'pages'=>$pages,
            'content'=>$content
        );
+
        return $this->ajaxReturn($data);
    }
    public function getHuifangRenWu(){
         $uid=I('request.uid');
         $page=I('request.page');
-        $pagesize=1;
+        $pagesize=50;
         $map=array('user_id'=>$uid);
         $total=M('RenWu')->where($map)->count();
         $pages=ceil($total/$pagesize);
-        $hf=M('HuiFang')->where($map)->page($page,$pagesize)->select();
+        $hf=M('RenWu')->where($map)->page($page,$pagesize)->select();
+
         $content='';
+        $status=array(
+            '1'=>'已回访',
+            '0'=>'待回访'
+        );
+        $seturl='';
+        $yz='';
         if($total)
         {
+
             foreach ($hf as $k=>$v)
             {
-                $content.="<tr>";
+                if($v['status']=='1')
+                {
+                    $seturl=U('Admin/RenWu/handle',array('id'=>$v['id'],'type'=>'false'));
+                    $yz=' <font >'.lang($status[$v['status']],'handel').'</font>';
+                }else
+                {
+                    $seturl=U('Admin/RenWu/handle',array('id'=>$v['id'],'type'=>'true'));
+                    $yz=' <font color=red>'.lang($status[$v['status']],'handel').'</font>';
+                }
+                $content.="<tr style='background: #fff'>";
                 $content.="
                <td>".$v['name']."</td>
               
-                <td>".$v['status']."</td>
+                <td><a href='".$seturl."' class='btn btn-white'>".$yz."</a></td>
           
                 <td>".to_time($v['rctime'])."</td>
                ";
@@ -470,4 +505,19 @@ class AjaxController extends AuthController
         return $this->ajaxReturn($data);
     }
 
+    //查看手机号码
+    public function showPhone($uid=''){
+        $user=M('User')->find($uid);
+        $data=array();
+        if(count($user)>0)
+        {
+            $data=array(
+                'phone'=>$user['tel']
+                );
+            add_smslog($uid);
+           
+        }
+        return $this->ajaxReturn($data);
+        
+    }
 }

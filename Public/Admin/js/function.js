@@ -459,12 +459,20 @@ $('[ data-layer="1"]').on("click", function() {
     url = $(this).attr('data-url');
     id = $(this).attr('data-uuid');
     title = $(this).attr('data-title');
+    close=$(this).attr('data-close');
+    if(!close)
+    {
+        close=true;
+    }else
+    {
+        close=false;
+    }
     w=$(this).attr('data-w');
     h=$(this).attr('data-h');
     layer.open({
         type: 2,
         title: title,
-        shadeClose: true,
+        shadeClose: close,
         shade: 0.8,
         area: [w, h],
         content: url,
@@ -472,5 +480,47 @@ $('[ data-layer="1"]').on("click", function() {
 
 
         }
+    });
+});
+//自动传值
+$("[data-auto-value='1']").on('change', function(event) {
+    event.preventDefault();
+    $cid=$(this).attr('data-auto-id');
+    $v=$(this).val();
+    $($cid).val($v);
+});
+
+$("[data-show-phone='1']").on('click',  function(event) {
+
+    event.preventDefault();
+    uid=$(this).attr('data-uid');
+    vid=$(this).attr('data-vid');
+    type=$(this).attr('data-type');
+    url=$(this).attr('data-url');
+    layer.confirm('确定查看手机号码？', {
+      btn: ['确定','取消'] //按钮
+    }, function(){
+        
+        $.get(url, {uid: uid}, function(data, textStatus, xhr) {
+            console.log(data);
+            if(data.phone)
+            {
+                if(type=='input')
+                {
+                    $(vid).val(data.phone)
+                }else
+                {
+                    $(vid).test(data.phone)
+                }
+                 layer.msg('查看成功', {icon: 1});
+                 $("[data-show-phone='1']").unbind('click');
+                
+            }else
+            {
+                layer.msg('该用户没有手机号码');
+            }   
+        });
+    }, function(){
+     
     });
 });

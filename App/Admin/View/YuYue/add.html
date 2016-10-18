@@ -69,7 +69,7 @@
                                                     echo get_lanmu_onelist('bingren',1,'first');
                                                 }else
                                                 {
-                                                    echo get_lanmu_onelist('bingren',1,'first',session('brid'));
+                                                    echo get_lanmu_onelist('bingren',1,'first',session('brid'),session('brid'));
                                                 }
                                             ?>
 
@@ -446,6 +446,8 @@
                     }
                 }
             );
+            //默认选择来源触发事
+            $("#ly_id").trigger("change");
             //手机号码和姓名用户检测，
             $telname=$("#telname");
             $phone=$("#phone");

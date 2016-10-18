@@ -97,8 +97,8 @@ class YuYueController extends AuthController {
         $filed = '
             y1.uuid as yuuid,
             y1.zx_mark,
-            y1.ynumber,y1.id as yid,y1.user_id,y1.admin_id,y1.status as ystatus,y1.ydatetime,y1.ctime as yuctime,y1.zx_content,y1.mark as ymark,
-            u1.name as user_name,u1.sex,u1.uuid as user_uuid,
+            y1.ynumber,y1.id as yid,y1.admin_id,y1.status as ystatus,y1.ydatetime,y1.ctime as yuctime,y1.zx_content,y1.mark as ymark,
+            u1.name as user_name,u1.sex,u1.uuid as user_uuid,u1.id as user_id,
             ly1.name as ly_name,ly2.name as lyt_name, ly3.name as lytt_name,
             a1.name as admin_name,
             k1.name as ks_name,
@@ -517,7 +517,7 @@ class YuYueController extends AuthController {
         }
     }
     public function all(){
-
+        echo json_decode();
         $id=I('get.id');
         //自己查看自己的
         if(!check_group('root'))

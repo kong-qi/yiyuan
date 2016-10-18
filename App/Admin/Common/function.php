@@ -260,11 +260,23 @@ function lang($cn,$type){
     );
     return $lang[$type][$cn];
 }
+//操作日志
 function add_log($content){
 
     $log=M('log');
     $data['admin_id']=session('admin_id');
     $data['ctime']=time();
+    $data['content']=$content;
+    $log->add($data);
+
+}
+//手机查看日志
+function add_smslog($uid,$content='查看手机'){
+
+    $log=M('SmsLog');
+    $data['admin_id']=session('admin_id');
+    $data['ctime']=time();
+    $data['uid']=$uid;
     $data['content']=$content;
     $log->add($data);
 
@@ -399,6 +411,100 @@ function get_lanmu_onelist($type="zixun",$echo=1,$fid="",$sid='',$checked=''){
     }
     return $rule;
 }
+function get_huifang_onelist($subtype='hf_theme',$type="huifang",$echo=1,$fid="",$sid='',$checked=''){
+    $check='';
+    $map=array();
+    $map['checked']=1;
+    $map['type']=$type;
+    $map['subtype']=$subtype;
+    if($fid!='')
+    {
+        if($fid=='first')
+        {
+            $map['fid']=0;
+        }else
+        {
+            $map['fid']=array('in',$fid);
+        }
+
+    }
+    if($sid!='')
+    {
+        $map['id']=array('in',$sid);
+    }
+
+
+
+    $rule=M('LanMu')->where($map)->select();
+    $str='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checked==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option $check value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+function get_huifang_where($where,$echo=1,$fid="",$sid='',$checked=''){
+    $check='';
+    $map=array();
+    $map['checked']=1;
+    $map=$where+$map;
+    if($fid!='')
+    {
+        if($fid=='first')
+        {
+            $map['fid']=0;
+        }else
+        {
+            $map['fid']=array('in',$fid);
+        }
+
+    }
+    if($sid!='')
+    {
+        $map['id']=array('in',$sid);
+    }
+
+
+
+    $rule=M('LanMu')->where($map)->select();
+    $str='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checked==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option $check value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+
 function get_area_list($echo=1,$fid="",$sid='',$checked=''){
     $check='';
     $map=array();
@@ -705,4 +811,43 @@ function get_yushen($id=0,$echo=1,$checkid=''){
 }
 function to_time($time,$f='Y-m-d H:i:s'){
     return date($f,$time);
+}
+/*短信模板
+ * /
+ */
+function get_sms_tpl($type=1,$checked){
+    $checkstr='';
+    $str='';
+    $m=M('sms')->where(array('checked'=>1))->select();
+    if($type==1)
+    {
+        if(count($m)>0)
+        {
+            foreach ($m as $k=>$v)
+            {
+                $str.='<option value="'.$v['content'].'">'.$v['name'].'</option>';
+            }
+        }
+        return $str;
+    }
+   
+}
+//隐藏手机
+function hide_tel($phone,$start,$num){
+    $IsWhat = preg_match('/(0[0-9]{2,3}[-]?[2-9][0-9]{6,7}[-]?[0-9]?)/i',$phone); //固定电话
+    if($IsWhat == 1){
+        $str=preg_replace('/(0[0-9]{2,3}[-]?[2-9])[0-9]{3,4}([0-9]{3}[-]?[0-9]?)/i','$1****$2',$phone);
+    }else{
+        $str=preg_replace('/(1[358]{1}[0-9])[0-9]{4}([0-9]{4})/i','$1****$2',$phone);
+    }
+    return substr_replace($phone,'****',3,4);
+}
+//取得病人库
+function get_user($uid){
+    $user=M('User')->find($uid);
+    if(count($user)>0)
+    {
+        return $user;
+    }
+    return false;
 }

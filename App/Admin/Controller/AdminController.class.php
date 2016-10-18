@@ -52,11 +52,13 @@ class AdminController extends AuthController {
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
                 }
             }else
             {
@@ -94,12 +96,14 @@ class AdminController extends AuthController {
                 if($result) {
                     $msg=lang('更新成功','handle');
                      add_log($this->onname.'：'.$data['name'].'更新成功');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    $msg=lang('更新成功','handle');
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
                 }else{
 
                     $msg=lang('数据一样无更新','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);;parent.layer.close(index)</script>";
                 }
             }else{
                 return $this->error($model->getError());
@@ -156,10 +160,17 @@ class AdminController extends AuthController {
 
 
         if($model->save($data)){
+
             return  $this->success(lang('更新成功','handle'));
+            $msg=lang('更新成功','handle');
+            $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+            echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
         }else
         {
-            return $this->error(lang('更新失败','handle'));
+            $msg=lang('更新失败','handle');
+            return  $this->success(lang('更新失败','handle'));
+            $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index ");
+            echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
         }
     }
 }

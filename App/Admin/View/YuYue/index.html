@@ -364,14 +364,14 @@
 
                                         <div class="box">
 
-                                            <if condition=" check_group('huifang')">
-                                                <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/list') }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                            <if condition=" check_group('yuyue_showhf')">
+                                                <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                    class="btn btn-xs btn-white"><span
                                                         class="fa fa-pencil-square "></span> {{ :lang('回访','handle') }}</a>
                                             </if>
 
-                                            <if condition=" check_group($rule_qz)">
-                                                <a href="javascript:void(0)" data-url="{{ :U('Admin/Sms/send') }}" data-title="发送短信" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                            <if condition=" check_group('sms_send')">
+                                                <a href="javascript:void(0)" data-url="{{ :U('Admin/Sms/send',array('uid'=>$v['user_id'])) }}" data-title="发送短信" data-close="1" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                    class="btn btn-xs btn-white"><span
                                                         class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
                                             </if>
@@ -626,7 +626,7 @@
         $(function () {
             select_all();
             del_confirm();
-            
+
             $("[data-datachenge='1']").change(function (e, a) {
                 $url = $(this).attr('data-url');
                 $type = $(this).attr('data-type');
@@ -848,9 +848,9 @@
             layer.open({
                 type: 2,
                 title: "{{ :lang('查看','handle') }}",
-                shadeClose: true,
+
                 shade: 0.8,
-                area: ['100%', '100%'],
+                area: ['80%', '80%'],
                 content: "{{ :U('Admin/YuYue/all') }}?id="+uuid+"&uid="+uid,
                 cancel: function (index) {
 

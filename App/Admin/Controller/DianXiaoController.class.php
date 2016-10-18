@@ -1,61 +1,58 @@
 <?php
 namespace Admin\Controller;
-class SmsController extends AuthController {
-    protected $onname='短信模版';
-    protected $rule_qz='sms';
-
-
+class DianXiaoController extends AuthController {
+    protected $onname='工作量录入';
+    protected $rule_qz='gongzuoliang';
     public function index(){
         //权限选择
-
-        $this->check_group($this->rule_qz);
-        $model=M('Sms');
+        $this->check_group('gongzuoliang');
+        $model=M('Gzl');
         $map=array();
         if(IS_GET)
         {
             $map=I('get.');
 
         }
-        
 
         $count =  $model->where($map)->count();// 查询满足要求的总记录数
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
-
+   
         $page=1;
         if(isset($_GET['p']))
         {
             $page=$_GET['p'];
         }
 
-        $list =  $model->where($map)->order('sort desc,id desc')->page( $page.','.$pagesize)->select();
+        $list =  $model->where($map)->order('id desc')->page( $page.','.$pagesize)->select();
         $this->assign('list',$list);// 赋值数据集
-       
 
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
+
         $this->display();
-
     }
-
     public function add(){
         //权限选择
-        $this->check_group($this->rule_qz);
+        $this->check_group('gongzuoliang_add');
         if(IS_POST)
         {
 
-            $model=D(CONTROLLER_NAME);
+            $model=D('Gzl');
 
             if($model->create())
             {
                 $data=$model->create();
-                $result =    $model->add();
+                $data['admin_id']=session('admin_id');
+                $result =    $model->add($data);
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
                 }
             }else
             {
@@ -63,8 +60,9 @@ class SmsController extends AuthController {
             }
         }else
         {
-            $rule=M('AdminGroup')->select();
-            $this->assign('rule',$rule);// 赋值数据集
+            $rule=get_huifang_where(array('is_tongji'=>'1','type'=>'zixun'));
+          
+            $this->rule=$rule;
             $this->display();
         }
 
@@ -72,10 +70,10 @@ class SmsController extends AuthController {
     public function edit(){
         //权限选择
 
-        $this->check_group('website');
+        $this->check_group('admin_edit');
         if(IS_POST)
         {
-            $model =D('Sms');
+            $model =D('Gzl');
 
             if($model->create()) {
                 $data=$model->create();
@@ -91,13 +89,16 @@ class SmsController extends AuthController {
                 $result =   $model->save($data);
 
                 if($result) {
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                     add_log($this->onname.'：'.$data['name'].'更新成功');
+                    $msg=lang('更新成功','handle');
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
                 }else{
+
                     $msg=lang('数据一样无更新','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);;parent.layer.close(index)</script>";
                 }
             }else{
                 return $this->error($model->getError());
@@ -105,12 +106,15 @@ class SmsController extends AuthController {
         }else{
             $id=I('get.uuid');
             $map=array(
-                'uuid'=>$id
+            'uuid'=>$id
             );
 
-            $model   =   M('Sms')->where($map)->find();
-            $rule=M('AdminGroup')->select();
+            $model   =   M('Gzl')->where($map)->find();
+            $rule=get_huifang_where(array('is_tongji'=>'1','type'=>'zixun'),'1','','',$model['gj_id']);
+           
             $this->rule=$rule;
+
+          
             if($model) {
                 $this->data =  $model;// 模板变量赋值
             }else{
@@ -121,12 +125,12 @@ class SmsController extends AuthController {
     }
     public  function del(){
         //权限选择
-        $this->check_group('website');
+        $this->check_group('admin_del');
         $id=I('get.id');
         $map=array(
             'uuid'=>$id
         );
-        $model   =   D('Sms');
+        $model   =   D(CONTROLLER_NAME);
         $data=$model->where($map)->find();
         $result=$model->where($map)->delete();
         if($result)
@@ -139,8 +143,8 @@ class SmsController extends AuthController {
     }
     public function handle($id){
         //权限选择
-        $this->check_group('website');
-        $model =M('Sms');
+        $this->check_group('admin_edit');
+        $model =M(CONTROLLER_NAME);
         $type=I('get.type');
         if($type=='true')
         {
@@ -154,22 +158,17 @@ class SmsController extends AuthController {
 
 
         if($model->save($data)){
-            add_log($this->onname.'：设置状态成功');
+
             return  $this->success(lang('更新成功','handle'));
+            $msg=lang('更新成功','handle');
+            $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+            echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
         }else
         {
-            add_log($this->onname.'：设置状态失败');
-            return $this->error(lang('更新失败','handle'));
+            $msg=lang('更新失败','handle');
+            return  $this->success(lang('更新失败','handle'));
+            $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index ");
+            echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
         }
-    }
-    public function send($uid=''){
-       
-        $user=M('User')->find($uid);
-        if(count($user)>0)
-        {
-            $this->data=$user;
-        }
-        
-        $this->display();
     }
 }
