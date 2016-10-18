@@ -6,7 +6,7 @@ class DianXiaoController extends AuthController {
     public function index(){
         //权限选择
         $this->check_group('gongzuoliang');
-        $model=M('Gzl');
+        $model=D('Gzl');
         $map=array();
         if(IS_GET)
         {
@@ -23,7 +23,7 @@ class DianXiaoController extends AuthController {
             $page=$_GET['p'];
         }
 
-        $list =  $model->where($map)->order('id desc')->page( $page.','.$pagesize)->select();
+        $list =  $model->relation(true)->where($map)->order('id desc')->page( $page.','.$pagesize)->select();
         $this->assign('list',$list);// 赋值数据集
 
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出

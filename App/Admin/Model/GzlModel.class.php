@@ -1,7 +1,8 @@
 <?php
 namespace Admin\Model;
 use Think\Model;
-class GzlModel extends Model {
+use Think\Model\RelationModel;
+class GzlModel extends  RelationModel{
     protected $_validate = array(
         array('name','require','名称为必须'), //默认情况下用正则进行验证
         //array('ename','require','英文名为必须',), // 在新增的时候验证name字段是否唯一
@@ -14,4 +15,18 @@ class GzlModel extends Model {
 
 
     );
+     protected $_link = array(
+        'Gname'=>array(
+            'mapping_type'      => self::BELONGS_TO,
+            'class_name'        => 'LanMu',
+            'foreign_key'=>'gj_id',
+            'as_fields' => 'name:gname',
+            'mapping_name'=>'lanmugj'
+
+            ),
+
+         
+
+    );
+
 }

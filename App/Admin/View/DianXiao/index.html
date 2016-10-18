@@ -30,7 +30,7 @@
                             <th width="40" class="hidden-xs text-center">
                                 <input name="chkall" type="checkbox" id="chkall"value="0"></th>
                             <th width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
-                         
+                            <th>{{ :lang('名称','filed') }}</th>
                             <th>{{ :lang('对话量','filed') }}</th>
                             <th >{{ :lang('有效咨询量','filed') }}</th>
                             <th >{{ :lang('A级对话量','filed') }}</th>
@@ -48,6 +48,7 @@
                                                               value="{{ $v.uuid }}"></td>
 
                                     <td class="hidden-xs">{{ $v.id }}</td>
+                                     <td >{{ $v.gname }}</td>
                                     <td>{{ $v.duihualiang }}</td>
                                     <td >{{ $v.zixunliang }}</td>
                                     <td >{{ $v.aduihua }}</td>
