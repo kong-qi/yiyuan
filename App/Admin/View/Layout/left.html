@@ -27,12 +27,12 @@
             </li>
             <li>
                 <a class="J_menuItem" href="{{ :U('Admin/YuYue/add') }}"><i class="fa icon-paste"></i> <span
-                        class="nav-label">{{ :lang('添加咨询','handle') }}</span></a>
+                        class="nav-label">{{ :lang('添加咨询','menu') }}</span></a>
             </li>
             <li>
                 <a href="#">
                     <i class="fa icon-newspaper-o"></i>
-                    <span class="nav-label">查看咨询</span>
+                    <span class="nav-label">{{ :lang('全部预约','menu') }}</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -83,47 +83,47 @@
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">工作量录入</span>
+                    <span class="nav-label">{{ :lang('工作量录入','menu') }}</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/DianXiao/add') }}">咨询工具录入</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/DianXiao/add') }}">{{ :lang('工作量添加','menu') }}</a>
                         </li>
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/DianXiao/index') }}">工作量列表</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/DianXiao/index') }}">{{ :lang('工作量列表','menu') }}</a>
                     </li>
                     </ul>
             </li>
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">机构录入</span>
+                    <span class="nav-label">{{ :lang('机构录入','menu') }}</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">机构录入</a>
-
+                    <!-- <li>
+                        <a class="J_menuItem" href="{{ :U('Admin/JiGou/add') }}">{{ :lang('机构录入','menu') }}</a>
+                    
                     </li>
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">机构查询</a>
-                    </li>
+                        <a class="J_menuItem" href="{{ :U('Admin/JiGou/index') }}">{{ :lang('机构查询','menu') }}</a>
+                    </li> -->
                 </ul>
             </li>
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">竞价</span>
+                    <span class="nav-label">{{ :lang('竞价人员','menu') }}</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">更正信息</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_website'=>'1')) }}">{{ :lang('更正信息','menu') }}</a>
 
                     </li>
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">录入消费</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/XiaoFei/index') }}">{{ :lang('录入消费','menu') }}</a>
                     </li>
                 </ul>
             </li>
@@ -191,11 +191,11 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">回访列表</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}">回访列表</a>
 
                     </li>
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">任务列表</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}">任务列表</a>
                     </li>
 
                 </ul>

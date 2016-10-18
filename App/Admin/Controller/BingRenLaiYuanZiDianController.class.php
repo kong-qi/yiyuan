@@ -192,6 +192,7 @@ class BingRenLaiYuanZiDianController extends AuthController {
         $this->check_group('bingren');
         $model =M('LanMu');
         $type=I('get.type');
+        $filed=I('get.filed');
         if($type=='true')
         {
             $status=1;
@@ -200,7 +201,14 @@ class BingRenLaiYuanZiDianController extends AuthController {
             $status=0;
         }
         $data['id'] =$id;
-        $data['is_price'] = $status;
+        if($filed!='')
+        {
+            $data[$filed] = $status;
+        }else
+        {
+            $data['is_price'] = $status;
+        }
+       
 
         if($model->save($data)){
             add_log($this->onname.'：设置费用成功');
@@ -211,4 +219,5 @@ class BingRenLaiYuanZiDianController extends AuthController {
             return $this->error(lang('更新失败','handle'));
         }
     }
+   
 }

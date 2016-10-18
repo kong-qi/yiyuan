@@ -21,6 +21,9 @@ class YuYueController extends AuthController {
         {
             $map['y1.admin_id']=session('admin_id');
         }
+
+        
+
         if(IS_GET)
         {
             $getdata=I('get.');
@@ -91,7 +94,29 @@ class YuYueController extends AuthController {
             }
            
             //print_r($map);
+            //判断是否是网站人员
+            //获取
+            if(I('get.is_website'))
+            {
+                $website_arr=M('LanMu')->field('id')->where(array('type'=>'bingren','is_website'=>1,'fid'=>array('neq',0)))->select();
+                $wb_arrid=array();
+                if(count($website_arr)>0)
+                {
+                    foreach ( $website_arr as $key => $value) {
+                        $wb_arrid[]=$value['id'];
+                    }
+                }
+                if(count( $wb_arrid)>0)
+                {
+                    $map['y1.lyall_id']=array('in', $wb_arrid);
+                }
+                
+                
+
+            }
+
         }
+
 
         $model=M('YuYue');
         $filed = '
@@ -318,7 +343,15 @@ class YuYueController extends AuthController {
         {
             $rule=get_tree_option($this->getList(),0);
             $this->assign('rule',$rule);// 赋值数据集
-            $this->display();
+
+            if(I("get.tpl"))
+            {
+                return $this->display(I("get.tpl"));
+            }else
+            {
+                return $this->display();
+            }
+            
         }
 
     }
@@ -465,13 +498,17 @@ class YuYueController extends AuthController {
                 $user=array();
                 foreach ($user_arr as $uv)
                 {
-                    $user[$uv]=$postdata[$uv];
+                    if($postdata[$uv]!='')
+                    {
+                        $user[$uv]=$postdata[$uv];
+                    }
+                    
                 }
                 //如果为空，则返回null
 
                 $user['id']=$data['user_id'];
 
-                $id=$data['id'];
+                
                 foreach ($data as $k=>$v)
                 {
                     if($v=='')
@@ -479,8 +516,13 @@ class YuYueController extends AuthController {
                         unset($data[$k]);
                     }
                 }
-                M("User")->save($user);
-                $result =   $model->where(array('id'=>$id))->save($data);
+
+                if(count($user)>1)
+                {
+                      M("User")->save($user);
+                }
+              
+                $result =   $model->save($data);
 
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
@@ -512,7 +554,14 @@ class YuYueController extends AuthController {
             }else{
                 return $this->error(lang('数据错误','handle'));
             }
-            $this->display();
+            if(I("get.tpl"))
+            {
+                return $this->display(I("get.tpl"));
+            }else
+            {
+                return $this->display();
+            }
+            
         }
     }
     public function all(){

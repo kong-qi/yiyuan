@@ -45,38 +45,12 @@ class HuiFangController extends AuthController {
         }
     }
 
-    public function index($type){
+    public function index(){
         //权限选择
 
-        $this->check_group($type);
-        $model=M('LanMu');
-        $map=array();
-        if(IS_GET)
-        {
-            $map=I('get.');
-
-        };
-        if($map['subtype']=='')
-        {
-            unset($map['subtype']);
-        }
-
-
-        $count =  $model->where($map)->count();// 查询满足要求的总记录数
-        $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
-
-        $page=1;
-        if(isset($_GET['p']))
-        {
-            $page=$_GET['p'];
-        }
-
-        $list =  $model->where($map)->order('sort desc,id desc')->page( $page.','.$pagesize)->select();
-        $this->assign('list',$list);// 赋值数据集
-
-        $this->assign('subcategory',$this->subjg);
-        $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
-        $this->display();
+        $this->check_group('huifangset');
+       
+        
 
     }
 

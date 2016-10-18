@@ -463,6 +463,7 @@ function get_huifang_where($where,$echo=1,$fid="",$sid='',$checked=''){
     $map=array();
     $map['checked']=1;
     $map=$where+$map;
+  
     if($fid!='')
     {
         if($fid=='first')
@@ -480,6 +481,42 @@ function get_huifang_where($where,$echo=1,$fid="",$sid='',$checked=''){
     }
 
 
+
+    $rule=M('LanMu')->where($map)->select();
+    $str='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checked==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option $check value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+function get_wangixao_where($where,$echo=1,$sid='',$checked=''){
+    $check='';
+    $map=array();
+    $map['checked']=1;
+    $map=$where+$map;
+   
+    if($sid!='')
+    {
+        $map['id']=array('in',$sid);
+    }
+
+    $map['fid']=array('neq',0);
 
     $rule=M('LanMu')->where($map)->select();
     $str='';
@@ -583,10 +620,10 @@ function onkefu($type='is_zixun',$merg=0,$aid='',$ready=''){
         }
         $str='
             <div class="form-group">
-                                    <label class="col-sm-12">咨询客服</label>
+                                    <label class="col-sm-12">'.lang('咨询客服').'</label>
                                     <div class="col-sm-12">
                                         <select class="form-control" '.$real.' name="admin_id" required id="userinfoZxy">
-                                            <option value="">请先选择咨询客户</option>
+                                            <option value="">'.lang('请先选择咨询客户').'</option>
                                             '.  $option.'
                                         </select>
                                     </div>
@@ -626,10 +663,10 @@ function onkefu2($type='is_zixun',$merg=0,$aid=''){
 
         $str='<div class="col-sm-3">
              <div class="input-group m-b">
-                                    <span class="input-group-addon">咨询客服</span>
+                                    <span class="input-group-addon">'.lang('咨询客服').'</span>
                                    
                                         <select class="form-control" name="admin_id" id="userinfoZxy">
-                                            <option value="">全部</option>
+                                            <option value="">'.lang('全部').'</option>
                                             '.  $option.'
                                         </select>
                                    
@@ -811,6 +848,9 @@ function get_yushen($id=0,$echo=1,$checkid=''){
 }
 function to_time($time,$f='Y-m-d H:i:s'){
     return date($f,$time);
+}
+function to_date_time($time,$f='Y-m-d H:i:s'){
+    return date($f,strtotime($time));
 }
 /*短信模板
  * /

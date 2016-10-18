@@ -1,13 +1,3 @@
-﻿/**
- 
- @Name : layDate v1.1 日期控件
- @Author: 贤心
- @Date: 2014-06-25
- @QQ群：176047195
- @Site：http://sentsin.com/layui/laydate
- 
- */
-
 ;
 ! function(a) {
     var b = { path: "", defSkin: "default", format: "YYYY-MM-DD", min: "1900-01-01 00:00:00", max: "2099-12-31 23:59:59", isv: !1 },

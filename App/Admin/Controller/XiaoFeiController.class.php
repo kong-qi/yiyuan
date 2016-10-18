@@ -1,19 +1,19 @@
 <?php
 namespace Admin\Controller;
-class DianXiaoController extends AuthController {
-    protected $onname='工作量录入';
+class XiaoFeiController extends AuthController {
+    protected $onname='消费录入';
     protected $rule_qz='gongzuoliang';
     public function index(){
         //权限选择
         $this->check_group('gongzuoliang');
-        $model=M('Gzl');
+        $model=M('XiaoFei');
         $map=array();
         if(IS_GET)
         {
             $map=I('get.');
 
         }
-        $join[] = 'LEFT JOIN __LAN_MU__ l1 ON g1.gj_id = l1.id';
+        $join[] = 'LEFT JOIN __LAN_MU__ l1 ON g1.xf_id = l1.id';
 
        
        
@@ -27,17 +27,17 @@ class DianXiaoController extends AuthController {
             g1.uuid as guuid,
             g1.id as gid,
             l1.name,
-            g1.duihualiang,
-            g1.zixunliang,
-            g1.aduihua,
-            g1.bduihua,
-            g1.cduihua
+            g1.prices,
+            g1.clicks,
+            g1.shows
+           
          ';
 
         $count = $model->alias('g1')->join($join)->where($map)->count();// 查询满足要求的总记录数
 
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
         $list =  $model->alias('g1')->field($filed)->join($join)->order('g1.id desc')->page( $page.','.$pagesize)->select();
+        
         $this->assign('list',$list);// 赋值数据集
 
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
@@ -50,7 +50,7 @@ class DianXiaoController extends AuthController {
         if(IS_POST)
         {
 
-            $model=D('Gzl');
+            $model=D('XiaoFei');
 
             if($model->create())
             {
@@ -61,12 +61,12 @@ class DianXiaoController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }
             }else
             {
@@ -74,7 +74,7 @@ class DianXiaoController extends AuthController {
             }
         }else
         {
-            $rule=get_huifang_where(array('is_tongji'=>'1','type'=>'zixun'));
+            $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren'));
           
             $this->rule=$rule;
             $this->display();
@@ -87,7 +87,7 @@ class DianXiaoController extends AuthController {
         $this->check_group('admin_edit');
         if(IS_POST)
         {
-            $model =D('Gzl');
+            $model =D('XiaoFei');
 
             if($model->create()) {
                 $data=$model->create();
@@ -123,10 +123,12 @@ class DianXiaoController extends AuthController {
             'uuid'=>$id
             );
 
-            $model   =   M('Gzl')->where($map)->find();
-            $rule=get_huifang_where(array('is_tongji'=>'1','type'=>'zixun'),'1','','',$model['gj_id']);
+            $model   =   M('XiaoFei')->where($map)->find();
+            
+            $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren'),'1','',$model['xf_id']);
            
             $this->rule=$rule;
+
 
           
             if($model) {
@@ -144,7 +146,7 @@ class DianXiaoController extends AuthController {
         $map=array(
             'uuid'=>$id
         );
-        $model   =   D(CONTROLLER_NAME);
+        $model   =   D("XiaoFei");
         $data=$model->where($map)->find();
         $result=$model->where($map)->delete();
         if($result)
@@ -158,7 +160,7 @@ class DianXiaoController extends AuthController {
     public function handle($id){
         //权限选择
         $this->check_group('admin_edit');
-        $model =M(CONTROLLER_NAME);
+        $model =M("XiaoFei");
         $type=I('get.type');
         if($type=='true')
         {

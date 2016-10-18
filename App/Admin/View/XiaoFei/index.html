@@ -14,10 +14,11 @@
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
                 <h3 class="pull-right">
-                     <a href="javascript:void(0)" class="btn btn-xs btn-success" id="tianjiazh">
+                    <a href="javascript:void(0)" class="btn btn-xs btn-success" id="tianjiazh">
                         </span> {{ :lang('添加','handle') }}
                         
                     </a>
+                    
                 </h3>
             </div>
             <div class="box-content">
@@ -33,11 +34,10 @@
                                 <input name="chkall" type="checkbox" id="chkall"value="0"></th>
                             <th width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
                             <th>{{ :lang('名称','filed') }}</th>
-                            <th>{{ :lang('对话量','filed') }}</th>
-                            <th >{{ :lang('有效咨询量','filed') }}</th>
-                            <th >{{ :lang('A级对话量','filed') }}</th>
-                            <th >{{ :lang('B级对话量','filed') }}</th>
-                            <th >{{ :lang('C级对话量','filed') }}</th>
+                            <th>{{ :lang('点击量','filed') }}</th>
+                            <th >{{ :lang('展现量','filed') }}</th>
+                            <th >{{ :lang('消费','filed') }}</th>
+                           
                             <th class="hidden-xs">{{ :lang('创建时间','filed') }}</th>
 
                             <th >{{ :lang('操作','handle') }}</th>
@@ -47,17 +47,13 @@
                                 <tr>
 
                                     <td align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select" name="checkbox[]"
-                                                              value="{{ $v.guuid }}"></td>
+                                                              value="{{ $v.uuid }}"></td>
 
-                                    <td class="hidden-xs">{{ $v.gid }}</td>
+                                    <td class="hidden-xs">{{ $v.id }}</td>
                                      <td >{{ $v.name }}</td>
-                                    <td>{{ $v.duihualiang }}</td>
-                                    <td >{{ $v.zixunliang }}</td>
-                                    <td >{{ $v.aduihua }}</td>
-                                    <td >{{ $v.bduihua }}</td>
-                                    <td >{{ $v.cduihua }}</td>
-
-
+                                    <td>{{ $v.clicks }}</td>
+                                    <td >{{ $v.shows }}</td>
+                                    <td >{{ $v.prices }}</td>
 
                                     <td class="hidden-xs">{{ :date('Y-m-d H:i:s',$v['ctime']) }}</td>
 

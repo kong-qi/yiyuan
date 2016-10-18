@@ -431,7 +431,7 @@ class AjaxController extends AuthController
         ';
        $total=$hf->alias('h1')->join($join)->where($map)->count();// 查询满足要求的总记录数
        $pages=ceil($total/$pagesize);
-       $hf=$hf->alias('h1')->field($filed)->join($join)->where($map)->page($page,$pagesize)->select();
+       $hf=$hf->alias('h1')->field($filed)->join($join)->where($map)->order('h1.id desc')->page($page,$pagesize)->select();
 
        $content='';
        if($total)
@@ -439,14 +439,14 @@ class AjaxController extends AuthController
            foreach ($hf as $k=>$v)
            {
                $content.="<tr style='background: #fff'>";
+              
                $content.="
                <td>".$v['hf_name']."</td>
                 <td>".$v['hf_type']."</td>
                 <td>".$v['hf_ways']."</td>
                 <td>".$v['hf_status']."</td>
                 <td>".$v['hf_fangxiang']."</td>
-                <td>".($v['ntime'])."</td>
-               ";
+                <td>".(to_date_time(($v['ntime']),'d-m-Y'))."</td>";
                $content.="</tr>";
            }
        }
@@ -493,7 +493,7 @@ class AjaxController extends AuthController
               
                 <td><a href='".$seturl."' class='btn btn-white'>".$yz."</a></td>
           
-                <td>".to_time($v['rctime'])."</td>
+                <td>".to_date_time(($v['rctime']),'d-m-Y')."</td>
                ";
                 $content.="</tr>";
             }

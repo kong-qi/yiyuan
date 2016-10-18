@@ -32,23 +32,23 @@
 
                                         <div class="input-group m-b">
 
-                                            <span class="input-group-addon"><font color="">所属一级科室</font></span>
+                                            <span class="input-group-addon"><font color="">{{ :lang('所属一级科室','handle') }}</font></span>
 
 
                                             <select class="form-control" name="ks_id" id="ks_id" onchange="get_tks(this.value)">
-                                                <option value="">请选择科室</option>
+                                                <option value="">{{ :lang('请选择科室','handle') }}</option>
                                                 {{ :get_keshi('0','1',I("get.ks_id") ) }}
                                             </select>
 
 
                                             <select class="form-control" id="kst_id" name="kst_id" onchange="get_tks2(this.value)">
-                                                <option value="">请选择二级科室</option>
+                                                <option value="">{{ :lang('请选择二级科室','handle') }}</option>
 
                                             </select>
 
 
                                             <select class="form-control" id="kstt_id" name="kstt_id">
-                                                <option value="">请选择具体病种</option>
+                                                <option value="">{{ :lang('请选择具体病种','handle') }}</option>
 
                                             </select>
 
@@ -57,11 +57,11 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon">病人来源</span>
+                                            <span class="input-group-addon">{{ :lang('病人来源','handle') }}</span>
 
                                             <select class="form-control" id="ly_id" name="ly_id" onchange="get_ly(this.value)">
 
-                                                <option value="">请选择</option>
+                                                <option value="">{{ :lang('请选择','handle') }}</option>
                                                 <?php
                                                     if(check_group('root'))
                                                     {
@@ -76,14 +76,14 @@
 
 
                                             <select class="form-control" id="lyt_id" name="lyt_id" onchange="get_ly2(this.value)">
-                                                <option value="">请选择</option>
+                                                <option value="">{{ :lang('请选择','handle') }}</option>
 
                                             </select>
 
 
                                             <select class="form-control" id="lytt_id" name="lytt_id"
                                                     data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
-                                                <option value="">请选择</option>
+                                                <option value="">{{ :lang('请选择','handle') }}</option>
 
                                             </select>
 
@@ -92,12 +92,12 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon">区域来源</span>
+                                            <span class="input-group-addon">{{ :lang('区域来源','handle') }}</span>
 
                                             <input type="hidden" name="areaall_id" id="areaall_id">
                                             <select class="form-control" id="area_id" name="area_id" onchange="get_area(this.value)" >
 
-                                                <option value="">请选择</option>
+                                                <option value="">{{ :lang('请选择','handle') }}</option>
                                                 <?php
 
                                                     echo get_area_list(1,'first','',I('get.area_id'));
@@ -108,7 +108,7 @@
 
 
                                             <select class="form-control" id="areat_id" name="areat_id" data-next="">
-                                                <option value="">请选择</option>
+                                                <option value="">{{ :lang('请选择','handle') }}</option>
 
                                             </select>
 
@@ -119,19 +119,19 @@
                                 <div class="roww">
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon">初复诊</span>
+                                            <span class="input-group-addon">{{ :lang('初复诊','handle') }}</span>
 
                                             <select class="form-control" name="is_fz" id="is_fz">
-                                                <option value="">全部</option>
-                                                <option value="0" {{ :set_on('is_fz',0) }}>初诊</option>
-                                                <option value="1" {{ :set_on('is_fz',1) }}>复诊</option>
+                                                <option value="">{{ :lang('全部','handle') }}</option>
+                                                <option value="0" {{ :set_on('is_fz',0) }}>{{ :lang('初诊','handle') }}</option>
+                                                <option value="1" {{ :set_on('is_fz',1) }}>{{ :lang('复诊','handle') }}</option>
                                             </select>
 
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon">意向评定</span>
+                                            <span class="input-group-addon">{{ :lang('意向评定','handle') }}</span>
 
                                                 <select class="form-control" name="yx_id" id="yx_id">
                                                     <option value="">全部</option>
@@ -142,7 +142,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon">咨询方式</span>
+                                            <span class="input-group-addon">{{ :lang('咨询方式','handle') }}</span>
 
 
                                             <select class="form-control" name="zx_id" id="zx_id">
@@ -155,7 +155,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon">{{ :lang('预约状态') }}</span>
+                                            <span class="input-group-addon">{{ :lang('预约状态','handle') }}</span>
 
 
                                             <select class="form-control" name="status" >
@@ -174,14 +174,14 @@
                                     {{ :onkefu2() }}
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">病人ID号</font></span>
+                                            <span class="input-group-addon"><font color="">{{ :lang('病人ID号','handle') }}</font></span>
                                             <input name="user_id" type="text" value="" value="{{ :I('get.user_id') }}"
                                                    class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">关键词</font></span>
+                                            <span class="input-group-addon"><font color="">{{ :lang('关键词','handle') }}</font></span>
                                             <input name="keyword" type="text" value="{{ :I('get.keyword') }}"
                                                    placeholder="姓名/手机/预约号" class="form-control">
                                         </div>
@@ -192,7 +192,7 @@
                                 <div class="roww">
                                     <div class="col-sm-3" style="padding:0px;">
                                         <div class="form-group">
-                                            <label class="col-sm-12 control-label">登记时间</label>
+                                            <label class="col-sm-12 control-label">{{ :lang('登记时间','handle') }}</label>
                                             <div class="col-md-6">
                                                 <input name="djstime" type="text" class="form-control layer-date"
                                                        value="{{ :I('get.djstime') }}" placeholder="YYYY-MM-DD" value=""
@@ -207,7 +207,7 @@
                                     </div>
                                     <div class="col-sm-3" style="padding:0px;">
                                         <div class="form-group">
-                                            <label class="col-sm-12 control-label">预约时间</label>
+                                            <label class="col-sm-12 control-label">{{ :lang('预约时间','handle') }}</label>
                                             <div class="col-md-6">
                                                 <input name="ystime" type="text" value="{{ :I('get.ystime') }}"
                                                        class="form-control layer-date" placeholder="YYYY-MM-DD" value=""
@@ -222,7 +222,7 @@
                                     </div>
                                     <div class="col-sm-3" style="padding:0px;">
                                         <div class="form-group">
-                                            <label class="col-sm-12 control-label">到诊时间</label>
+                                            <label class="col-sm-12 control-label">{{ :lang('到诊时间','handle') }}</label>
                                             <div class="col-md-6">
                                                 <input name="dzstime" type="text" class="form-control layer-date"
                                                        value="{{ :I('get.dzstime') }}" placeholder="YYYY-MM-DD" value=""
@@ -335,11 +335,11 @@
                                         <lable class="badge badge-info">{{ $v.sex }}</lable>
                                     </td>
                                     <td id="tdd5">
-                                        <lable class="text-success">{{ :(date('Y-m-d H:i:s',$v['ydatetime'])) }}</lable>
+                                        <lable class="text-success">{{ :to_time($v['ydatetime'],'d-m-Y H:i:s') }}</lable>
                                     </td>
 
                                     <td id="tdd6">
-                                        <lable class="text-info">{{ :(date('Y-m-d H:i:s',$v['yuctime'])) }}</lable>
+                                        <lable class="text-info">{{ :to_time($v['yuctime'],'d-m-Y H:i:s') }}</lable>
                                     </td>
                                     <td id="tdd7">{{ $v.ks_name }}</td>
 
@@ -361,9 +361,19 @@
 
                                     </td>
                                     <td id="tdd11">
+                                        
 
+                                        <!-- /竞价更正 -->
+                                        <if condition="I('get.is_website')">
+                                               <if condition=" check_group($rule_qz.'_edit')">
+                                                   <a href="{{ :U("__CONTROLLER__/edit/",array('id'=>$v['yuuid'],'tpl'=>'webedit')) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                   class="btn btn-xs btn-white" >
+                                                   <span class="fa fa-trash "></span>
+                                                   {{ :lang('修改来源','handle') }}</a>
+                                               </if>
+                                        <else/>
                                         <div class="box">
-
+                                            
                                             <if condition=" check_group('yuyue_showhf')">
                                                 <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                    class="btn btn-xs btn-white"><span
@@ -388,15 +398,18 @@
                                                 {{ :lang('删除','handle') }}</a>
                                             </if>-->
                                         </div>
+                                        
+                                        </if>
+                                       
                                     </td>
                                 </tr>
                                 <tr class="js-tr" style="display: none">
                                     <td colspan="12">
                                         <div class="box m-t" style="border-bottom: 1px solid #ccc">
-                                            <label for="" class="badge badge-info">咨询小结</label> {{ $v.zx_mark }}
+                                            <label for="" class="badge badge-info">{{ :lang('咨询小结','handle') }}</label> {{ $v.zx_mark }}
                                         </div>
                                         <div class="box m-t" style="border-bottom: 1px solid #ccc">
-                                            <label for="" class="badge badge-info">备注</label> {{ $v.mark }}
+                                            <label for="" class="badge badge-info">{{ :lang('备注','handle') }}</label> {{ $v.mark }}
                                         </div>
                                         <div class="box text-center"  >
                                             <a href="javascript:void(0)" class="btn btn-success js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.yuuid }}" data->{{ :lang('查看更多','handle') }}</a>

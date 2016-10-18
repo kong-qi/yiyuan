@@ -18,8 +18,10 @@
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
                 <h3 class="pull-right">
-                    <a href=#" id="tianjiazh" class="btn btn-xs btn-success"> <span
-                            class="fa fa-pencil-square-o"></span> {{ :lang('添加','handle') }}</a>
+                   <a href="javascript:void(0)" class="btn btn-xs btn-success" id="tianjiazh">
+                        </span> {{ :lang('添加','handle') }}
+                        
+                    </a>
                 </h3>
             </div>
             <div class="box-content">
@@ -37,6 +39,7 @@
                             <th class="hidden-xs">{{ :lang('编号','filed') }}</th>
                             <th>{{ :lang('名称','filed') }}</th>
                             <th>{{ :lang('预约号前缀','filed') }}</th>
+                             <th>{{ :lang('是否是网站来源','filed') }}</th>
                             <th >{{ :lang('状态','filed') }}</th>
                             <th >{{ :lang('操作','handle') }}</th>
                         </tr>
@@ -64,6 +67,21 @@
                                         {{ $v.name }}</label></td>
                                     <td>
                                         <span class="badge badge-info">{{ $v.card }}</span>
+                                    </td>
+                                    <td>
+                                        <if condition="$v['is_website']">
+                                            <a href="{{ :U(MODULE_NAME.'/'.CONTROLLER_NAME.'/payFor/',array('id'=>$v['id'],'filed'=>'is_website','type'=>'false'))
+                                            }}" class="btn btn-white btn-sm">
+                                                {{ :lang('是','handle') }}
+                                            </a>
+                                            <else/>
+                                            <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/payFor/",array('id'=>$v['id'],'filed'=>'is_website','type'=>'true'))
+                                            }}" class="btn btn-white btn-sm">
+                                            <font color=red>{{ :lang('否','handle') }}</font>
+                                            </a>
+
+
+                                        </if>
                                     </td>
 
                                     <td >

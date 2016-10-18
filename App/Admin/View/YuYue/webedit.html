@@ -1,0 +1,234 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+
+                            <div class="ibox-tools" style="margin-top:0px;"> <a class="btn btn-w-m btn-primary" href="{{ $burl }}" id="xibox-tools"> <i class="icon icon-exchange"></i> 返回 </a> </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content">
+            <form action="" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
+                
+                
+                <div class="col-sm-6" style="padding:0px;">
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">{{ :lang('基本信息','handle') }}</a></h5>
+                                <div class="ibox-tools" style="margin-top:-8px;">
+                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">保存内容</button>
+                                    <button class="btn btn-white" type="reset" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">重置</button>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                    <label class="col-sm-12">{{ :lang('客户姓名','handle') }}</label>
+                                    <input type="hidden" name="user_id" value="{{ $data.User.id }}" id="user_id">
+                                    <input type="hidden" name="id" value="{{ $data['id'] }}">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" required  value="{{ $data.User.name }}" id="telname">
+                                    </div>
+                                </div>
+                                
+                                
+                             
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-sm-6" style="padding:0px;">
+                    
+                    
+                    <div class="col-sm-12">
+                        <div class="ibox float-e-margins" >
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">{{ :lang('来源信息','handle') }}</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" >
+
+                                <div class="form-group">
+                                    <label class="col-sm-12">  <label class="col-sm-12">{{ :lang('网站来源','handle') }}</label></label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="web_id" id="">
+                                            <option>{{ :lang('请先选择网站','handle') }}</option>
+                                            <php>echo get_lanmu_onelist('website',1,'first','',$data['web_id']);</php>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                     <label class="col-sm-12">{{ :lang('访问入口','handle') }}</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="web_url" value="{{ $data.web_url }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                     <label class="col-sm-12">{{ :lang('咨询页面','handle') }}</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="web_onname" value="{{ $data.web_onname }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">{{ :lang('搜索关键词','handle') }}</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="web_key" value="{{ $data.web_key }}">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+
+
+
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+ 
+    <script>
+        
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            },
+            success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success");
+            },
+            errorElement: "span",
+            errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+                //e.insertBefore(r.parents(".ibox-content"));
+            },
+            errorClass: "error",
+            validClass: "no-error"
+
+        });
+        $().ready(function () {
+            $("#validate").validate(
+                {
+
+
+                    submitHandler:function(form) {
+                        //设置表单参数
+                        //最终来源
+                        $lyaid=$("#lyall_id");
+                        $ly1=$("#ly_id").val();
+                        $ly2=$("#lyt_id").val();
+                        $ly3=$("#lytt_id").val();
+
+                        if($ly3!='')
+                        {
+                            $lyaid.val($ly3);
+                        }else
+                        {
+                            if($ly2!='')
+                            {
+                                $lyaid.val($ly2);
+                            }else
+                            {
+                                if($ly1!='')
+                                {
+                                    $lyaid.val($ly1);
+                                }
+                            }
+                        }
+                        //
+                        //最终科室
+                        $ksaid=$("#ksall_id");
+                        $ks1=$("#ks_id").val();
+                        $ks2=$("#kst_id").val();
+                        $ks3=$("#kstt_id").val();
+
+                        if($ks3!='')
+                        {
+                            $ksaid.val($ks3);
+                        }else
+                        {
+                            if($ks2!='')
+                            {
+                                $ksaid.val($ks2);
+                            }else
+                            {
+                                if($ks1!='')
+                                {
+                                    $ksaid.val($ks1);
+                                }
+                            }
+                        }
+                        //最终区域
+                        $areaaid=$("#areaall_id");
+                        $area1=$("#area_id").val();
+                        $area2=$("#areat_id").val();
+                        if( $area2!='')
+                        {
+                            $areaaid.val($area2);
+                        }else
+                        {
+                            if( $area1!='')
+                            {
+                                $ksaid.val( $area1);
+                            }
+                        }
+                        $(form).ajaxSubmit();
+                    }
+                }
+            );
+            //手机号码和姓名用户检测，
+            $telname=$("#telname");
+            $phone=$("#phone");
+            //keydown
+            $phone.blur(function () {
+                $url='{{ :U("Admin/Ajax/check_phone") }}';
+                if($telname.val()!='' && $phone.val()!='')
+                {
+                    $.get($url,{'name':$telname.val(),'phone':$phone.val()},function (data) {
+                        console.log(data);
+                        if(data)
+                        {
+                            $("#user_id").val(data[0].id);
+                            $admin_name=data[0].realname==''?data[0].name:data[0].realname;
+                            $msg='{{ :lang("已被") }} <span style="color: #0000cc;">'+$admin_name+"</span> {{ :lang('客服于') }} <span >"+data[0].ydatetime+'</span><br/>{{ :lang("登记") }} '+data[0].ksname+" {{ :lang('科室') }} "+data[0].kstname+" {{ :lang('疾病项目') }}";
+                            layer.alert($msg, {
+                                skin: 'layui-layer-lan'
+                                ,closeBtn: 0
+                                ,shift: 4 //动画类型
+                            });
+                        }
+
+                    })
+                }
+
+            });
+            
+
+        });
+
+      
+
+    </script>
+</block>
