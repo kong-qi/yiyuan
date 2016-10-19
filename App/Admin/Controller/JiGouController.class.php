@@ -83,7 +83,7 @@ class JiGouController extends AuthController {
                 if($result) {
                     $msg=lang('添加成功');
                     add_log($this->onname.'：'.$data['name'].'添加成功');
-                    return $this->success($msg);
+                    return $this->success($msg,__CONTROLLER__);
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败');
                     $msg=lang('添加失败');
@@ -115,7 +115,7 @@ class JiGouController extends AuthController {
                if($result) {
                    $msg=lang('更新成功');
                    add_log($this->onname.'：'.$data['name'].'更新成功');
-                    return  $this->success($msg);
+                    return  $this->success($msg,__CONTROLLER__);
                 }else{
                    $msg=lang('数据一样，无需更新');
                     return $this->error($msg);
