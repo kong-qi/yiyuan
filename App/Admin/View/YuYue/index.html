@@ -404,12 +404,7 @@
                                                        class="btn btn-xs btn-white"><span
                                                             class="fa fa-pencil-square "></span> {{ :lang('查看回访/任务','handle') }}</a>
                                                 </if>
-                                                <if condition=" check_group($rule_qz.'_edit')">
-                                                    <a data-title="分配医生" data-close="1" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}" data-url="{{ :U("__CONTROLLER__/edit/",array('id'=>$v['yuuid'],'tpl'=>'jiezhen','backurl'=>__SELF__)) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
-                                                    class="btn btn-xs btn-white" >
-                                                    <span class="fa fa-trash "></span>
-                                                    {{ :lang('分配医生','handle') }}</a>
-                                                </if>
+                                                
                                                 <if condition=" check_group('sms_send')">
                                                     <a href="javascript:void(0)" data-url="{{ :U('Admin/Sms/send',array('uid'=>$v['user_id'])) }}" data-title="发送短信" data-close="1" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                        class="btn btn-xs btn-white"><span

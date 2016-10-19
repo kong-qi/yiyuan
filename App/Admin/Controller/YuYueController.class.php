@@ -241,7 +241,7 @@ class YuYueController extends AuthController {
             'is_yishen'=>$is_yishen
 
         );
-        print_r($show_rule);
+        //print_r($show_rule);
         $this->assign($show_rule);
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
         $this->display();
