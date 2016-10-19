@@ -506,6 +506,27 @@ function get_huifang_where($where,$echo=1,$fid="",$sid='',$checked=''){
     }
     return $rule;
 }
+//取得机构来源的二级
+function jigou_id(){
+    $arr=array();
+    //找出第一级
+    $m1=M('LanMu')->where(array('fid'=>0,'checked'=>1,'type'=>'bingren','is_jigou'=>1))->find();
+
+    if(count($m1)>0)
+    {
+        $m=M('LanMu')->where(array('fid'=>$m1['id'],'checked'=>1,'type'=>'bingren','is_tongji'))->select();
+        if(count($m)>0)
+        {
+            foreach ($m as $v)
+            {
+                $arr[]=$v['id'];
+            }
+        }
+    }
+    return $arr;
+
+}
+
 function get_wangixao_where($where,$echo=1,$sid='',$checked=''){
     $check='';
     $map=array();

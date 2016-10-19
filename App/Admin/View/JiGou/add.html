@@ -33,7 +33,7 @@
                             <tr>
                                 <td align="right">{{ :lang('机构评级') }}</td>
                                 <td align="right">
-                                    <select name="pj_id" class="form-control" id="">
+                                    <select name="pj_id" class="form-control" >
                                         {{ :get_huifang_onelist('mete','jigou') }}
                                     </select>
                                 </td>
@@ -41,33 +41,27 @@
                              <tr>
                                 <td align="right">{{ :lang('机构类别') }}</td>
                                 <td align="right">
-                                    <select name="pj_id" class="form-control" id="">
-                                        {{ :get_wangixao_where(array('type'=>'bingren','is_jigou'=>1),'jigou') }}
+                                    <select name="fid" class="form-control" >
+                                        {{ :get_wangixao_where(array('type'=>'bingren','is_jigou'=>1),'jigou',jigou_id()) }}
                                     </select>
                                 </td>
                             </tr>
-                             <tr>
-                                <td align="right">{{ :lang('机构评级') }}</td>
-                                <td align="right">
-                                    <select name="pj_id" class="form-control" id="">
-                                        {{ :get_huifang_onelist('mete','jigou') }}
-                                    </select>
-                                </td>
-                            </tr>
+
                             <tr>
                                 <td align="right">{{ :lang('合作状态') }}</td>
                                 <td align="right">
-                                    <select name="pj_id" class="form-control" id="">
-                                        {{ :get_huifang_onelist('mete','jigou') }}
+                                    <select name="join_id" class="form-control" >
+                                        {{ :get_huifang_onelist('join','jigou') }}
                                     </select>
                                 </td>
                             </tr>
                             <tr>
                                 <td align="right">{{ :lang('是否启用') }}</td>
                                 <td align="right">
-                                    <select name="pj_id" class="form-control" id="">
-                                       <option value="0">不启用</option>}
-                                       <option value="1">启用</option>}
+                                    <select name="checked" class="form-control" id="">
+
+                                       <option value="1">{{ :lang('启用') }}</option>
+                                        <option value="0">{{ :lang('停用') }}</option>
                                     </select>
                                 </td>
                             </tr>
@@ -103,37 +97,38 @@
                             <tr>
                                 <td align="right">{{ :lang('具体地址') }}</td>
                                 <td align="right">
-                                   <input type="text" class=" form-control">
+                                   <input type="text" name="address" class=" form-control">
                                 </td>
                             </tr>
                              <tr>
                                 <td align="right">{{ :lang('负责人') }}</td>
                                 <td align="right">
-                                   <input type="text" class=" form-control">
+                                   <input type="text" name="funame" class=" form-control">
                                 </td>
                             </tr>
                              <tr>
                                 <td align="right">{{ :lang('负责人联系电话') }}</td>
                                 <td align="right">
-                                   <input type="text" class=" form-control">
+                                   <input type="text" name="futel" class=" form-control">
                                 </td>
                             </tr>
                              <tr>
-                                <td align="right">{{ :lang('联机构市场业务联系人') }}</td>
+                                <td align="right">{{ :lang('机构市场业务联系人') }}</td>
                                 <td align="right">
-                                   <input type="text" class=" form-control">
+                                   <input type="text" name="ywname" class=" form-control">
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">{{ :lang('联机构市场业务联系人') }}</td>
+                                <td align="right">{{ :lang('本院市场部对接人员') }}</td>
                                 <td align="right">
-                                   <input type="text" class=" form-control">
+                                    <input type="text" name="buname" value="{{ :session('name') }}" class=" form-control">
                                 </td>
                             </tr>
+
                             <tr>
                                 <td align="right">机构照片</td>
                                 <td class="enmoreinsert_file">
-                                    <input type="hidden" name="enthumbs" value="" size="80"
+                                    <input type="hidden" name="thumbs" value="" size="80"
                                            class="input insert_input">
                                     <button type="button" class="btn btn-xs btn-success"
                                             onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.enmoreinsert_file','2')">
@@ -146,54 +141,38 @@
                             <tr>
                                 <td align="right">合作介绍</td>
                                 <td>
-                                    <textarea name="enintro" id="enintro" cols="80" rows="10"
-                                              class="textarea no-border"></textarea>
+                                    <textarea name="content" id="" cols="80" rows="10"
+                                              class="textarea form-control"></textarea>
 
                                 </td>
                             </tr>
                              <tr>
                                 <td align="right">机构备注</td>
                                 <td>
-                                    <textarea name="enintro" id="enintro" cols="80" rows="10"
-                                              class="textarea no-border"></textarea>
+                                    <textarea name="mark" cols="80" rows="10"
+                                              class="textarea  form-control"></textarea>
 
                                 </td>
                             </tr>
-                            <tr>
-                                <td align="right">{{ :lang('联本院市场部对接人员') }}</td>
-                                <td align="right">
-                                   <input type="text" class=" form-control">
-                                </td>
-                            </tr>
+
                             <tr>
                                 <td align="right">{{ :lang('签约时间') }}</td>
                                 <td align="right">
-                                   <input type="text" class=" form-control">
+                                    <input class="form-control layer-date" required onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})" placeholder="YYYY-MM-DD hh:mm" value="" name="quyue_time" id="hf_time" >
+
                                 </td>
                             </tr>
                             <tr>
                                 <td align="right">{{ :lang('合同编号') }}</td>
                                 <td align="right">
-                                   <input type="text" class=" form-control">
+                                   <input type="text" name="hetong" class=" form-control">
                                 </td>
                             </tr>
-                           
-                            <tr>
-                                <td align="right">{{ :lang('录入时间') }}</td>
-                                <td align="right">
-                                   <input type="text" class=" form-control">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="right">{{ :lang('联机构市场业务联系人') }}</td>
-                                <td align="right">
-                                   <input type="text" class=" form-control">
-                                </td>
-                            </tr>
+
                             <tr>
                                 <td align="right">{{ :lang('快速码') }}</td>
                                 <td align="right">
-                                   <input type="text" class=" form-control">
+                                   <input type="text" name="code" class=" form-control">
                                 </td>
                             </tr>
                             
@@ -223,6 +202,7 @@
     </div>
 </block>
 <block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
     <script>
 
         $.validator.setDefaults({
@@ -243,13 +223,32 @@
             $("#validate").validate({
                 rules: {
                     name: "required",
-                    "ruleid[]":{required:1}
+
 
                 },
                 messages: {
                     name:e + "必填",
                     "ruleid[]":e + "必填",
 
+                },
+                submitHandler:function(form) {
+                    //设置表单参数
+                    //最终区域
+                    $areaaid=$("#areaall_id");
+                    $area1=$("#area_id").val();
+                    $area2=$("#areat_id").val();
+                    if( $area2!='')
+                    {
+                        $areaaid.val($area2);
+                    }else
+                    {
+                        if( $area1!='')
+                        {
+                            $ksaid.val( $area1);
+                        }
+                    }
+                    return_pic_json(".enmoreinsert_file .itempic", "thumbs", 1);
+                    $(form).ajaxSubmit();
                 }
             });
             $("[data-datachenge='1']").change(function () {

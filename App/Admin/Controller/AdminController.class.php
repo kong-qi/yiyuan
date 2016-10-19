@@ -94,8 +94,8 @@ class AdminController extends AuthController {
                 $result =   $model->save($data);
 
                 if($result) {
-                    $msg=lang('更新成功','handle');
-                     add_log($this->onname.'：'.$data['name'].'更新成功');
+
+                    add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";

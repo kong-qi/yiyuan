@@ -16,6 +16,8 @@ class YuYueController extends AuthController {
         }
         $is_website=0;
         $is_huifang=0;
+        $is_yishen=0;
+        $is_qiantai=0;
         
 
         if(IS_GET)
@@ -95,6 +97,7 @@ class YuYueController extends AuthController {
         //获取
         if(I('get.is_website'))
         {
+            $is_website=1;
             $website_arr=M('LanMu')->field('id')->where(array('type'=>'bingren','is_website'=>1,'fid'=>array('neq',0)))->select();
             $wb_arrid=array();
             if(count($website_arr)>0)
@@ -116,11 +119,20 @@ class YuYueController extends AuthController {
         //回访人员
         if(I('get.is_huifang'))
         {
+            $is_huifang=1;
             //关闭自己的自己信息
             if(isset($map['y1.admin_id']))
             {
                 unset($map['y1.admin_id']);
             }
+        }
+        if(I('get.is_qiantai'))
+        {
+            $is_qiantai=1;
+        }
+        if(I('get.is_yishen'))
+        {
+            $is_yishen=1;
         }
 
         $model=M('YuYue');
@@ -222,6 +234,15 @@ class YuYueController extends AuthController {
             '操作'
             );
         $this->menu_list=$menu_list;
+        $show_rule=array(
+            'is_website'=>$is_website,
+            'is_huifang'=>$is_huifang,
+            'is_qiantai'=>$is_qiantai,
+            'is_yishen'=>$is_yishen
+
+        );
+        print_r($show_rule);
+        $this->assign($show_rule);
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
         $this->display();
 
@@ -570,6 +591,7 @@ class YuYueController extends AuthController {
             }
             if(I("get.tpl"))
             {
+                $this->assign('back_url',I('get.backurl'));
                 return $this->display(I("get.tpl"));
             }else
             {

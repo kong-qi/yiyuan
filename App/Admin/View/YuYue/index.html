@@ -364,14 +364,14 @@
                                         
 
                                         <!-- /竞价更正 -->
-                                        <if condition="I('get.is_website')">
+                                        <if condition="$is_website">
                                                <if condition=" check_group($rule_qz.'_edit')">
                                                    <a href="{{ :U("__CONTROLLER__/edit/",array('id'=>$v['yuuid'],'tpl'=>'webedit')) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
                                                    class="btn btn-xs btn-white" >
                                                    <span class="fa fa-trash "></span>
                                                    {{ :lang('修改来源','handle') }}</a>
                                                </if>
-                                            <elseif condition="I('get.is_huifang') eq 1"/>
+                                            <elseif condition="$is_huifang eq 1"/>
                                                 <if condition=" check_group('yuyue_showhf')">
                                                     <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                        class="btn btn-xs btn-white"><span
@@ -392,6 +392,23 @@
                                                     >
                                                     <span class="fa fa-trash "></span>
                                                     {{ :lang('添加任务','handle') }}</a>
+                                                </if>
+                                                <if condition=" check_group('sms_send')">
+                                                    <a href="javascript:void(0)" data-url="{{ :U('Admin/Sms/send',array('uid'=>$v['user_id'])) }}" data-title="发送短信" data-close="1" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                       class="btn btn-xs btn-white"><span
+                                                            class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
+                                                </if>
+                                            <elseif condition="$is_qiantai eq 1"/>
+                                                <if condition=" check_group('yuyue_showhf')">
+                                                    <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                       class="btn btn-xs btn-white"><span
+                                                            class="fa fa-pencil-square "></span> {{ :lang('查看回访/任务','handle') }}</a>
+                                                </if>
+                                                <if condition=" check_group($rule_qz.'_edit')">
+                                                    <a data-title="分配医生" data-close="1" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}" data-url="{{ :U("__CONTROLLER__/edit/",array('id'=>$v['yuuid'],'tpl'=>'jiezhen','backurl'=>__SELF__)) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                    class="btn btn-xs btn-white" >
+                                                    <span class="fa fa-trash "></span>
+                                                    {{ :lang('分配医生','handle') }}</a>
                                                 </if>
                                                 <if condition=" check_group('sms_send')">
                                                     <a href="javascript:void(0)" data-url="{{ :U('Admin/Sms/send',array('uid'=>$v['user_id'])) }}" data-title="发送短信" data-close="1" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}"

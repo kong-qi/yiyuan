@@ -138,7 +138,7 @@
                 </ul>
             </li>
             </if>
-
+            <if condition="check_group('qiantaijz')">
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
@@ -147,17 +147,18 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">接诊</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1')) }}">接诊</a>
 
                     </li>
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">查询病人</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1','show'=>'none')) }}">查询病人</a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">复诊列表</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1','show'=>'none','is_fz'=>1)) }}">复诊列表</a>
                     </li>
                 </ul>
             </li>
+            </if>
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
@@ -166,7 +167,7 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">接待</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_yishen'=>'1','show'=>'none','status'=>'2')) }}">接待</a>
 
                     </li>
                     <li>

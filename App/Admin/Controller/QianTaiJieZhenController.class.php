@@ -1,9 +1,9 @@
 <?php
 namespace Admin\Controller;
-class jiGouController extends AuthController {
+class QianTaiJieZhenController extends AuthController {
 
-    protected $onname='市场渠道';
-    protected $rule_qz='jiugouset';
+    protected $onname='前台咨询接诊';
+    protected $rule_qz='qiantaijz';
     
     public function index(){
         //权限选择
@@ -66,41 +66,7 @@ class jiGouController extends AuthController {
 
     }
     public function add(){
-        //权限选择
-        $this->check_group($this->rule_qz);
-        if(IS_POST)
-        {
-
-            $model=D('LanMu');
-            if($model->create())
-            {
-                $data=$model->create();
-                $data['type']='bingren';
-                $data['admin_id']=session('admin_id');
-                $data['is_jigou']='1';
-                $result =    $model->add($data);
-
-                if($result) {
-                    $msg=lang('添加成功');
-                    add_log($this->onname.'：'.$data['name'].'添加成功');
-                    return $this->success($msg);
-                }else{
-                    add_log($this->onname.'：'.$data['name'].'添加失败');
-                    $msg=lang('添加失败');
-                    return $this->error($msg);
-                }
-            }else
-            {
-                $this->error($model->getError());
-            }
-        }else
-        {
-
-
-
-
-            $this->display();
-        }
+       
 
     }
     public function edit(){

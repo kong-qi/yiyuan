@@ -1,48 +1,93 @@
 <?php
 namespace Admin\Controller;
-class jiGouController extends AuthController {
+class JiGouController extends AuthController {
 
-    protected $onname='机构';
+    protected $onname='市场渠道';
     protected $rule_qz='jiugouset';
     
     public function index(){
         //权限选择
         $this->check_group('jiugouset');
-        $model=M(CONTROLLER_NAME);
-        $map=array();
-        if(IS_GET)
-        {
-            $map=I('get.');
-        }
-        $count =  $model->where($map)->count();// 查询满足要求的总记录数
-        $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+        $model=M('LanMu');
+        $map=array(
+            'jg.fid'=>array('in',jigou_id()),
+            'jg.is_jigou'=>1,
+            'jg.type'=>'bingren'
+        );
+        $filed = '
+            jg.uuid as uuid,jg.id as id,
+            jg.hetong as hetong,jg.code as code,jg.name as name,jg.funame as funame,jg.futel as futel,jg.checked as checked,jg.buname as buname,
+            lb.name as lbname,
+            pj.name as pjname,
+            ae.name as area_name,
+            ae2.name as area2_name,
+            zt.name as status_name
+            
+            
+        ';
+        //关联评级
+        $join[] = 'LEFT JOIN __LAN_MU__ pj ON jg.pj_id = pj.id';
+        $join[] = 'LEFT JOIN __LAN_MU__ zt ON jg.join_id = zt.id';
+        $join[] = 'LEFT JOIN __AREA__ ae ON jg.area_id = ae.id';
+        $join[] = 'LEFT JOIN __AREA__ ae2 ON jg.areat_id = ae2.id';
+        $join[] = 'LEFT JOIN __LAN_MU__ lb ON jg.fid = lb.id';
+
+        $count =  $model->alias('jg')->join($join)->where($map)->count();// 查询满足要求的总记录数
         $page=1;
         if(isset($_GET['p']))
         {
             $page=$_GET['p'];
         }
-        $list =  $model->where($map)->page( $page.','.$pagesize)->select();
+
+        $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'50';
+
+        $list = $model->alias('jg')->field($filed)->join($join)->order('jg.id desc')->where($map)->page( $page.','.$pagesize)->select();
+
         $this->assign('list',$list);// 赋值数据集
+
+
+        $menu_list= array(
+            '编号',
+            '预约号',
+            '姓名',
+            '性别',
+            '预约时间',
+            '登记时间',
+            '预约科室',
+            '预约病种',
+            '预约来源',
+            '预约状态',
+            '操作'
+        );
+        $this->menu_list=$menu_list;
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
+
         $this->display();
+
     }
     public function add(){
         //权限选择
-        $this->check_group('group_add');
+        $this->check_group($this->rule_qz);
         if(IS_POST)
         {
 
-            $model=D(CONTROLLER_NAME);
+            $model=D('LanMu');
             if($model->create())
             {
-                $result =    $model->add();
                 $data=$model->create();
+                $data['type']='bingren';
+                $data['admin_id']=session('admin_id');
+                $data['is_jigou']='1';
+                $result =    $model->add($data);
+
                 if($result) {
+                    $msg=lang('添加成功');
                     add_log($this->onname.'：'.$data['name'].'添加成功');
-                    return $this->success('操作成功！',__CONTROLLER__);
+                    return $this->success($msg);
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败');
-                    return $this->error('写入错误！');
+                    $msg=lang('添加失败');
+                    return $this->error($msg);
                 }
             }else
             {
@@ -60,19 +105,20 @@ class jiGouController extends AuthController {
     }
     public function edit(){
         //权限选择
-        $this->check_group('group_edit');
+        $this->check_group($this->rule_qz."_edit");
         if(IS_POST)
         {
-            $model =D(CONTROLLER_NAME);
+            $model =D('LanMu');
            
             if($data=$model->create()) {
                 $result =   $model->save();
-
                if($result) {
+                   $msg=lang('更新成功');
                    add_log($this->onname.'：'.$data['name'].'更新成功');
-                    return  $this->success('更新操作成功！');
+                    return  $this->success($msg);
                 }else{
-                    return $this->error('数据一样，暂无更新');
+                   $msg=lang('数据一样，无需更新');
+                    return $this->error($msg);
                 }
             }else{
                 return $this->error($model->getError());
@@ -83,7 +129,7 @@ class jiGouController extends AuthController {
                 'uuid'=>$id
             );
 
-            $model   =   M(CONTROLLER_NAME)->where($map)->find();
+            $model   =   M('LanMu')->where($map)->find();
 
             if($model) {
                 $this->data =  $model;// 模板变量赋值
@@ -106,10 +152,12 @@ class jiGouController extends AuthController {
         if($result)
         {
             add_log($this->onname.'：'.$data['name'].'删除成功');
-            return  $this->success('删除成功');
+            $msg=lang('删除成功');
+            return  $this->success($msg);
         }
         add_log($this->onname.'：'.$data['name'].'删除失败');
-        return $this->error('删除失败');
+        $msg=lang('删除成功');
+        return $this->error($msg);
     }
     public function handle($id){
         //权限选择

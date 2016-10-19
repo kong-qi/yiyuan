@@ -35,7 +35,9 @@
                             <th >{{ :lang('名称','filed') }}</th>
                             <th >{{ :lang('类别','filed') }}</th>
                             <th >{{ :lang('评级','filed') }}</th>
-
+                            <th >{{ :lang('区域','filed') }}</th>
+                            <th >{{ :lang('机构负责人','filed') }}</th>
+                            <th >{{ :lang('机构电话','filed') }}</th>
                             <th>{{ :lang('状态','filed') }}</th>
                             <th >{{ :lang('操作','handle') }}</th>
                         </tr>
@@ -46,7 +48,14 @@
                                     <td align="center"><input type="checkbox" class="checkbox-select" name="checkbox[]"
                                                               value="{{ $v.uuid }}"></td>
                                     <td >{{ $v.id }}</td>
+                                    <td >{{ $v.hetong }}</td>
+                                    <td >{{ $v.code }}</td>
                                     <td>{{ $v.name }}</td>
+                                    <td>{{ $v.lbname }}</td>
+                                    <td>{{ $v.pjname }}</td>
+                                    <td>{{ $v.area_name }}-{{ $v.area2_name }}</td>
+                                    <td>{{ $v.funame }}</td>
+                                    <td>{{ $v.futel }}</td>
 
 
                                     <td >
@@ -122,6 +131,7 @@
     </div>
 </block>
 <block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
     <script>
         $(function () {
             select_all();
