@@ -384,6 +384,7 @@ class AjaxController extends AuthController
     public  function check_phone(){
         $name=I('get.name');
         $phone=I("get.phone");
+
         $Model = new \Think\Model();
         $result=$Model->query("SELECT u1.id,u1.name,y1.ydatetime,y1.admin_id,a1.name as admin_name,a1.realname,y1.ks_id,k1.name 
         as ksname,y1.kstt_id,k2.`name` as kstname from __PREFIX__user as u1 LEFT JOIN __PREFIX__yu_yue 
@@ -398,6 +399,45 @@ class AjaxController extends AuthController
         {
             return false;
         }
+    }
+    public  function  getYuShen($id,$ysid='',$checked=''){
+        $rule=M('KeShi')->where(array('checked'=>1,'type'=>'yushen','fid'=>$id))->select();
+        $str='';
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+
+                if($ysid==$v['id'])
+                {
+                    $checked="selected='selected'";
+                }else
+                {
+                    $checked='';
+                    if($checked=='')
+                    {
+                        if($k==0)
+                        {
+                            $checked="selected='selected'";
+                        }else
+                        {
+                            $checked='';
+                        }
+
+                    }
+
+                }
+                $str.="<option ".$checked." value='".$v['id']."'>".$v['name']."</option>";
+
+
+            }
+        }
+        $arr=array(
+
+            'content'=>$str
+
+        );
+        return $this->ajaxReturn($arr);
     }
     /*
      * 生产预约码
@@ -433,7 +473,7 @@ class AjaxController extends AuthController
         ';
        $total=$hf->alias('h1')->join($join)->where($map)->count();// 查询满足要求的总记录数
        $pages=ceil($total/$pagesize);
-       $hf=$hf->alias('h1')->field($filed)->join($join)->where($map)->order('h1.id desc')->page($page,$pagesize)->select();
+       $hf=$hf->alias('h1')->field($filed)->join($join)->where($map)->order('h1.id asc')->page($page,$pagesize)->select();
 
        $content='';
        if($total)
@@ -474,7 +514,7 @@ class AjaxController extends AuthController
         $map=array('user_id'=>$uid);
         $total=M('RenWu')->where($map)->count();
         $pages=ceil($total/$pagesize);
-        $hf=M('RenWu')->where($map)->page($page,$pagesize)->select();
+        $hf=M('RenWu')->where($map)->page($page,$pagesize)->order('rtime desc')->select();
 
         $content='';
         $status=array(
@@ -507,7 +547,7 @@ class AjaxController extends AuthController
               
                 <td><a href='".$seturl."' class='btn btn-white'>".$yz."</a></td>
           
-                <td>".to_date_time(($v['rctime']),'d-m-Y')."</td>
+                <td>".to_date_time(($v['rtime']),'d-m-Y')."</td>
                 <td>".$del."</td>
                ";
                 $content.="</tr>";

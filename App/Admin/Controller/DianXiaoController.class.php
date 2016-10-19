@@ -31,7 +31,8 @@ class DianXiaoController extends AuthController {
             g1.zixunliang,
             g1.aduihua,
             g1.bduihua,
-            g1.cduihua
+            g1.cduihua,
+            g1.ctime as ctime
          ';
 
         $count = $model->alias('g1')->join($join)->where($map)->count();// 查询满足要求的总记录数

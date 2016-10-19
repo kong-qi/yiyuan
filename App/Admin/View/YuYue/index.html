@@ -13,7 +13,7 @@
         <else/>
         <div class="box">
             <div class="col-sm-12">
-                <form action="" method="get" id="contact-form">
+                <form action='{{ :U(MODULE_NAME ."/".CONTROLLER_NAME."/index") }}' method="get" id="contact-form">
 
                     <div class="col-sm-12" style="padding:0px;">
                         <div class="ibox float-e-margins" id="shoujisf1">
@@ -371,6 +371,7 @@
                                                    <span class="fa fa-trash "></span>
                                                    {{ :lang('修改来源','handle') }}</a>
                                                </if>
+                                            <!--//回访人员-->
                                             <elseif condition="$is_huifang eq 1"/>
                                                 <if condition=" check_group('yuyue_showhf')">
                                                     <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
@@ -398,7 +399,21 @@
                                                        class="btn btn-xs btn-white"><span
                                                             class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
                                                 </if>
+                                            <!--//前台-->
                                             <elseif condition="$is_qiantai eq 1"/>
+                                                <if condition=" check_group('qiantaijz_add')">
+                                                    <if condition="$v['ys_id']==''">
+                                                        <a href="javascript:void(0)"  data-url="{{ :U(MODULE_NAME ."/".CONTROLLER_NAME."/edit/",array('id'=>$v['yuuid'],'tpl'=>'qitai','close'=>'1')) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                        data-title="{{ :lang('分配医生') }}" data-w="500px" data-h="560px;" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                           class="btn btn-xs btn-white"><span
+                                                                class="fa fa-pencil-square "></span> {{ :lang('分配医生','handle') }}</a>
+                                                        <else/>
+                                                        <a href="javascript:void(0)"  data-url="{{ :U(MODULE_NAME ."/".CONTROLLER_NAME."/edit/",array('id'=>$v['yuuid'],'tpl'=>'qitai','close'=>'1')) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                        data-title="{{ :lang('分配医生') }}" data-w="500px" data-h="560px;" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                        class="btn btn-xs btn-primary"><span
+                                                            class="fa fa-pencil-square "></span> {{ :lang('已分配医生','handle') }}</a>
+                                                    </if>
+                                                </if>
                                                 <if condition=" check_group('yuyue_showhf')">
                                                     <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                        class="btn btn-xs btn-white"><span
@@ -410,6 +425,11 @@
                                                        class="btn btn-xs btn-white"><span
                                                             class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
                                                 </if>
+                                            <elseif condition="$is_yishen eq 1"/>
+                                                <a href="{{ :U('Admin/YuShen/quecheck') }}"
+                                                class="btn btn-xs btn-white" >
+                                                <span class="fa fa-trash "></span>
+                                                {{ :lang('确诊','handle') }}</a>
                                             <else/>
                                         <div class="box">
                                             
@@ -425,7 +445,7 @@
                                                         class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
                                             </if>
                                             <if condition=" check_group($rule_qz.'_edit')">
-                                                <a href="{{ :U("__CONTROLLER__/edit/",array('id'=>$v['yuuid'])) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                <a href="{{ :U(MODULE_NAME ."/".CONTROLLER_NAME."/edit/",array('id'=>$v['yuuid'])) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
                                                 class="btn btn-xs btn-white" >
                                                 <span class="fa fa-trash "></span>
                                                 {{ :lang('修改','handle') }}</a>

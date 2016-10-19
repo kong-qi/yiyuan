@@ -471,6 +471,10 @@
                         console.log(data);
                         if(data)
                         {
+                            if(!data.id=='{{ $data.User.id }}')
+                            {
+
+
                             $("#user_id").val(data[0].id);
                             $admin_name=data[0].realname==''?data[0].name:data[0].realname;
                             $msg='{{ :lang("已被") }} <span style="color: #0000cc;">'+$admin_name+"</span> {{ :lang('客服于') }} <span >"+data[0].ydatetime+'</span><br/>{{ :lang("登记") }} '+data[0].ksname+" {{ :lang('科室') }} "+data[0].kstname+" {{ :lang('疾病项目') }}";
@@ -479,6 +483,7 @@
                                 ,closeBtn: 0
                                 ,shift: 4 //动画类型
                             });
+                            }
                         }
 
                     })

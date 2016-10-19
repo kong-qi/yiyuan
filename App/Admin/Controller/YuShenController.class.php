@@ -1,8 +1,11 @@
 <?php
 namespace Admin\Controller;
-class XiaoFeiController extends AuthController {
-    protected $onname='每日消费';
-    protected $rule_qz='days_price';
+class YuShenController extends AuthController {
+    protected $onname='医生确诊';
+    protected $rule_qz='t';
+    public function quecheck(){
+        
+    }
     public function index(){
         //权限选择
         $this->check_group($this->rule_qz);
@@ -29,8 +32,7 @@ class XiaoFeiController extends AuthController {
             l1.name,
             g1.prices,
             g1.clicks,
-            g1.shows,
-            g1.cdate as cdate
+            g1.shows
            
          ';
 

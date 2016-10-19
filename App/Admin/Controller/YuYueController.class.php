@@ -73,7 +73,17 @@ class YuYueController extends AuthController {
 
                 $timestr2 = strtotime($getdata['ystime']) . "," . strtotime($getdata['yetime']);
 
-                $map['y1.ydatetime']=$map2['ydatetime']=array('between', $timestr2);
+                $map['y1.ydatetime']=array('between', $timestr2);
+
+            }
+            if($getdata['dzstime']!='' && $getdata['dzetime'] !='')
+            {
+                $getdata['dzstime'].=" 00:00:00";
+                $getdata['dzetime'].=" 23:59:59";
+
+                $timestr2 = strtotime($getdata['dzstime']) . "," . strtotime($getdata['dzetime']);
+
+                $map['y1.dztime']=array('between', $timestr2);
 
             }
 
@@ -139,6 +149,7 @@ class YuYueController extends AuthController {
         $filed = '
             y1.uuid as yuuid,
             y1.zx_mark,
+            y1.ys_id as ys_id,
             y1.ynumber,y1.id as yid,y1.admin_id,y1.status as ystatus,y1.ydatetime,y1.ctime as yuctime,y1.zx_content,y1.mark as ymark,
             u1.name as user_name,u1.sex,u1.uuid as user_uuid,u1.id as user_id,
             ly1.name as ly_name,ly2.name as lyt_name, ly3.name as lytt_name,

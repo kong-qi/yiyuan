@@ -1,0 +1,190 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+
+        <div class="animated fadeInUp">
+
+            <form action="" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
+                <div class="ibox-content">
+                    <div class="col-sm-12">
+
+
+                        <div class="form-group">
+                            <div class="input-group m-b" style="margin-bottom:5px;">
+
+                                <label class="input-group-addon">{{ :lang('就诊医生') }}</label>
+                                <select class="form-control" required="required" id="ks_id" name="ks_id">
+                                    <option value="">{{ :lang('请选择科室','handle') }}</option>
+                                    {{ :get_keshi('0','1',$data['ks_id'] ) }}
+                                </select>
+                                <select class="form-control" required="required" id="ys_id" name="ys_id">
+                                    <option value="">{{ :lang('请选择医生','handle') }}</option>
+
+                                </select>
+
+                            </div>
+
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group m-b" style="margin-bottom:5px;">
+                                <label class="input-group-addon">{{ :lang('客户姓名','handle') }}</label>
+                                <input type="hidden" name="id" value="{{ $data.id }}">
+                                <input type="hidden" name="user_id" value="{{ $data.User.id }}" id="user_id">
+
+                                <input type="text" class="form-control" required name="name"
+                                       value="{{ $data.User.name }}" id="telname">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group m-b" style="margin-bottom:5px;">
+                                <label class="input-group-addon">{{ :lang('纠正生日','handle') }}</label>
+                                <input type="hidden" name="dztime" value="{{ :time() }}">
+                                <input class="form-control layer-date" name="birthday" placeholder="YYYY-MM-DD"
+                                       value="{{ :($data['User']['birthday']) }}" id="shengri">
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group m-b" style="margin-bottom:5px;">
+                                <label class="input-group-addon">{{ :lang('备注','handle') }}</label>
+
+                                <textarea name="mark" id="mark"" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['mark']) }}</textarea>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+
+                                <div class="input-group m-b">
+                                    <span class="input-group-addon">{{ :lang('预约状态','handle') }}</span>
+
+                                    <php>$status=yuyue_status()</php>
+                                    <select class="form-control" name="status" >
+                                        <option value="">全部</option>
+                                        <if condition="$status">
+                                            <foreach name="status" item="lv" key="lkey">
+                                                <option value="{{ $lkey }}" {{ :$lkey==$data['status']?"selected='selected'":'' }}>{{ $lv }}</option>
+                                            </foreach>
+                                        </if>
+                                    </select>
+
+
+
+                                </div>
+
+                        </div>
+
+                        <div class="form-group" align="center" style="margin-bottom:5px;">
+                            <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('提交','handle')
+                                }}
+                            </button>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    {{ :load_ueditor() }}
+    <script>
+        bd_ueditor('mark',120);
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            },
+            success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success");
+            },
+            errorElement: "span",
+            errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+                //e.insertBefore(r.parents(".ibox-content"));
+            },
+            errorClass: "error",
+            validClass: "no-error"
+
+        });
+        $().ready(function () {
+            $("#validate").validate(
+                    {
+                        submitHandler: function (form) {
+                            //设置表单参数
+                            //最终来源
+
+                            $(form).ajaxSubmit();
+                        }
+                    }
+            );
+
+
+            var shengri = {
+                elem: '#shengri',
+                format: 'YYYY-MM-DD',
+                max: laydate.now(-365 * 10),
+                istime: false,
+                oclear: false,
+                choose: function (dates) { //选择好日期的回调
+
+                    $v = $("#shengri").val();
+                    if ($v != '') {
+                        $("#age").val(get_age($v));
+                    }
+                }
+            };
+
+            laydate(shengri);
+
+
+        });
+
+        $("#ks_id").change(function () {
+            $url = "{{ :U('Admin/Ajax/getYuShen') }}";
+            $next_id = "ys_id";
+            $id = $(this).val();
+            $.ajax({
+                'url': $url,
+                type: 'get',
+                data: {
+                    'id': $id,
+                    ysid: "{{ $data.ys_id }}"
+                },
+                cache: false,
+                dataType: 'json',
+                success: function (data) {
+                    if (data.content != '') {
+                        $str = '<option value="">{{ :lang("请选择") }}</option>';
+                        $str += data.content;
+                        $("#" + $next_id).empty().append($str);
+
+                    } else {
+                        $str = "<option value=''>{{ :lang('无') }}</option>";
+                        $("#" + $next_id).empty();
+                        $($closeid).empty().append($str);
+
+
+                    }
+
+                }
+            });
+        }).trigger('change');
+
+
+    </script>
+</block>

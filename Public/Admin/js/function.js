@@ -272,7 +272,8 @@ function jqtable($id, $col, $close) {
     });
 }
 
-function bd_ueditor($id) {
+function bd_ueditor($id,$h) {
+    $h=$h || 200;
     var ue = UE.getEditor($id, {
         toolbars: [
             ['fullscreen', 'source', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontborder', 'fontfamily', 'forecolor',
@@ -281,7 +282,7 @@ function bd_ueditor($id) {
             ]
         ],
 
-        initialFrameHeight: 200,
+        initialFrameHeight: $h,
         initialFrameWidth: '100%',
         autoHeightEnabled: true,
         autoFloatEnabled: true,
