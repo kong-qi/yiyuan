@@ -6,22 +6,16 @@ class YuYueController extends AuthController {
 
 
     public function index(){
-        ;
-        //权限选择
-       /* print_r( get_date('bw'));
-        print_r(get_date('sw'));
-        print_r(get_date('sm'));
-        print_r(get_date('by'));
-        print_r(get_date('diy',-1));
-        print_r(get_date('year'));*/
-        $this->check_group($this->rule_qz);
+
+        $this->check_group($this->rule_qz."_show");
         $map=array();
         //自己查看自己的
         if(!check_group('root'))
         {
             $map['y1.admin_id']=session('admin_id');
         }
-
+        $is_website=0;
+        $is_huifang=0;
         
 
         if(IS_GET)
@@ -93,30 +87,41 @@ class YuYueController extends AuthController {
                  $map['_string'] = "u1.name like '%".$key."%' or u1.tel like '%".$key."%' or y1.ynumber like '%".$key."%'";
             }
            
-            //print_r($map);
-            //判断是否是网站人员
-            //获取
-            if(I('get.is_website'))
-            {
-                $website_arr=M('LanMu')->field('id')->where(array('type'=>'bingren','is_website'=>1,'fid'=>array('neq',0)))->select();
-                $wb_arrid=array();
-                if(count($website_arr)>0)
-                {
-                    foreach ( $website_arr as $key => $value) {
-                        $wb_arrid[]=$value['id'];
-                    }
-                }
-                if(count( $wb_arrid)>0)
-                {
-                    $map['y1.lyall_id']=array('in', $wb_arrid);
-                }
-                
-                
 
-            }
 
         }
-
+        //print_r($map);
+        //判断是否是网站人员
+        //获取
+        if(I('get.is_website'))
+        {
+            $website_arr=M('LanMu')->field('id')->where(array('type'=>'bingren','is_website'=>1,'fid'=>array('neq',0)))->select();
+            $wb_arrid=array();
+            if(count($website_arr)>0)
+            {
+                foreach ( $website_arr as $key => $value) {
+                    $wb_arrid[]=$value['id'];
+                }
+            }
+            if(count( $wb_arrid)>0)
+            {
+                $map['y1.lyall_id']=array('in', $wb_arrid);
+            }
+            //关闭自己的自己信息
+            if(isset($map['y1.admin_id']))
+            {
+                unset($map['y1.admin_id']);
+            }
+        }
+        //回访人员
+        if(I('get.is_huifang'))
+        {
+            //关闭自己的自己信息
+            if(isset($map['y1.admin_id']))
+            {
+                unset($map['y1.admin_id']);
+            }
+        }
 
         $model=M('YuYue');
         $filed = '
@@ -228,6 +233,8 @@ class YuYueController extends AuthController {
 
         //权限选择
         $this->check_group($this->rule_qz);
+
+
         if(IS_POST)
         {
 
@@ -472,9 +479,15 @@ class YuYueController extends AuthController {
     public function edit(){
         //权限选择
         $base=I('get.base');
+        //网站更新信息
+        if(I('get.is_website'))
+        {
+            
+        }
+        
         $this->burl=U('Admin/YuYue/index')."?".base64_decode($base);
 
-        $this->check_group('yushen');
+        $this->check_group('yuyue_edit');
         if(IS_POST)
         {
             $model =D('YuYue');
@@ -527,11 +540,12 @@ class YuYueController extends AuthController {
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
-                    //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.lo</script>";
+                    return  $this->success($msg);
                 }else{
                     $msg=lang('数据一样无更新','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    return  $this->success(lang('无更新','handle'));
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
                 }
             }else{
                 return $this->error($model->getError());

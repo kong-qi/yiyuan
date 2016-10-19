@@ -84,7 +84,7 @@ class DianXiaoController extends AuthController {
     public function edit(){
         //权限选择
 
-        $this->check_group('admin_edit');
+        $this->check_group('gongzuoliang_edit');
         if(IS_POST)
         {
             $model =D('Gzl');
@@ -139,7 +139,7 @@ class DianXiaoController extends AuthController {
     }
     public  function del(){
         //权限选择
-        $this->check_group('admin_del');
+        $this->check_group('gongzuoliang_del');
         $id=I('get.id');
         $map=array(
             'uuid'=>$id
@@ -157,7 +157,7 @@ class DianXiaoController extends AuthController {
     }
     public function handle($id){
         //权限选择
-        $this->check_group('admin_edit');
+        $this->check_group('gongzuoliang_edit');
         $model =M(CONTROLLER_NAME);
         $type=I('get.type');
         if($type=='true')

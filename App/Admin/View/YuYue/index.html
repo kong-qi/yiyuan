@@ -327,7 +327,7 @@
                                                                                 value="{{ $v.yuuid }}"></td>
 
                                     <td id="tdd1" class="hidden-xs">{{ $v.yid }}</td>
-                                    <td id="tdd2" class="hidden-xs"><span class="js-open-more glyphicon glyphicon-plus m-r"></span>{{ $v.ynumber }}
+                                    <td id="tdd2" ><span class="js-open-more glyphicon glyphicon-plus m-r"></span>{{ $v.ynumber }}
                                     </td>
                                     <td data-log="1" id="tdd3">{{ $v.user_name }}</td>
                                     <td id="tdd4">
@@ -371,7 +371,34 @@
                                                    <span class="fa fa-trash "></span>
                                                    {{ :lang('修改来源','handle') }}</a>
                                                </if>
-                                        <else/>
+                                            <elseif condition="I('get.is_huifang') eq 1"/>
+                                                <if condition=" check_group('yuyue_showhf')">
+                                                    <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                       class="btn btn-xs btn-white"><span
+                                                            class="fa fa-pencil-square "></span> {{ :lang('查看回访/任务','handle') }}</a>
+                                                </if>
+                                                <if condition=" check_group('huifangset_add')">
+                                                    <a href="javascript:void(0))"
+                                                       class="btn btn-xs btn-white"
+                                                       data-url="{{ :U('Admin/HuiFang/add',array('uid'=>$v['user_id'])) }}" data-title="添加回访" data-close="1" data-w="550px" data-h="60%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                    >
+                                                        <span class="fa fa-trash "></span>
+                                                        {{ :lang('添加回访','handle') }}</a>
+                                                </if>
+                                                <if condition=" check_group('hfrenwu_add')">
+                                                    <a href="javascript:void(0))"
+                                                    class="btn btn-xs btn-white"
+                                                       data-url="{{ :U('Admin/RenWu/add',array('uid'=>$v['user_id'])) }}" data-title="添加任务" data-close="1" data-w="550px" data-h="60%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                    >
+                                                    <span class="fa fa-trash "></span>
+                                                    {{ :lang('添加任务','handle') }}</a>
+                                                </if>
+                                                <if condition=" check_group('sms_send')">
+                                                    <a href="javascript:void(0)" data-url="{{ :U('Admin/Sms/send',array('uid'=>$v['user_id'])) }}" data-title="发送短信" data-close="1" data-w="550px" data-h="400px" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                       class="btn btn-xs btn-white"><span
+                                                            class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
+                                                </if>
+                                            <else/>
                                         <div class="box">
                                             
                                             <if condition=" check_group('yuyue_showhf')">

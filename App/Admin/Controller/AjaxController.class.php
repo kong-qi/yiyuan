@@ -422,6 +422,8 @@ class AjaxController extends AuthController
        $join[] = 'LEFT JOIN __LAN_MU__ l5 ON l5.id = h1.goplace';
        $filed = '
           h1.ntime,
+          h1.uuid as huuid,
+          h1.content as cont,
           l1.name as hf_name,
           l2.name as hf_type,
           l3.name as hf_ways,
@@ -439,14 +441,22 @@ class AjaxController extends AuthController
            foreach ($hf as $k=>$v)
            {
                $content.="<tr style='background: #fff'>";
-              
+               $delurl=U('Admin/HuiFang/del',array('id'=>$v['huuid']));
+                $del='<a href="'.$delurl.'" class="btn btn-xs btn-white" > <span class="fa fa-trash "></span>
+                                                        删除</a>
+                ';
                $content.="
                <td>".$v['hf_name']."</td>
                 <td>".$v['hf_type']."</td>
                 <td>".$v['hf_ways']."</td>
                 <td>".$v['hf_status']."</td>
                 <td>".$v['hf_fangxiang']."</td>
-                <td>".(to_date_time(($v['ntime']),'d-m-Y'))."</td>";
+                
+                <td>".(to_date_time(($v['ntime']),'d-m-Y'))."</td>
+                <td>".htmlspecialchars_decode($v['cont'])."</td>
+                <td>".$del."</td>
+                ";
+
                $content.="</tr>";
            }
        }
@@ -488,12 +498,17 @@ class AjaxController extends AuthController
                     $yz=' <font color=red>'.lang($status[$v['status']],'handel').'</font>';
                 }
                 $content.="<tr style='background: #fff'>";
+                $delurl=U('Admin/RenWu/del',array('id'=>$v['uuid']));
+                $del='<a href="'.$delurl.'" class="btn btn-xs btn-white" > <span class="fa fa-trash "></span>
+                                                        删除</a>
+                ';
                 $content.="
                <td>".$v['name']."</td>
               
                 <td><a href='".$seturl."' class='btn btn-white'>".$yz."</a></td>
           
                 <td>".to_date_time(($v['rctime']),'d-m-Y')."</td>
+                <td>".$del."</td>
                ";
                 $content.="</tr>";
             }

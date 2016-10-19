@@ -59,6 +59,7 @@
                                                 $br=get_lanmu_onelist('bingren','',"first");
                                                 $brlyarr=array();
                                                 $brlyarr= explode(",",$data['brly_id']);
+
                                                 ?>
 
                                             <if condition="$br">
@@ -99,11 +100,11 @@
                                                         $subrule=get_rule($lv_v['id']);
                                                         ?>
                                                         <label class="checkbox-inline f-label">
-                                                            <input type="checkbox" name="ruleid[]" {{ :strstr($data['ruleid'],$lv_v['ename'])!=''?"checked='checked'":"" }} value="{{ $lv_v.ename }}">进入{{ $lv_v.name }}&nbsp;&nbsp;</label>
+                                                            <input type="checkbox" name="ruleid[]" {{ :checked_on2($data['ruleid'],$lv_v['ename'])!=''?"checked='checked'":"" }} value="{{ $lv_v.ename }}">进入{{ $lv_v.name }}&nbsp;&nbsp;</label>
                                                         <if condition="$subrule">
                                                             <foreach name="subrule" item="sv" key="k2">
                                                                 <label class="checkbox-inline f-label">
-                                                                    <input type="checkbox" name="ruleid[]"  {{ :strstr($data['ruleid'],$sv['ename'])!=''?"checked='checked'":"" }}  value="{{ $sv.ename }}">{{ $sv.name }}&nbsp;&nbsp;</label>
+                                                                    <input type="checkbox" name="ruleid[]"  {{ :checked_on2($data['ruleid'],$sv['ename'])!=''?"checked='checked'":"" }}  value="{{ $sv.ename }}">{{ $sv.name }}&nbsp;&nbsp;</label>
                                                             </foreach>
                                                         </if>
                                                     </div>

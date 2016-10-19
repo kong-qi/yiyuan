@@ -25,10 +25,14 @@
                 </div>
                 <div class="logo-element"><i class="icon icon-plus"></i></div>
             </li>
+            <if condition="check_group('yuyue_add')">
             <li>
                 <a class="J_menuItem" href="{{ :U('Admin/YuYue/add') }}"><i class="fa icon-paste"></i> <span
                         class="nav-label">{{ :lang('添加咨询','menu') }}</span></a>
             </li>
+                </if>
+
+            <if condition="check_group('yuyue')">
             <li>
                 <a href="#">
                     <i class="fa icon-newspaper-o"></i>
@@ -80,6 +84,8 @@
 
                 </ul>
             </li>
+            </if>
+            <if condition="check_group('gongzuoliang')">
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
@@ -95,6 +101,8 @@
                     </li>
                     </ul>
             </li>
+            </if>
+            <if condition="check_group('jiugouset')">
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
@@ -102,15 +110,17 @@
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <!-- <li>
+                    <li>
                         <a class="J_menuItem" href="{{ :U('Admin/JiGou/add') }}">{{ :lang('机构录入','menu') }}</a>
                     
                     </li>
                     <li>
                         <a class="J_menuItem" href="{{ :U('Admin/JiGou/index') }}">{{ :lang('机构查询','menu') }}</a>
-                    </li> -->
+                    </li>
                 </ul>
             </li>
+            </if>
+            <if condition="check_group('days_price')">
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
@@ -127,10 +137,12 @@
                     </li>
                 </ul>
             </li>
+            </if>
+
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">前台</span>
+                    <span class="nav-label">{{ :lang('接诊人员') }}</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -146,10 +158,10 @@
                     </li>
                 </ul>
             </li>
-           <!-- <li>
+            <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">医生</span>
+                    <span class="nav-label">{{ :lang('医生人员') }}</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -162,12 +174,12 @@
                     </li>
 
                 </ul>
-            </li>-->
+            </li>
 
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">收银</span>
+                    <span class="nav-label">{{ :lang('收银人员') }}</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
@@ -183,26 +195,27 @@
                     </li>
                 </ul>
             </li>
+            <if condition="check_group('hfrenwu') or check_group('huifangset')" >
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">回访</span>
+                    <span class="nav-label">回访人员</span>
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}">回访列表</a>
-
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}?is_huifang=1&a=1">回访列表</a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}">任务列表</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}?is_huifang=1">任务列表</a>
                     </li>
 
                 </ul>
             </li>
+            </if>
 
 
-
+            <if condition=" check_group('sms') OR check_group('group') ">
             <li>
                 <a href="#">
                     <i class="fa icon-cogs"></i>
@@ -222,6 +235,7 @@
 
                 </ul>
             </li>
+            </if>
             <if condition=" check_group('admin') OR check_group('group') OR check_group('rule')">
 
             <li>

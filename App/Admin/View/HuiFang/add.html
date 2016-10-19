@@ -1,0 +1,113 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="animated fadeInUp">
+            <div class="col-sm-12 ">
+                <form action="{{ :U('Admin/HuiFang/getlistadd') }}" method="post" id="huifang_form" class="form-horizontal" enctype="multipart/form-data">
+                    <div class="ibox float-e-margins m-t">
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <label class="col-sm-12">{{ :lang('病人名字') }}</label>
+                                <div class="col-sm-12">
+                                    <input type="hidden" name="close_frame" value="1">
+                                    <input type="hidden" name="bktab" value="1">
+                                    <input type="hidden" readonly name="admin_id" value="{{ :session('admin_id') }}">
+                                    <input type="hidden" name="user_id" value="{{ $data.id }}">
+                                    <input class="form-control" value="{{ $data.name }}" name="uname" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">{{ :lang('回访主题') }}</label>
+                                <div class="col-sm-12">
+                                    <select  id="hf_name" name="name" class="form-control">
+                                        {{ :get_huifang_onelist() }}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">{{ :lang('回访类型') }}</label>
+                                <div class="col-sm-12">
+                                    <select  id="hf_type" name="type" class="form-control">
+                                        {{ :get_huifang_onelist('hf_type') }}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">{{ :lang('回访方式') }}</label>
+                                <div class="col-sm-12">
+                                    <select  id="hf_way" name="ways" class="form-control">
+                                        {{ :get_huifang_onelist('hf_way') }}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">{{ :lang('客户流向') }}</label>
+                                <div class="col-sm-12" >
+                                    <select  id="hf_go" name="goplace" class="form-control">
+                                        {{ :get_huifang_onelist('hf_go') }}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">{{ :lang('回访状态') }}</label>
+                                <div class="col-sm-12" >
+                                    <select name="status" class="form-control">
+                                        {{ :get_huifang_onelist('hf_status') }}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-12">{{ :lang('下次回访时间') }}</label>
+                                <div class="col-sm-12">
+                                    <input class="form-control layer-date" required onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})" placeholder="YYYY-MM-DD hh:mm" value="" name="ntime" id="hf_time" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-12">{{ :lang('回访小结') }}</label>
+                                <div class="col-sm-12">
+                                    <textarea class="summernote" name="content" id="content"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+
+                                    <button class="btn btn-primary" type="submit">{{ :lang('添加') }}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    {{ :load_ueditor() }}
+    <script>
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.insertBefore(r.parents(".ibox-content"));
+                //e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function () {
+            $("#validate").validate();
+            bd_ueditor('content');
+        });
+
+    </script>
+</block>

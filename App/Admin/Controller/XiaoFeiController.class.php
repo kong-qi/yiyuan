@@ -1,11 +1,11 @@
 <?php
 namespace Admin\Controller;
 class XiaoFeiController extends AuthController {
-    protected $onname='消费录入';
-    protected $rule_qz='gongzuoliang';
+    protected $onname='每日消费';
+    protected $rule_qz='days_price';
     public function index(){
         //权限选择
-        $this->check_group('gongzuoliang');
+        $this->check_group($this->rule_qz);
         $model=M('XiaoFei');
         $map=array();
         if(IS_GET)
@@ -46,7 +46,7 @@ class XiaoFeiController extends AuthController {
     }
     public function add(){
         //权限选择
-        $this->check_group('gongzuoliang_add');
+        $this->check_group('days_price_add');
         if(IS_POST)
         {
 
@@ -84,7 +84,7 @@ class XiaoFeiController extends AuthController {
     public function edit(){
         //权限选择
 
-        $this->check_group('admin_edit');
+        $this->check_group($this->rule_qz."_edit");
         if(IS_POST)
         {
             $model =D('XiaoFei');
@@ -141,7 +141,7 @@ class XiaoFeiController extends AuthController {
     }
     public  function del(){
         //权限选择
-        $this->check_group('admin_del');
+        $this->check_group($this->rule_qz."_del");
         $id=I('get.id');
         $map=array(
             'uuid'=>$id
@@ -159,7 +159,7 @@ class XiaoFeiController extends AuthController {
     }
     public function handle($id){
         //权限选择
-        $this->check_group('admin_edit');
+        $this->check_group($this->rule_qz."_edit");
         $model =M("XiaoFei");
         $type=I('get.type');
         if($type=='true')

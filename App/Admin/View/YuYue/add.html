@@ -35,8 +35,10 @@
                                     <label class="col-sm-12">{{ :lang('科室','handle') }}</label>
                                     <div class="col-sm-4" >
                                         <input type="hidden" name="ksall_id" id="ksall_id">
-                                        <select class="form-control"  required="required" id="ks_id" data-all="ksall_id"  name="ks_id" data-datachenge='1' data-close="#kst_id,#kstt_id"  data-type="ks"  data-next="kst_id"  data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
-                                            <option value="">{{ :lang('请选择科室<','handle') }}</option>
+                                        <select class="form-control"  required="required" id="ks_id" data-all="ksall_id"
+                                                name="ks_id" data-datachenge='1' data-close="#kst_id,#kstt_id"
+                                                data-type="ks"  data-next="kst_id"  data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
+                                            <option value="">{{ :lang('请选择科室','handle') }}</option>
                                             {{ :get_keshi() }}
                                         </select>
                                     </div>
@@ -60,7 +62,8 @@
                                     <label class="col-sm-12">{{ :lang('病人来源','handle') }}</label>
                                     <div class="col-sm-4">
                                         <input type="hidden" name="lyall_id" id="lyall_id">
-                                        <select class="form-control"  required="required" id="ly_id"   name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id"  data-type="ly"  data-next="lyt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+                                        <select class="form-control"  required="required" id="ly_id"
+                                                name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id"  data-type="ly"  data-next="lyt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
 
                                         <option value="">{{ :lang('请选择','handle') }}</option>
                                             <?php
@@ -84,7 +87,8 @@
                                     </div>
                                     <div class="col-sm-4" >
 
-                                        <select class="form-control"  id="lytt_id"   name="lytt_id" data-datachenge='1' data-close=""  data-type="ly"  data-next="lytt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+                                        <select class="form-control"  id="lytt_id"   name="lytt_id" data-datachenge='1' data-close=""
+                                                data-type="ly"  data-next="lytt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
                                             <option value="">{{ :lang('请选择','handle') }}</option>
 
                                         </select>
@@ -134,7 +138,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-12">{{ :lang('初复诊','handle') }}</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" name="is_fz" id="">
+                                        <select class="form-control" name="is_fz" >
                                             <option value="0">{{ :lang('初诊','handle') }}</option>
                                             <option value="1">{{ :lang('复诊','handle') }}</option>
                                         </select>
@@ -143,7 +147,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-12">{{ :lang('意向评定','handle') }}</label>
                                     <div class="col-sm-12">
-                                        <select class="form-control" name="yx_id" id="">
+                                        <select class="form-control" name="yx_id" >
                                             <option value="">{{ :lang('请先选择意向评定','handle') }}</option>
                                             {{ :get_lanmu_onelist('yuyuezl') }}
                                         </select>

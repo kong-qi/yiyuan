@@ -65,6 +65,7 @@ function get_group_rule($groupid){
     {
         $grouparr=array_merge($grouparr,to_arr($v['ruleid']));
     }
+
     return $grouparr;
 }
 /**
@@ -888,6 +889,22 @@ function get_user($uid){
     if(count($user)>0)
     {
         return $user;
+    }
+    return false;
+}
+function checked_on2($str,$id){
+    $arr=str_to_arr($str);
+    if($arr)
+    {
+        return in_array($id,$arr);
+    }
+    return '';
+}
+function str_to_arr($str,$type=","){
+    if($str){
+        $newstr=explode($type,$str);
+        if(!$newstr) return false;
+        return  $newstr;
     }
     return false;
 }
