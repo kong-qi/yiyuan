@@ -51,7 +51,7 @@ class PriceZiDianController extends AuthController {
             $page=$_GET['p'];
         }
         
-        $list =  D('Price')->relation(true)->where($map);
+        $list =  D('Price')->where($map);
 
 
         if(I('sorttype'))
