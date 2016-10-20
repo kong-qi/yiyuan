@@ -9,7 +9,7 @@ class PriceZiDianController extends AuthController {
         //权限选择
 
         $this->check_group($this->rule_qz);
-        $model=D('Price');
+
         $map=array();
         if(IS_GET)
         {
@@ -42,7 +42,7 @@ class PriceZiDianController extends AuthController {
         }
 
 
-        $count =  $model->where($map)->count();// 查询满足要求的总记录数
+        $count =  D('Price')->where($map)->count();// 查询满足要求的总记录数
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'50';
 
         $page=1;
@@ -51,8 +51,9 @@ class PriceZiDianController extends AuthController {
             $page=$_GET['p'];
         }
         
-        $list =  $model->relation(true)->where($map);
-        
+        $list =  D('Price')->relation(true)->where($map);
+
+
         if(I('sorttype'))
         {
             $sorttype=I('sorttype');
