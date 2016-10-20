@@ -75,7 +75,7 @@ class XiaoFeiController extends AuthController {
             }
         }else
         {
-            $rule=get_wangixao_where(array('is_website'=>'1','is_price'=>1,'fid'=>69,'type'=>'bingren'));
+            $rule=get_wangixao_where(array('is_price'=>1,'fid'=>69,'type'=>'bingren'));
           
             $this->rule=$rule;
             $this->display();
@@ -126,7 +126,7 @@ class XiaoFeiController extends AuthController {
 
             $model   =   M('XiaoFei')->where($map)->find();
             
-            $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren','is_price'=>1,'fid'=>69),'1','',$model['xf_id']);
+            $rule=get_wangixao_where(array('type'=>'bingren','is_price'=>1,'fid'=>69),'1','',$model['xf_id']);
 
            
             $this->rule=$rule;

@@ -432,10 +432,27 @@
                                                             class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
                                                 </if>
                                             <elseif condition="$is_yishen eq 1"/>
-                                                <a href="{{ :U('Admin/YuShen/quecheck') }}"
+                                            <!--//医生-->
+                                                <a href="{{ :U('Admin/YuShen/quecheck',array('uuid'=>$v['yuuid'])) }}"
                                                 class="btn btn-xs btn-white" >
                                                 <span class="fa fa-trash "></span>
                                                 {{ :lang('确诊','handle') }}</a>
+                                                <if condition=" check_group('yuyue_showhf')">
+                                                    <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                       class="btn btn-xs btn-white"><span
+                                                            class="fa fa-pencil-square "></span> {{ :lang('查看回访/任务','handle') }}</a>
+                                                </if>
+
+                                            <a href="javascript:void(0)"  data-url="{{ :U('Admin/YuYue/showContent',array('id'=>$v['yuuid'])) }}"
+                                               data-title="查看对话" data-w="50%" data-h="40%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                               class="btn btn-xs btn-white"><span
+                                                        class="fa fa-pencil-square "></span> {{ :lang('对话','handle') }}</a>
+                                                <script>
+
+
+
+                                                </script>
+
                                             <else/>
                                         <div class="box">
                                             

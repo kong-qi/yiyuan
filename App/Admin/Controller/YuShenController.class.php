@@ -2,9 +2,30 @@
 namespace Admin\Controller;
 class YuShenController extends AuthController {
     protected $onname='医生确诊';
-    protected $rule_qz='t';
+    protected $rule_qz='yishenjz';
     public function quecheck(){
-        
+        $this->check_group($this->rule_qz."_add");
+        $id=I('get.uuid');
+
+        $map=array(
+            'uuid'=>$id
+        );
+
+        $model   =   M('YuYue')->where($map)->find();
+
+        $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren'),'1','',$model['xf_id']);
+
+        $this->rule=$rule;
+
+
+
+        if($model) {
+            $this->data =  $model;// 模板变量赋值
+        }else{
+            return $this->error(lang('数据错误','handle'));
+        }
+
+        $this->display();
     }
     public function index(){
         //权限选择
@@ -49,22 +70,38 @@ class YuShenController extends AuthController {
     }
     public function add(){
         //权限选择
-        $this->check_group('days_price_add');
+        $this->check_group($this->rule_qz."_add");
         if(IS_POST)
         {
 
-            $model=D('XiaoFei');
+            $model=D('JieZhen');
 
             if($model->create())
             {
                 $data=$model->create();
                 $data['admin_id']=session('admin_id');
+                //更新预约表
+                $jztime=strtotime($data['jztime']);
+                $ydata['ysz_id']=$data['ysz_id'];
+                $ydata['jztime']=$data['jztime']= $jztime;//接诊时间
+                $ydata['dz_id']=$data['zl_id'];
+                $ydata['id']=$data['yy_id'];
+
+
+                //插入，然后更新
+                /*print_r($ydata);
+                print_r($data);
+                exit();*/
                 $result =    $model->add($data);
+
                 if($result) {
+                    M('YuYue')->data($ydata)->save();
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/kaidan");
+                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    return $this->success('添加成功！', __CONTROLLER__);
+                    // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
@@ -77,11 +114,12 @@ class YuShenController extends AuthController {
             }
         }else
         {
-            $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren'));
           
-            $this->rule=$rule;
             $this->display();
         }
+
+    }
+    public function kaidan($id){
 
     }
     public function edit(){

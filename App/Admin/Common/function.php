@@ -71,7 +71,7 @@ function get_group_rule($groupid){
 /**
  * @param $groupid
  * @return array
- * 取得权限组
+ * 取得权限组里面病人来源的操作
  */
 function get_brly_rule($groupid){
     //算出权限组
@@ -835,6 +835,19 @@ function yuyue_status($checked=''){
         '3'=>'已确诊',
         '4'=>'已改期',
         '5'=>'逾期未到'
+    );
+    if($checked!='')
+    {
+        return $arr[$checked];
+    }
+    return $arr;
+}
+function sf_status($checked=''){
+    $arr=array(
+        '0'=>'未收费',
+        '1'=>'已收费',
+        '3'=>'已收定金',
+
     );
     if($checked!='')
     {

@@ -153,11 +153,16 @@ class YuYueController extends AuthController {
             {
                 unset($map['y1.admin_id']);
             }
+            if(isset($map['y1.ys_id']))
+            {
+                unset($map['y1.ys_id']);
+            }
         }
 
         $model=M('YuYue');
         $filed = '
             y1.uuid as yuuid,
+            y1.zx_content as zx_content,
             y1.zx_mark,
             y1.ys_id as ys_id,
             y1.ynumber,y1.id as yid,y1.admin_id,y1.status as ystatus,y1.ydatetime,y1.ctime as yuctime,y1.zx_content,y1.mark as ymark,
@@ -343,6 +348,7 @@ class YuYueController extends AuthController {
 
                 }
                 //用户存在时
+                $backurl=U('Admin/YuYue/add');
                 if($has_user_id!='')
                 {
                     $result =    $model->add($data);
@@ -350,13 +356,14 @@ class YuYueController extends AuthController {
                         M()->commit();
                         add_log($this->onname.'：'.$data['name'].'添加成功');
                         $msg=lang('添加成功','handle');
-                        return $this->success($msg."预约号为：". $data['ynumber'],'/Admin/YuYue/add');
+
+                        return $this->success($msg."预约号为：". $data['ynumber'],$backurl);
                         //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
 
 
                     }else{
                         M()->rollback();
-                        add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/YuYue/add');
+                        add_log($this->onname.'：'.$data['name'].'添加失败');
                         $msg=lang('添加失败','handle');
                         return $this->success($msg);
                     }
@@ -371,13 +378,13 @@ class YuYueController extends AuthController {
                         M()->commit();
                         add_log($this->onname.'：'.$data['name'].'添加成功');
                         $msg=lang('添加成功','handle');
-                        return $this->success($msg."预约号为：". $data['ynumber']);
+                        return $this->success($msg."预约号为：". $data['ynumber'],$backurl);
                         //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
 
 
                     }else{
                         M()->rollback();
-                        add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
+                        add_log($this->onname.'：'.$data['name'].'添加失败',$backurl);
                         $msg=lang('添加失败','handle');
                         return $this->success($msg);
                     }
@@ -691,6 +698,35 @@ class YuYueController extends AuthController {
         {
             add_log($this->onname.'：'.$logmsg.'失败');
             return $this->error(lang('更新失败','handle'));
+        }
+    }
+    public function showContent(){
+        $id=I('get.id');
+        //自己查看自己的
+        if(!check_group('root'))
+        {
+            $map['admin_id']=session('admin_id');
+        }
+
+
+        $map=array(
+            'uuid'=>$id
+        );
+
+        $model   = D('YuYue')->relation(true)->where($map)->find();
+
+        if($model) {
+            $this->data =  $model;// 模板变量赋值
+        }else{
+            return $this->error(lang('数据错误','handle'));
+        }
+        if(I("get.tpl"))
+        {
+            $this->assign('back_url',I('get.backurl'));
+            return $this->display(I("get.tpl"));
+        }else
+        {
+            return $this->display();
         }
     }
 }

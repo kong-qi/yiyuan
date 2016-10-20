@@ -50,8 +50,8 @@ class LoginController extends Controller
                         session('uuid',$ckpwd['uuid']);
                         session('nameinfo',json_encode($ckpwd));
                         session('uniqid',$ckpwd['uniqid']);
-                        session('group',(get_group_rule($ckpwd['groupid'])));
-                        session('brid',(get_brly_rule($ckpwd['groupid'])));
+                        session('group',(get_group_rule($ckpwd['groupid'])));//取得权限字符串
+                        session('brid',(get_brly_rule($ckpwd['groupid'])));//取得B人来源
                         add_log('登录成功');
                        
                         return $this->success(lang('登录成功','login'),U('Admin/Index/index'));
