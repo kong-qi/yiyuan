@@ -10,7 +10,7 @@
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
                 <h3 class="pull-right ">
-                    <a href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                    <a href="{{ :U('Admin/YuYue/index',array('is_yushen'=>'1')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
                 </h3>
             </div>
             <div class="box-content">
@@ -31,11 +31,36 @@
                                     <th>{{ :lang('内容','filed') }}</th>
                                 </tr>
                                 <tr>
-                                    <td align="right">{{ :lang('接诊时间','filed') }}</td>
+                                    <td align="right">{{ :lang('开单时间','filed') }}</td>
                                     <td>
-                                        <input type="text" required name="jztime" value="{{ :date('Y-m-d H:i:s') }}"
+                                        <input type="text" required name="kd_time" value="{{ :date('Y-m-d H:i:s') }}"
                                                size="80" class="form-control"
                                                onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">{{ :lang('消费项目','filed') }}</td>
+                                    <td>
+                                        <div class="box">
+                                            <table class="table">
+                                                <tr>
+                                                    <td colspan="3">
+                                                        lkdff
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        单价: <input type="text">
+                                                    </td>
+                                                    <td>
+                                                        数量: <input type="text">
+                                                    </td>
+                                                    <td>
+                                                        总计: <input type="text">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -46,11 +71,19 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="right">{{ :lang('接诊时间','filed') }}</td>
+                                    <td align="right">{{ :lang('是否按疗效消费','filed') }}</td>
                                     <td>
-                                        <input type="text" required name="jztime" value="{{ :date('Y-m-d H:i:s') }}"
-                                               size="80" class="form-control"
-                                               onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})">
+                                        <select name="" id="" class="form-control">
+                                            <option value="0">否</option>
+                                            <option value="1">是</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">{{ :lang('开单人','filed') }}</td>
+                                    <td>
+
+                                        <input type="text" class="from-control" name="kd_name">
                                     </td>
                                 </tr>
 

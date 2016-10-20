@@ -4,6 +4,7 @@ use Think\Model;
 use Think\Model\RelationModel;
 class PriceModel extends RelationModel {
     protected $_validate = array(
+        
         array('name','require','名称为必须'), //默认情况下用正则进行验证
 
         //array('ename','require','英文名为必须',), // 在新增的时候验证name字段是否唯一

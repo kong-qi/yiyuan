@@ -96,7 +96,7 @@ class YuShenController extends AuthController {
                 $result =    $model->add($data);
                 $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/kaidan",array('id'=>$result,'yid'=>$data['yy_id']));
                 $yresult=M('YuYue')->data($ydata)->save();
-                
+
                 if($result && $yresult) {
 
                     M()->commit();
@@ -127,7 +127,9 @@ class YuShenController extends AuthController {
 
     }
     public function kaidan($id,$yid){
-        echo $id."yid:".$yid;
+        $m=M('JieZhen')->where(array('checked'=>1))->find($id);
+        print_r($m);
+        $this->display();
     }
     public function edit(){
         //权限选择
