@@ -62,12 +62,12 @@ class XiaoFeiController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.window.location='".$backurl."';</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.window.location='".$backurl."';</script>";
                 }
             }else
             {
