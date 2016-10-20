@@ -71,38 +71,100 @@ class QianTaiJieZhenController extends AuthController {
     }
     public function edit(){
         //权限选择
-        $this->check_group($this->rule_qz."_edit");
+        $this->check_group('yuyue_edit');
+        //网站更新信息
+        $this->onname='分配医生';
+
+        $base=I('get.base');
+        //网站更新信息
+        $backurl=$this->burl=U('Admin/YuYue/index?is_qiantai=1&'.base64_decode($base));
+
+
         if(IS_POST)
         {
-            $model =D('LanMu');
-           
-            if($data=$model->create()) {
-                $result =   $model->save();
-               if($result) {
-                   $msg=lang('更新成功');
-                   add_log($this->onname.'：'.$data['name'].'更新成功');
-                    return  $this->success($msg);
+            $model =D('YuYue');
+            $postdata=I('post.');
+            if($model->create()) {
+                $data=$model->create();
+
+                $user_arr=array(
+                    'name',
+                    'qq',
+                    'sex',
+                    'birthday',
+                    'age',
+                    'tel',
+                    'is_jiehun',
+                    'admin_id',
+                    'email',
+                    'othetel'
+
+                );
+                $user=array();
+                foreach ($user_arr as $uv)
+                {
+                    if($postdata[$uv]!='')
+                    {
+                        $user[$uv]=$postdata[$uv];
+                    }
+
+                }
+                //如果为空，则返回null
+
+                $user['id']=$data['user_id'];
+
+
+                foreach ($data as $k=>$v)
+                {
+                    if($v=='')
+                    {
+                        unset($data[$k]);
+                    }
+                }
+
+                if(count($user)>1)
+                {
+                    M("User")->save($user);
+                }
+
+                $result =   $model->save($data);
+
+                if($result) {
+                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    $msg=lang('更新成功','handle');
+
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.window.location='".$backurl."';</script>";
+
+                    //return  $this->success($msg);
                 }else{
-                   $msg=lang('数据一样，无需更新');
-                    return $this->error($msg);
+                    $msg=lang('数据一样无更新','handle');
+                    //return  $this->success(lang('无更新','handle'));
+
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.window.location='".$backurl."';</script>";
+
                 }
             }else{
                 return $this->error($model->getError());
             }
         }else{
             $id=I('get.uuid');
+            //自己查看自己的
+
             $map=array(
                 'uuid'=>$id
             );
 
-            $model   =   M('LanMu')->where($map)->find();
+            $model   = D('YuYue')->relation(true)->where($map)->find();
 
             if($model) {
                 $this->data =  $model;// 模板变量赋值
             }else{
-                return $this->error('数据错误');
+                return $this->error(lang('数据错误','handle'));
             }
-            $this->display();
+
+                return $this->display('YuYue:qitai');
+
+
         }
     }
     public  function del(){

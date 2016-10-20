@@ -14,9 +14,12 @@
         <div class="box">
             <div class="col-sm-12">
                 <form action='{{ :U(MODULE_NAME ."/".CONTROLLER_NAME."/index") }}' method="get" id="contact-form">
-
+                    <input type="hidden" name="is_huifang" value="{{ $is_huifang }}">
+                    <input type="hidden" name="is_website" value="{{ $is_website }}">
+                    <input type="hidden" name="is_qiantai"  value="{{ $is_qiantai }}">
+                    <input type="hidden" name="is_yishen" value="{{ $is_yishen }}">
                     <div class="col-sm-12" style="padding:0px;">
-                        <div class="ibox float-e-margins" id="shoujisf1">
+                        <div class="ibox float-e-margins" >
                             <div class="ibox-title">
                                 <h5><a class="collapse-link">筛查选项</a></h5>
                                 <div class="ibox-tools">
@@ -25,7 +28,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="ibox-content" style="padding-left:0px; padding-right:0px;" id="shoujisf3">
+                            <div class="ibox-content" style="padding-left:0px; padding-right:0px;" >
                                 <div class="roww">
 
                                     <div class="col-sm-3">
@@ -366,10 +369,12 @@
                                         <!-- /竞价更正 -->
                                         <if condition="$is_website">
                                                <if condition=" check_group($rule_qz.'_edit')">
-                                                   <a href="{{ :U("__CONTROLLER__/edit/",array('id'=>$v['yuuid'],'tpl'=>'webedit')) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
-                                                   class="btn btn-xs btn-white" >
-                                                   <span class="fa fa-trash "></span>
-                                                   {{ :lang('修改来源','handle') }}</a>
+
+                                                   <a href="javascript:void(0)"
+                                                      data-title="{{ :lang('修改来源') }}" data-w="500px" data-h="560px;" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                      data-url="{{ :U('Admin/XiaoFei/updateWeb?uuid='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}"
+                                                      class="btn btn-xs btn-white"><span
+                                                           class="fa fa-pencil-square "></span> {{ :lang('修改来源','handle') }}</a>
                                                </if>
                                             <!--//回访人员-->
                                             <elseif condition="$is_huifang eq 1"/>
@@ -403,12 +408,13 @@
                                             <elseif condition="$is_qiantai eq 1"/>
                                                 <if condition=" check_group('qiantaijz_add')">
                                                     <if condition="$v['ys_id']==''">
-                                                        <a href="javascript:void(0)"  data-url="{{ :U(MODULE_NAME ."/".CONTROLLER_NAME."/edit/",array('id'=>$v['yuuid'],'tpl'=>'qitai','close'=>'1')) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                        <a href="javascript:void(0)"
                                                         data-title="{{ :lang('分配医生') }}" data-w="500px" data-h="560px;" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+                                                           data-url="{{ :U('Admin/QianTaiJieZhen/edit?uuid='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}"
                                                            class="btn btn-xs btn-white"><span
                                                                 class="fa fa-pencil-square "></span> {{ :lang('分配医生','handle') }}</a>
                                                         <else/>
-                                                        <a href="javascript:void(0)"  data-url="{{ :U(MODULE_NAME ."/".CONTROLLER_NAME."/edit/",array('id'=>$v['yuuid'],'tpl'=>'qitai','close'=>'1')) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                        <a href="javascript:void(0)" data-url="{{ :U('Admin/QianTaiJieZhen/edit?uuid='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}"
                                                         data-title="{{ :lang('分配医生') }}" data-w="500px" data-h="560px;" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                         class="btn btn-xs btn-primary"><span
                                                             class="fa fa-pencil-square "></span> {{ :lang('已分配医生','handle') }}</a>
@@ -445,7 +451,7 @@
                                                         class="fa fa-pencil-square "></span> {{ :lang('短信','handle') }}</a>
                                             </if>
                                             <if condition=" check_group($rule_qz.'_edit')">
-                                                <a href="{{ :U(MODULE_NAME ."/".CONTROLLER_NAME."/edit/",array('id'=>$v['yuuid'])) }}?base={{ :base64_encode($_SERVER['QUERY_STRING']) }}"
+                                                <a href="{{ :U('Admin/YuYue/edit?id='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}"
                                                 class="btn btn-xs btn-white" >
                                                 <span class="fa fa-trash "></span>
                                                 {{ :lang('修改','handle') }}</a>

@@ -139,10 +139,20 @@ class YuYueController extends AuthController {
         if(I('get.is_qiantai'))
         {
             $is_qiantai=1;
+            //关闭自己的自己信息
+            if(isset($map['y1.admin_id']))
+            {
+                unset($map['y1.admin_id']);
+            }
         }
         if(I('get.is_yishen'))
         {
             $is_yishen=1;
+            //关闭自己的自己信息
+            if(isset($map['y1.admin_id']))
+            {
+                unset($map['y1.admin_id']);
+            }
         }
 
         $model=M('YuYue');
@@ -512,11 +522,6 @@ class YuYueController extends AuthController {
         //权限选择
         $base=I('get.base');
         //网站更新信息
-        if(I('get.is_website'))
-        {
-            
-        }
-        
         $this->burl=U('Admin/YuYue/index')."?".base64_decode($base);
 
         $this->check_group('yuyue_edit');
@@ -589,6 +594,8 @@ class YuYueController extends AuthController {
             {
                 $map['admin_id']=session('admin_id');
             }
+
+
             $map=array(
                 'uuid'=>$id
             );

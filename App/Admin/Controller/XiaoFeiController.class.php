@@ -75,7 +75,7 @@ class XiaoFeiController extends AuthController {
             }
         }else
         {
-            $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren'));
+            $rule=get_wangixao_where(array('is_website'=>'1','is_price'=>1,'fid'=>69,'type'=>'bingren'));
           
             $this->rule=$rule;
             $this->display();
@@ -126,7 +126,8 @@ class XiaoFeiController extends AuthController {
 
             $model   =   M('XiaoFei')->where($map)->find();
             
-            $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren'),'1','',$model['xf_id']);
+            $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren','is_price'=>1,'fid'=>69),'1','',$model['xf_id']);
+
            
             $this->rule=$rule;
 
@@ -186,6 +187,104 @@ class XiaoFeiController extends AuthController {
             return  $this->success(lang('更新失败','handle'));
             $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index ");
             echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+        }
+    }
+    public function updateWeb(){
+        //权限选择
+        $this->check_group('yuyue_edit');
+        //网站更新信息
+        $this->onname='分配医生';
+
+        $base=I('get.base');
+        //网站更新信息
+        $backurl=$this->burl=U('Admin/YuYue/index?is_qiantai=1&'.base64_decode($base));
+
+
+        if(IS_POST)
+        {
+            $model =D('YuYue');
+            $postdata=I('post.');
+            if($model->create()) {
+                $data=$model->create();
+
+                $user_arr=array(
+                    'name',
+                    'qq',
+                    'sex',
+                    'birthday',
+                    'age',
+                    'tel',
+                    'is_jiehun',
+                    'admin_id',
+                    'email',
+                    'othetel'
+
+                );
+                $user=array();
+                foreach ($user_arr as $uv)
+                {
+                    if($postdata[$uv]!='')
+                    {
+                        $user[$uv]=$postdata[$uv];
+                    }
+
+                }
+                //如果为空，则返回null
+
+                $user['id']=$data['user_id'];
+
+
+                foreach ($data as $k=>$v)
+                {
+                    if($v=='')
+                    {
+                        unset($data[$k]);
+                    }
+                }
+
+                if(count($user)>1)
+                {
+                    M("User")->save($user);
+                }
+
+                $result =   $model->save($data);
+
+                if($result) {
+                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    $msg=lang('更新成功','handle');
+
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.window.location='".$backurl."';</script>";
+
+                    //return  $this->success($msg);
+                }else{
+                    $msg=lang('数据一样无更新','handle');
+                    //return  $this->success(lang('无更新','handle'));
+
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.window.location='".$backurl."';</script>";
+
+                }
+            }else{
+                return $this->error($model->getError());
+            }
+        }else{
+            $id=I('get.uuid');
+            //自己查看自己的
+
+            $map=array(
+                'uuid'=>$id
+            );
+
+            $model   = D('YuYue')->relation(true)->where($map)->find();
+
+            if($model) {
+                $this->data =  $model;// 模板变量赋值
+            }else{
+                return $this->error(lang('数据错误','handle'));
+            }
+
+            return $this->display('YuYue:webedit');
+
+
         }
     }
 }
