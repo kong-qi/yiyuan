@@ -1,5 +1,6 @@
 <?php
 namespace Admin\Model;
+use Think\Model;
 use Think\Model\RelationModel;
 class PriceModel extends RelationModel {
     protected $_validate = array(

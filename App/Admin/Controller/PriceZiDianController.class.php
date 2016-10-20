@@ -52,6 +52,7 @@ class PriceZiDianController extends AuthController {
         }
         
         $list =  $model->relation(true)->where($map);
+        
         if(I('sorttype'))
         {
             $sorttype=I('sorttype');
