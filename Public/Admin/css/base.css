@@ -181,6 +181,8 @@ select {
 }
 .cl {
   clear: both  !important;
+  content: '';
+  display: block;
 }
 .table {
   background-color: #F9F9F9;
@@ -673,4 +675,10 @@ select {
   overflow-y: auto;
   background: #fff;
   padding: 10px;
+}
+.change_price .price_item {
+  cursor: pointer;
+}
+.change_price .price_item_active {
+  border: 1px solid #428bca;
 }

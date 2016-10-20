@@ -30,7 +30,7 @@
                         </div>
                        <div class="input-group m-b" style="margin-bottom:5px;">
                            <span class="input-group-addon">{{ :lang('消费日期','filed') }}</span>
-                           <input id="shengri" class="form-control"  required name="cdate" value="{{ $data.cdate }}" type="text"/>
+                           <input id="shengri" class="form-control"  required name="cdate" value="{{ :to_time($data['cdate'],'Y-m-d') }}" type="text"/>
                        </div>
 
 
@@ -51,7 +51,7 @@
         var shengri = {
             elem: '#shengri',
             format: 'YYYY-MM-DD',
-            max: laydate.now(-365 * 10),
+            max: laydate.now(-1),
             istime: false,
             oclear: false,
             choose: function (dates) { //选择好日期的回调

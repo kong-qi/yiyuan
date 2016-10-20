@@ -72,6 +72,41 @@ class AdminController extends AuthController {
         }
 
     }
+     public function ysadd(){
+        //权限选择
+        $this->check_group('admin_add');
+        if(IS_POST)
+        {
+
+            $model=D(CONTROLLER_NAME);
+
+            if($model->create())
+            {
+                $data=$model->create();
+                $result =    $model->add();
+                if($result) {
+                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    $msg=lang('添加成功','handle');
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+                }else{
+                    add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
+                    $msg=lang('添加失败','handle');
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+                }
+            }else
+            {
+                $this->error($model->getError());
+            }
+        }else
+        {
+            $rule=M('AdminGroup')->where(array('checked'=>1))->select();
+            $this->assign('rule',$rule);// 赋值数据集
+            $this->display();
+        }
+
+    }
     public function edit(){
         //权限选择
 

@@ -242,7 +242,7 @@
                                     <div class="col-sm-3">
                                         <label class="col-sm-12 control-label">&nbsp;</label>
                                         <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
-                                        <a href="{{ :U('Admin/YuYue/index') }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
+                                        <!-- <a href="{{ :U('Admin/YuYue/index',$_SERVER['QUERY_STRING']) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}{{ $_SERVER['QUERY_STRING'] }}</a> -->
 
                                     </div>
                                 </div>
@@ -281,7 +281,7 @@
                                             <li>
                                                 <div class="checkbox-inline f-label">
                                                     <input type="checkbox" checked=""
-                                                           onclick="anxia('tdd{{ :($k+1) }}')"
+                                                           onclick="anxia('tdd{{ :($k) }}')"
                                                            class="tdd{{ :($k+1) }}">
                                                     <label>{{ $v }}</label>
                                                 </div>
@@ -307,7 +307,7 @@
                             <th width="40" class="hidden-xs text-center">
                                 <input name="chkall" type="checkbox" id="chkall" value="0"></th>
 
-                            <th id="tdd1" class="hidden-xs">{{ :lang('编号','filed') }}</th>
+                           
                             <th id="tdd2">{{ :lang('预约号','filed') }}</th>
                             <th id="tdd3">{{ :lang('姓名','filed') }}</th>
                             <th id="tdd4">{{ :lang('性别','filed') }}</th>
@@ -329,7 +329,7 @@
                                                                                 name="checkbox[]"
                                                                                 value="{{ $v.yuuid }}"></td>
 
-                                    <td id="tdd1" class="hidden-xs">{{ $v.yid }}</td>
+                                  
                                     <td id="tdd2" ><span class="js-open-more glyphicon glyphicon-plus m-r"></span>{{ $v.ynumber }}
                                     </td>
                                     <td data-log="1" id="tdd3">{{ $v.user_name }}</td>
@@ -433,10 +433,20 @@
                                                 </if>
                                             <elseif condition="$is_yishen eq 1"/>
                                             <!--//医生-->
-                                                <a href="{{ :U('Admin/YuShen/quecheck',array('uuid'=>$v['yuuid'])) }}"
-                                                class="btn btn-xs btn-white" >
-                                                <span class="fa fa-trash "></span>
-                                                {{ :lang('确诊','handle') }}</a>
+
+                                                <if condition="$v['status'] eq 2">
+                                                    <a href="{{ :U('Admin/YuShen/quecheck',array('uuid'=>$v['yuuid'])) }}"
+                                                    class="btn btn-xs btn-white" >
+                                                        <span class="fa fa-trash "></span>
+                                                        {{ :lang('确诊','handle') }}
+                                                    </a>
+                                                    <else/>
+                                                    <a href="#"
+                                                    class="btn btn-xs btn-white" >
+                                                        <span class="fa fa-trash "></span>
+                                                        {{ :lang('查看确诊记录','handle') }}
+                                                    </a>
+                                                </if>
                                                 <if condition=" check_group('yuyue_showhf')">
                                                     <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
                                                        class="btn btn-xs btn-white"><span

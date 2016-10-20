@@ -5,11 +5,14 @@
  * Date: 2016/4/23
  * Time: 11:27
  */
-
+function create_admin_id(){
+    return session('admin_id');
+}
 /**
  * @param $str
  * 是否审核
  */
+
 function checked_str($str,$msg=array('通过','禁用')){
     switch ($str)
     {
@@ -857,7 +860,8 @@ function sf_status($checked=''){
 }
 
 function get_yushen($id=0,$echo=1,$checkid=''){
-    $rule=M('KeShi')->where(array('checked'=>1,'fid'=>0,'type'=>'yushen'))->select();
+    $rule=M('KeShi')->where(array('checked'=>1,'type'=>'yushen'))->select();
+  
     $str='';
     $check='';
     if($echo)
@@ -874,6 +878,38 @@ function get_yushen($id=0,$echo=1,$checkid=''){
                     $check='';
                 }
                 $str.="<option ". $check." value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+get_yushen_ks(0,1);
+function get_yushen_ks($id=0,$echo=1,$checkid=''){
+    $join[] = 'LEFT JOIN __KE_SHI__ a1 ON k1.fid = a1.id';
+    $filed='
+        k1.name as name ,k1.id as id,
+        a1.name as ksname,a1.id as ks_id
+    ';
+    $rule=M('KeShi')->field($filed)->alias('k1')->join($join)->where(array('k1.checked'=>1,'k1.type'=>'yushen'))->select();
+   
+    $str='';
+    $check='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checkid==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option data-ksid='".$v['ks_id']."' ". $check." value='".$v['id']."'>".$v['ksname']."——".$v['name']."</option>";
             }
         }
         return  $str;

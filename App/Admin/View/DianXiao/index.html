@@ -31,14 +31,14 @@
                         <tr>
                             <th width="40" class="hidden-xs text-center">
                                 <input name="chkall" type="checkbox" id="chkall"value="0"></th>
-                            <th width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
+                            <th >{{ :lang('咨询时间','filed') }}</th>
                             <th>{{ :lang('名称','filed') }}</th>
                             <th>{{ :lang('咨询总量','filed') }}</th>
                             <th >{{ :lang('有效对话量','filed') }}</th>
                             <th >{{ :lang('A级对话量','filed') }}</th>
                             <th >{{ :lang('B级对话量','filed') }}</th>
                             <th >{{ :lang('C级对话量','filed') }}</th>
-                            <th class="hidden-xs">{{ :lang('创建时间','filed') }}</th>
+
 
                             <th >{{ :lang('操作','handle') }}</th>
                         </tr>
@@ -48,8 +48,8 @@
 
                                     <td align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select" name="checkbox[]"
                                                               value="{{ $v.guuid }}"></td>
+                                    <td class="hidden-xs">{{ :date('d-m-Y',($v['cdate'])) }}</td>
 
-                                    <td class="hidden-xs">{{ $v.gid }}</td>
                                      <td >{{ $v.name }}</td>
                                     <td>{{ :$v['aduihua']+$v['bduihua']+$v['cduihua'] }}</td>
                                     <td>{{ :$v['aduihua']+$v['bduihua'] }}</td>
@@ -136,7 +136,7 @@
          title: "{{ :lang('添加','handle') }}",
          shadeClose: true,
          shade: 0.8,
-         area: ['310px', '380px'],
+         area: ['400px', '400px'],
          content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}?uuid=",
          cancel: function(index){
          //window.location.reload()
@@ -155,7 +155,7 @@
                 title: "{{ :lang('修改','handle') }}",
                 shadeClose: true,
                 shade: 0.8,
-                area: ['310px', '380px'],
+                area: ['400px', '400px'],
                 content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=" + title,
                 cancel: function (index) {
                     //window.location.reload()

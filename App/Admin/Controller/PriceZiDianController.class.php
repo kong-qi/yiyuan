@@ -64,6 +64,7 @@ class PriceZiDianController extends AuthController {
                     array(
                         $sorttype=>$sort
                     )
+                    
                 );
             }
 
@@ -335,4 +336,5 @@ class PriceZiDianController extends AuthController {
             return $this->error(lang('更新失败','handle'));
         }
     }
+   
 }

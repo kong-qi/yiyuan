@@ -13,7 +13,7 @@
                     <div class="ibox-content">
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('名字','filed') }}</span>
-                            <input type="hidden" name="cdate" value="{{ :date('Y-m-d',time()) }}">
+
                             <select name="gj_id" class="form-control" required>
                                 <option value="">{{ :lang('请选择','filed') }}</option>
                                 {{ $rule }}
@@ -40,6 +40,10 @@
                             <span class="input-group-addon">{{ :lang('C级对话量','filed') }}</span>
                             <input class="form-control" required min="0" name="cduihua" value="" type="text"/>
                         </div>
+                        <div class="input-group m-b" style="margin-bottom:5px;">
+                            <span class="input-group-addon">{{ :lang('咨询日期','filed') }}</span>
+                            <input id="shengri" class="form-control"  required  name="cdate" value="{{ :date('Y-m-d',time()) }}" type="text"/>
+                        </div>
 
 
 
@@ -56,6 +60,7 @@
 
 </block>
 <block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
     <script>
 
         $.validator.setDefaults({
@@ -71,6 +76,19 @@
         });
         $().ready(function () {
             $("#validate").validate();
+            var shengri = {
+                elem: '#shengri',
+                format: 'YYYY-MM-DD',
+                max: laydate.now(-365 * 10),
+                istime: false,
+                oclear: false,
+                choose: function (dates) { //选择好日期的回调
+
+                    $("#shengri").val();
+
+                }
+            };
+            laydate(shengri);
         });
 
     </script>

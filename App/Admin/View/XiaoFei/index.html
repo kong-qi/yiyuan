@@ -50,7 +50,7 @@
                                  <!--   <td align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select" name="checkbox[]"
                                                               value="{{ $v.uuid }}"></td>-->
 
-                                    <td class="hidden-xs">{{ :date('d-m-Y',strtotime($v['cdate'])) }}</td>
+                                    <td class="hidden-xs">{{ :date('d-m-Y',($v['cdate'])) }}</td>
                                     <td >{{ $v.name }}</td>
                                     <td>{{ $v.clicks }}</td>
                                     <td >{{ $v.shows }}</td>

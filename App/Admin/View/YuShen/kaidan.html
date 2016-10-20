@@ -16,10 +16,10 @@
             <div class="box-content">
                 <div class="form-warp">
 
-                    <form action="{{ :U('Admin/YuShen/add') }}" method="post" id="validate">
-                        <input type="hidden" name="yy_id" value="{{ $data.id }}">
+                    <form action="{{ :U('Admin/YuShen/postKaiDan') }}" method="post" id="validate">
+                        <input type="hidden" name="yuyue_id" value="{{ $data.id }}">
                         <input type="hidden" name="user_id" value="{{ $data.user_id }}">
-
+                         <input type="hidden" name="price_show" id="price_show">
                         <input
                             type="hidden" name="">
                         <div class="tab-box">
@@ -41,41 +41,34 @@
                                 <tr>
                                     <td align="right">{{ :lang('消费项目','filed') }}</td>
                                     <td>
-                                        <div class="box">
-                                            <table class="table">
-                                                <tr>
-                                                    <td colspan="3">
-                                                        lkdff
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        单价: <input type="text">
-                                                    </td>
-                                                    <td>
-                                                        数量: <input type="text">
-                                                    </td>
-                                                    <td>
-                                                        总计: <input type="text">
-                                                    </td>
-                                                </tr>
-                                            </table>
+                                        <a class="btn btn-success m-b" onclick="price_chane('{{ :U("Admin/YuShen/xiaofei") }}','.insert_price_more','#price_total')">{{ :lang('添加消费项目') }}</a>
+                                        <div class="insert_price_more">
+                                            
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="right">{{ :lang('总价','filed') }}</td>
                                     <td>
-                                        <input type="text" required name="price_total" value=""
-                                               size="80" class="form-control">
+                                        <input type="text" required name="price_total" value="0"
+                                               size="80" class="form-control" readonly="" id="price_total">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="right">{{ :lang('是否按疗效消费','filed') }}</td>
                                     <td>
-                                        <select name="" id="" class="form-control">
+                                        <select name="is_liaoxiao" id="" class="form-control">
                                             <option value="0">否</option>
                                             <option value="1">是</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">{{ :lang('消费状态','filed') }}</td>
+                                    <td>
+                                        <select name="shoufei_id" required id="" class="form-control">
+                                            <option value="">{{ :lang('请选择状态') }}</option>
+                                            {{ :get_lanmu_onelist('shuofei') }}
                                         </select>
                                     </td>
                                 </tr>
@@ -83,7 +76,7 @@
                                     <td align="right">{{ :lang('开单人','filed') }}</td>
                                     <td>
 
-                                        <input type="text" class="from-control" name="kd_name">
+                                        <input type="text" class="from-control" value="{{ :session('name') }}" name="kd_name">
                                     </td>
                                 </tr>
 
@@ -111,56 +104,20 @@
 </block>
 <block name="add_foot_js">
     <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
-    {{ :load_ueditor() }}
-    <if condition="$data['ks_id'] neq ''">
-        <script>
-            $(function () {
-                get_tks("{{ $data['ks_id'] }}");
-            })
-
-        </script>
-    </if>
-    <if condition="$data['kst_id'] neq ''">
-        <script>
-            $(function () {
-                get_tks2("{{ $data['kst_id'] }}");
-            })
-
-        </script>
-    </if>
+  
 
     <script>
-        bd_ueditor('mark',120);
-        function get_tks($id) {
-            $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
-            $tfid = '{{ :I("get.kst_id") }}';
-            log($tfid);
-            $str = "<option value=''>无</option>";
-            if ($id == '') {
-                $("#kstt_id").empty().append($str);
-            }
-            $.getJSON($url, {'id': $id, 'tfid': $tfid}, function (json, textStatus) {
-                $("#kst_id").show().empty().append(json.content);
-            });
-            get_tks2('');
-        }
-        function get_tks2($id) {
-            $str = "<option value=''>无</option>";
-            $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
-            $tfid = '{{ :I("get.kstt_id") }}';
-            log($tfid);
-            if ($id == '') {
-                $("#kstt_id").empty().append($str);
-            }
-            $.getJSON($url, {'id': $id, 'tfid': $tfid}, function (json, textStatus) {
-                if (json.content != '') {
-
-                    $("#kstt_id").show().empty().append(json.content);
-                } else {
-                    $("#kstt_id").empty().append($str);
-                }
-            });
-        }
+      
+       function js_total(){
+           $ysum=0;
+           $(".price_heji").each(function(){
+               $ysum+=parseFloat($(this).val());
+                
+               
+           });
+            $ysum=Math.round($ysum);
+           $("#price_total").val($ysum);
+       }
         $.validator.setDefaults({
             highlight: function (e) {
                 $(e).closest("td").removeClass("has-success").addClass("has-error")
@@ -178,45 +135,55 @@
             // validate signup form on keyup and submit
             $("#validate").validate({
 
+                //JSON保存这些开单数据
+                
+
                 submitHandler: function (form) {
                     //设置表单参数
                     //最终区域
 
-                    return_pic_json(".enmoreinsert_file .itempic", "thumbs", 1);
+                    return_price_json(".price_item", "price_show", 1);
+                    $show_str=$(".price_item").length;
+
+                    if($show_str<=0)
+                    {
+                        layer.msg('{{ :lang("请选择消费项目") }}');
+                        return false;
+                    }
                     $(form).ajaxSubmit();
                 }
             });
 
-            $("#ks2_id").change(function () {
-                $url = "{{ :U('Admin/Ajax/getYuShen') }}";
-                $next_id = "ysz_id";
-                $id = $(this).val();
-                $.ajax({
-                    'url': $url,
-                    type: 'get',
-                    data: {
-                        'id': $id,
-                        ysid: "{{ $data.ys_id }}"
-                    },
-                    cache: false,
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.content != '') {
-                            $str = '<option value="">{{ :lang("请选择") }}</option>';
-                            $str += data.content;
-                            $("#" + $next_id).empty().append($str);
+            //价格改变
+            $(document).on('change','.price_jg',function(){
+                
+                $pt=$(this).parents(".panel-body");
+                 
+               
+                 $p=$(this).val();
+                 $t=$pt.find(".price_heji");
+                 $num=$pt.find(".price_num").val();
+                 $t.val($num*$p);
+                 js_total();
 
-                        } else {
-                            $str = "<option value=''>{{ :lang('无') }}</option>";
-                            $("#" + $next_id).empty();
-                            $($closeid).empty().append($str);
+            })
+             //价格改变
+            $(document).on('change','.price_num',function(){
+                
+                $pt=$(this).parents(".panel-body");
+                 
+               
+                 $p=$(this).val();
+                 $t=$pt.find(".price_heji");
+                 $num=$pt.find(".price_jg").val();
+                 $t.val($num*$p);
+                 js_total()
 
+            })
 
-                        }
+           
 
-                    }
-                });
-            }).trigger('change');
+         
         });
 
     </script>

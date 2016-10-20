@@ -1,0 +1,89 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+    <link href="__CSS__/plugins/chosen/chosen.css" rel="stylesheet">
+</block>
+<block name="right">
+    <div class="right-box">
+  
+        
+        <div class="animated fadeInUp">
+            <form action="" method="post" id="validate">
+             <input type="hidden" name="groupid" value='12'>
+
+                <div class="ibox float-e-margins" style="margin-bottom:0px;">
+                   
+                        <div class="input-group m-b" style="margin-bottom:5px;">
+                            <span class="input-group-addon">{{ :lang('账号','filed') }}</span>
+                            <input class="form-control" name="name" type="text" value="" required>
+                        </div>
+                        <div class="input-group m-b" style="margin-bottom:5px;">
+                            <span class="input-group-addon">{{ :lang('密码','filed') }}</span>
+                            <input class="form-control" name="pwd" type="password" required value=""/>
+                        </div>
+                        <div class="input-group m-b"  style="margin-bottom:5px;">
+                            <span class="input-group-addon">{{ :lang('名字','filed') }}</span>
+                            <input class="form-control" name="realname" value="" type="text"/ id="realname">
+                        </div>
+                        <div class="input-group m-b" >
+                            <span class="input-group-addon">{{ :lang('对应医生','filed') }}</span>
+                            
+                               <select name="ys_id"  class="chosen-select form-control ">
+                                   <option value="">{{ :lang('请选择医生') }}</option>
+                                    {{ :get_yushen_ks(0,1) }}
+                               </select>
+                           
+                        </div>
+
+
+                        <div class="form-group" align="center" style="margin-bottom:5px;">
+                            <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('提交','handle') }}</button>
+                        </div>
+                   
+                </div>
+                <div class="cl"></div>
+            </form>
+        </div>
+    </div>
+
+</block>
+<block name="add_foot_js">
+<script src="__JS__/plugins/chosen/chosen.jquery.js"></script>
+    <script>
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function () {
+            $("#validate").validate();
+        });
+
+    </script>
+    <script>
+            $(document).ready(function() {
+                $(".chosen-select").chosen(
+                    {
+                        no_results_text: "没有找到",
+                        width:"100%"
+                    }
+                ).on('change', function(event) {
+                    event.preventDefault();
+                    /* Act on the event */
+                    $("#realname").val($(this).val());
+                    /*parent.$('#menu_key2').val($(this).val());
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭   */
+                });;
+                
+            });
+            
+            
+        </script>
+</block>

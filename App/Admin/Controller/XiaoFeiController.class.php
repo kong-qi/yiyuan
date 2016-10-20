@@ -57,6 +57,7 @@ class XiaoFeiController extends AuthController {
             {
                 $data=$model->create();
                 $data['admin_id']=session('admin_id');
+                $data['cdate']=strtotime($data['cdate']);
                 $result =    $model->add($data);
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
@@ -92,6 +93,7 @@ class XiaoFeiController extends AuthController {
 
             if($model->create()) {
                 $data=$model->create();
+                $data['cdate']=strtotime($data['cdate']);
                 $id=$data['id'];
                 if(($data['pwd'])!='')
                 {

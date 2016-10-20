@@ -134,7 +134,7 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1')) }}">接诊</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1','status'=>'1')) }}">接诊</a>
 
                     </li>
                     <li>
@@ -146,6 +146,7 @@
                 </ul>
             </li>
             </if>
+            <if condition="check_group('yishenjz')">
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
@@ -153,17 +154,24 @@
                     <span class="fa icon-chevron-left arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_yishen'=>'1','status'=>'2')) }}">接待</a>
+                    <if condition="check_group('yishenjz_add')">
+                        <li>
+                            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_yishen'=>'1','status'=>'2')) }}">接待</a>
 
-                    </li>
+                        </li>
+                        <li>
+                            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_yishen'=>'1','status'=>'3')) }}">确诊列表</a>
+
+                        </li>
+                    </if>
                     <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">开单列表</a>
+                        <a class="J_menuItem" href="{{ :U('Admin/YuShen/kaidanList') }}">开单列表</a>
                     </li>
 
                 </ul>
             </li>
-
+            </if>
+            <if condition="check_group('shouyin')">
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
@@ -183,6 +191,7 @@
                     </li>
                 </ul>
             </li>
+            </if>
             <if condition="check_group('hfrenwu') or check_group('huifangset')" >
             <li>
                 <a href="#">
@@ -234,6 +243,9 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <if condition=" check_group('admin')">
+                    <li><a href="{{ :U('Admin/Admin/ysadd') }}" class="J_menuItem">添加医生</a>
+                    </if>
+                    <if condition=" check_group('admin')">
                     <li><a href="{{ :U('Admin/Admin/index') }}" class="J_menuItem">管理员</a>
                     </if>
                     <if condition=" check_group('group')">
@@ -257,6 +269,7 @@
                     </ul>
                 </li>
             </if>
+            <if condition="check_group('tongji') ">
             <li>
                 <a href="#">
                     <i class="fa icon-bar-chart-alt"></i>
@@ -290,6 +303,7 @@
                     </li>
                 </ul>
             </li>
+            </if>
         </ul>
     </div>
 </nav>

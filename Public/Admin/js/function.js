@@ -59,6 +59,49 @@ $(function() {
         });
 
     });
+
+    $(document).on('click', '.js_left_price', function(event) {
+
+
+        var onthis = $(this).parents(".price_item");
+
+
+        var getup = $(this).parents(".price_item").prev(".price_item");
+
+        if (getup.html() != null) {
+
+            $(getup).before(onthis);
+
+        }
+
+    });
+    //下移动
+    $(document).on('click', '.js_right_price', function(event) {
+
+        var onthis = $(this).parents(".price_item");
+        var getup = $(this).parents(".price_item").next(".price_item");
+        if (getup.html() != null) {
+
+            $(getup).after(onthis);
+
+        }
+
+    });
+    //删除
+    $(document).on('click', '.js_remove_price', function(event) {
+        var onthis = $(this).parents(".price_item");
+        layer.confirm('你确定要取消删除吗？', {
+            btn: ['删除', '取消'] //按钮
+        }, function(index) {
+
+            onthis.remove();
+            layer.close(index)
+        }, function(index) {
+
+            layer.close(index)
+        });
+
+    });
 })
 
 function tab() {
@@ -371,6 +414,52 @@ function return_pic_json($item, $insert, $debug) {
     return $result;
 
 }
+//项目价格加上
+function return_price_json($item, $insert, $debug) {
+    var $array = new Array();
+    var title = '';
+    var title2 = '';
+    var price = '';
+    var num='';
+    var total='';
+    var danwei='';
+    var ks_id='';
+    var kst_id='';
+
+    var debug = '';
+
+    $($item).each(function(index, el) {
+        title=$(this).find('.price_title').text();
+        title2=$(this).find('.price_pj').val();
+        price=$(this).find('.price_jg').val();
+        num=$(this).find('.price_num').val();
+        total=$(this).find('.price_heji').val();
+        danwei=$(this).find('.price_dw').val();
+        ks_id=$(this).find('.price_ks').val();
+        kst_id=$(this).find('.price_kst').val();
+       
+        $array.push({ 'title': encodeURI(title), 'title2': encodeURI(title2), 'price':price,'num':num,'total':total,'danwei':danwei });
+    });
+    if ($array.length == '1') {
+        if ($array[0]['title'] == '' || $array[0]['title2'] == '' || $array[0]['ks_id'] == '' || $array[0]['kst_id'] == '' || $array[0]['danwei'] == '' || $array[0]['num'] == '' || $array[0]['total'] == '' ||  $array[0]['price'] == '') {
+            return false;
+        }
+    }
+    if ($debug) {
+        debug = $debug;
+    }
+    $result = JSON.stringify($array);
+    if (debug) {
+        console.log($result);
+    }
+    if ($insert) {
+        console.log($insert);
+        $("input[name='" + $insert + "']").val($result);
+    }
+    return $result;
+
+}
+
 
 function return_pic_json2($item, $insert, $debug) {
     var $array = new Array();
@@ -525,3 +614,77 @@ $("[data-show-phone='1']").on('click',  function(event) {
      
     });
 });
+//价格设置
+function price_chane($url, $inserid,$ytotal, $more) {
+
+    $pic_more = 0;
+    
+    $more=$more || 0;
+
+    $more_input = '';
+
+   
+    var ly = layer.open({
+        type: 2,
+        title: '选择价格',
+        //shadeClose: true,
+        shade: 0.8,
+        closeBtn: 1,
+        btn: ['确定', '取消'],
+        area: ['80%', '80%'],
+        content: $url, //iframe的url
+
+        yes: function(index) {
+            ifrmae = $("#layui-layer-iframe" + index).contents();
+            list_pic = ifrmae.find(".change_price ").find('.active');
+            //alert($filetype);
+            $htmlstr='';
+            $total=0;
+            list_pic.each(function(index, el) {
+                $total+=parseFloat($(this).find('.price_heji').val());
+                $(this).find(".panel-footer").css('display','block');
+                $htmlstr+='<div class="col-xs-6 col-sm-3 price_item">';
+                $htmlstr+=$(this).html();
+                $htmlstr+="</div>";
+
+
+
+            });
+           
+            if($more)
+            {
+                $($inserid).empty.append($htmlstr);
+            }else
+            {
+
+                $($inserid).append($htmlstr);
+            }
+            //console.log($htmlstr);
+            //原来总价加现在的加个
+            $yprice=$($ytotal).val();
+            $ysum=parseFloat($yprice)+parseFloat($total);
+            $ysum=Math.round($ysum);
+            log(parseFloat($yprice));
+            //验证是否为数字
+            reg=/^\d+\.?\d+$/;
+            if(!reg.test($ysum))
+            {
+                layer.msg("数据出错，请确认准确提交");
+            }else
+            {
+
+                $($ytotal).val($ysum);
+                console.log($total);
+                //console.log($htmlstr);
+                layer.close(index);
+            }
+          
+
+
+        }
+    });
+
+
+
+
+}

@@ -24,6 +24,7 @@ class DianXiaoController extends AuthController {
             $page=$_GET['p'];
         }
          $filed = '
+            g1.cdate as cdate,
             g1.uuid as guuid,
             g1.id as gid,
             l1.name,
@@ -56,6 +57,7 @@ class DianXiaoController extends AuthController {
             if($model->create())
             {
                 $data=$model->create();
+                $data['cdate']=strtotime($data['cdate']);
                 $data['admin_id']=session('admin_id');
                 $result =    $model->add($data);
                 if($result) {
@@ -92,6 +94,7 @@ class DianXiaoController extends AuthController {
 
             if($model->create()) {
                 $data=$model->create();
+                $data['cdate']=strtotime($data['cdate']);
                 $id=$data['id'];
                 if(($data['pwd'])!='')
                 {
@@ -145,7 +148,7 @@ class DianXiaoController extends AuthController {
         $map=array(
             'uuid'=>$id
         );
-        $model   =   D(CONTROLLER_NAME);
+        $model   =   D('Gzl');
         $data=$model->where($map)->find();
         $result=$model->where($map)->delete();
         if($result)

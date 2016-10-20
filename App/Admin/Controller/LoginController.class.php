@@ -47,6 +47,7 @@ class LoginController extends Controller
 
                         session('name',$ckpwd['name']);
                         session('admin_id',$ckpwd['id']);
+                        session('ys_id',$ckpwd['ys_id']);
                         session('uuid',$ckpwd['uuid']);
                         session('nameinfo',json_encode($ckpwd));
                         session('uniqid',$ckpwd['uniqid']);

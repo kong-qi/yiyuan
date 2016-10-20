@@ -7,7 +7,7 @@
 
         <div class="animated fadeInUp">
 
-            <form action="{{ :U('Admin/QianTaiJieZhen/add') }}" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
+            <form action="{{ :U('Admin/QianTaiJieZhen/edit') }}" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
                 <div class="ibox-content">
                     <div class="col-sm-12">
 
@@ -64,11 +64,11 @@
                                     <span class="input-group-addon">{{ :lang('预约状态','handle') }}</span>
 
                                     <php>$status=yuyue_status()</php>
-                                    <select class="form-control" name="status" >
-                                        <option value="">全部</option>
+                                    <select class="form-control" name="status" required="" >
+                                        <option value="">{{ :lang('请选择状态') }}</option>
                                         <if condition="$status">
                                             <foreach name="status" item="lv" key="lkey">
-                                                <option value="{{ $lkey }}" {{ :$lkey==$data['status']?"selected='selected'":'' }}>{{ $lv }}</option>
+                                                <option value="{{ $lkey }}" >{{ $lv }}</option>
                                             </foreach>
                                         </if>
                                     </select>
@@ -114,7 +114,8 @@
             },
             errorElement: "span",
             errorPlacement: function (e, r) {
-                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+                layer.msg('{{ :lang("请确认必填项") }}');
+                //e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
                 //e.insertBefore(r.parents(".ibox-content"));
             },
             errorClass: "error",

@@ -7,7 +7,7 @@ class QianTaiJieZhenController extends AuthController {
     
     public function index(){
         //权限选择
-        $this->check_group('jiugouset');
+        $this->check_group('qiantaijz_add');
         $model=M('LanMu');
         $map=array(
             'jg.fid'=>array('in',jigou_id()),
@@ -71,13 +71,13 @@ class QianTaiJieZhenController extends AuthController {
     }
     public function edit(){
         //权限选择
-        $this->check_group('yuyue_edit');
+        $this->check_group('qiantaijz');
         //网站更新信息
         $this->onname='分配医生';
 
         $base=I('get.base');
         //网站更新信息
-        $backurl=$this->burl=U('Admin/YuYue/index?is_qiantai=1&'.base64_decode($base));
+        $backurl=$this->burl=U('Admin/YuYue/index?is_qiantai=1&status=1&'.base64_decode($base));
 
 
         if(IS_POST)
@@ -168,7 +168,7 @@ class QianTaiJieZhenController extends AuthController {
     }
     public  function del(){
         //权限选择
-        $this->check_group('group_del');
+        $this->check_group('qiantaijz_del');
         $id=I('get.id');
         $map=array(
                 'uuid'=>$id

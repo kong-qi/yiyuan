@@ -1,0 +1,404 @@
+<extend name="Layout:index"/>
+<block name="add_css">
+    <link rel="stylesheet" href="__CSS__/sweetalert.css">
+</block>
+<block name="add_js">
+    <script src="__JS__/sweetalert.min.js"></script>
+
+</block>
+<block name="right">
+    <div class="right-box">
+
+        <!-- <div class="box">
+            <div class="col-sm-12">
+                <form action="" method="get" id="contact-form">
+                    <div class="col-sm-12" style="padding:0px;">
+                        <div class="ibox float-e-margins" id="shoujisf1">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">筛查选项</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" style="padding-left:0px; padding-right:0px;" id="shoujisf3">
+                                <div class="roww">
+                                    <div class="col-sm-3">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon"><font color="">所属一级科室</font></span>
+                                            <select class="form-control" name="fid" id="fid">
+        
+                                                <option value="none">所有类别</option>
+                                                <if condition="$subcategory">
+        
+                                                    <foreach name="subcategory" item="v" key="k">
+        
+                                                        <option value="{{ $v.id }}" {{ :$v['id']==I('get.fid')?"selected='selected'":'' }}>{{ $v.name }}</option>
+                                                    </foreach>
+                                                </if>
+        
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon"><font color="">所属二级级科室</font></span>
+                                            <select class="form-control" name="tfid" id="tfid">
+        
+                                                <option value="none">所有类别</option>
+        
+        
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon"><font color="">关键词</font></span>
+                                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}" placeholder="费用名称/票据名称" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon"><font color="red">排序方式</font></span>
+                                            <input type="hidden" name="sorttype" id="sorttype">
+                                            <select name="sort" id="sort" class="form-control">
+                                                <option value="none" data-type="price" {{ :I('get.sort')=='none'?'selected="selected"':'' }}>默认</option>
+                                                <option value="asc" data-type="price" {{ :I('get.sort')=='asc'?'selected="selected"':'' }}>价格从底到高</option>
+                                                <option value="desc" data-type="price"　{{ :I('get.sort')=='desc'?'selected="selected"':'' }}>价格从高到底</option>
+                                            </select>
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-sm-3">
+        
+                                        <button class="btn btn-primary" type="submit">确定筛选</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> -->
+        <div class="box">
+            <div class="box-title">
+                {{ :lang($onname,'menu') }}
+                <h3 class="pull-right">
+                    <a href=#" id="tianjiazh" class="btn btn-xs btn-success"> <span
+                            class="fa fa-pencil-square-o"></span> {{ :lang('添加','handle') }}</a>
+                    <a href=#" id="tianjiazh2" class="btn btn-xs btn-success"> <span
+                            class="fa fa-pencil-square-o"></span> {{ :lang('导入数据','handle') }}</a>
+                </h3>
+            </div>
+            
+
+
+
+                <if condition="$menu_list">
+                    <div class="ibox-title">
+                        <h5><a class="collapse-link">字段选择</a>
+
+                            <div class="keep-open btn-group open" title="列">
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-default btn-outline dropdown-toggle"
+                                            data-toggle="dropdown" aria-expanded="true"
+                                            style="padding:0px 5px; border:0px">
+                                        <i class="glyphicon glyphicon-list"></i>
+                                        <span class="caret"></span>
+                                    </button>
+
+
+                                    <ul class="dropdown-menu" role="menu" style=" padding:10px">
+                                        <foreach name="menu_list" item="v" key="k">
+                                            <li>
+                                                <div class="checkbox-inline f-label">
+                                                    <input type="checkbox" checked="" onclick="anxia('tdd{{ $k }}')"
+                                                           class="tdd{{ $k }}">
+                                                    <label>{{ $v }}</label>
+                                                </div>
+                                            </li>
+                                        </foreach>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </h5>
+
+                    </div>
+
+                </if>
+                <div class="list-box">
+
+                    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table table-hover">
+
+                        <tbody>
+
+                        <tr>
+                        
+                            <th id="tdd2">{{ :lang('开单时间','filed') }}</th>
+                            <th id="tdd3">{{ :lang('姓名','filed') }}</th>
+                            <th id="tdd4">{{ :lang('消费项目','filed') }}</th>
+
+                            <th id="tdd5">{{ :lang('合计总价','filed') }}</th>
+                            <th id="tdd6">{{ :lang('是否疗程消费','filed') }}</th>
+                            <th id="tdd7">{{ :lang('咨询医生','filed') }}</th>
+                          
+                        </tr>
+                        <if condition="$list">
+
+                            <volist name="list" id="v">
+
+                                <tr>
+
+                                  
+                                    <td data-log="1" id="tdd2">{{ :to_time($v['kd_time']) }}</td>
+                                    <td id="tdd3">
+
+                                        <lable class="badge badge-info">{{ $v.user_name }}</lable>
+                                    </td>
+                                    <td id="tdd4">
+                                        <?php
+                                        $show=(json_decode(htmlspecialchars_decode($v['price_show']),true));
+                                        foreach($show as $k=>$sv)
+                                        {
+                                            echo '
+                                                <table class="table">
+                                                    <tr>
+                                                        <td>'.lang("名称").' '.urldecode($sv['title']).'</td>
+                                                        <td>'.lang("单价").' '.urldecode($sv['price']).'</td>
+                                                        <td>'.lang("数量").''.urldecode($sv['num']).'</td>
+                                                        <td>'.lang("总计").' '.urldecode($sv['total']).'</td>
+                                                    </tr>
+                                                </table>
+                                            ';
+                                        }
+                                        ?>
+
+                                    </td>
+
+                                    <td id="tdd5">{{ $v.price_total }}</td>
+                                    <td id="tdd6">{{ :$v['is_liaoxiao']==1?'是':'否' }}</td>
+                                    <td id="tdd7">{{ $v.kd_name }}</td>
+                                    
+                                </tr>
+
+                            </volist>
+
+                            <else/>
+                            <tr>
+                                <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
+                            </tr>
+                        </if>
+                        </tbody>
+
+
+                    </table>
+
+                </div>
+               <!--  <div class="row">
+                   <div class="col-xs-6">
+                       <div class="m-b">
+                           <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
+                              data-model="LanMu"
+                              data-handle="del" data-handle-check="1" data-handle-value=""><span
+                                   class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
+                           <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
+                              data-model="LanMu"
+                              data-handle="sort" data-handle-check="1" data-handle-value="0"><span
+                                   class="fa fa-arrows-v"></span> {{ :lang('排序','handle') }}</a>
+                           <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
+                              data-model="LanMu"
+                              data-handle="checked" data-handle-check="1" data-handle-value="1"><span
+                                   class="fa fa-check"></span> {{ :lang('启用','handle') }}</a>
+                           <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
+                              data-model="LanMu"
+                              data-handle="checked" data-handle-check="1" data-handle-value="0"><span
+                                   class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
+               
+                       </div>
+                   </div>
+                   <div class="col-xs-6">
+               
+                       <div class="pagee">{{ $page }}</div>
+                   </div>
+               </div> -->
+
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+</block>
+<block name="add_foot_js">
+    <script>
+
+
+        $('#tianjiazh').on('click', function() {
+            layer.open({
+                type: 2,
+                title: "{{ :lang('添加','handle') }}",
+                shadeClose: true,
+                shade: 0.8,
+                area: ['500px', '500px'],
+                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}",
+                cancel: function(index){
+                    window.location.reload()
+
+                }
+            });
+        });
+        $('#tianjiazh2').on('click', function() {
+            layer.open({
+                type: 2,
+                title: "{{ :lang('添加','handle') }}",
+                shadeClose: true,
+                shade: 0.8,
+                area: ['80%', '400px'],
+                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/excel/") }}",
+                cancel: function(index){
+                    window.location.reload()
+
+                }
+            });
+        });
+
+        $('[id=xiugaizh]').on('click', function (zhid) {
+            var title = $(zhid.target).attr("data-uuid");
+            layer.open({
+                type: 2,
+                title: "{{ :lang('修改','handle') }}",
+                shadeClose: true,
+                shade: 0.8,
+                area: ['500px', '500px'],
+                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=" + title,
+                cancel: function (index) {
+                    window.location.reload()
+
+                }
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            select_all();
+            del_confirm();
+            $("#fid").change(function (e,a) {
+                $id=$(this).val();
+
+                if($id!='none')
+                {
+
+                    $.getJSON("{{ :U('Admin/PriceZiDian/ajaxList/') }}?id="+ $id+"&tfid="+a,function (data) {
+                        console.log(data);
+                        $("#tfid").empty().append(data);
+                    })
+                }else
+                {
+                    $("#tfid").empty();
+                }
+
+            }).triggerHandler('change',"{{ :I('get.tfid') }}");;;
+            //paix
+            $("#sort").change(function () {
+                $v=$(this).find("option:selected").attr('data-type');
+
+                $("#sorttype").val($v);
+            })
+            $(document).on("click", "[data-handle-check='1']", function () {
+                $uuid = checked_box_id();
+                $model = $(this).attr('data-model');
+                $type = $(this).attr('data-handle');
+                $value = $(this).attr('data-handle-value');
+                $filed = $(this).attr('data-handle-filed');
+                $sort = checked_sort_id();
+                $log="{{ $onname }}："+checked_log_name();
+                //console.log($uuid);
+                //console.log($sort);
+                //console.log($log);
+
+                if ($uuid) {
+                    switch ($type) {
+
+                        default:
+
+                            swal({
+                                        title: "{{ :lang('你确定批量操作吗','handle') }}?",
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "{{ :lang('确定','handle') }}",
+                                        cancelButtonText: "{{ :lang('取消','handle') }}",
+                                        closeOnConfirm: false,
+                                        showLoaderOnConfirm: true,
+                                    },
+                                    function () {
+                                        setTimeout(function () {
+                                            $.ajax({
+                                                'url': '{{ :U("Admin/Ajax/handle") }}',
+                                                type: 'post',
+                                                data: {
+                                                    'uuid': $uuid,
+                                                    'model': $model,
+                                                    'value': $value,
+                                                    'type': $type,
+                                                    'filed': $filed,
+                                                    'sort':$sort,
+                                                    'log':$log,
+                                                    'token': '{{ :token() }}'
+                                                },
+                                                cache: false,
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    console.log(data);
+                                                    if (data.error == 0) {
+                                                        swal({
+                                                            title: data.msg,
+                                                            confirmButtonText: "{{ :lang('确定','handle') }}",
+                                                            type: "success",
+                                                            timer: 1000,
+                                                        });
+                                                        window.location.reload();
+                                                    } else {
+                                                        swal({
+                                                            title: data.msg,
+                                                            confirmButtonText:"{{ :lang('确定','handle') }}",
+                                                            type: "warning",
+                                                            timer: 1000,
+                                                        });
+
+                                                    }
+                                                    ;
+                                                }
+                                            })
+                                        }, 2000);
+                                    }
+                            );
+                            break;
+                    }
+
+                } else {
+                    swal("{{ :lang('没有选择','handle') }}");
+                }
+
+            });
+
+        });
+        function anxia(tddid) { //隐藏表格
+            if ($("." + tddid).is(":checked")) {
+                $("[id=" + tddid + "]").css('display', '');;
+            } else {
+                $("[id=" + tddid + "]").css('display', 'none');;
+            }
+        };
+
+    </script>
+</block>

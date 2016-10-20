@@ -83,6 +83,7 @@ class YuShenController extends AuthController {
                 $data['admin_id']=session('admin_id');
                 //更新预约表
                 $jztime=strtotime($data['jztime']);
+                $ydata['status']=3;
                 $ydata['ysz_id']=$data['ysz_id'];
                 $ydata['jztime']=$data['jztime']= $jztime;//接诊时间
                 $ydata['dz_id']=$data['zl_id'];
@@ -127,9 +128,68 @@ class YuShenController extends AuthController {
 
     }
     public function kaidan($id,$yid){
+        $this->onname='开单';
+        $this->assign('onname',$this->onname);
+
         $m=M('JieZhen')->where(array('checked'=>1))->find($id);
-        print_r($m);
+        
+        $data=array(
+
+            );
+        $this->assign($data);
+        $this->data=$m;
         $this->display();
+    }
+    //开单
+    public function postKaiDan(){
+        //更新预约状is_kd为1，开单时间kdtime
+        //权限选择
+        $thin->onname='开单';
+        $this->check_group("kaidan_add");
+        if(IS_POST){
+            M()->startTrans();
+            $model =D('KaiDan');
+
+            if($data=$model->create()) {
+                $data['admin_id']=session('admin_id');
+               
+
+                $ydata['is_kd']=1;
+                $ydata['id']=$data['yuyue_id'];;
+
+                $ydata['kdtime']=$data['kd_time']=strtotime($data['kd_time']);
+                $result =    $model->add($data);
+                
+                $yresult=M('YuYue')->data($ydata)->save();
+
+                $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/kaidanList");
+               
+                if($result && $yresult) {
+
+                    M()->commit();
+                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    $msg=lang('添加成功','handle');
+
+                    add_log($this->onname.'：'.$data['name'].'添加成功');
+
+                    return $this->success('添加成功！',$backurl );
+                    // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }else{
+                    M()->rollback();
+                    add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
+                    $msg=lang('添加失败','handle');
+                    return $this->success('添加失败！',$backurl );
+                    //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }
+
+            }
+        }
+    }
+    //消费项目
+    public function xiaofei(){
+  
+         $this->display();
     }
     public function edit(){
         //权限选择
@@ -236,5 +296,45 @@ class YuShenController extends AuthController {
             $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index ");
             echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
         }
+    }
+    public function kaidanList(){
+        $this->check_group('kaidan');
+        $map=array();
+        $model=M('KaiDan');
+        $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ a1 ON kd.admin_id = a1.id';
+
+        $page=1;
+        if(isset($_GET['p']))
+        {
+            $page=$_GET['p'];
+        }
+         $filed = '
+            kd.id as id,kd.uuid as uuid,kd.kd_time as kd_time,kd.kd_name as kd_name,kd.is_liaoxiao as is_liaoxiao,kd.price_show,kd.price_total,
+            u1.name as user_name
+           
+         ';
+
+        $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
+
+        $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+        $list =  $model->alias('kd')->field($filed)->join($join)->order('kd.id desc')->page( $page.','.$pagesize)->select();
+         $menu_list= array(
+          
+            2=>'开单时间',
+            3=>'姓名',
+            4=>'消费项目',
+            5=>'合计总价',
+            6=>'是否疗程次数消费',
+            7=>'咨询医生',
+           
+           
+            );
+        $this->menu_list=$menu_list;
+
+        $this->assign('list',$list);// 赋值数据集
+        
+
+        $this->display();
     }
 }

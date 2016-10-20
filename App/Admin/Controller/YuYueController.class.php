@@ -6,7 +6,7 @@ class YuYueController extends AuthController {
 
 
     public function index(){
-
+        //print_r(session('group'));
         $this->check_group($this->rule_qz."_show");
         $map=array();
         //自己查看自己的
@@ -147,21 +147,23 @@ class YuYueController extends AuthController {
         }
         if(I('get.is_yishen'))
         {
+            
             $is_yishen=1;
             //关闭自己的自己信息
             if(isset($map['y1.admin_id']))
             {
                 unset($map['y1.admin_id']);
             }
-            if(isset($map['y1.ys_id']))
-            {
-                unset($map['y1.ys_id']);
-            }
+            
+                $map['y1.ys_id']=session('ys_id');
+            
         }
+        //
 
         $model=M('YuYue');
         $filed = '
             y1.uuid as yuuid,
+            y1.status as status,
             y1.zx_content as zx_content,
             y1.zx_mark,
             y1.ys_id as ys_id,
@@ -247,17 +249,17 @@ class YuYueController extends AuthController {
 
 
         $menu_list= array(
-            '编号',
-            '预约号',
-            '姓名',
-            '性别',
-            '预约时间',
-            '登记时间',
-            '预约科室',
-            '预约病种',
-            '预约来源',
-            '预约状态',
-            '操作'
+          
+            1=>'预约号',
+            2=>'姓名',
+            3=>'性别',
+            4=>'预约时间',
+            5=>'登记时间',
+            6=>'预约科室',
+            7=>'预约病种',
+            8=>'预约来源',
+            9=>'预约状态',
+            10=>'操作'
             );
         $this->menu_list=$menu_list;
         $show_rule=array(

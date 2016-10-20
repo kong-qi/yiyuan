@@ -507,7 +507,7 @@ class AjaxController extends AuthController
 
        return $this->ajaxReturn($data);
    }
-   public function getHuifangRenWu(){
+    public function getHuifangRenWu(){
         $uid=I('request.uid');
         $page=I('request.page');
         $pagesize=50;
@@ -559,6 +559,101 @@ class AjaxController extends AuthController
         );
         return $this->ajaxReturn($data);
     }
+    public function getPriceList(){
+
+        $uid=I('request.uid');
+        $page=I('request.page');
+        $fid=I('request.ks_id');
+        $tfid=I('request.kst_id');
+
+        $key=I('request.key');
+
+        $map=array();
+
+        if($fid)
+        {
+            $map['fid']=$fid;
+
+        }
+        if($tfid)
+        {
+            $map['tfid']=$tfid;
+        }
+         if($key)
+        {
+            $map2['name']=array('like','%'.$key.'%');
+            $map2['ticket_name']=array('like','%'.$key.'%');
+            $map2['_logic'] = 'OR';
+            $map['_complex']=$map2;
+           
+           
+        }
+        
+         $pagesize=12;
+        $total=M('Price')->where($map)->count();// 查询满足要求的总记录数
+        $pages=ceil($total/$pagesize);
+        $m=M('Price')->where($map)->order('id desc')->page($page,$pagesize)->select();
+        $str='';
+        if(count($m)>0)
+        {
+            foreach ($m as $key => $v) {
+                
+                if($v['is_update']!='1')
+                {
+                    $price_edit='readonly';
+                }else
+                {
+                    $price_edit='';
+                }
+                $str.='
+                    <div class="col-xs-6 col-sm-3 price_item"">
+                        <div class="panel panel-default >
+                            <input hidden="fid" class="price_ks" value="'.$v['fid'].'">
+                             <input hidden="tfid" class="price_kst" value="'.$v['tfid'].'">
+                             <div class="panel-heading"><span class="price_title">'.$v['name'].'</span></div>
+                             <div class="panel-body">
+                                <div class="input-group">
+                                    <span class="input-group-addon">'.lang('票据名称').'：</span>
+                                    <input type="text" class="form-control price_pj" readonly="" value="'.$v['ticket_name'].'" >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">'.lang('价格').'</span>
+                                    <input type="text"  class="form-control price_jg" min="0" '. $price_edit.' value="'.$v['price'].'" >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">'.lang('单位').'</span>
+                                    <input type="text" class="form-control price_dw" readonly="" value="'.$v['danwei'].'" >
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">'.lang('开单数量').'</span>
+                                    <input type="text" class="form-control price_num"  value="1" placeholder="">
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">'.lang('合计金额').'</span>
+                                    <input type="text" class="form-control price_heji" readonly="" value="'.$v['price'].'" >
+                                </div>
+                                <div class="panel-footer" style="display:none">
+                                    <a href="javascript:void(0)" class="label label-primary js_remove_price">'.lang("删除").'</a>
+                                    <a href="javascript:void(0)" class="label label-primary js_left_price">'.lang("上移动").'</a>
+                                    <a href="javascript:void(0)" class="label label-primary js_right_price">'.lang("下移动").'</a>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                ';
+            }
+        }
+
+        $data=array(
+            'pages'=>$pages,
+            'content'=>$str
+        );
+
+        return $this->ajaxReturn($data);
+       
+    }
 
     //查看手机号码
     public function showPhone($uid=''){
@@ -572,7 +667,7 @@ class AjaxController extends AuthController
             add_smslog($uid);
            
         }
-        return $this->ajaxReturn($data);
+        return '';$this->ajaxReturn($data);
         
     }
 }
