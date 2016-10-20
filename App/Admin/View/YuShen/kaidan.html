@@ -39,104 +39,21 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="right">{{ :lang('科室') }}</td>
-                                    <td align="right">
-                                        <div class="form-group">
-
-                                            <div class="col-sm-4">
-                                                <input type="hidden" name="ksall_id" id="ksall_id">
-                                                <select class="form-control" name="ks_id" id="ks_id"
-                                                        onchange="get_tks(this.value)">
-                                                    <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                                    {{ :get_keshi('0','1',$data['ks_id'] ) }}
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-4">
-
-                                                <select class="form-control" id="kst_id" name="kst_id"
-                                                        onchange="get_tks2(this.value)">
-                                                    <o
-                                                    <option value="">{{ :lang('请选择二级科室','handle') }}</option>
-
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-4">
-
-                                                <select class="form-control" id="kstt_id" name="kstt_id">
-                                                    <option value="">{{ :lang('请选择具体病种','handle') }}</option>
-
-
-                                                </select>
-                                            </div>
-
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td align="right">{{ :lang('医生') }}</td>
-                                    <td align="right">
-
-                                        <div class="col-xs-3">
-                                            <select class="form-control" required="required" id="ks2_id" name="ks_id">
-                                                <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                                {{ :get_keshi('0','1',$data['ks_id'] ) }}
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <select class="form-control" required="required" id="ysz_id" name="ysz_id">
-                                                <option value="">{{ :lang('请选择医生','handle') }}</option>
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- <tr>
-                                    <td align="right">{{ :lang('消费状态') }}</td>
-                                    <td align="right">
-                                       <php>$sfstatus=sf_status()</php>
-                                        <select class="form-control" name="sf_status" >
-                                            <if condition="$sfstatus">
-                                                <foreach name="sfstatus" item="v" key="k">
-                                                    <option value="{{ $k }}">{{ $v }}</option>
-                                                </foreach>
-                                            </if>
-
-                                        </select>
-                                    </td>
-                                </tr>-->
-                                <tr>
-                                    <td align="right">{{ :lang('病人质量评定','handle') }}</td>
-                                    <td align="right">
-                                        <select class="form-control" name="zl_id" required>
-                                            <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
-                                            {{ :get_lanmu_onelist('daozhen','1','','',$data['dz_id']) }}
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('病人术前术后照片') }}</td>
-                                    <td class="enmoreinsert_file">
-                                        <input type="hidden" name="thumbs" value="" size="80"
-                                               class="input insert_input">
-                                        <button type="button" class="btn btn-xs btn-success"
-                                                onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
-                                        <span class="fa fa-image"></span> 上传相册</button>
-                                        <div class="insert_img_more insert_img_more_en">
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('咨询总结') }}</td>
+                                    <td align="right">{{ :lang('总价','filed') }}</td>
                                     <td>
-                                        <div class="input-group m-b" style="margin-bottom:5px;">
-
-
-                                            <textarea name="jz_content" id="mark" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['mark']) }}</textarea>
-                                        </div>
-
+                                        <input type="text" required name="price_total" value=""
+                                               size="80" class="form-control">
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td align="right">{{ :lang('接诊时间','filed') }}</td>
+                                    <td>
+                                        <input type="text" required name="jztime" value="{{ :date('Y-m-d H:i:s') }}"
+                                               size="80" class="form-control"
+                                               onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})">
+                                    </td>
+                                </tr>
+
 
 
                                 </tbody>

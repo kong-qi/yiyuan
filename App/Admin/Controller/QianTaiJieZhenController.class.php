@@ -86,7 +86,6 @@ class QianTaiJieZhenController extends AuthController {
             $postdata=I('post.');
             if($model->create()) {
                 $data=$model->create();
-
                 $user_arr=array(
                     'name',
                     'qq',

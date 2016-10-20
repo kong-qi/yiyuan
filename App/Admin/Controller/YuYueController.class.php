@@ -289,6 +289,7 @@ class YuYueController extends AuthController {
             $postdata=I('post.');
             if($model->create())
             {
+                M()->startTrans();
                 $data=$model->create();
                 //写入数据拉
                 //预约好前缀获取

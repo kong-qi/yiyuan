@@ -78,6 +78,7 @@ class YuShenController extends AuthController {
 
             if($model->create())
             {
+                M()->startTrans();
                 $data=$model->create();
                 $data['admin_id']=session('admin_id');
                 //更新预约表
@@ -93,20 +94,26 @@ class YuShenController extends AuthController {
                 print_r($data);
                 exit();*/
                 $result =    $model->add($data);
+                $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/kaidan",array('id'=>$result,'yid'=>$data['yy_id']));
+                $yresult=M('YuYue')->data($ydata)->save();
+                
+                if($result && $yresult) {
 
-                if($result) {
-                    M('YuYue')->data($ydata)->save();
+                    M()->commit();
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/kaidan");
+
                     add_log($this->onname.'：'.$data['name'].'添加成功');
-                    return $this->success('添加成功！', __CONTROLLER__);
+
+                    return $this->success('添加成功！',$backurl );
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
+                    M()->rollback();
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                    return $this->success('添加失败！',$backurl );
+                    //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }
             }else
             {
@@ -114,13 +121,13 @@ class YuShenController extends AuthController {
             }
         }else
         {
-          
+
             $this->display();
         }
 
     }
-    public function kaidan($id){
-
+    public function kaidan($id,$yid){
+        echo $id."yid:".$yid;
     }
     public function edit(){
         //权限选择
