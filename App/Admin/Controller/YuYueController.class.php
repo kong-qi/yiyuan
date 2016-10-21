@@ -617,13 +617,13 @@ class YuYueController extends AuthController {
             //没有如果没有
             if(!check_group('huifangset')  or !check_group('hfrenwu') or !check_group('qiantaijz') or !check_group('yishenjz') or !check_group('yishenjz') or !check_group('    kaidan') )
             {
-                echo "d";
-                $map['admin_id']=session('admin_id');
+                
+                //$map['admin_id']=session('admin_id');
             }
             
         }
 
-        print_r($map);
+       
 
         $model   = D('YuYue')->relation(true)->where($map)->find();
 
