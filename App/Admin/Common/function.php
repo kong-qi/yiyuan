@@ -151,6 +151,7 @@ function echo_type($str,$array){
     }
 }
 
+
 function lang($cn,$type){
     $chang_lang='cn';
     if(cookie('lang'))
@@ -162,8 +163,34 @@ function lang($cn,$type){
     {
         return $cn;
     }
-    return $cn."(VN)";
-    $lang=array(
+    $lang_list=array();
+    $chache_lang='lang';
+    if(S($chache_lang))
+    {
+        $lang_list=S($chache_lang);
+    }else
+    {
+         $lang=M('Lang')->where(array('checked'=>1,'type'=>$chang_lang))->select();
+         if(count($lang)>0)
+         {
+             foreach ($lang as $key => $value) {
+                 $lang_list[$value['name']]=$value['ename'];
+             }
+         }
+         S($chache_lang,$lang_list,60*60*24*365);
+    }
+   
+    
+   if(array_key_exists($cn,$lang_list))
+    {
+       
+        return $lang_list[ $cn];
+    }else
+    {
+        return $cn;
+    }
+    //return $lang_list[$chang_lang];
+    /*$lang=array(
         'login'=>array(
             '用户名不能为空'=>'Tên người dùng không thể để trống',
             '密码不能为空'=>'Mật khẩu không thể để trống',
@@ -289,8 +316,8 @@ function lang($cn,$type){
             '是否统计到工作量'=>''
 
         ),
-    );
-    return $lang[$type][$cn];
+    );*/
+    
 }
 //操作日志
 function add_log($content){
@@ -888,6 +915,20 @@ function sf_status($checked=''){
         return $arr[$checked];
     }
     return $arr;
+}
+function set_arr_to($table,$where){
+    $map=array('checked'=>1);
+    $map=$where+$map;
+    $js_arr=M($table)->where($map)->select();
+    $narr=array();
+    if(count($js_arr)>0)
+    {
+        foreach ($js_arr as $key => $value) {
+            # code...
+            $narr[$value['id']]=$value['name'];
+        }
+    }
+    return $narr;
 }
 
 function get_yushen($id=0,$echo=1,$checkid=''){

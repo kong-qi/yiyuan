@@ -1,18 +1,22 @@
 <li>
     <a href="#">
         <i class="fa icon-cogs"></i>
-        <span class="nav-label">系统设置</span>
+        <span class="nav-label">{{ :lang('系统设置') }}</span>
         <span class="fa icon-chevron-left arrow"></span>
     </a>
     <ul class="nav nav-second-level">
 
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/Sms/index') }}">短信模版设置</a>
+            <a class="J_menuItem" href="{{ :U('Admin/Sms/index') }}">{{ :lang('短信模版') }}</a>
+            <!--34-->
+        </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/Lang/index') }}">{{ :lang('语言设置') }}</a>
             <!--34-->
         </li>
 
         <li>
-            <a class="J_menuItem" href="/index.php/role/system_auth.html">优惠券</a>
+            <a class="J_menuItem" href="/index.php/role/system_auth.html">{{ :lang('优惠券') }}</a>
         </li>
 
     </ul>

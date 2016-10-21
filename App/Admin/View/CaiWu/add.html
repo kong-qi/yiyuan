@@ -1,0 +1,156 @@
+<extend name="Layout:index" />
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    
+            <div class="sf_box">
+            
+              <div class="sf_part">
+                <dl class="sf_dl">
+                    <dd>{{ :lang('姓名') }}： {{ :$data['user_name'] }}</dd>
+                    <dd>{{ :lang('性别') }}：{{ :$data['user_sex'] }}</dd>
+                    <dd>{{ :lang('年龄') }} {{ :$data['user_age'] }}</dd>
+                    <div class="cl"></div>
+                </dl>
+                 
+              </div>
+              <div class="sf_part">
+                <?php
+                $show=(json_decode(htmlspecialchars_decode($data['price_show']),true));
+                foreach($show as $k=>$sv)
+                {
+                    echo '
+                        <dl class="sf_show">
+                            <dd ><span class="title">'.urldecode($sv['title2']).'</span></dd>
+                            <dd  class="w150">'.lang('价格').':<span class="text-grey">'.($sv['price']).'</span></dd>
+                            <dd class="w120">'.lang('开单数量').':<span class="text-primary">'.($sv['price']).'</span></dd>
+                            <dd class="w150">'.lang('合计金额').':<span class="text-danger">'.($sv['price']).'</span></dd>
+                            <div class="cl"></div>
+                        </dl>
+                       
+                    ';
+                   
+                }
+                ?>
+                 
+
+              </div>
+              <div class="sf_part m-r">
+                  <p class="text-right">
+                      {{ :lang('收费时间') }}：{{ :date('d-m-Y',time()) }}
+                  </p>
+                  <p class="text-right">{{ :lang('收费员') }}：{{ :session('admin_info')['realname'] }}</p>
+              </div>
+               <div class="sf_part m-r">
+                  <p >
+                     <strong>{{ :lang('应收金额') }}：{{ :$data['price_total'] }}</strong>
+                  </p>
+                  <p>
+                      优惠码: <input class="input" type="text" value="KJKDFDF"> <span class="label label-danger">优惠价：1454元</span>
+                  </p>
+                  <p>优惠后：852050</p>
+                  <p>
+                      实收现金: <input class="input" type="text"> 刷卡: <input class="input" type="text"> 储蓄卡: <input class="input" type="text"> 其他调用券: <input class="input" type="text">
+                  </p>
+                  
+              </div>
+              <div class="sf_part">
+                  <p class="text-center">
+                      <a href="#" class="btn btn-success">提交</a>
+                      <a href="#" class="btn btn-white" onclick="javascript:window.print();return false;">打印</a>
+                  </p>
+              </div>
+
+           
+            <div class="cl"></div>
+            </div>
+       
+   
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script>
+    function js_total() {
+        $ysum = 0;
+        $(".price_heji").each(function() {
+            $ysum += parseFloat($(this).val());
+
+
+        });
+        $ysum = Math.round($ysum);
+        $("#price_total").val($ysum);
+    }
+    $.validator.setDefaults({
+        highlight: function(e) {
+            $(e).closest("td").removeClass("has-success").addClass("has-error")
+        },
+        success: function(e) {
+            e.closest("td").removeClass("has-error").addClass("has-success")
+        },
+        errorElement: "span",
+        errorPlacement: function(e, r) {
+            e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+        },
+        errorClass: "error",
+        validClass: "no-error"
+
+    });
+    $().ready(function() {
+        // validate the comment form when it is submitted
+        var e = "<i class='fa fa-times-circle'></i> ";
+
+        // validate signup form on keyup and submit
+        $("#validate").validate({
+
+            //JSON保存这些开单数据
+
+
+            submitHandler: function(form) {
+                //设置表单参数
+                //最终区域
+
+                return_price_json(".price_item", "price_show", 1);
+                $show_str = $(".price_item").length;
+
+                if ($show_str <= 0) {
+                    layer.msg('{{ :lang("请选择消费项目") }}');
+                    return false;
+                }
+                $(form).ajaxSubmit();
+            }
+        });
+
+        //价格改变
+        $(document).on('change', '.price_jg', function() {
+
+                $pt = $(this).parents(".panel-body");
+
+
+                $p = $(this).val();
+                $t = $pt.find(".price_heji");
+                $num = $pt.find(".price_num").val();
+                $t.val($num * $p);
+                js_total();
+
+            })
+            //价格改变
+        $(document).on('change', '.price_num', function() {
+
+            $pt = $(this).parents(".panel-body");
+
+
+            $p = $(this).val();
+            $t = $pt.find(".price_heji");
+            $num = $pt.find(".price_jg").val();
+            $t.val($num * $p);
+            js_total()
+
+        })
+
+
+
+
+    });
+    </script>
+</block>

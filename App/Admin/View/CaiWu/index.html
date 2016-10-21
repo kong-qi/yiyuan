@@ -9,7 +9,7 @@
 <block name="right">
     <div class="right-box">
 
-        <!-- <div class="box">
+       <div class="box">
             <div class="col-sm-12">
                 <form action="" method="get" id="contact-form">
                     <div class="col-sm-12" style="padding:0px;">
@@ -26,24 +26,18 @@
                                 <div class="roww">
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">所属一级科室</font></span>
+                                            <span class="input-group-addon"><font color="">收费状态</font></span>
                                             <select class="form-control" name="fid" id="fid">
         
-                                                <option value="none">所有类别</option>
-                                                <if condition="$subcategory">
-        
-                                                    <foreach name="subcategory" item="v" key="k">
-        
-                                                        <option value="{{ $v.id }}" {{ :$v['id']==I('get.fid')?"selected='selected'":'' }}>{{ $v.name }}</option>
-                                                    </foreach>
-                                                </if>
+                                                <option value="none">全部</option>
+                                                 {{ :get_lanmu_onelist('shuofei',1,'','',I('get.fid')) }}
         
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">所属二级级科室</font></span>
+                                            <span class="input-group-addon"><font color="">结算状态</font></span>
                                             <select class="form-control" name="tfid" id="tfid">
         
                                                 <option value="none">所有类别</option>
@@ -54,33 +48,38 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">关键词</font></span>
+                                            <span class="input-group-addon"><font color="">病人姓名</font></span>
                                             <input name="keyword" type="text" value="{{ :I('get.keyword') }}" placeholder="费用名称/票据名称" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="red">排序方式</font></span>
-                                            <input type="hidden" name="sorttype" id="sorttype">
-                                            <select name="sort" id="sort" class="form-control">
-                                                <option value="none" data-type="price" {{ :I('get.sort')=='none'?'selected="selected"':'' }}>默认</option>
-                                                <option value="asc" data-type="price" {{ :I('get.sort')=='asc'?'selected="selected"':'' }}>价格从底到高</option>
-                                                <option value="desc" data-type="price"　{{ :I('get.sort')=='desc'?'selected="selected"':'' }}>价格从高到底</option>
-                                            </select>
+                                   
+        
+                                    
+                                </div>
+                                <div class="roww">
+                                    <div class="col-sm-3" style="padding:0px;">
+                                        <div class="form-group">
+                                            <label class="col-sm-12 control-label">开单时间</label>
+                                            <div class="col-md-6">
+                                                <input name="djstime" type="text" class="form-control layer-date" value="" placeholder="YYYY-MM-DD hh:mm:ss" id="shijian11">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="djetime" type="text" class="form-control layer-date" value="" placeholder="YYYY-MM-DD hh:mm:ss" id="shijian12">
+                                            </div>
                                         </div>
                                     </div>
-        
-                                    <div class="col-sm-3">
-        
-                                        <button class="btn btn-primary" type="submit">确定筛选</button>
-                                    </div>
+                                    
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="col-sm-12 control-label">&nbsp;</label>
+                                    <button class="btn btn-primary" type="submit">确定筛选</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-        </div> -->
+        </div>
         <div class="box">
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
@@ -132,13 +131,16 @@
 
                         <tr>
                         
-                            <th id="tdd2">{{ :lang('开单时间','filed') }}</th>
+                            <th id="tdd2" width="160">{{ :lang('开单时间','filed') }}</th>
                             <th id="tdd3">{{ :lang('姓名','filed') }}</th>
                             <th id="tdd4">{{ :lang('消费项目','filed') }}</th>
 
                             <th id="tdd5">{{ :lang('合计总价','filed') }}</th>
                             <th id="tdd6">{{ :lang('是否疗程消费','filed') }}</th>
                             <th id="tdd7">{{ :lang('咨询医生','filed') }}</th>
+                            <th id="tdd8">{{ :lang('收费状态','filed') }}</th>
+                            <th id="tdd9">{{ :lang('结算状态','filed') }}</th>
+                            <th id="tdd10">{{ :lang('操作','filed') }}</th>
                           
                         </tr>
                         <if condition="$list">
@@ -148,10 +150,10 @@
                                 <tr>
 
                                   
-                                      <td data-log="1" id="tdd2">{{ :to_time($v['kd_time'],'m-d-Y h:i:s') }}</td>
+                                    <td data-log="1" id="tdd2">{{ :to_time($v['kd_time'],'m-d-Y h:i:s') }}</td>
                                     <td id="tdd3">
-                                        <a href="#">{{ $v.user_name }}</a>
-                                        
+
+                                           <a href="#">{{ $v.user_name }}</a>
                                     </td>
                                     <td id="tdd4" width="500">
                                         <a href="javascript:void" class="btn btn-info js-click" >查看消费详情</a>
@@ -202,6 +204,9 @@
                                     <td id="tdd5">{{ $v.price_total }}</td>
                                     <td id="tdd6">{{ :$v['is_liaoxiao']==1?'是':'否' }}</td>
                                     <td id="tdd7">{{ $v.kd_name }}</td>
+                                    <td id="tdd8"><a href="javascript:void(0)">{{ $v.sfname }}</a></td>
+                                    <td id="tdd9"><a href="javascript:void(0)">{{ $v.jsname }}</a></td>
+                                    <td id="tdd9"><a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1' data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}" data-title="{{ :lang('收费') }}" class="btn btn-primary ">收费</a></td>
                                     
                                 </tr>
 
@@ -260,61 +265,15 @@
 
 </block>
 <block name="add_foot_js">
-    <script>
-
-
-        $('#tianjiazh').on('click', function() {
-            layer.open({
-                type: 2,
-                title: "{{ :lang('添加','handle') }}",
-                shadeClose: true,
-                shade: 0.8,
-                shadeClose: true,
-                area: ['500px', '500px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}",
-                cancel: function(index){
-                    window.location.reload()
-
-                }
-            });
-        });
-        $('#tianjiazh2').on('click', function() {
-            layer.open({
-                type: 2,
-                title: "{{ :lang('添加','handle') }}",
-                shadeClose: true,
-                shade: 0.8,
-                area: ['80%', '400px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/excel/") }}",
-                cancel: function(index){
-                    window.location.reload()
-
-                }
-            });
-        });
-
-        $('[id=xiugaizh]').on('click', function (zhid) {
-            var title = $(zhid.target).attr("data-uuid");
-            layer.open({
-                type: 2,
-                title: "{{ :lang('修改','handle') }}",
-                shadeClose: true,
-                shade: 0.8,
-                area: ['500px', '500px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=" + title,
-                cancel: function (index) {
-                    window.location.reload()
-
-                }
-            });
-        });
-    </script>
+        <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
     <script type="text/javascript">
+
         $(function(){
             $(".js-click").click(function(){
                 $pd=$(this).parents('td').find(".show_price");
                 
                 layer.open({
+                  shadeClose: true,
                   type: 1,
                   title:'{{ :lang("查看开单详情") }}',
                   skin: 'layui-layer-rim', //加上边框
@@ -440,6 +399,26 @@
                 $("[id=" + tddid + "]").css('display', 'none');;
             }
         };
-
+        var shijian11 = {
+            elem: '#shijian11',
+            format: 'YYYY-MM-DD hh:mm:ss',
+            istime: true,
+            istoday: true,
+            choose: function (datas) {
+                shijian12.min = datas; //开始日选好后，重置结束日的最小日期
+                shijian12.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var shijian12 = {
+            elem: '#shijian12',
+            format: 'YYYY-MM-DD hh:mm:ss',
+            istime: true,
+            istoday: true,
+            choose: function (datas) {
+                shijian11.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(shijian11);
+        laydate(shijian12);
     </script>
 </block>
