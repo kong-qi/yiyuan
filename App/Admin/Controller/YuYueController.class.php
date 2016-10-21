@@ -56,7 +56,7 @@ class YuYueController extends AuthController {
              $is_huifang=1;
         }
 
-        echo 
+        
         
         
 
