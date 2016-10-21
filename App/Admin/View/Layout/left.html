@@ -3,23 +3,24 @@
     <div class="sidebar-collapse">
         <ul class="nav" id="side-menu">
             <li class="nav-header">
+
                 <div class="dropdown profile-element">
                     <span><img alt="image" class="img-circle" src="__IMG__/a6.jpg"/></span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="">
-                                <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">{{ :session('name')
-                                   }}</strong></span>
-                                <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                                <span class="cl">
+                               <span class="block m-t-xs"><strong class="font-bold">{{ :session('name') }}</strong></span>
+                                <span class="text-muted text-xs block"><?php echo (admin('',1)) ?><b class="caret"></b></span>
                                 </span>
                     </a>
+                    
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <!--<li><a href="" onClick="xiugaiimg('1')">修改头像</a>
                         </li>-->
-                        <li><a href="javascript:xiugaizh('67')">修改密码</a>
+                        <li><a href="javascript:void(0)" data-url="{{ :U('Admin/Admin/pwd',array('uuid'=>session('uuid'))) }}" data-title="{{ :lang('修改密码') }}" data-w="30%" data-h="40%" data-layer="1">{{ :lang('修改密码') }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ :U('Admin/Login/outlogin') }}"
-                               onClick="if(confirm('确认退出?')) return true;else return false;">安全退出</a>
+                               onClick="if(confirm('确认退出?')) return true;else return false;">{{ :lang('安全退出') }}</a>
                         </li>
                     </ul>
                 </div>
@@ -33,276 +34,42 @@
                 </if>
 
             <if condition="check_group('yuyue')">
-            <li>
-                <a href="#">
-                    <i class="fa icon-newspaper-o"></i>
-                    <span class="nav-label">{{ :lang('全部预约','menu') }}</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index',array('status'=>1)) }}">{{ :lang('全部预约','menu') }}</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index') }}?djstime={{ :date('Y-m-d') }}&djetime={{ :date('Y-m-d') }}&status=1&show=none">{{ :lang('今日预约','menu') }}</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :date('Y-m-d') }}&yetime={{ :date('Y-m-d') }}&status=1&show=none">{{ :lang('今日预到','menu') }}</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index') }}?dzstime={{ :date('Y-m-d') }}&dzetime={{ :date('Y-m-d') }}&status=2&show=none">{{ :lang('今日已到','menu') }}</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index') }}?djstime={{ :get_days(-1) }}&djetime={{ :get_days(-1) }}&status=1&show=none">{{ :lang('昨日预约','menu') }}</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index') }}?dzstime={{ :get_days(-1) }}&dzetime={{ :get_days(-1) }}&status=2&show=none">{{ :lang('昨日已到','menu') }}</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem"
-                           href="{{ :U('Admin/YuYue/index') }}?ystime={{ :get_days(1) }}&yetime={{ :get_days(1) }}&status=1&show=none">{{ :lang('明天预到','menu') }}</a>
-                    </li>
-
-                </ul>
-            </li>
+                <include file="Layout:Menu:yuyue" />
             </if>
             <if condition="check_group('gongzuoliang')">
-            <li>
-                <a href="#">
-                    <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">{{ :lang('工作量录入','menu') }}</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/DianXiao/add') }}">{{ :lang('工作量添加','menu') }}</a>
-                        </li>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/DianXiao/index') }}">{{ :lang('工作量列表','menu') }}</a>
-                    </li>
-                    </ul>
-            </li>
+                 <include file="Layout:Menu:gzl" />
             </if>
             <if condition="check_group('jiugouset')">
-            <li>
-                <a href="#">
-                    <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">{{ :lang('机构录入','menu') }}</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/JiGou/add') }}">{{ :lang('机构录入','menu') }}</a>
-                    
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/JiGou/index') }}">{{ :lang('机构查询','menu') }}</a>
-                    </li>
-                </ul>
-            </li>
+                 <include file="Layout:Menu:jigou" />
             </if>
             <if condition="check_group('days_price')">
-            <li>
-                <a href="#">
-                    <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">{{ :lang('竞价人员','menu') }}</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_website'=>'1')) }}">{{ :lang('更正信息','menu') }}</a>
-
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/XiaoFei/index') }}">{{ :lang('录入消费','menu') }}</a>
-                    </li>
-                </ul>
-            </li>
+                 <include file="Layout:Menu:website" />
             </if>
             <if condition="check_group('qiantaijz')">
-            <li>
-                <a href="#">
-                    <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">{{ :lang('接诊人员') }}</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1','status'=>'1')) }}">接诊</a>
-
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1','cx'=>1)) }}">查询病人</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_qiantai'=>'1','show'=>'none','is_fz'=>1)) }}">复诊列表</a>
-                    </li>
-                </ul>
-            </li>
+                 <include file="Layout:Menu:jiezhen" />
             </if>
             <if condition="check_group('yishenjz')">
-            <li>
-                <a href="#">
-                    <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">{{ :lang('医生人员') }}</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <if condition="check_group('yishenjz_add')">
-                        <li>
-                            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_yishen'=>'1','status'=>'2')) }}">接待</a>
-
-                        </li>
-                        <li>
-                            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('is_yishen'=>'1','status'=>'3')) }}">确诊列表</a>
-
-                        </li>
-                    </if>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuShen/kaidanList') }}">开单列表</a>
-                    </li>
-
-                </ul>
-            </li>
+                 <include file="Layout:Menu:yishen" />
             </if>
             <if condition="check_group('shouyin')">
-            <li>
-                <a href="#">
-                    <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">{{ :lang('收银人员') }}</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/add') }}">结账</a>
-
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">结算</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">退定金</a>
-                    </li>
-                </ul>
-            </li>
+                <include file="Layout:Menu:shouyin" />
             </if>
             <if condition="check_group('hfrenwu') or check_group('huifangset')" >
-            <li>
-                <a href="#">
-                    <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">回访人员</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}?is_huifang=1&a=1">回访列表</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/YuYue/index') }}?is_huifang=1">任务列表</a>
-                    </li>
-
-                </ul>
-            </li>
+                <include file="Layout:Menu:huifang" />
             </if>
-
-
             <if condition=" check_group('sms') OR check_group('group') ">
-            <li>
-                <a href="#">
-                    <i class="fa icon-cogs"></i>
-                    <span class="nav-label">系统设置</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-
-                    <li>
-                        <a class="J_menuItem" href="{{ :U('Admin/Sms/index') }}">短信模版设置</a>
-                        <!--34-->
-                    </li>
-
-                    <li>
-                        <a class="J_menuItem" href="/index.php/role/system_auth.html">优惠券</a>
-                    </li>
-
-                </ul>
-            </li>
+                <include file="Layout:Menu:config" />
+                
             </if>
             <if condition=" check_group('admin') OR check_group('group') OR check_group('rule')">
-
-            <li>
-                <a href="#">
-                    <i class="fa icon-cogs"></i>
-                    <span class="nav-label">权限设置</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <if condition=" check_group('admin')">
-                    <li><a href="{{ :U('Admin/Admin/ysadd') }}" class="J_menuItem">添加医生</a>
-                    </if>
-                    <if condition=" check_group('admin')">
-                    <li><a href="{{ :U('Admin/Admin/index') }}" class="J_menuItem">管理员</a>
-                    </if>
-                    <if condition=" check_group('group')">
-                    <li><a href="{{ :U('Admin/AdminGroup/index') }}" class="J_menuItem">管理组</a></li>
-                    </if>
-                    <if condition=" check_group('rule')">
-                    <li><a href="{{ :U('Admin/AdminRule/index') }}" class="J_menuItem">权限规则</a></li>
-                    </if>
-                </ul>
-            </li>
+                 <include file="Layout:Menu:admin" />
+            
             </if>
             <if condition="check_group('zidian') ">
-                <li>
-                    <a href="#">
-                        <i class="fa icon-cogs"></i>
-                        <span class="nav-label">字典设置</span>
-                        <span class="fa icon-chevron-left arrow"></span>
-                    </a>
-                    <ul class="nav nav-second-level">
-                        {{ :zidian_nav() }}
-                    </ul>
-                </li>
+                <include file="Layout:Menu:zidian" />
             </if>
             <if condition="check_group('tongji') ">
-            <li>
-                <a href="#">
-                    <i class="fa icon-bar-chart-alt"></i>
-                    <span class="nav-label">统计报表</span>
-                    <span class="fa icon-chevron-left arrow"></span>
-                </a>
-                <ul class="nav nav-second-level">
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_tongji.html">数据报表</a>
-                        <!--15-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_bingzhong.html">病种报表</a>
-                        <!--16-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_qudao.html">推广渠道报表</a>
-                        <!--53-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_fangshi.html">咨询方式报表</a>
-                        <!--52-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_zixunyuan.html">咨询员报表</a>
-                        <!--54-->
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="/index.php/tongji/report_guanjianci.html">关键词报表</a>
-                        <!--54-->
-                    </li>
-                </ul>
-            </li>
+                <include file="Layout:Menu:tongji" />
             </if>
         </ul>
     </div>

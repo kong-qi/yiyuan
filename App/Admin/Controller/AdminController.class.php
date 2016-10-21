@@ -37,6 +37,56 @@ class AdminController extends AuthController {
 
         $this->display();
     }
+    public function pwd(){
+        if(IS_POST)
+        {
+            $model =D(CONTROLLER_NAME);
+
+            if($model->create()) {
+                $data=$model->create();
+                $id=$data['id'];
+                if(($data['pwd'])!='')
+                {
+                    $data['pwd']=sha1($data['pwd']);
+                }else
+                {
+                    unset($data['pwd']);
+                }
+
+                $result =   $model->save($data);
+
+                if($result) {
+
+                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    $msg=lang('更新成功','handle');
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.layer.close(index);</script>";
+                    //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
+                }else{
+
+                    $msg=lang('数据一样无更新','handle');
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index)</script>";
+                }
+            }else{
+                return $this->error($model->getError());
+            }
+        }else{
+            $id=I('get.uuid');
+            $map=array(
+            'uuid'=>$id
+            );
+
+            $model   =   M(CONTROLLER_NAME)->where($map)->find();
+            $rule=M('AdminGroup')->where(array('checked'=>1))->select();
+            $this->rule=$rule;
+            if($model) {
+                $this->data =  $model;// 模板变量赋值
+            }else{
+                return $this->error(lang('数据错误','handle'));
+            }
+            $this->display();
+        }
+    }
     public function add(){
         //权限选择
         $this->check_group('admin_add');

@@ -1,0 +1,12 @@
+<if condition="check_group('yishenjz')">
+   <?php
+      if($v['ystatus']==2){
+   ?>
+   <a href="{{ :U('Admin/YuShen/quecheck',array('uuid'=>$v['yuuid'])) }}" class="btn btn-xs btn-white">
+       <span class="fa fa-trash "></span> {{ :lang('确诊','handle') }}
+   </a>
+   <?php 
+   }
+   ?>
+   
+</if>

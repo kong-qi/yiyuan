@@ -1,0 +1,19 @@
+<li>
+    <a href="#">
+        <i class="fa icon-bar-chart-alt"></i>
+        <span class="nav-label">{{ :lang('前台') }}</span>
+        <span class="fa icon-chevron-left arrow"></span>
+    </a>
+    <ul class="nav nav-second-level">
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'qiantai','status'=>'1')) }}">接诊</a>
+
+        </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'all','cx'=>1)) }}">查询病人</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'all','show'=>'none','is_fz'=>1)) }}">复诊列表</a>
+        </li>
+    </ul>
+</li>

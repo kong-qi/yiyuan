@@ -1,0 +1,8 @@
+
+<if condition="$v['ys_id'] eq ''">
+    <a href="javascript:void(0)" data-title="{{ :lang('分配医生') }}" data-w="500px" data-h="560px;" data-layer="1" data-uuid="{{ $v.user_uuid }}" data-url="{{ :U('Admin/QianTaiJieZhen/edit?uuid='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}" class="btn btn-xs btn-white"><span
+         class="fa fa-pencil-square "></span> {{ :lang('分配医生','handle') }}</a>
+    <else/>
+    <a href="javascript:void(0)" data-url="{{ :U('Admin/QianTaiJieZhen/edit?uuid='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}" data-title="{{ :lang('分配医生') }}" data-w="500px" data-h="560px;" data-layer="0" data-uuid="{{ $v.user_uuid }}" class="btn btn-xs btn-primary"><span
+         class="fa fa-pencil-square "></span> {{ :lang('已分配医生','handle') }}</a>
+</if>

@@ -199,7 +199,7 @@ class XiaoFeiController extends AuthController {
 
         $base=I('get.base');
         //网站更新信息
-        $backurl=$this->burl=U('Admin/YuYue/index?is_website=1&'.base64_decode($base));
+        $backurl=$this->burl=U('Admin/YuYue/index?shenfeng=website&'.base64_decode($base));
 
 
         if(IS_POST)
@@ -208,6 +208,7 @@ class XiaoFeiController extends AuthController {
             $postdata=I('post.');
             if($model->create()) {
                 $data=$model->create();
+               
 
                 $user_arr=array(
                     'name',

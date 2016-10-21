@@ -67,7 +67,7 @@ class JiGouController extends AuthController {
     }
     public function add(){
         //权限选择
-        $this->check_group($this->rule_qz);
+        $this->check_group($this->rule_qz."_add");
         if(IS_POST)
         {
 
@@ -141,7 +141,7 @@ class JiGouController extends AuthController {
     }
     public  function del(){
         //权限选择
-        $this->check_group('group_del');
+        $this->check_group($this->rule_qz."_del");
         $id=I('get.id');
         $map=array(
                 'uuid'=>$id
@@ -161,7 +161,7 @@ class JiGouController extends AuthController {
     }
     public function handle($id){
         //权限选择
-        $this->check_group('group_edit');
+        $this->check_group($this->rule_qz."_edit");
         $model =M(CONTROLLER_NAME);
         $type=I('get.type');
         if($type=='true')

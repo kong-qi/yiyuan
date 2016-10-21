@@ -51,14 +51,14 @@
                                     <div class="col-sm-4" >
                                         <input type="hidden" name="ksall_id" id="ksall_id">
                                         <select class="form-control" name="ks_id" id="ks_id" onchange="get_tks(this.value)">
-                                           <option value="">{{ :lang('请选择科室<','handle') }}</option>
+                                           <option value="">{{ :lang('请选择科室','handle') }}</option>
                                             {{ :get_keshi('0','1',$data['ks_id'] ) }}
                                         </select>
                                     </div>
                                     <div class="col-sm-4" >
 
                                         <select class="form-control" id="kst_id" name="kst_id" onchange="get_tks2(this.value)">
-                                            <o<option value="">{{ :lang('请选择二级科室','handle') }}</option>
+                                            <option value="">{{ :lang('请选择二级科室','handle') }}</option>
 
                                         </select>
                                     </div>
@@ -557,7 +557,7 @@
         ?>
         function get_tks($id){
             $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
-            $tfid='{{ :I("get.kst_id") }}';
+            $tfid='{{ $data["kst_id"] }}';
             log($tfid);
             $str = "<option value=''>无</option>";
             if($id=='')
@@ -567,12 +567,12 @@
             $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
                 $("#kst_id").show().empty().append(json.content);
             });
-            get_tks2('');
+            get_tks2('{{ $data["kst_id"] }}');
         }
         function get_tks2($id){
             $str = "<option value=''>无</option>";
             $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
-            $tfid='{{ :I("get.kstt_id") }}';
+            $tfid='{{ :$data["kstt_id"] }}';
             log($tfid);
             if($id=='')
             {
@@ -591,7 +591,7 @@
         }
         function get_ly($id){
             $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
-            $tfid='{{ :I("get.lyt_id") }}';
+            $tfid='{{ $data["lyt_id"] }}';
             log($tfid);
             $str = "<option value=''>无</option>";
             if($id=='')
@@ -601,12 +601,12 @@
             $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
                 $("#lyt_id").show().empty().append(json.content);
             });
-            get_ly2('');
+            get_ly2('{{ $data["lyt_id"] }}');
         }
         function get_ly2($id){
             $str = "<option value=''>无</option>";
             $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
-            $tfid='{{ :I("get.lytt_id") }}';
+            $tfid='{{ $data["lytt_id"] }}';
             log($tfid);
             if($id=='')
             {

@@ -58,12 +58,12 @@
                                     <td >
 
                                         <div class="box">
-                                            <if condition=" check_group('admin_edit')">
+                                            <if condition=" check_group($rule_qz.'_edit')">
                                             <a href="#" id="xiugaizh" title="{{ $v.guuid }}"
                                             class="btn btn-xs btn-white"><span
                                                 class="fa fa-pencil-square "></span> {{ :lang('编辑','handle') }}</a>
                                             </if>
-                                            <if condition=" check_group('admin_del')">
+                                            <if condition=" check_group($rule_qz.'_del')">
                                             <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['guuid'])) }}"
                                             class="btn btn-xs btn-white" date-del="1">
                                             <span class="fa fa-trash "></span>

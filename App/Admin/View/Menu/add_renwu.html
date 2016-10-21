@@ -1,0 +1,8 @@
+<if condition=" check_group('hfrenwu_add')">
+    <a href="javascript:void(0))"
+    class="btn btn-xs btn-white"
+       data-url="{{ :U('Admin/RenWu/add',array('uid'=>$v['user_id'])) }}" data-title="添加任务" data-close="1" data-w="550px" data-h="60%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+    >
+    <span class="fa fa-trash "></span>
+    {{ :lang('添加任务','handle') }}</a>
+</if>

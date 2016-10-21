@@ -59,7 +59,7 @@
 
 
                                     <td >
-                                        <if condition="check_group('admin_edit')">
+                                        <if condition="check_group($rule_qz.'_edit')">
                                             <if condition="$v['checked']">
                                                 <a href="{{ :U(MODULE_NAME.'/'.CONTROLLER_NAME.'/handle/',array('id'=>$v['id'],'type'=>'false'))
                                             }}" class="btn btn-white btn-sm">
@@ -87,12 +87,12 @@
                                     <td >
 
                                         <div class="box">
-                                            <if condition=" check_group('group_edit')">
+                                            <if condition=" check_group($rule_qz.'_edit')">
                                             <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/",array('uuid'=>$v['uuid'])) }}"
                                             class="btn btn-xs btn-white"><span
                                                 class="fa fa-pencil-square "></span> {{ :lang('编辑','handle') }}</a>
                                                 </if>
-                                            <if condition=" check_group('group_del')">
+                                            <if condition=" check_group($rule_qz.'_del')">
                                             <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/del/",array('id'=>$v['uuid'])) }}"
                                             class="btn btn-xs btn-white" date-del="1">
                                             <span class="fa fa-trash "></span>

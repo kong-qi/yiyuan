@@ -1,0 +1,16 @@
+<if condition="check_group('root')">
+	<include file="Menu:show_huifang" />
+	<include file="Menu:fenpeiys" />
+	<include file="Menu:yishen_edit" />
+	
+	
+	
+</if>
+
+
+<if condition=" check_group($rule_qz.'_edit')">
+    <a href="{{ :U('Admin/YuYue/edit?id='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}"
+    class="btn btn-xs btn-white" >
+    <span class="fa fa-trash "></span>
+    {{ :lang('修改','handle') }}</a>
+</if>

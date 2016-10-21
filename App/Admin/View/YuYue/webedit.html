@@ -10,12 +10,10 @@
             </div>
             <form action="" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
                 <div class="input-group m-b" style="margin-bottom:5px;">
-
-
                         <input type="hidden" name="user_id" value="{{ $data.User.id }}" id="user_id">
                         <input type="hidden" name="id" value="{{ $data['id'] }}">
-                         <label class="input-group-addon">{{ :lang('客户姓名','handle') }}</label>
-                            <input type="text" class="form-control" value="{{ $data.User.name }}" readonly id="telname">
+                        <label class="input-group-addon">{{ :lang('客户姓名','handle') }}</label>
+                        <input type="text" class="form-control" value="{{ $data.User.name }}" readonly id="telname">
 
 
                 </div>
@@ -26,6 +24,43 @@
                             <option>{{ :lang('请先选择网站','handle') }}</option>
                             <php>echo get_lanmu_onelist('website',1,'first','',$data['web_id']);</php>
                         </select>
+
+                </div>
+                
+                <div class="input-group m-b" style="margin-bottom:5px;">
+                    <label class="input-group-addon">{{ :lang('病人来源','handle') }}</label>
+                    <div class="col-sm-4">
+                        <input type="hidden" name="lyall_id" id="lyall_id" value="{{ $data.lyall_id }}">
+                        <select class="form-control"  required="required" id="ly_id"   name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id"  data-type="ly"  data-next="lyt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+
+                        <option value="">{{ :lang('请选择','handle') }}</option>
+                            <?php
+                                    if(check_group('root'))
+                                    {
+                                        echo get_lanmu_onelist('bingren',1,'first','',$data['ly_id']);
+                                    }else
+                                    {
+                                        echo get_lanmu_onelist('bingren',1,'first',session('brid'),$data['ly_id']);
+                                    }
+                                ?>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-4" >
+
+                        <select class="form-control" id="lyt_id" name="lyt_id" onchange="get_ly2(this.value)">
+                             <option value="">{{ :lang('请选择','handle') }}</option>
+
+                        </select>
+                    </div>
+                    <div class="col-sm-4" >
+
+                        <select class="form-control" id="lytt_id" name="lytt_id"
+                                data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
+                             <option value="">{{ :lang('请选择','handle') }}</option>
+
+                        </select>
+                    </div>
 
                 </div>
                 <div class="input-group m-b" style="margin-bottom:5px;">
@@ -59,9 +94,12 @@
 </block>
 <block name="add_foot_js">
     <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
- 
+    
     <script>
         
+        get_ly({{ $data.ly_id }});
+        get_ly2({{ $data.lyt_id }});
+
 
         $.validator.setDefaults({
             highlight: function (e) {
@@ -79,6 +117,41 @@
             validClass: "no-error"
 
         });
+        
+        function get_ly($id){
+            $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
+            $tfid='{{ $data.lyt_id }}';
+            log($tfid);
+            $str = "<option value=''>无</option>";
+            if($id=='')
+            {
+                $("#lyt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                $("#lyt_id").show().empty().append(json.content);
+            });
+            get_ly2("{{ $data['lyt_id'] }}");
+        }
+        function get_ly2($id){
+            $str = "<option value=''>无</option>";
+            $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
+            $tfid='{{ :I("get.lytt_id") }}';
+            log($tfid);
+            if($id=='')
+            {
+                $("#lytt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                if(json.content!='')
+                {
+
+                    $("#lytt_id").show().empty().append(json.content);
+                }else
+                {
+                    $("#lytt_id").empty().append( $str);
+                }
+            });
+        }
         $().ready(function () {
             $("#validate").validate(
                 {
@@ -109,72 +182,12 @@
                             }
                         }
                         //
-                        //最终科室
-                        $ksaid=$("#ksall_id");
-                        $ks1=$("#ks_id").val();
-                        $ks2=$("#kst_id").val();
-                        $ks3=$("#kstt_id").val();
-
-                        if($ks3!='')
-                        {
-                            $ksaid.val($ks3);
-                        }else
-                        {
-                            if($ks2!='')
-                            {
-                                $ksaid.val($ks2);
-                            }else
-                            {
-                                if($ks1!='')
-                                {
-                                    $ksaid.val($ks1);
-                                }
-                            }
-                        }
-                        //最终区域
-                        $areaaid=$("#areaall_id");
-                        $area1=$("#area_id").val();
-                        $area2=$("#areat_id").val();
-                        if( $area2!='')
-                        {
-                            $areaaid.val($area2);
-                        }else
-                        {
-                            if( $area1!='')
-                            {
-                                $ksaid.val( $area1);
-                            }
-                        }
+                       
                         $(form).ajaxSubmit();
                     }
                 }
             );
-            //手机号码和姓名用户检测，
-            $telname=$("#telname");
-            $phone=$("#phone");
-            //keydown
-            $phone.blur(function () {
-                $url='{{ :U("Admin/Ajax/check_phone") }}';
-                if($telname.val()!='' && $phone.val()!='')
-                {
-                    $.get($url,{'name':$telname.val(),'phone':$phone.val()},function (data) {
-                        console.log(data);
-                        if(data)
-                        {
-                            $("#user_id").val(data[0].id);
-                            $admin_name=data[0].realname==''?data[0].name:data[0].realname;
-                            $msg='{{ :lang("已被") }} <span style="color: #0000cc;">'+$admin_name+"</span> {{ :lang('客服于') }} <span >"+data[0].ydatetime+'</span><br/>{{ :lang("登记") }} '+data[0].ksname+" {{ :lang('科室') }} "+data[0].kstname+" {{ :lang('疾病项目') }}";
-                            layer.alert($msg, {
-                                skin: 'layui-layer-lan'
-                                ,closeBtn: 0
-                                ,shift: 4 //动画类型
-                            });
-                        }
-
-                    })
-                }
-
-            });
+           
             
 
         });

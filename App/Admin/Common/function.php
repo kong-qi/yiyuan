@@ -13,6 +13,24 @@ function create_admin_id(){
  * 是否审核
  */
 
+function admin($filed='',$group=''){
+    if(session('admin_info'))
+    {
+        $admin_info=session('admin_info');
+        if($group!='')
+        {
+            $gn=M('AdminGroup')->find($admin_info['groupid']);
+            return $gn['name'];
+        }
+        if($filed!='')
+        {
+
+            return $admin_info[$filed];
+        }
+        return $admin_info;
+    }
+}
+
 function checked_str($str,$msg=array('通过','禁用')){
     switch ($str)
     {
@@ -83,6 +101,16 @@ function get_brly_rule($groupid){
     if(count($model)>0)
     {
         return $model['brly_id'];
+    }
+
+}
+function get_group_info($groupid){
+    //算出权限组
+    $model=M('AdminGroup');
+    $model=$model->where(array('id'=>array('in',$groupid)))->find();
+    if(count($model)>0)
+    {
+        return $model;
     }
 
 }

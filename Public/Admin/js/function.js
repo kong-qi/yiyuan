@@ -2,6 +2,20 @@
  * Created by Administrator on 2016/4/20.
  */
 $(function() {
+    //选择打开，关闭TABLE
+    $('[data-change="select"]').click(function(){
+        classid=$(this).attr("data-class");
+        if($(this).is(":checked"))
+        {
+           
+            $("."+classid).show();
+        }else
+        {
+             
+            $("."+classid).hide();
+        }
+        
+    })
     //上移
     $(document).on('click', '.js_left_pic', function(event) {
 
@@ -17,6 +31,7 @@ $(function() {
         }
 
     });
+
     //下移动
     $(document).on('click', '.js_right_pic', function(event) {
 

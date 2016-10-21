@@ -5,19 +5,51 @@ class YuYueController extends AuthController {
     protected $rule_qz='yuyue';
 
 
-    public function index(){
+    public function index($shenfeng='zixun'){
         //print_r(session('group'));
         $this->check_group($this->rule_qz."_show");
         $map=array();
-        //自己查看自己的
-        if(!check_group('root'))
-        {
-            $map['y1.admin_id']=session('admin_id');
-        }
         $is_website=0;
         $is_huifang=0;
         $is_yishen=0;
         $is_qiantai=0;
+        print_r(session('group'));
+        //自己查看自己的
+        if(!check_group('root'))
+        {
+            switch ($shenfeng) {
+                case 'zixun':
+                    $map['y1.admin_id']=session('admin_id');
+                break;
+                //网站竞价来源
+                case 'website':
+                     $is_website=1;
+                    $map['y1.ly_id']=array('in', session('brid'));
+                break;
+                //回访人员
+                case 'huifang':
+                    $is_huifang=1;
+                    
+                break;
+                case 'qiantai':
+
+                    $is_qiantai=1;
+                    
+                break;
+                case 'yishen':
+                    $is_yishen=1;
+                    $map['y1.ys_id']=session('ys_id');
+                 case 'all':
+                   
+                
+                default:
+                    # code...
+                    break;
+            }
+
+            
+        }
+        echo $is_yishen;
         
 
         if(IS_GET)
@@ -105,71 +137,27 @@ class YuYueController extends AuthController {
         //print_r($map);
         //判断是否是网站人员
         //获取
-        if(I('get.is_website'))
-        {
-            $is_website=1;
-            $website_arr=M('LanMu')->field('id')->where(array('type'=>'bingren','is_website'=>1,'fid'=>array('neq',0)))->select();
-            $wb_arrid=array();
-            if(count($website_arr)>0)
-            {
-                foreach ( $website_arr as $key => $value) {
-                    $wb_arrid[]=$value['id'];
-                }
-            }
-            if(count( $wb_arrid)>0)
-            {
-                $map['y1.lyall_id']=array('in', $wb_arrid);
-            }
-            //关闭自己的自己信息
-            if(isset($map['y1.admin_id']))
-            {
-                unset($map['y1.admin_id']);
-            }
-        }
-        //回访人员
-        if(I('get.is_huifang'))
-        {
-            $is_huifang=1;
-            //关闭自己的自己信息
-            if(isset($map['y1.admin_id']))
-            {
-                unset($map['y1.admin_id']);
-            }
-        }
-        if(I('get.is_qiantai'))
-        {
-            $is_qiantai=1;
-            //关闭自己的自己信息
-            if(isset($map['y1.admin_id']))
-            {
-                unset($map['y1.admin_id']);
-            }
-        }
-        if(I('get.is_yishen'))
-        {
-            
-            $is_yishen=1;
-            //关闭自己的自己信息
-            if(isset($map['y1.admin_id']))
-            {
-                unset($map['y1.admin_id']);
-            }
-            
-                $map['y1.ys_id']=session('ys_id');
-            
-        }
+
         //
 
         $model=M('YuYue');
         $filed = '
+            ly1.name as ly_name,
+            ly2.name as lyt_name,
+            ly3.name as lytt_name,
             y1.uuid as yuuid,
-            y1.status as status,
+            y1.status as ystatus,
             y1.zx_content as zx_content,
             y1.zx_mark,
             y1.ys_id as ys_id,
-            y1.ynumber,y1.id as yid,y1.admin_id,y1.status as ystatus,y1.ydatetime,y1.ctime as yuctime,y1.zx_content,y1.mark as ymark,
+            y1.ynumber,
+            y1.id as yid,
+            y1.admin_id,
+            y1.ydatetime as ydatetime,
+            y1.ctime as yctime,
+            y1.mark as mark,
             u1.name as user_name,u1.sex,u1.uuid as user_uuid,u1.id as user_id,
-            ly1.name as ly_name,ly2.name as lyt_name, ly3.name as lytt_name,
+           
             a1.name as admin_name,
             k1.name as ks_name,
             k2.name as kst_name,
@@ -222,26 +210,6 @@ class YuYueController extends AuthController {
         {
             $page=$_GET['p'];
         }
-        
-        // $list =$model->where($map);
-
-       /* if(I('sorttype'))
-        {
-            $sorttype=I('sorttype');
-            $sort=I('sort');
-            if($sort!=='none')
-            {
-                $list=$list->order(
-                    array(
-                        $sorttype=>$sort
-                    )
-                );
-            }
-
-        }else
-        {
-            $list=$list->order('sort desc,id desc');
-        }*/
 
         $list = $model->alias('y1')->field($filed)->join($join)->order('y1.ydatetime desc,y1.id desc')->where($map)->page( $page.','.$pagesize)->select();
      
@@ -250,16 +218,16 @@ class YuYueController extends AuthController {
 
         $menu_list= array(
           
-            1=>'预约号',
-            2=>'姓名',
-            3=>'性别',
-            4=>'预约时间',
-            5=>'登记时间',
-            6=>'预约科室',
-            7=>'预约病种',
-            8=>'预约来源',
-            9=>'预约状态',
-            10=>'操作'
+            'td-yuyue'=>array('name'=>'预约号','w'=>'','h'=>'','is_hide'=>''),
+            'td-name'=>array('name'=>'姓名','w'=>'','h'=>'','is_hide'=>''),
+            'td-sex'=>array('name'=>'性别','w'=>'','h'=>'','is_hide'=>''),
+            'td-ytime'=>array('name'=>'预约时间','w'=>'','h'=>'','is_hide'=>''),
+            'td-djtime'=>array('name'=>'登记时间','w'=>'','h'=>'','is_hide'=>''),
+            'td-ks'=>array('name'=>'预约科室','w'=>'','h'=>'','is_hide'=>''),
+            'td-bz'=>array('name'=>'预约病种','w'=>'','h'=>'','is_hide'=>''),
+            'td-ly'=>array('name'=>'预约来源','w'=>'','h'=>'','is_hide'=>''),
+            'td-status'=>array('name'=>'预约状态','w'=>'','h'=>'','is_hide'=>''),
+            'td-handel'=>array('name'=>'操作','w'=>'','h'=>'','is_hide'=>'')
             );
         $this->menu_list=$menu_list;
         $show_rule=array(
@@ -629,16 +597,25 @@ class YuYueController extends AuthController {
         }
     }
     public function all(){
-        echo json_decode();
+        
         $id=I('get.id');
-        //自己查看自己的
-        if(!check_group('root'))
-        {
-            $map['admin_id']=session('admin_id');
-        }
+
         $map=array(
             'uuid'=>$id
         );
+        //自己查看自己的
+        if(!check_group('root'))
+        {
+            //没有如果没有
+            if(!check_group('huifangset')  or !check_group('hfrenwu') or !check_group('qiantaijz') or !check_group('yishenjz') or !check_group('yishenjz') or !check_group('    kaidan') )
+            {
+                echo "d";
+                $map['admin_id']=session('admin_id');
+            }
+            
+        }
+
+        print_r($map);
 
         $model   = D('YuYue')->relation(true)->where($map)->find();
 
