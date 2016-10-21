@@ -6,6 +6,7 @@ class YuYueController extends AuthController {
 
 
     public function index($shenfeng='zixun'){
+        echo $shenfeng;
         //print_r(session('group'));
         $this->check_group($this->rule_qz."_show");
         $map=array();
@@ -29,6 +30,7 @@ class YuYueController extends AuthController {
                 //回访人员
                 case 'huifang':
                     $is_huifang=1;
+                    echo 234;
                     
                 break;
                 case 'qiantai':
@@ -49,6 +51,12 @@ class YuYueController extends AuthController {
 
             
         }
+        if($shenfeng=='huifang')
+        {
+             $is_huifang=1;
+        }
+
+        echo 
         
         
 
