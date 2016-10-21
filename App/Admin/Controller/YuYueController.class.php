@@ -30,7 +30,7 @@ class YuYueController extends AuthController {
                 //回访人员
                 case 'huifang':
                     $is_huifang=1;
-                    echo 234;
+                  
                     
                 break;
                 case 'qiantai':
