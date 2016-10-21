@@ -146,7 +146,7 @@ class JiGouController extends AuthController {
         $map=array(
                 'uuid'=>$id
             );
-        $model   =  D(CONTROLLER_NAME);
+        $model   =  D('LanMu');
         $data=$model->where($map)->find();
         $result=$model->where($map)->delete();
         if($result)
@@ -162,7 +162,7 @@ class JiGouController extends AuthController {
     public function handle($id){
         //权限选择
         $this->check_group($this->rule_qz."_edit");
-        $model =M(CONTROLLER_NAME);
+        $model =M('LanMu');
         $type=I('get.type');
         if($type=='true')
         {

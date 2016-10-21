@@ -14,10 +14,7 @@
         <div class="box">
             <div class="col-sm-12">
                 <form action='' method="get" id="contact-form">
-                    <input type="hidden" name="is_huifang" value="{{ $is_huifang }}">
-                    <input type="hidden" name="is_website" value="{{ $is_website }}">
-                    <input type="hidden" name="is_qiantai"  value="{{ $is_qiantai }}">
-                    <input type="hidden" name="is_yishen" value="{{ $is_yishen }}">
+                    
                     <div class="col-sm-12" style="padding:0px;">
                         <div class="ibox float-e-margins" >
                             <div class="ibox-title">
@@ -322,29 +319,29 @@
                                                                                 value="{{ $v.yuuid }}"></td>
 
                                   
-                                    <td id="tdd2" ><span class="js-open-more glyphicon glyphicon-plus m-r"></span>{{ $v.ynumber }}
+                                    <td class="td-yuyue" ><span class="js-open-more glyphicon glyphicon-plus m-r"></span>{{ $v.ynumber }}
                                     </td>
-                                    <td data-log="1" id="tdd3">{{ $v.user_name }}</td>
-                                    <td id="tdd4">
+                                    <td data-log="1" class="td-name">{{ $v.user_name }}</td>
+                                    <td class="td-sex">
 
                                         <lable class="badge badge-info">{{ $v.sex }}</lable>
                                     </td>
-                                    <td id="tdd5">
+                                    <td class="td-ytime">
                                         <lable class="text-success">{{ :to_time($v['ydatetime'],'d-m-Y H:i:s') }}</lable>
                                     </td>
 
-                                    <td id="tdd6">
+                                    <td class="td-djtime">
                                         <lable class="text-info">{{ :to_time($v['yctime'],'d-m-Y H:i:s') }}</lable>
                                     </td>
-                                    <td id="tdd7">{{ $v.ks_name }}</td>
+                                    <td class="td-ks">{{ $v.ks_name }}</td>
 
-                                    <td id="tdd8">{{ $v.kstt_name }}</td>
-                                    <td id="tdd9">
+                                    <td class="td-bz">{{ $v.kstt_name }}</td>
+                                    <td class="td-ly">
                                         {{ $v.ly_name }}
                                     </td>
 
 
-                                    <td id="tdd11">
+                                    <td class="td-status">
                                         <select name="" id="js-chenage" disabled>
 
                                             <if condition="$status">
@@ -355,7 +352,7 @@
                                         </select>
 
                                     </td>
-                                    <td id="tdd11">
+                                    <td class="td-handle">
                                         <!-- //网站竞价人员 -->
                                         <div class="box">
                                            
@@ -365,6 +362,7 @@
                                             <include file="Menu:website" />
                                             <!--//回访人员-->
                                         <elseif condition="$is_huifang"/>
+                                            
                                             <include file="Menu:huifang" />
                                             <!--//前台-->
                                         <elseif condition="$is_qiantai"/>

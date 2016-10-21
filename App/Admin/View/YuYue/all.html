@@ -15,6 +15,9 @@
                             <if condition="check_group('yuyue_hfsrenwu')"><li class=""><a data-toggle="tab" href="tabs_panels.html#tab-5" aria-expanded="false"><span class="hidden-xs">{{ :lang('回访任务') }}</span><span class="visible-xs">{{ :lang('任务') }}</span></a> </li>
                             </if>
                             <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-2" aria-expanded="false"><span class="hidden-xs">{{ :lang('详细对话') }}</span><span class="visible-xs">{{ :lang('对话') }}</span></a> </li>
+                            
+                            <if condition="check_group('yishenjz_add')"><li class=""><a data-toggle="tab" href="tabs_panels.html#tab-6" aria-expanded="false"><span class="hidden-xs">{{ :lang('确诊列表') }}</span><span class="visible-xs">{{ :lang('列表') }}</span></a> </li>
+                            </if>
 
                         </ul>
                     </div>
@@ -258,6 +261,33 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="tab-6" class="tab-pane active" style="background: #fff">
+                            <div class="col-sm-12">
+                                <div class="ibox-content">
+                                    
+
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>{{ :lang('确诊日期') }}</th>
+                                            <th>{{ :lang('姓名') }}</th>
+                                            <th>{{ :lang('接诊医生') }}</th>
+                                            <th>{{ :lang('科室') }}</th>
+                                            <th>{{ :lang('质量评级') }}</th>
+                                             <th>{{ :lang('详细') }}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="zhuti_zq">
+                                        </tbody>
+                                        <tr>
+                                            <td colspan="8">
+                                                <div id="lpageqz" class="m-t"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
 
                     </div>
@@ -296,6 +326,44 @@
         });
         };
         hj_ajax();
+        </script>
+    </if>
+    <if condition="check_group('yishenjz_add')">
+        <script>
+            function quzheng_ajax(curr) {
+                $.getJSON("{{ :U('Admin/Ajax/getCheckShow') }}", {
+                    page: curr || 1,
+                    "uid": "{{ $data.user_id }}",
+                }, function (res) {
+                    $("#zhuti_zq").empty().append(res.content);
+                    $(".js-open-more").click(function () {
+
+                        $p = $(this).parents(".js-tr").next();
+
+                        if ($p.is(":hidden")) {
+                            $p.show();
+                            $(this).find('span').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+                        } else {
+                            $p.hide();
+                            $(this).find('span').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+                        }
+                    });
+                    //显示分页
+                    laypage({
+                        cont: 'lpageqz', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                        pages: res.pages, //通过后台拿到的总页数
+                        curr: curr || 1, //当前页,
+                        first:false,
+                        jump: function (obj, first) { //触发分页后的回调
+                            if (!first) { //点击跳页触发函数自身，并传递当前页：obj.curr
+                                quzheng_ajax(obj.curr);
+                            }
+                        }
+                    });
+                });
+            }
+            ;
+        quzheng_ajax();
         </script>
     </if>
     <if condition="check_group('yuyue_hfsrenwu')">

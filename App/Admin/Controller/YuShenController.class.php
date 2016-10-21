@@ -27,6 +27,12 @@ class YuShenController extends AuthController {
 
         $this->display();
     }
+    //查看确诊，针对病人
+    public function showcheck($uid){
+        $this->uid=$uid;
+        $this->display();
+
+    }
     public function index(){
         //权限选择
         $this->check_group($this->rule_qz);
@@ -90,12 +96,15 @@ class YuShenController extends AuthController {
                 $ydata['id']=$data['yy_id'];
 
 
+
                 //插入，然后更新
                 /*print_r($ydata);
                 print_r($data);
                 exit();*/
                 $result =    $model->add($data);
                 $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/kaidan",array('id'=>$result,'yid'=>$data['yy_id']));
+                //确诊ID添加进去
+                $ydata['qz_id']=$result;
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 if($result && $yresult) {
@@ -128,6 +137,7 @@ class YuShenController extends AuthController {
 
     }
     public function kaidan($id,$yid){
+        
         $this->onname='开单';
         $this->assign('onname',$this->onname);
 
@@ -159,7 +169,9 @@ class YuShenController extends AuthController {
 
                 $ydata['kdtime']=$data['kd_time']=strtotime($data['kd_time']);
                 $result =    $model->add($data);
-                
+                //开单ID
+                $ydata['kd_id']=$result;
+               
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/kaidanList");

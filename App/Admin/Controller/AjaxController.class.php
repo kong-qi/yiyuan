@@ -507,7 +507,7 @@ class AjaxController extends AuthController
 
        return $this->ajaxReturn($data);
    }
-    public function getHuifangRenWu(){
+   public function getHuifangRenWu(){
         $uid=I('request.uid');
         $page=I('request.page');
         $pagesize=50;
@@ -559,6 +559,117 @@ class AjaxController extends AuthController
         );
         return $this->ajaxReturn($data);
     }
+    //查看确诊
+   public function getCheckShow($uid){
+       
+        $page=I('request.page');
+        $pagesize=20;
+        $map=array(
+            'jz.user_id'=>$uid
+            );
+        $m=M('JieZhen');
+        //病区域
+        $join[]='LEFT JOIN __KE_SHI__ ks1 ON jz.ks_id = ks1.id';
+        $join[]='LEFT JOIN __KE_SHI__ ks2 ON jz.kst_id = ks2.id';
+        $join[]='LEFT JOIN __KE_SHI__ ks3 ON jz.kstt_id = ks3.id';
+        //用户，医生
+        $join[]='LEFT JOIN __USER__ u1 ON jz.user_id = u1.id';
+        $join[]='LEFT JOIN __KE_SHI__ ys ON jz.ysz_id = ys.id';
+        $join[]='LEFT JOIN __LAN_MU__ zl ON jz.zl_id = zl.id';
+
+        $filed = '
+            jz.thumbs as thumbs,
+           jz.id as id,
+           jz.jz_content as jz_content,
+           jz.uuid as uuid,
+           jz.jztime as jztime,
+           ks1.name as ksname,
+           ks2.name as kstname,
+           ks3.name as ksttname,
+           u1.name as user_name,
+           ys.name as yushen_name,
+           zl.name as zlname
+         ';
+
+         $total=$m->alias('jz')->join($join)->where($map)->count();// 查询满足要求的总记录数
+         $pages=ceil($total/$pagesize);
+         $m=$m->alias('jz')->field($filed)->join($join)->where($map)->order('jz.jztime desc ')->page($page,$pagesize)->select();
+        
+         
+         $content='';
+         if($total)
+         {
+             foreach ($m as $k=>$v)
+             {
+                 $content.="<tr style='background: #fff' class='js-tr'>";
+                 $delurl=U('Admin/HuiFang/del',array('id'=>$v['huuid']));
+                  $del='<a href="'.$delurl.'" class="btn btn-xs btn-white" > <span class="fa fa-trash "></span>
+                                                          删除</a>
+                  ';
+                  //查看详情
+                  $showurl=U('Admin/YuShen/getCheckshow',array('id'=>$v['id']));
+                  $detail='
+                    <a href="javascript:void(0)"  class="js-open-more btn btn-xs btn-white"><span
+                            class=" glyphicon-plus glyphicon-plus"></span>'.lang('展开').'</a>
+                  ';
+                  $v['ksttname']=$v['ksttname']==''?'':"~".$v['ksttname'];
+                  $v['kstname']=$v['kstname']==''?'':"~".$v['kstname'];
+                 $content.="
+                 <td>".to_time($v['jztime'],'d-m-Y')."</td>
+                  <td>".$v['user_name']."</td>
+                  <td>".$v['yushen_name']."</td>
+                  <td>".$v['ksname'].$v['kstname'].$v['ksttname']."</td>
+                  <td>".$v['zlname']."</td>
+                  <td>". $detail."</td>
+                  
+                
+                  ";
+                 
+                  $thumbs=json_decode(htmlspecialchars_decode($v['thumbs']),true);
+                  $sb=htmlspecialchars_decode($v['jz_content']);
+                
+                  $pic_str='';
+                  if($thumbs)
+                  {
+                        
+                      foreach($thumbs as $v)
+                      {
+                        $pic_str.='
+                        
+                          <div class="col-xs-4 col-md-3">
+                            <a href="#" class="thumbnail">
+                              <img data-url="'.$v['path'].'" src="'.pic_url($v['path']).'" alt="">
+                            </a>
+                          
+                        </div>
+                        
+                         
+                      ';
+                      }
+                  
+                  }
+
+                 $content.="</tr><tr style='display:none'>
+                    <td colspan='6'>
+                    <div class='roww'>
+                        ".$pic_str."
+                       
+                    </div>
+                    <div class='roww'>".$sb."</div>
+                        
+                    <td>
+                 </tr>";
+                 
+             }
+         }
+         $data=array(
+             'pages'=>$pages,
+             'content'=>$content
+         );
+          //print_r($data);
+
+         return $this->ajaxReturn($data);
+   }
     public function getPriceList(){
 
         $uid=I('request.uid');

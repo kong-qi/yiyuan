@@ -14,13 +14,18 @@ class YuYueController extends AuthController {
         $is_huifang=0;
         $is_yishen=0;
         $is_qiantai=0;
-       
+        
         //自己查看自己的
         if(!check_group('root'))
         {
+            if(check_group('yuyue_only'))
+            {
+                $map['y1.admin_id']=session('admin_id');
+            }
+            
             switch ($shenfeng) {
                 case 'zixun':
-                    $map['y1.admin_id']=session('admin_id');
+                       
                 break;
                 //网站竞价来源
                 case 'website':
@@ -48,14 +53,47 @@ class YuYueController extends AuthController {
                     # code...
                     break;
             }
-
             
+        }else
+        {
+            switch ($shenfeng) {
+                case 'zixun':
+                       //$is_qiantai=1;
+                break;
+                //网站竞价来源
+                case 'website':
+                     $is_website=1;
+                   
+                break;
+                //回访人员
+                case 'huifang':
+                    $is_huifang=1;
+                  
+                    
+                break;
+                case 'qiantai':
+
+                    $is_qiantai=1;
+                    
+                break;
+                case 'yishen':
+                    $is_yishen=1;
+                    
+                 case 'all':
+                   
+                
+                default:
+                    # code...
+                    break;
+            }
         }
-        if($shenfeng=='huifang')
+      
+
+       /* if($shenfeng=='huifang')
         {
              $is_huifang=1;
-        }
-
+        }*/
+       
         
         
         
@@ -158,12 +196,18 @@ class YuYueController extends AuthController {
             y1.zx_content as zx_content,
             y1.zx_mark,
             y1.ys_id as ys_id,
+            y1.is_kd as is_kd,
+            y1.qz_id as qz_id,
+            y1.kd_id as kd_id,
+            y1.kdtime as kdtime,
             y1.ynumber,
             y1.id as yid,
             y1.admin_id,
             y1.ydatetime as ydatetime,
             y1.ctime as yctime,
             y1.mark as mark,
+            y1.jztime as jztime,
+            y1.dztime as dztime,
             u1.name as user_name,u1.sex,u1.uuid as user_uuid,u1.id as user_id,
            
             a1.name as admin_name,
@@ -235,7 +279,7 @@ class YuYueController extends AuthController {
             'td-bz'=>array('name'=>'预约病种','w'=>'','h'=>'','is_hide'=>''),
             'td-ly'=>array('name'=>'预约来源','w'=>'','h'=>'','is_hide'=>''),
             'td-status'=>array('name'=>'预约状态','w'=>'','h'=>'','is_hide'=>''),
-            'td-handel'=>array('name'=>'操作','w'=>'','h'=>'','is_hide'=>'')
+            'td-handle'=>array('name'=>'操作','w'=>'','h'=>'','is_hide'=>'')
             );
         $this->menu_list=$menu_list;
         $show_rule=array(
@@ -245,7 +289,7 @@ class YuYueController extends AuthController {
             'is_yishen'=>$is_yishen
 
         );
-        //print_r($show_rule);
+        print_r($show_rule);
         $this->assign($show_rule);
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
         $this->display();

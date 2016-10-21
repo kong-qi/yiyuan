@@ -1,12 +1,34 @@
 <if condition="check_group('yishenjz')">
    <?php
-      if($v['ystatus']==2){
+   	 
+      if($v['dztime']!='' and $v['jztime']==''){
+      
+		
    ?>
-   <a href="{{ :U('Admin/YuShen/quecheck',array('uuid'=>$v['yuuid'])) }}" class="btn btn-xs btn-white">
+	<a href="{{ :U('Admin/YuShen/quecheck',array('uuid'=>$v['yuuid'])) }}" class="btn btn-xs btn-white">
        <span class="fa fa-trash "></span> {{ :lang('确诊','handle') }}
+   </a>
+
+   <?php 
+   }
+   
+  if($v['jztime']!=''){
+   ?>
+  <a href="javascript:void(0)" class="btn btn-xs btn-info" data-url="{{ :U('Admin/YuShen/showcheck',array('uid'=>$v['user_id'])) }}" data-title="{{ :lang('查看确诊','handle') }}" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}">
+       <span class="fa fa-trash "></span> {{ :lang('查看确诊','handle') }}
    </a>
    <?php 
    }
-   ?>
+    
+    if(($v['qz_id']!='') and  ($v['kd_id']=='')){
    
+    ?>
+    
+      <a href="{{ :U('Admin/YuShen/kaidan',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="80%" data-h="80%" data-uuid="{{ $v.user_uuid }}">
+           <span class="fa fa-trash "></span> {{ :lang('立即开单','handle') }}
+       </a>
+    <?php
+    }
+   ?>
+
 </if>
