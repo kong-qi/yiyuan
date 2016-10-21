@@ -49,7 +49,7 @@ class YuYueController extends AuthController {
 
             
         }
-        echo $is_yishen;
+        
         
 
         if(IS_GET)
