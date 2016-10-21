@@ -576,10 +576,10 @@ class YuYueController extends AuthController {
         }else{
             $id=I('get.id');
             //自己查看自己的
-            if(!check_group('root'))
+           /* if(!check_group('root'))
             {
                 $map['admin_id']=session('admin_id');
-            }
+            }*/
 
 
             $map=array(
