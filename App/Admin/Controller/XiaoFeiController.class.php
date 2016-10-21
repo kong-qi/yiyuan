@@ -14,6 +14,7 @@ class XiaoFeiController extends AuthController {
 
         }
         $join[] = 'LEFT JOIN __LAN_MU__ l1 ON g1.xf_id = l1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ a1 ON g1.admin_id = a1.id';
 
        
        
@@ -24,6 +25,8 @@ class XiaoFeiController extends AuthController {
             $page=$_GET['p'];
         }
          $filed = '
+            a1.realname as admin_rname,
+            a1.name as admin_name,
             g1.uuid as guuid,
             g1.id as gid,
             l1.name,

@@ -84,12 +84,7 @@
         <div class="box">
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
-                <h3 class="pull-right">
-                    <a href=#" id="tianjiazh" class="btn btn-xs btn-success"> <span
-                            class="fa fa-pencil-square-o"></span> {{ :lang('添加','handle') }}</a>
-                    <a href=#" id="tianjiazh2" class="btn btn-xs btn-success"> <span
-                            class="fa fa-pencil-square-o"></span> {{ :lang('导入数据','handle') }}</a>
-                </h3>
+                
             </div>
             
 
@@ -158,24 +153,50 @@
 
                                         <lable class="badge badge-info">{{ $v.user_name }}</lable>
                                     </td>
-                                    <td id="tdd4">
+                                    <td id="tdd4" width="500">
+                                        <a href="javascript:void" class="btn btn-info js-click" >查看消费详情</a>
+                                        <div class="row hide show_price" >
                                         <?php
                                         $show=(json_decode(htmlspecialchars_decode($v['price_show']),true));
                                         foreach($show as $k=>$sv)
                                         {
                                             echo '
-                                                <table class="table">
-                                                    <tr>
-                                                        <td>'.lang("名称").' '.urldecode($sv['title']).'</td>
-                                                        <td>'.lang("单价").' '.urldecode($sv['price']).'</td>
-                                                        <td>'.lang("数量").''.urldecode($sv['num']).'</td>
-                                                        <td>'.lang("总计").' '.urldecode($sv['total']).'</td>
-                                                    </tr>
-                                                </table>
+                                                <div class="col-xs-4 col-sm-4 price_item active">
+                                                <div class="panel panel-default">                             
+                                                     
+                                                     <div class="panel-heading"><span class="price_title">'.urldecode($sv['title']).'</span></div>
+                                                     <div class="panel-body">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">票据名称：</span>
+                                                            <input type="text" class="form-control price_jg" min="0"  readonly="" value="'.urldecode($sv['title2']).'">
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">价格</span>
+                                                            <input type="text" class="form-control price_jg" min="0" readonly="" value="'.($sv['price']).'">
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">单位</span>
+                                                            <input type="text" class="form-control price_dw" readonly="" value="'.urldecode($sv['danwei']).'">
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">开单数量</span>
+                                                            <input type="text" class="form-control price_num no-error" readonly="" value="'.urldecode($sv['num']).'" placeholder="" aria-invalid="false">
+                                                        </div>
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">合计金额</span>
+                                                            <input type="text" class="form-control price_heji" readonly="" value="'.urldecode($sv['total']).'">
+                                                        </div>
+                                                       
+                                                    </div>
+                                                    
+                                                </div>
+                                                </div>
                                             ';
+                                           
                                         }
                                         ?>
-
+                                        
+                                        </div>
                                     </td>
 
                                     <td id="tdd5">{{ $v.price_total }}</td>
@@ -287,8 +308,27 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        $(function(){
+            $(".js-click").click(function(){
+                $pd=$(this).parents('td').find(".show_price");
+                
+                layer.open({
+                  type: 1,
+                  title:'{{ :lang("查看开单详情") }}',
+                  skin: 'layui-layer-rim', //加上边框
+                  area: ['800px', '50%'], //宽高
+                  content: $pd.html()
+                });
+                
+
+            })
+        })
+    </script>
     <script>
+
         $(function () {
+
             select_all();
             del_confirm();
             $("#fid").change(function (e,a) {

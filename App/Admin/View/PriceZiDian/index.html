@@ -26,32 +26,15 @@
                                 <div class="roww">
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">所属一级科室</font></span>
+                                            <span class="input-group-addon"><font color="">所属类别</font></span>
                                             <select class="form-control" name="fid" id="fid">
 
                                                 <option value="none">所有类别</option>
-                                                <if condition="$subcategory">
-
-                                                    <foreach name="subcategory" item="v" key="k">
-
-                                                        <option value="{{ $v.id }}" {{ :$v['id']==I('get.fid')?"selected='selected'":'' }}>{{ $v.name }}</option>
-                                                    </foreach>
-                                                </if>
-
+                                               {{ :get_lanmu_onelist('xiaofei',1,'','',I('get.fid')) }}
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">所属二级级科室</font></span>
-                                            <select class="form-control" name="tfid" id="tfid">
-
-                                                <option value="none">所有类别</option>
-
-
-                                            </select>
-                                        </div>
-                                    </div>
+                                   
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">关键词</font></span>
@@ -96,19 +79,19 @@
 
                         <div class="m-b">
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
-                               data-model="LanMu"
+                               data-model="Price"
                                data-handle="del" data-handle-check="1" data-handle-value=""><span
                                     class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="LanMu"
+                               data-model="Price"
                                data-handle="sort" data-handle-check="1" data-handle-value="0"><span
                                     class="fa fa-arrows-v"></span> {{ :lang('排序','handle') }}</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="LanMu"
+                               data-model="Price"
                                data-handle="checked" data-handle-check="1" data-handle-value="1"><span
                                     class="fa fa-check"></span> {{ :lang('启用','handle') }}</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="LanMu"
+                               data-model="Price"
                                data-handle="checked" data-handle-check="1" data-handle-value="0"><span
                                     class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
 
@@ -162,9 +145,7 @@
                             <th id="tdd0" width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
                             <th id="tdd1" class="hidden-xs">{{ :lang('编号','filed') }}</th>
                             <th id="tdd2">{{ :lang('费用名称','filed') }}</th>
-                            <th id="tdd3">{{ :lang('科室一级','filed') }}</th>
-                            <th id="tdd4">{{ :lang('科室二级','filed') }}</th>
-
+                            <th id="tdd3">{{ :lang('类别名称','filed') }}</th>
                             <th id="tdd5">{{ :lang('票据名称','filed') }}</th>
                             <th id="tdd6">{{ :lang('单价','filed') }}</th>
                             <th id="tdd7">{{ :lang('单位','filed') }}</th>
@@ -188,9 +169,9 @@
                                     <td data-log="1" id="tdd2">{{ $v.name }}</td>
                                     <td id="tdd3">
 
-                                        <lable class="badge badge-info">{{ $v.fname }}</lable>
+                                        <lable class="badge badge-info">{{ :$lbarr[$v['fid']] }}</lable>
                                     </td>
-                                    <td id="tdd4"> <lable class="badge badge-success">{{ $v.tfname }}</lable></td>
+                                  
 
                                     <td id="tdd5">{{ $v.ticket_name }}</td>
                                     <td id="tdd6">{{ $v.price }}</td>
@@ -284,19 +265,19 @@
                     <div class="col-xs-6">
                         <div class="m-b">
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
-                               data-model="LanMu"
+                               data-model="Price"
                                data-handle="del" data-handle-check="1" data-handle-value=""><span
                                     class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="LanMu"
+                               data-model="Price"
                                data-handle="sort" data-handle-check="1" data-handle-value="0"><span
                                     class="fa fa-arrows-v"></span> {{ :lang('排序','handle') }}</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="LanMu"
+                               data-model="Price"
                                data-handle="checked" data-handle-check="1" data-handle-value="1"><span
                                     class="fa fa-check"></span> {{ :lang('启用','handle') }}</a>
                             <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="LanMu"
+                               data-model="Price"
                                data-handle="checked" data-handle-check="1" data-handle-value="0"><span
                                     class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
 

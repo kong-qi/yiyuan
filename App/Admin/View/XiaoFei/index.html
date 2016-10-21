@@ -34,10 +34,12 @@
                                 <input name="chkall" type="checkbox" id="chkall"value="0"></th>-->
 
                             <th >{{ :lang('消费日期','filed') }}</th>
+
                             <th>{{ :lang('名称','filed') }}</th>
                             <th>{{ :lang('点击量','filed') }}</th>
                             <th >{{ :lang('展现量','filed') }}</th>
                             <th >{{ :lang('消费','filed') }}</th>
+                            <th>{{ :lang('添加者') }}</th>
                            
 
 
@@ -55,6 +57,7 @@
                                     <td>{{ $v.clicks }}</td>
                                     <td >{{ $v.shows }}</td>
                                     <td >{{ $v.prices }}</td>
+                                    <td>{{ :$v['admin_rname']==''? $v['admin_name']: $v['admin_rname'] }}</td>
                                     <td >
 
                                         <div class="box">

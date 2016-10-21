@@ -7,21 +7,14 @@
         <div class="roww">
             <div class="col-sm-3">
                 <div class="input-group m-b">
-                    <span class="input-group-addon"><font color="">{{ :lang('所属一级科室') }}</font></span>
+                    <span class="input-group-addon"><font color="">{{ :lang('所属类别') }}</font></span>
                     <select class="form-control" required="required" id="ks_id" data-all="ksall_id" name="ks_id" data-datachenge='1' data-close="#kst_id" data-type="ks" data-next="kst_id" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
-                        <option value="">{{ :lang('请选择科室','handle') }}</option>
-                        {{ :get_keshi() }}
+                        <option value="">{{ :lang('请选择类别','handle') }}</option>
+                         {{ :get_lanmu_onelist('xiaofei',1,'','',I('get.fid')) }}
                     </select>
                 </div>
             </div>
-            <div class="col-sm-3">
-                <div class="input-group m-b">
-                    <span class="input-group-addon"><font color="">{{ :lang('所属二级级科室') }}</font></span>
-                    <select class="form-control" name="kst_id" id="kst_id">
-                        <option value="">{{ :lang('所有类别') }}</option>
-                    </select>
-                </div>
-            </div>
+            
         </div>
         <div class="col-sm-3">
             <div class="input-group m-b">
@@ -104,62 +97,17 @@
         })
        
 
-        $("[data-datachenge='1']").change(function() {
-            $url = $(this).attr('data-url');
-            $ks = $(this).attr('data-type');
-            $next_id = $(this).attr('data-next');
-            $id = $(this).val();
-            $closeid = $(this).attr('data-close');
-            $str = "<option value=''>无</option>";
-            if ($id == '') {
-                $($closeid).empty().append($str);
-
-                return false;
-
-
-            }
-            $.ajax({
-                'url': $url,
-                type: 'get',
-                data: {
-                    'id': $id,
-                },
-                cache: false,
-
-                dataType: 'json',
-                success: function(data) {
-
-                    if (data.content != '') {
-
-                        $str = '<option value="">{{ :lang("请选择") }}</option>';
-                        $str += data.content;
-
-                        $("#" + $next_id).empty().append($str);
-
-                    } else {
-                        $str = "<option value=''>{{ :lang('无') }}</option>";
-                        $("#" + $next_id).empty();
-                        $($closeid).empty().append($str);
-
-
-
-                    }
-
-                }
-            });
-        }).trigger("click");
+       
 
 
     })
 
     function go_ajax(curr) {
         $ks_id = $("#ks_id").val();
-        $kst_id = $("#kst_id").val();
         $key = $(".js-key").val();
         $.getJSON("{{ :U('Admin/Ajax/getPriceList') }}", {
             page: curr || 1,
             ks_id: $ks_id,
-            kst_id: $kst_id,
             key: $key
         }, function(res) {
            // console.log(res);

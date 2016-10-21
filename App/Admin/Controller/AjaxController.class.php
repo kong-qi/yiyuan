@@ -686,10 +686,7 @@ class AjaxController extends AuthController
             $map['fid']=$fid;
 
         }
-        if($tfid)
-        {
-            $map['tfid']=$tfid;
-        }
+       
          if($key)
         {
             $map2['name']=array('like','%'.$key.'%');
@@ -717,10 +714,10 @@ class AjaxController extends AuthController
                     $price_edit='';
                 }
                 $str.='
-                    <div class="col-xs-6 col-sm-3 price_item"">
+                    <div class="col-xs-6 col-sm-3 price_item">
                         <div class="panel panel-default >
                             <input hidden="fid" class="price_ks" value="'.$v['fid'].'">
-                             <input hidden="tfid" class="price_kst" value="'.$v['tfid'].'">
+                             
                              <div class="panel-heading"><span class="price_title">'.$v['name'].'</span></div>
                              <div class="panel-body">
                                 <div class="input-group">

@@ -74,6 +74,14 @@ class PriceZiDianController extends AuthController {
         }
 
         $list=$list->page( $page.','.$pagesize)->select();
+        $lb=M('LanMu')->where(array('type'=>'xiaofei','checked'))->select();
+        $lbarr=array();
+        if(count($lb)>0)
+        {
+            foreach ($lb as $key => $value) {
+                $lbarr[$value['id']]=$value['name'];
+            }
+        }
 
         $this->assign('list',$list);// 赋值数据集
         $rule=($this->getList());
@@ -81,8 +89,7 @@ class PriceZiDianController extends AuthController {
             '排序',
             '编号',
             '费用名称',
-            '科室一级',
-            '科室二级',
+            '所属类别',
             '票据名称',
             '单价',
             '单位',
@@ -91,6 +98,7 @@ class PriceZiDianController extends AuthController {
             '状态',
             '操作'
             );
+        $this->lbarr=$lbarr;
         $this->menu_list=$menu_list;
         $this->assign("subcategory",$rule);
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
@@ -200,13 +208,12 @@ class PriceZiDianController extends AuthController {
                     'ctime' => time(),
                     'uuid' => create_uuid(),
                     'name' => $v[0],
-                    'fid' => $v[1],
-                    'tfid'=>$v[2],
-                    'ticket_name'=>$v[3],
-                    'price'=>$v[4],
-                    'danwei'=>$v[5],
-                    'is_update'=>$v[6],
-                    'code'=>$v[7],
+                    'ticket_name'=>$v[1],
+                    'fid' => $v[2],
+                    'price'=>$v[3],
+                    'danwei'=>$v[4],
+                    'is_update'=>$v[5],
+                    'code'=>$v[6],
                     'admin_id' => session('admin_id')
                 );
             }

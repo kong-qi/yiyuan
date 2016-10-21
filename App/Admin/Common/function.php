@@ -325,10 +325,12 @@ function zidian_nav(){
 
         'area'=>'区域字典',
         'yushen'=>'医生字典',
+        'xiaofei'=>'收费类别',
         'pricezd'=>'收费项目',
         'yuyuezl'=>'预约评定',
         'zixun'=>'咨询工具',
         'danzhen'=>'到诊评定',
+        
         'shuofei'=>'收费字典',
         'jiesuan'=>'结算字典',
         'huifang'=>'回访字典',
@@ -336,6 +338,7 @@ function zidian_nav(){
         'website'=>'网站字典'
     );
     $url=array(
+        'xiaofei'=>U('Admin/XiaoFeiZiDian/index',array('type'=>'xiaofei')),
         'keshi'=>U('Admin/KeShiZiDian/index',array('type'=>'keshi')),
         'bingren'=>U('Admin/BingRenLaiYuanZiDian/index',array('type'=>'bingren')),
         'pricezd'=>U('Admin/PriceZiDian/index'),
