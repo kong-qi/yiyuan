@@ -13,7 +13,7 @@ class YuYueController extends AuthController {
         $is_huifang=0;
         $is_yishen=0;
         $is_qiantai=0;
-        print_r(session('group'));
+       
         //自己查看自己的
         if(!check_group('root'))
         {
