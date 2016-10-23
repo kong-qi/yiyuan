@@ -27,6 +27,7 @@
                                         <tr>
                                             <th>{{ :lang('确诊日期') }}</th>
                                             <th>{{ :lang('姓名') }}</th>
+                                            <th>{{ :lang('手术医生') }}</th>
                                             <th>{{ :lang('接诊医生') }}</th>
                                             <th>{{ :lang('科室') }}</th>
                                             <th>{{ :lang('质量评级') }}</th>
@@ -63,7 +64,7 @@
             function quzheng_ajax(curr) {
                 $.getJSON("{{ :U('Admin/Ajax/getCheckShow') }}", {
                     page: curr || 1,
-                    "uid": "{{ $uid }}",
+                    "yid": "{{ $yid }}",
                 }, function (res) {
                     $("#zhuti_zq").empty().append(res.content);
                     $(".js-open-more").click(function () {

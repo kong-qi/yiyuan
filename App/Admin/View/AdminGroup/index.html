@@ -29,6 +29,7 @@
                         <tr>
                             <th width="40" class="text-center"><input name="chkall" type="checkbox" id="chkall"
                                                                  value="0"></th>
+
                             <th align="center">{{ :lang('编号','filed') }}</th>
                             <th >{{ :lang('名称','filed') }}</th>
 
@@ -79,11 +80,13 @@
                                             class="btn btn-xs btn-white"><span
                                                 class="fa fa-pencil-square "></span> {{ :lang('编辑','handle') }}</a>
                                                 </if>
+                                            <if condition="in_array($v['id'],$saveArea) neq 1">
                                             <if condition=" check_group('group_del')">
                                             <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/del/",array('id'=>$v['uuid'])) }}"
                                             class="btn btn-xs btn-white" date-del="1">
                                             <span class="fa fa-trash "></span>
                                             {{ :lang('删除','handle') }}</a>
+                                            </if>
                                             </if>
                                         </div>
                                     </td>
@@ -105,6 +108,7 @@
                     <a href="javascript:void(0)" class="btn btn-xs" data-model="{{ :CONTROLLER_NAME }}"
                        data-handle="del" data-handle-check="1" data-handle-value=""><span class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
                 </div>-->
+               
                 <div class="box text-center">
 
                     <div class="pager">{{ $page }}</div>

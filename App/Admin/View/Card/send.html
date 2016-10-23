@@ -1,0 +1,124 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+
+
+</block>
+
+<block name="right">
+
+    <div class="animated fadeInUp">
+        <form action="" method="post" id="validate">
+            <input type="hidden" name="id" value="{{ $data.id }}">
+            <div class="ibox float-e-margins" style="margin-bottom:0px;">
+                <div class="ibox-content">
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('面额','filed') }}</span>
+                       
+                        <input class="form-control" name="name" type="text" value="{{ $data.price }}"  readonly />
+                    </div>
+                  
+                    <div class="input-group" style="margin-bottom:5px;">
+                      <span class="input-group-addon">{{ :lang('搜索') }}</span>
+                     
+                      <input type="text" class="form-control" value="" data-key="1" placeholder="{{ :lang('姓名/手机/病人ID号') }}">
+                      <span class="input-group-addon" data-search="1">{{ :lang('搜索') }}</span>
+                    </div>
+                    <div class="input-group" style="margin-bottom:5px;">
+                      <span class="input-group-addon">{{ :lang('病人名字') }}</span>
+                     
+                      <input type="text" class="form-control"  required="" data-uname="1" value=""  readonly="">
+                     
+                    </div>
+                    <div class="input-group" style="margin-bottom:5px;">
+                      <span class="input-group-addon">{{ :lang('病人ID') }}</span>
+                     
+                      <input type="text" class="form-control" name="user_id"  required="" data-uid="1" value=""  readonly="">
+                     
+                    </div>
+
+
+                    <div class="form-group" align="center" style="margin-bottom:5px;">
+                        <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('确定','handle') }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+   
+</block>
+<block name="add_foot_js">
+        <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script>
+        $(function () {
+
+            $("[data-search='1']").click(function(){
+               
+               $key=$("[data-key='1']").val();
+               $name=$("[data-uname='1']");
+               $id=$("[data-uid='1']");
+               $.ajax({
+                   'url': '{{ :U("Admin/Ajax/getUserList") }}',
+                   type: 'get',
+                   data: {
+                    
+                       'key': $key,
+                      
+                   },
+                   cache: false,
+                   dataType: 'json',
+                   success: function (data) {
+                        if(data.id!='')
+                        {
+                            $id.val(data.id)
+                            $name.val(data.name);
+                        }else
+                        {
+                            layer.msg('{{ :lang("没有找到") }}')
+                            $id.val('')
+                            $name.val('');
+                        }
+                       
+                       
+                   }
+               })
+            })
+      
+
+        });
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function() {
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+                rules: {
+                    bonus_money:{
+                        required:1,
+                    },
+					bonus_sum:{
+                        required:1,
+                    },
+					limit_time:{
+                        required:1,
+                    }
+                }
+				
+
+            });
+			
+			
+			
+        });
+    </script>
+</block>

@@ -18,7 +18,7 @@
                                 <h5><a class="collapse-link">筛查选项</a></h5>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
-                                        <i class="fa fa-wrench" id="shoujisf2"></i>
+                                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
                                     </a>
                                 </div>
                             </div>
@@ -109,7 +109,7 @@
                                                 <div class="checkbox-inline f-label">
                                                     <input type="checkbox" checked="" onclick="anxia('tdd{{ $k }}')"
                                                            class="tdd{{ $k }}">
-                                                    <label>{{ $v }}</label>
+                                                    <label>{{ :lang($v) }}</label>
                                                 </div>
                                             </li>
                                         </foreach>
@@ -130,88 +130,111 @@
                         <tbody>
 
                         <tr>
-                        
-                            <th id="tdd2" width="160">{{ :lang('开单时间','filed') }}</th>
+                            <if condition="$is_js">
+                                <th width="40" class="hidden-xs text-center">
+                                    <input name="chkall" type="checkbox" id="chkall"value="0"></th>
+                            </if>
+                            <th id="tdd2">{{ :lang('开单时间','filed') }}</th>
                             <th id="tdd3">{{ :lang('姓名','filed') }}</th>
-                            <th id="tdd4">{{ :lang('消费项目','filed') }}</th>
 
-                            <th id="tdd5">{{ :lang('合计总价','filed') }}</th>
-                            <th id="tdd6">{{ :lang('是否疗程消费','filed') }}</th>
-                            <th id="tdd7">{{ :lang('咨询医生','filed') }}</th>
-                            <th id="tdd8">{{ :lang('收费状态','filed') }}</th>
-                            <th id="tdd9">{{ :lang('结算状态','filed') }}</th>
-                            <th id="tdd10">{{ :lang('操作','filed') }}</th>
+                            <th id="tdd4">{{ :lang('收费详情','filed') }}</th>
+                     
+
+                            <th id="tdd9">{{ :lang('合计总价','filed') }}</th>
+                            <th id="tdd10">{{ :lang('手术医生','filed') }}</th>
+                            <th id="tdd11">{{ :lang('开单人','filed') }}</th>
+                            <th id="tdd12">{{ :lang('收费状态','filed') }}</th>
+                            <th id="tdd13">{{ :lang('操作','filed') }}</th>
+
                           
                         </tr>
                         <if condition="$list">
-
+                           
                             <volist name="list" id="v">
-
+                                <?php $show=(json_decode(htmlspecialchars_decode($v['price_show']),true));?>
+                               
                                 <tr>
-
+                                    <if condition="$is_js">
+                                        <td align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select" name="checkbox[]"
+                                                                  value="{{ $v.uuid }}"></td>
+                                    </if>
                                   
-                                    <td data-log="1" id="tdd2">{{ :to_time($v['kd_time'],'m-d-Y h:i:s') }}</td>
-                                    <td id="tdd3">
-
-                                           <a href="#">{{ $v.user_name }}</a>
-                                    </td>
-                                    <td id="tdd4" width="500">
-                                        <a href="javascript:void" class="btn btn-info js-click" >查看消费详情</a>
-                                        <div class="row hide show_price" >
-                                        <?php
-                                        $show=(json_decode(htmlspecialchars_decode($v['price_show']),true));
-                                        foreach($show as $k=>$sv)
-                                        {
-                                            echo '
-                                                <div class="col-xs-4 col-sm-4 price_item active">
-                                                <div class="panel panel-default">                             
-                                                     
-                                                     <div class="panel-heading"><span class="price_title">'.urldecode($sv['title']).'</span></div>
-                                                     <div class="panel-body">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">'.lang('票据名称').'：</span>
-                                                            <input type="text" class="form-control price_jg" min="0"  readonly="" value="'.urldecode($sv['title2']).'">
-                                                        </div>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">'.lang('价格').'</span>
-                                                            <input type="text" class="form-control price_jg" min="0" readonly="" value="'.($sv['price']).'">
-                                                        </div>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">'.lang('单位').'</span>
-                                                            <input type="text" class="form-control price_dw" readonly="" value="'.urldecode($sv['danwei']).'">
-                                                        </div>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">'.lang('开单数量').'</span>
-                                                            <input type="text" class="form-control price_num no-error" readonly="" value="'.urldecode($sv['num']).'" placeholder="" aria-invalid="false">
-                                                        </div>
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">'.lang('合计金额').'</span>
-                                                            <input type="text" class="form-control price_heji" readonly="" value="'.urldecode($sv['total']).'">
-                                                        </div>
-                                                       
-                                                    </div>
-                                                    
-                                                </div>
-                                                </div>
-                                            ';
-                                           
-                                        }
-                                        ?>
+                                      <td data-log="1" id="tdd2" >{{ :to_time($v['kd_time'],'m-d-Y h:i:s') }}</td>
+                                    <td id="tdd3" >
+                                        <a href="#">{{ $v.user_name }}</a>
                                         
-                                        </div>
+                                    </td>
+                                    <td id="tdd4">
+                                        <table class="table table-hover table-noboer">
+                                            <thead>
+                                                <tr>
+                                                    <td><span class="m-l">{{ :lang('名称') }}</span></td>
+                                                    <td>{{ :lang('单价') }}</td>
+                                                    <td>{{ :lang('单位') }}</td>
+                                                    <td>{{ :lang('数量') }}</td>
+                                                    <td>{{ :lang('合计金额') }}</td>
+                                                    
+                                                </tr>
+                                               
+                                                    <if condition="$show">
+                                                        <foreach name="show" item="sv" key="sk">
+                                                         <tr>
+                                                            <td><a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a> </td>
+                                                            <td>{{ :urldecode($sv['price']) }}</td>
+                                                            <td>{{ :urldecode($sv['danwei']) }}</td>
+                                                            <td>{{ :urldecode($sv['num']) }}</td>
+                                                            <td>{{ :urldecode($sv['total']) }}</td>
+                                                        </tr>
+                                                        </foreach>
+                                                    </if>
+                                               
+                                            </thead>
+                                        </table>
+                                    </td>
+                                       
                                     </td>
 
-                                    <td id="tdd5">{{ $v.price_total }}</td>
-                                    <td id="tdd6">{{ :$v['is_liaoxiao']==1?'是':'否' }}</td>
-                                    <td id="tdd7">{{ $v.kd_name }}</td>
-                                    <td id="tdd8"><a href="javascript:void(0)">{{ $v.sfname }}</a></td>
-                                    <td id="tdd9"><a href="javascript:void(0)">{{ $v.jsname }}</a></td>
-                                    <td id="tdd9"><a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1' data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}" data-title="{{ :lang('收费') }}" class="btn btn-primary ">收费</a></td>
+                                    <td id="tdd9" >{{ $v.price_total }}</td>
+                                    <td id="tdd10" >
+                                        {{ $v.sy_name }}
+                                    </td>
+                                    <td id="tdd11" >
+                                        {{ $v.kd_name }}
+                                    </td>
+                                    <td id="tdd12" >
+                                        <span class="{{ :btn_color($v['sf_status']) }}">{{ :sf_status($v['sf_status']) }}</span>
+                                        
+                                    </td>
+                                    <td id="tdd13" >
+                                        <if condition="$v['is_yf'] eq 1">
+                                            <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1' data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}" data-title="{{ :lang('输入补交金额') }}" class="btn btn-info ">{{ :lang('输入补交金额') }}</a>
+                                       
+                                            
+                                        </if>
+                                       
+                                       <?php
+                                        if($v['sf_status']==0){
+                                       ?>
+                                            <if condition="check_group('shouyin_check')">
+                                            <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1' data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}" data-title="{{ :lang('收费') }}" class="btn btn-primary ">{{ :lang('收费') }}</a>
+                                            </if>
+                                            <if condition="check_group('kaidan_edit')">
+                                                
+                                                     <a href="javascript:void(0)" data-layer="1" data-w="90%" data-h="500px" data-url="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('编辑') }}</a>
+                                                
+                                            </if>
+                                            <if condition="check_group('kaidan_edit')">
+                                            <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
+                                                    <span class="fa fa-trash "></span>
+                                                    删{{ :lang('除') }}</a>
+                                             </if>
+                                        <?php }?>
+                                    </td>
                                     
                                 </tr>
 
                             </volist>
-
+                             
                             <else/>
                             <tr>
                                 <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
@@ -223,6 +246,19 @@
                     </table>
 
                 </div>
+                 <if condition="$is_js">
+                    <div class="row">
+                       <div class="col-xs-6">
+                           <div class="m-b">
+                               
+                               <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
+                                  data-model="LanMu"
+                                  data-handle="checked" data-handle-check="1" data-handle-value="0"><span
+                                       class="fa fa-ban"></span> {{ :lang('结算','handle') }}</a>
+                   
+                           </div>
+                       </div>
+                 </if>
                <!--  <div class="row">
                    <div class="col-xs-6">
                        <div class="m-b">
@@ -244,12 +280,12 @@
                                    class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
                
                        </div>
-                   </div>
+                   </div>-->
                    <div class="col-xs-6">
                
                        <div class="pagee">{{ $page }}</div>
                    </div>
-               </div> -->
+               </div> 
 
             </div>
             <div class="cl"></div>

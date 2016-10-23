@@ -1,21 +1,24 @@
 <li>
     <a href="#">
         <i class="fa icon-cogs"></i>
-        <span class="nav-label">权限设置</span>
+        <span class="nav-label">{{ :lang('权限设置') }}</span>
         <span class="fa icon-chevron-left arrow"></span>
     </a>
     <ul class="nav nav-second-level">
         <if condition=" check_group('admin')">
-        <li><a href="{{ :U('Admin/Admin/ysadd') }}" class="J_menuItem">添加医生</a>
+        <li><a href="{{ :U('Admin/Admin/ysadd') }}" class="J_menuItem">{{ :lang('添加医生') }}</a>
         </if>
         <if condition=" check_group('admin')">
-        <li><a href="{{ :U('Admin/Admin/index') }}" class="J_menuItem">管理员</a>
+        <li><a href="{{ :U('Admin/Admin/yslist') }}" class="J_menuItem">{{ :lang('医生列表') }}</a>
+        </if>
+        <if condition=" check_group('admin')">
+        <li><a href="{{ :U('Admin/Admin/index') }}" class="J_menuItem">{{ :lang('管理员') }}</a>
         </if>
         <if condition=" check_group('group')">
-        <li><a href="{{ :U('Admin/AdminGroup/index') }}" class="J_menuItem">管理组</a></li>
+        <li><a href="{{ :U('Admin/AdminGroup/index') }}" class="J_menuItem">{{ :lang('管理组') }}</a></li>
         </if>
         <if condition=" check_group('rule')">
-        <li><a href="{{ :U('Admin/AdminRule/index') }}" class="J_menuItem">权限规则</a></li>
+        <li><a href="{{ :U('Admin/AdminRule/index') }}" class="J_menuItem">{{ :lang('权限规则') }}</a></li>
         </if>
     </ul>
 </li>

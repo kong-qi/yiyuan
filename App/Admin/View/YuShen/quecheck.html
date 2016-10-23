@@ -10,7 +10,7 @@
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
                 <h3 class="pull-right ">
-                    <a href="{{ :U('Admin/YuYue/index',array('is_yishen'=>'1','status'=>2)) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                    <a href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>2)) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
                 </h3>
             </div>
             <div class="box-content">
@@ -19,6 +19,7 @@
                     <form action="{{ :U('Admin/YuShen/add') }}" method="post" id="validate">
                         <input type="hidden" name="yy_id" value="{{ $data.id }}">
                         <input type="hidden" name="user_id" value="{{ $data.user_id }}">
+                        <input type="hidden" name="ys_id" value="{{ $data.ys_id }}">
 
                         <input
                             type="hidden" name="">
@@ -30,14 +31,12 @@
                                     <th width="131" class="text-center">{{ :lang('名称','filed') }}</th>
                                     <th>{{ :lang('内容','filed') }}</th>
                                 </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('接诊时间','filed') }}</td>
-                                    <td>
-                                        <input type="text" required name="jztime" value="{{ :date('Y-m-d H:i:s') }}"
-                                               size="80" class="form-control"
-                                               onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})">
-                                    </td>
-                                </tr>
+                               <tr>
+                                   <td align="right">{{ :lang('病人姓名') }}</td>
+                                   <td>
+                                       <input type="text" class="form-control" readonly="" value="{{ :$data['User']['name'] }}">
+                                   </td>
+                               </tr>
                                 <tr>
                                     <td align="right">{{ :lang('科室') }}</td>
                                     <td align="right">
@@ -183,7 +182,7 @@
         bd_ueditor('mark',120);
         function get_tks($id) {
             $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
-            $tfid = '{{ :I("get.kst_id") }}';
+            $tfid = '{{ $data.kst_id }}';
             log($tfid);
             $str = "<option value=''>无</option>";
             if ($id == '') {
@@ -197,7 +196,7 @@
         function get_tks2($id) {
             $str = "<option value=''>无</option>";
             $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
-            $tfid = '{{ :I("get.kstt_id") }}';
+            $tfid = '{{ $data.kstt_id }}';
             log($tfid);
             if ($id == '') {
                 $("#kstt_id").empty().append($str);

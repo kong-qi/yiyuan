@@ -560,12 +560,12 @@ class AjaxController extends AuthController
         return $this->ajaxReturn($data);
     }
     //查看确诊
-   public function getCheckShow($uid){
+   public function getCheckShow($yid){
        
         $page=I('request.page');
         $pagesize=20;
         $map=array(
-            'jz.user_id'=>$uid
+            'jz.yy_id'=>$yid
             );
         $m=M('JieZhen');
         //病区域
@@ -575,6 +575,7 @@ class AjaxController extends AuthController
         //用户，医生
         $join[]='LEFT JOIN __USER__ u1 ON jz.user_id = u1.id';
         $join[]='LEFT JOIN __KE_SHI__ ys ON jz.ysz_id = ys.id';
+        $join[]='LEFT JOIN __KE_SHI__ ys2 ON jz.ys_id = ys2.id';
         $join[]='LEFT JOIN __LAN_MU__ zl ON jz.zl_id = zl.id';
 
         $filed = '
@@ -587,7 +588,8 @@ class AjaxController extends AuthController
            ks2.name as kstname,
            ks3.name as ksttname,
            u1.name as user_name,
-           ys.name as yushen_name,
+           ys2.name as yushen_name,
+           ys.name as yushenss_name,
            zl.name as zlname
          ';
 
@@ -612,11 +614,25 @@ class AjaxController extends AuthController
                     <a href="javascript:void(0)"  class="js-open-more btn btn-xs btn-white"><span
                             class=" glyphicon-plus glyphicon-plus"></span>'.lang('展开').'</a>
                   ';
+                  $detail.='
+                    <a href="'.U('Admin/YuShen/quecheck_edit',array('id'=>$v['id'],'tpl'=>'quecheck_thumbs')).'"  class=" btn btn-xs btn-white"><span
+                            class=" glyphicon-plus glyphicon-plus"></span>'.lang('上传照片').'</a>
+                  ';
+                  $detail.='
+                    <a href="'.U('Admin/YuShen/quecheck_edit',array('id'=>$v['id'])).'"  class=" btn btn-xs btn-white"><span
+                            class=" glyphicon-plus glyphicon-plus"></span>'.lang('修改').'</a>
+                  ';
+                  $detail.='
+                    <a href="'.U('Admin/YuShen/quecheck_edit',array('id'=>$v['id'])).'"  class=" btn btn-xs btn-primary"><span
+                            class=" glyphicon-plus glyphicon-plus"></span>'.lang('开单').'</a>
+                  ';
+
                   $v['ksttname']=$v['ksttname']==''?'':"~".$v['ksttname'];
                   $v['kstname']=$v['kstname']==''?'':"~".$v['kstname'];
                  $content.="
                  <td>".to_time($v['jztime'],'d-m-Y')."</td>
                   <td>".$v['user_name']."</td>
+                  <td>".$v['yushenss_name']."</td>
                   <td>".$v['yushen_name']."</td>
                   <td>".$v['ksname'].$v['kstname'].$v['ksttname']."</td>
                   <td>".$v['zlname']."</td>
@@ -683,24 +699,37 @@ class AjaxController extends AuthController
 
         if($fid)
         {
-            $map['fid']=$fid;
+            $map['pr.fid']=$fid;
 
         }
        
          if($key)
         {
-            $map2['name']=array('like','%'.$key.'%');
-            $map2['ticket_name']=array('like','%'.$key.'%');
+            $map2['pr.name']=array('like','%'.$key.'%');
+            $map2['pr.code']=array('like','%'.$key.'%');
+            
             $map2['_logic'] = 'OR';
             $map['_complex']=$map2;
            
            
         }
-        
-         $pagesize=12;
-        $total=M('Price')->where($map)->count();// 查询满足要求的总记录数
+        $field='
+        pr.id as id,
+        pr.name as name,
+        pr.ticket_name as ticket_name,
+        pr.price as price,
+        pr.danwei as danwei,
+        pr.is_update as is_update,
+        pr.code as code,
+        pr.fid as fid,
+        xf.name as xf_name
+        ';
+        $join[] = 'LEFT JOIN __LAN_MU__ xf ON pr.fid = xf.id';
+        $pagesize=12;
+        $total=M('Price')->alias('pr')->join($join)->where($map)->count();// 查询满足要求的总记录数
         $pages=ceil($total/$pagesize);
-        $m=M('Price')->where($map)->order('id desc')->page($page,$pagesize)->select();
+        $m=M('Price')->alias('pr')->field($field)->join($join)->where($map)->order('pr.id desc')->page($page,$pagesize)->select();
+        //print_r($m);
         $str='';
         if(count($m)>0)
         {
@@ -711,9 +740,22 @@ class AjaxController extends AuthController
                     $price_edit='readonly';
                 }else
                 {
-                    $price_edit='';
+                    $price_edit='none';
                 }
-                $str.='
+                 $str.='
+                    <div class="col-xs-6 col-sm-3 price_item " data-edit="'.$price_edit.'" data-xfname="'.$v['xf_name'].'" data-id="'.$v['id'].'" data-fid="'.$v['fid'].'" data-name="'.$v['name'].'"  
+                    data-price="'.$v['price'].'" data-danwei="'.$v['danwei'].'" data-num="1" data-ticket="'.$v['ticket_name'].'" >
+                        <div class="panel panel-default" style="margin-bottom:0">
+                           
+                             
+                             <div class="panel-heading" ><span class="label label-info m-r">'.$v['xf_name'].'</span>'.$v['name'].'</div>
+                            
+                            
+                        </div>
+                        
+                    </div>
+                ';
+               /* $str.='
                     <div class="col-xs-6 col-sm-3 price_item">
                         <div class="panel panel-default >
                             <input hidden="fid" class="price_ks" value="'.$v['fid'].'">
@@ -750,7 +792,7 @@ class AjaxController extends AuthController
                         </div>
                         
                     </div>
-                ';
+                ';*/
             }
         }
 
@@ -761,6 +803,14 @@ class AjaxController extends AuthController
 
         return $this->ajaxReturn($data);
        
+    }
+    public function getUserList(){
+        $key=trim(I('request.key'));
+        $map=array();
+
+        $map['_string'] = "name like '".$key."%' or tel like '%".$key."%' or id = '".$key."'";
+        $m=M('User')->where($map)->find();
+        return $this->ajaxReturn($m);
     }
 
     //查看手机号码
@@ -775,7 +825,22 @@ class AjaxController extends AuthController
             add_smslog($uid);
            
         }
-        return '';$this->ajaxReturn($data);
+        return $this->ajaxReturn($data);
         
+    }
+    public function getYouHui(){
+        $code=I('get.code');
+        $uid=I('get.uid');
+        $map=array(
+                'code'=>$code,
+                'checked'=>1,
+                'ltime'=>array('gt',time()),
+                'user_id'=>$uid
+            );
+        $m=M('Card')->where($map)->find();
+        if(count($m)>0)
+        {
+            return $this->ajaxReturn($m);
+        }
     }
 }

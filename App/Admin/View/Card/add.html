@@ -1,0 +1,128 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+
+
+</block>
+
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="box">
+           <div class="box-title">
+              {{ :lang($onname,'menu') }}
+               <h3 class="pull-right ">
+                   <a href="__CONTROLLER__/" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+               </h3>
+           </div>
+            <div class="box-content">
+                <div class="form-warp">
+                    <div class="tab">
+                        <ul>
+
+                            <li class="active"> {{ :lang($onname) }}</li>
+
+                        </ul>
+                    </div>
+                    <form action="" method="post" id="validate">
+                        <input type="hidden" name="id" value="{{ $data.id }}">
+                        <div class="tab-box">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table">
+                                <tbody>
+                                <!--<tr>
+                                    <th width="131">名称</th>
+                                    <th>内容</th>
+                                </tr>-->
+                                <tr>
+                                    <td align="right">{{ :lang('抵扣券面额') }}：</td>
+                                    <td>
+                                        <input type="text" min="0" required="" name="price" value="" size="80" class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">{{ :lang('生成数量') }}：</td>
+                                    <td>
+                                        <input type="text" required="" name="num" value="" size="80" class="input">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="right">{{ :lang('有效期至') }}：</td>
+                                    <td>
+                                       
+                                        <input type="text" name="ltime" value="" readonly=""  onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})" size="80" class="input">
+                                    </td>
+                                </tr>
+								
+
+                              
+
+                                </tbody>
+                            </table>
+                        </div>
+                       
+                        <table class="table">
+                            <tfooter>
+                                <tr>
+                                    <td width="142"></td>
+                                    <td>
+                                        <input type="submit" value="提交" class="btn">
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </table>
+                    </form>
+
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+        <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script>
+        $(function () {
+
+
+      
+
+        });
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function() {
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+                rules: {
+                    bonus_money:{
+                        required:1,
+                    },
+					bonus_sum:{
+                        required:1,
+                    },
+					limit_time:{
+                        required:1,
+                    }
+                }
+				
+
+            });
+			
+			
+			
+        });
+    </script>
+</block>

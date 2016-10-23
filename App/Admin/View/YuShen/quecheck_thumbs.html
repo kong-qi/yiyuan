@@ -1,0 +1,134 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+
+
+        <div class="box">
+            <div class="box-title">
+                {{ :lang($onname,'menu') }}
+                <h3 class="pull-right ">
+                    <a href="{{ :U('Admin/YuShen/showcheck',array('yid'=>$data['yy_id'])) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                </h3>
+            </div>
+            <div class="box-content">
+                <div class="form-warp">
+
+                    <form action="{{ :U('Admin/YuShen/queck_edit_thumbs') }}" method="post" id="validate">
+                        <input type="hidden" name="id" value="{{ $data.id }}">
+
+                       
+                        <div class="tab-box">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table "
+                                   style="background: #fff">
+                                <tbody>
+                                <tr>
+                                    <th width="131" class="text-center">{{ :lang('名称','filed') }}</th>
+                                    <th>{{ :lang('内容','filed') }}</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">{{ :lang('病人姓名') }}</td>
+                                    <td>
+                                        <input type="text" class="form-control" readonly="" value="{{ :$data['User']['name'] }}">
+                                    </td>
+                                </tr>
+                               
+                                <tr>
+                                    <td align="right">{{ :lang('病人术前术后照片') }}</td>
+                                    <td class="enmoreinsert_file">
+                                        <input type="hidden" name="thumbs" value="" size="80"
+                                               class="input insert_input">
+                                        <button type="button" class="btn btn-xs btn-success"
+                                                onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
+                                        <span class="fa fa-image"></span> 上传相册</button>
+                                        <div class="insert_img_more insert_img_more_en">
+                                            <?php
+                                                $picurl=json_decode(htmlspecialchars_decode($data['thumbs']),true);
+                                            
+                                            if($picurl)
+                                            {
+                                            
+                                            foreach($picurl as $v)
+                                            {
+                                            echo '
+                                            <li class="itempic"><img data-url="'.$v['path'].'"
+                                                                     src="'.pic_url($v['path']).'" alt="">
+                                                <p class="m_t_10"><a href="javascript:void(0)"
+                                                                     class="btn btn-white btn-xs js_left_pic"><i
+                                                        class="fa fa-angle-left"></i>上移</a>
+                                                    <a href="javascript:void(0)"
+                                                       class="btn btn-white btn-xs js_right_pic"><i
+                                                            class="fa fa-angle-right"></i>下移</a>
+                                                    <a href="javascript:void(0)"
+                                                       class="btn btn-danger btn-xs js_remove_pic"><i
+                                                            class="fa fa-trash"></i>删除</a></p></li>
+                                            ';
+                                            }
+                                            
+                                            }
+                                            ?>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                </tbody>
+                                <tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
+                                        </td>
+                                    </tr>
+                                </tfooter>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="cl"></div>
+        </div>
+
+
+    </div>
+</block>
+<block name="add_foot_js">
+    
+
+    <script>
+        
+     
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function () {
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+
+                submitHandler: function (form) {
+                    //设置表单参数
+                    //最终区域
+
+                    return_pic_json(".enmoreinsert_file .itempic", "thumbs", 1);
+                    //return false;
+                    $(form).ajaxSubmit();
+                }
+            });
+
+           
+        });
+
+    </script>
+</block>

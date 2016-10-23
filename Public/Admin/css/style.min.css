@@ -205,10 +205,10 @@ body.body-small .navbar-top-links li:last-child {
 }
 
 .fa.arrow:before {
-	content: '\e6e0';
+	content: "\f104";
 }
 .active > a > .fa.arrow:before {
-  content: '\e6e3';
+  content: "\f107";
 }
 .nav-second-level li, .nav-third-level li {
 	border-bottom: none !important;
@@ -2505,7 +2505,7 @@ a.forum-item-title:hover {
 	border-bottom: 1px solid #e7eaec;
 }
 body {
-	font-family: "Verdana",'Times New Roman', Times,"open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 12px;
 	color: #676a6c;
 	overflow-x: hidden;
@@ -2515,7 +2515,6 @@ html, body {
 }
 body, body.full-height-layout #page-wrapper, body.full-height-layout #wrapper, html {
     height: 100%;
-    margin-right: -8px;
 }
 
 #page-wrapper {
@@ -5730,7 +5729,6 @@ body.fixed-sidebar.mini-navbar .navbar-static-side {
 
 #page-wrapper {
 	margin-left: 0 !important;
-	overflow: hidden;
 }
 .timeline-item .date {
 	text-align: left;
@@ -5972,12 +5970,6 @@ body.fixed-sidebar.mini-navbar .navbar-static-side {
 .ibox-content{overflow-x:hidden}
 .m-b{ margin-bottom:5px;}
 
-
-#page-wrapper
-{
-	overflow: hidden;
-
-	padding:0;
-	padding-left: 15px;
-
+.icon-remove-sign:before {
+    content: "\f00d";
 }

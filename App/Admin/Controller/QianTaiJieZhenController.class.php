@@ -75,9 +75,15 @@ class QianTaiJieZhenController extends AuthController {
         //网站更新信息
         $this->onname='分配医生';
 
-        $base=I('get.base');
+        $base=I('request.base');
+        $base=$base==''?"1":$base;
+      
         //网站更新信息
-        $backurl=$this->burl=U('Admin/YuYue/index?shenfeng=qiantai&status=1&'.base64_decode($base));
+        $backurl=U('Admin/YuYue/index?shenfeng=qiantai&status='.$base);
+       
+        $this->assign('base',$base);
+        
+       
 
 
         if(IS_POST)
@@ -166,6 +172,7 @@ class QianTaiJieZhenController extends AuthController {
 
         }
     }
+   
     public  function del(){
         //权限选择
         $this->check_group('qiantaijz_del');

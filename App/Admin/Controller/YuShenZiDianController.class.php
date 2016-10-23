@@ -7,7 +7,7 @@ class YuShenZiDianController extends AuthController {
 
     public function index($type){
         //权限选择
-
+        
         $this->check_group($type);
         $model=M('KeShi');
         $map=array();

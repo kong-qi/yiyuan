@@ -5,6 +5,7 @@ class AdminController extends AuthController {
 
     public function index(){
         //权限选择
+        
         $this->check_group('admin');
         $model=M(CONTROLLER_NAME);
         $map=array();
@@ -13,10 +14,11 @@ class AdminController extends AuthController {
             $map=I('get.');
 
         }
-        $rule=M('AdminGroup')->select();
+        $rule=M('AdminGroup')->where(array('checked'=>1))->select();
         $newrule=array();
         foreach ($rule as $key => $v)
         {
+
             $newrule[$v['id']]=$v['name'];
 
         }
@@ -88,7 +90,10 @@ class AdminController extends AuthController {
         }
     }
     public function add(){
+
         //权限选择
+        $save=array('12','1');
+        $this->saveArea=$save;
         $this->check_group('admin_add');
         if(IS_POST)
         {
@@ -122,14 +127,46 @@ class AdminController extends AuthController {
         }
 
     }
-     public function ysadd(){
+    public function yslist(){
+        //权限选择
+        $this->onname='医生列表';
+        $this->check_group('admin');
+        $model=M(CONTROLLER_NAME);
+        $map=array('ys_id'=>array('neq',''));
+        
+        $rule=M('AdminGroup')->select();
+        $newrule=array();
+        foreach ($rule as $key => $v)
+        {
+            $newrule[$v['id']]=$v['name'];
+
+        }
+        ;
+        $count =  $model->where($map)->count();// 查询满足要求的总记录数
+        $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+        
+        $page=1;
+        if(isset($_GET['p']))
+        {
+            $page=$_GET['p'];
+        }
+
+        $list =  $model->where($map)->order('sort desc,id desc')->page( $page.','.$pagesize)->select();
+        $this->assign('list',$list);// 赋值数据集
+        $this->assign('gpdata',$newrule);
+        $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
+
+        $this->display();
+    }
+    public function ysadd(){
         //权限选择
         $this->check_group('admin_add');
+
         if(IS_POST)
         {
 
             $model=D(CONTROLLER_NAME);
-
+             $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/yslist");
             if($model->create())
             {
                 $data=$model->create();
@@ -137,12 +174,12 @@ class AdminController extends AuthController {
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                   
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/ysadd");
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
                 }
             }else
@@ -156,10 +193,65 @@ class AdminController extends AuthController {
             $this->display();
         }
 
+    }
+    public function ysedit(){
+        //权限选择
+        $save=array('12');
+        $this->saveArea=$save;
+        $this->check_group('admin_edit');
+        if(IS_POST)
+        {
+            $model =D(CONTROLLER_NAME);
+
+            if($model->create()) {
+                $data=$model->create();
+                $id=$data['id'];
+                if(($data['pwd'])!='')
+                {
+                    $data['pwd']=sha1($data['pwd']);
+                }else
+                {
+                    unset($data['pwd']);
+                }
+
+                $result =   $model->save($data);
+
+                if($result) {
+
+                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    $msg=lang('更新成功','handle');
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
+                    //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
+                }else{
+
+                    $msg=lang('数据一样无更新','handle');
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);;parent.layer.close(index)</script>";
+                }
+            }else{
+                return $this->error($model->getError());
+            }
+        }else{
+            $id=I('get.uuid');
+            $map=array(
+            'uuid'=>$id
+            );
+
+            $model   =   M(CONTROLLER_NAME)->where($map)->find();
+            $rule=M('AdminGroup')->where(array('checked'=>1))->select();
+            $this->rule=$rule;
+            if($model) {
+                $this->data =  $model;// 模板变量赋值
+            }else{
+                return $this->error(lang('数据错误','handle'));
+            }
+            $this->display();
+        }
     }
     public function edit(){
         //权限选择
-
+        $save=array('12','1');
+        $this->saveArea=$save;
         $this->check_group('admin_edit');
         if(IS_POST)
         {

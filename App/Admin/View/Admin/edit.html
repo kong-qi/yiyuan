@@ -26,7 +26,10 @@
                             <option value="">{{ :lang('请选择','filed') }}</option>
                             <if condition="$rule">
                                 <volist name="rule" id="v">
-                                    <option value="{{ $v.id }}" {{ :($v['id']==checked_on($data['groupid'],$v['id'])?"selected='selected'":"") }}>{{ $v.name }}</option>
+                                    <if condition="in_array($v['id'],$saveArea) neq 1">
+                                        <option value="{{ $v.id }}" {{ :($v['id']==checked_on($data['groupid'],$v['id'])?"selected='selected'":"") }}>{{ $v.name }}</option>
+                                    </if>
+                                    
                                 </volist>
 
 

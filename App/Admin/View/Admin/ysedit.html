@@ -1,0 +1,68 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="animated fadeInUp">
+        <form action="" method="post" id="validate">
+            <input type="hidden" name="id" value="{{ $data.id }}">
+            <div class="ibox float-e-margins" style="margin-bottom:0px;">
+                <div class="ibox-content">
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('账号','filed') }}</span>
+                        <input class="form-control" name="name" type="text" value="{{ $data.name }}" readonly />
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('密码','filed') }}</span>
+                        <input class="form-control" name="pwd" type="password" value="" />
+                    </div>
+                    <div class="input-group m-b" style="margin-bottom:5px;">
+                        <span class="input-group-addon">{{ :lang('名字','filed') }}</span>
+                        <input class="form-control" name="realname" value="{{ $data.realname }}" type="text" />
+                    </div>
+
+                    <div class="form-group" align="center" style="margin-bottom:5px;">
+                        <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('确定','handle') }}</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script>
+
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function() {
+            // validate the comment form when it is submitted
+            var e = "<i class='fa fa-times-circle'></i> ";
+
+            // validate signup form on keyup and submit
+            $("#validate").validate({
+                rules: {
+                    name:{
+                        required:1,
+                        ename:1
+                    },
+
+                    realname: "required",
+                    "groupid[]":{required:1}
+
+                },
+            });
+        });
+
+
+    </script>
+</block>

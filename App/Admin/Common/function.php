@@ -893,7 +893,7 @@ function yuyue_status($checked=''){
     $arr=array(
         '1'=>'已预约',
         '2'=>'已到院',
-        '3'=>'已确诊',
+        '3'=>'已接诊',
         '4'=>'已改期',
         '5'=>'逾期未到'
     );
@@ -907,7 +907,7 @@ function sf_status($checked=''){
     $arr=array(
         '0'=>'未收费',
         '1'=>'已收费',
-        '3'=>'已收定金',
+        '2'=>'已收定金',
 
     );
     if($checked!='')
@@ -916,6 +916,20 @@ function sf_status($checked=''){
     }
     return $arr;
 }
+function btn_color($checked=''){
+     $arr=array(
+        '0'=>'badge',
+        '1'=>'badge badge-info',
+        '2'=>'badge badge-danger',
+
+    );
+    if($checked!='')
+    {
+        return $arr[$checked];
+    }
+    return $arr;
+}
+
 function set_arr_to($table,$where){
     $map=array('checked'=>1);
     $map=$where+$map;
@@ -957,7 +971,7 @@ function get_yushen($id=0,$echo=1,$checkid=''){
     }
     return $rule;
 }
-get_yushen_ks(0,1);
+
 function get_yushen_ks($id=0,$echo=1,$checkid=''){
     $join[] = 'LEFT JOIN __KE_SHI__ a1 ON k1.fid = a1.id';
     $filed='

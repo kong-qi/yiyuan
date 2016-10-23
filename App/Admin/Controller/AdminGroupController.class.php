@@ -6,6 +6,9 @@ class AdminGroupController extends AuthController {
     protected $noticeAll='<p>超级管理员：表示最高权限</p><p>游客：只能访问，不能操作</p>';
     public function index(){
         //权限选择
+        //安全区域
+        $save=array('12','1');
+        $this->saveArea=$save;
         $this->check_group('group');
         $model=M(CONTROLLER_NAME);
         $map=array();

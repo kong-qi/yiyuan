@@ -10,75 +10,125 @@
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
                 <h3 class="pull-right ">
-                    <a href="{{ :U('Admin/YuYue/index',array('is_yushen'=>'1')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                    <a href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>3)) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
                 </h3>
+            </div>
+            <div class="ibox-content" style="padding-left:10px; padding-right:10px;" id="shoujisf3">
+                <div class="roww">
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon"><font color="">{{ :lang('所属类别') }}</font></span>
+                            <select class="form-control" required="required" id="ks_id" data-all="ksall_id" name="ks_id" data-datachenge='1' data-close="#kst_id" data-type="ks" data-next="kst_id" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
+                                <option value="">{{ :lang('请选择类别','handle') }}</option>
+                                 {{ :get_lanmu_onelist('xiaofei',1,'','',I('get.fid')) }}
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group m-b">
+                        <span class="input-group-addon"><font color="">关键词</font></span>
+                        <input name="keyword" type="text" value="" placeholder="{{ :lang('费用名称/检索码') }}" class="form-control js-key">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-primary  go-search" type="button">{{ :lang('确定筛选') }}</button>
+                </div>
+               
+                <!-- <div class="alert alert-warning" role="alert">{{ :lang('请点击选择消费项目') }}</div> -->
+                <div class="roww change_price" id="zhuti" style="">
+                </div>
+                <div class="pager" id="pager">
+                </div>
             </div>
             <div class="box-content">
                 <div class="form-warp">
 
                     <form action="{{ :U('Admin/YuShen/postKaiDan') }}" method="post" id="validate">
+                        <input type="hidden" name="qz_id" value="{{ $data.id }}">
+                        <input type="hidden" name="ys_id" value="{{ $data.ys_id }}">
+                        <input type="hidden" name="ysz_id" value="{{ $data.ysz_id }}">
                         <input type="hidden" name="yuyue_id" value="{{ $data.yy_id }}">
                         <input type="hidden" name="user_id" value="{{ $data.user_id }}">
-                         <input type="hidden" name="price_show" id="price_show">
-                        <input
-                            type="hidden" name="">
-                        <div class="tab-box">
-                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table "
+                          <input type="hidden" name="price_show" id="price_show">
+                        <input type="hidden" name="sf_status" value="0">
+                        <input type="hidden" name="kd_time" value="{{ :time() }}">
+                        <div class="tab-box ">
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table  "
                                    style="background: #fff">
                                 <tbody>
                                 <tr>
                                     <th width="131" class="text-center">{{ :lang('名称','filed') }}</th>
-                                    <th>{{ :lang('内容','filed') }}</th>
+                                    <th>{{ :lang('收费项目','filed') }}</th>
                                 </tr>
                                 <tr>
-                                    <td align="right">{{ :lang('开单时间','filed') }}</td>
+                                    <td align="right">{{ $data['User']['name'] }}</td>
                                     <td>
-                                        <input type="text" required name="kd_time" value="{{ :date('Y-m-d H:i:s') }}"
-                                               size="80" class="form-control"
-                                               onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('消费项目','filed') }}</td>
-                                    <td>
-                                        <a class="btn btn-success m-b" onclick="price_chane('{{ :U("Admin/YuShen/xiaofei") }}','.insert_price_more','#price_total')">{{ :lang('添加消费项目') }}</a>
-                                        <div class="insert_price_more">
-                                            
+                                        
+                                        <div class="insert_price_more m-l">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <td ><span class="m-l"> {{ :lang('收费项目') }}</span></td>
+                                                        <td>{{ :lang('单价') }}</td>
+                                                        <td>{{ :lang('单位') }}</td>
+                                                        <td>{{ :lang('数量') }}</td>
+                                                        <td>{{ :lang('小计金额') }}</td>
+                                                        <td>{{ :lang('操作') }}</td>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="add_price">
+                                                    
+                                               
+                                                
+                                                
+                                               
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="4" class="text-right"><span class="label label-primary">{{ :lang('总价','filed') }}</span></td>
+                                                        <td>
+                                                            <input type="text" required name="price_total" value="0"
+                                                                   size="80" class="form-control" readonly="" style="width: 120px;" id="price_total">
+                                                        </td>
+                                                        <td></td>
+                                                        
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('总价','filed') }}</td>
-                                    <td>
-                                        <input type="text" required name="price_total" value="0"
-                                               size="80" class="form-control" readonly="" id="price_total">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('是否按疗效消费','filed') }}</td>
-                                    <td>
-                                        <select name="is_liaoxiao" id="" class="form-control">
-                                            <option value="0">否</option>
-                                            <option value="1">是</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('消费状态','filed') }}</td>
-                                    <td>
-                                        <select name="shoufei_id" required id="" class="form-control">
-                                           
-                                            {{ :get_lanmu_onelist('shuofei') }}
-                                        </select>
-                                    </td>
-                                </tr>
+                               
+                            
+                                <if condition="check_group('kaidan_yishen')">
+                                    
+                               
                                 <tr>
                                     <td align="right">{{ :lang('开单人','filed') }}</td>
                                     <td>
+                                        
 
-                                        <input type="text" class="from-control" value="{{ :session('name') }}" name="kd_name">
+                                                <div class="col-xs-3">
+                                                    <select class="form-control m-l" required="required" id="ks2_id" name="kd_kstid">
+                                                        <option value="">{{ :lang('请选择科室','handle') }}</option>
+                                                        {{ :get_keshi('0','1',$data['ks_id'] ) }}
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <select class="form-control" required="required" id="ysz_id" name="kd_id">
+                                                        <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                                    </select>
+                                                </div>
+                                        
                                     </td>
                                 </tr>
+                                <else/>
+                                    <input type="hidden"  name="kd_id" value="{{ :session('ys_id') }}">
+                                
+                                </if>
 
 
 
@@ -103,20 +153,35 @@
     </div>
 </block>
 <block name="add_foot_js">
-    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script src="__JS__/layer/laypage/laypage.js"></script>
   
-
+    
     <script>
+      $total=$("#price_total");
       
-       function js_total(){
-           $ysum=0;
-           $(".price_heji").each(function(){
-               $ysum+=parseFloat($(this).val());
-                
-               
+       function go_ajax(curr) {
+           $ks_id = $("#ks_id").val();
+           $key = $(".js-key").val();
+           $.getJSON("{{ :U('Admin/Ajax/getPriceList') }}", {
+               page: curr || 1,
+               ks_id: $ks_id,
+               key: $key
+           }, function(res) {
+              // console.log(res);
+               $("#zhuti").empty().append(res.content);
+               //显示分页
+               laypage({
+                   cont: 'pager', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                   pages: res.pages, //通过后台拿到的总页数
+                   curr: curr || 1, //当前页,
+                   first: false,
+                   jump: function(obj, first) { //触发分页后的回调
+                       if (!first) { //点击跳页触发函数自身，并传递当前页：obj.curr
+                           go_ajax(obj.curr);
+                       }
+                   }
+               });
            });
-            $ysum=Math.round($ysum);
-           $("#price_total").val($ysum);
        }
         $.validator.setDefaults({
             highlight: function (e) {
@@ -142,49 +207,245 @@
                     //设置表单参数
                     //最终区域
 
-                    return_price_json(".price_item", "price_show", 1);
-                    $show_str=$(".price_item").length;
+                    return_price_json(".show_price_all", "price_show", 1);
+                    $show_str=$(".show_price_all").length;
 
                     if($show_str<=0)
                     {
                         layer.msg('{{ :lang("请选择消费项目") }}');
                         return false;
                     }
+                    //return false;
                     $(form).ajaxSubmit();
                 }
             });
+            $(".go-search").click(function() {
 
+                go_ajax(0);
+
+            });
+            
+            $(document).on('click',".price_item",function(){
+                $add_obj=$("#add_price");
+
+
+                $xf_id=$(this).attr('data-fid');//类别ID
+                $xf_name=$(this).attr('data-xfname');//类别名字
+                $price=$(this).attr('data-price');//价格
+                $name=$(this).attr('data-name');//名字
+                $ticket_name=$(this).attr('data-ticket');//票据
+                $danwei=$(this).attr('data-danwei');//单位
+                $id=$(this).attr('data-id');//价格ID 
+                $num=1;
+                $has_on=$(".ajax-price-id-"+$id).text();
+               
+                if($has_on!='')
+                {
+                    layer.msg('{{ :lang("已经添加过了") }}');
+                    return false;
+                }
+                //价格是否可以修改
+                $edit_price_status=$(this).attr('data-edit');
+                if($edit_price_status!='none')
+                {
+                   
+                    $edit_price_status=' readonly="readonly" ';
+                }
+
+                $str='<tr class="show_price_all ajax-price-id-'+$id+'"> <td><input type="hidden"  name="ticket_name[]" value="'+$ticket_name+'"> <input type="hidden"  name="price_name[]" value="'+$name+'"> <input type="hidden" name="price_xfname[]" value="'+$xf_name+'"> <input type="hidden" name="price_fid[]" value="'+$xf_id+'"> <input type="hidden" class="input_price"  name="price_id[]" value="'+$id+'"> <input type="hidden" name="price_danwei[]" value="'+$danwei+'"> <input type="hidden" class="input_heji" name="price_heji[]" value="'+$price+'">  <a href="javascript:;" class="m-l pr_name" data-xfname="'+$xf_name+'" data-fid="'+$xf_id+'" data-id="'+$id+'" data-ticket="'+$ticket_name+'">'+$name+'</a></td> <td><input '+$edit_price_status+' name="price_price[]" min="0" type="text" value="'+$price+'" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td> <td> <span class="badge pr_danwei">'+$danwei+'</span></td> <td><input type="text" min="0" value="'+$num+'" name="price_num[]" class="form-control pr_num" style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td> <td><span class="pr_heji">'+$price+'</span></td> <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ :lang('上移') }}</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ :lang('下移') }}</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> {{ :lang('删除') }}</a> </td> </tr>';
+                //log($str);
+                $("#add_price").append($str);
+                 js_total();
+                $(this).remove();
+            });
             //价格改变
-            $(document).on('change','.price_jg',function(){
+            $(document).on('change','.pr_price',function(){
                 
-                $pt=$(this).parents(".panel-body");
+                $pt=$(this).parents(".show_price_all");
                  
                
                  $p=$(this).val();
-                 $t=$pt.find(".price_heji");
-                 $num=$pt.find(".price_num").val();
-                 $t.val($num*$p);
+
+                 $t=$pt.find(".pr_heji");
+                 
+                 $num=$pt.find(".pr_num").val();
+
+
+                 $t.text($num*$p);
                  js_total();
 
-            })
-             //价格改变
-            $(document).on('change','.price_num',function(){
+                 //更新input
+                 $pt.find(".input_price").val($p);
+                 $pt.find(".input_heji").val($num*$p);
+
+            });
+            
+            //数量变化
+            $(document).on('change','.pr_num',function(){
                 
-                $pt=$(this).parents(".panel-body");
+                $pt=$(this).parents(".show_price_all");
                  
                
-                 $p=$(this).val();
-                 $t=$pt.find(".price_heji");
-                 $num=$pt.find(".price_jg").val();
-                 $t.val($num*$p);
-                 js_total()
+                 $num=$(this).val();
+                 $price=$pt.find(".pr_price").val();
+                 
+                 $pt.find(".pr_heji").text($price*$num);
+                 js_total();
+                  //更新input
+                 $pt.find(".input_price").val($price);
+                 $pt.find(".input_heji").val($price*$num);
 
-            })
+            });
+            //-数量按钮
+            $(document).on('click','.js-add-num',function(){
+                
+                $pt=$(this).parents(".show_price_all");
+                
+                
+                $obj_num=$pt.find(".pr_num");
+                $num=$obj_num.val(); 
+                if($num>=1)
+                 {
+                    $num++;
+                 }else
+                 {
+                    $num=1;
+                 }
+                 $obj_num.val($num);
+                 $price=$pt.find(".pr_price").val();
+                 $pt.find(".pr_heji").text($price*$num);
+                 js_total();
+                  //更新input
+                 $pt.find(".input_price").val($price);
+                 $pt.find(".input_heji").val($price*$num);
+
+
+            });
+            //---
+            $(document).on('click','.js-del-num',function(){
+                $pt=$(this).parents(".show_price_all");
+                
+                
+                $obj_num=$pt.find(".pr_num");
+                $num=$obj_num.val(); 
+               
+                if($num>1)
+                 {
+                    $num--;
+                 }else
+                 {
+                    $num=1;
+                 }
+                 log($num);
+                 $obj_num.val($num);
+                 $price=$pt.find(".pr_price").val();
+                 $pt.find(".pr_heji").text($price*$num);
+                 js_total();
+                  //更新input
+                 $pt.find(".input_price").val($price);
+                 $pt.find(".input_heji").val($price*$num);
+
+            });
+            //删除
+            $(document).on('click', '.js-handle-remove', function(event) {
+                var onthis = $(this).parents(".show_price_all");
+                layer.confirm('{{ :lang("你确定要取消删除吗") }}？', {
+                    btn: ['删除', '取消'] //按钮
+                }, function(index) {
+                  
+                    onthis.remove();
+                    js_total();
+                    layer.close(index)
+
+                }, function(index) {
+
+                    layer.close(index)
+                });
+
+            });
+            //上
+            $(document).on('click', '.js-handle-up', function(event) {
+
+
+                var onthis = $(this).parents(".show_price_all");
+
+
+                var getup = $(this).parents(".show_price_all").prev(".show_price_all");
+
+                if (getup.html() != null) {
+
+                    $(getup).before(onthis);
+
+                }
+
+            });
+            //下移动
+            $(document).on('click', '.js-handle-down', function(event) {
+
+                var onthis = $(this).parents(".show_price_all");
+                var getup = $(this).parents(".show_price_all").next(".show_price_all");
+                if (getup.html() != null) {
+
+                    $(getup).after(onthis);
+
+                }
+
+            });
+            $("#ks2_id").change(function () {
+                $url = "{{ :U('Admin/Ajax/getYuShen') }}";
+                $next_id = "ysz_id";
+                $id = $(this).val();
+                $.ajax({
+                    'url': $url,
+                    type: 'get',
+                    data: {
+                        'id': $id,
+                        ysid: "{{ $data.ys_id }}"
+                    },
+                    cache: false,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.content != '') {
+                            $str = '<option value="">{{ :lang("请选择") }}</option>';
+                            $str += data.content;
+                            $("#" + $next_id).empty().append($str);
+
+                        } else {
+                            $str = "<option value=''>{{ :lang('无') }}</option>";
+                            $("#" + $next_id).empty();
+                            $($closeid).empty().append($str);
+
+
+                        }
+
+                    }
+                });
+            }).trigger('change');
+
 
            
 
          
         });
+        function js_total(){
+            $ysum=0;
+            pr_price=$(".pr_price");
+            pr_num=$(".price_num");
+            pr_heji=$(".pr_heji");
+
+            $input_price=$(".input_price");
+            $input_heji=$(".input_heji");
+
+            //循环合计
+            pr_heji.each(function(){
+                $ysum+=parseFloat($(this).text());
+                
+                
+            });
+            $ysum=Math.round($ysum);
+            $total.val($ysum);
+            
+        }
 
     </script>
 </block>

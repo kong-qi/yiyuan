@@ -6,14 +6,17 @@
     </a>
     <ul class="nav nav-second-level">
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'qiantai','status'=>'1')) }}">分配医生</a>
+            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'qiantai','status'=>'1')) }}">{{ :lang('分诊') }}</a>
 
         </li>
-        <li>
-            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'all','cx'=>1)) }}">查询病人</a>
+         <li>
+            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'qiantai','cx'=>1,'status'=>2)) }}">{{ :lang('已分诊列表') }}</a>
         </li>
         <li>
+            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'all','cx'=>1)) }}">{{ :lang('全部预约') }}</a>
+        </li>
+        <!-- <li>
             <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'all','show'=>'none','is_fz'=>1)) }}">复诊列表</a>
-        </li>
+        </li> -->
     </ul>
 </li>

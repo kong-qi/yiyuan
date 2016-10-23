@@ -7,11 +7,11 @@
     <ul class="nav nav-second-level">
         <if condition="check_group('yishenjz_add')">
             <li>
-                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>'2')) }}">{{ :lang('接待确诊') }}</a>
+                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>'2')) }}">{{ :lang('我要接诊') }}</a>
 
             </li>
             <li>
-                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>'3')) }}">{{ :lang('确诊病人') }}</a>
+                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>'3')) }}">{{ :lang('已接诊病人列表') }}</a>
 
             </li>
             <li>
@@ -19,6 +19,7 @@
 
             </li>
         </if>
+        
         <li>
             <a class="J_menuItem" href="{{ :U('Admin/YuShen/kaidanList') }}">{{ :lang('开单列表') }}</a>
         </li>

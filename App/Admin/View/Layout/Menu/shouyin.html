@@ -6,14 +6,20 @@
     </a>
     <ul class="nav nav-second-level">
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/index') }}">收费</a>
+            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>'3')) }}">{{ :lang('我要开单') }}</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/index') }}">{{ :lang('收费列表') }}</a>
 
         </li>
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">结算</a>
+            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/index',array('status'=>'1')) }}">{{ :lang('等待结算列表') }}</a>
         </li>
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/WangDian/payadd') }}">退定金</a>
+            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/index',array('status'=>'1','is_js'=>1)) }}">{{ :lang('已结算列表') }}</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/index',array('status'=>'2')) }}">{{ :lang('补交退定金列表') }}</a>
         </li>
     </ul>
 </li>

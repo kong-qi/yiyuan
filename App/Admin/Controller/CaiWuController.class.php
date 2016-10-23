@@ -3,14 +3,20 @@ namespace Admin\Controller;
 class CaiWuController extends AuthController {
     protected $onname='收费';
     protected $rule_qz='shouyinn';
-    public function index(){
+    public function index($status=0,$is_js=0){
         $this->check_group('shouyin');
-        $map=array();
+
+        $map=array(
+            'kd.sf_status'=>$status,
+            'kd.js_status'=>$is_js
+            );
         $model=M('KaiDan');
         $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
-        $join[] = 'LEFT JOIN __ADMIN__ a1 ON kd.admin_id = a1.id';
-        $join[] = 'LEFT JOIN __LAN_MU__ sf ON kd.shoufei_id = sf.id';
-        $join[] = 'LEFT JOIN __LAN_MU__ js ON kd.js_status = js.id';
+        $join[] = 'LEFT JOIN __KE_SHI__ ys ON kd.kd_id = ys.id';
+         
+        
+         $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
+          $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
 
         $page=1;
         if(isset($_GET['p']))
@@ -19,25 +25,24 @@ class CaiWuController extends AuthController {
         }
          $filed = '
             kd.id as id,
-            kd.yuyue_id as yid,
+            kd.is_yf as is_yf,
+            kd.sf_status as sf_status,
             kd.uuid as uuid,
             kd.kd_time as kd_time,
-            kd.kd_name as kd_name,
-            kd.is_liaoxiao as is_liaoxiao,
+           
+            kd.js_status as js_status,
             kd.price_show,
             kd.price_total,
-            kd.shoufei_id as shoufei_id,
-            kd.js_status as js_status,
+            jzys.name as sy_name,
             u1.name as user_name,
-            sf.name as sfname,
-            js.name as jsname
+            ys.name as kd_name
            
          ';
 
         $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
 
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
-        $list =  $model->alias('kd')->field($filed)->join($join)->order('kd.id desc')->page( $page.','.$pagesize)->select();
+        $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.id desc')->page( $page.','.$pagesize)->select();
          $menu_list= array(
           
             2=>'开单时间',
@@ -53,10 +58,15 @@ class CaiWuController extends AuthController {
            
             );
         $this->menu_list=$menu_list;
-        print_r($list);
+       
         //取得结算
         $js_arr=set_arr_to('LanMu',array('type'=>'jiesuan'));
-        print_r($js_arr);
+        
+        if($status==1 and $is_js==0)
+        {
+             $this->is_js=$is_js;
+        }
+       
 
         $this->assign('list',$list);// 赋值数据集
         
@@ -65,40 +75,111 @@ class CaiWuController extends AuthController {
     }
   
     
-    public function add($id){
+    public function add(){
         //权限选择
         //$this->check_group($this->rule_qz."_check");
-        $map=array();
-        $model=M('KaiDan');
-        $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
-        $join[] = 'LEFT JOIN __ADMIN__ a1 ON kd.admin_id = a1.id';
-        $join[] = 'LEFT JOIN __LAN_MU__ sf ON kd.shoufei_id = sf.id';
-        $join[] = 'LEFT JOIN __LAN_MU__ js ON kd.js_status = js.id';
+        if(IS_POST)
+        {
+            $post=I('post.');
+            $data['id']=$post['id'];
+            $data['sf_time']=time();
+            $data['sf_admin_id']=session('admin_id');
+            if($post['youhui_id']!='')
+            {
+                $data['youhui_id']=$post['youhui_id'];
+            }
+            if($post['sf_status']=='2')
+            {
+                $data['yf_money']=$post['yf_money'];
+                $data['sf_status']=2;
 
-        $filed = '
-           kd.id as id,
-           kd.yuyue_id as yid,
-           kd.uuid as uuid,
-           kd.kd_time as kd_time,
-           kd.kd_name as kd_name,
-           kd.is_liaoxiao as is_liaoxiao,
-           kd.price_show,
-           kd.price_total,
-           kd.shoufei_id as shoufei_id,
-           kd.js_status as js_status,
-           u1.name as user_name,
-           u1.age as age ,
-           u1.sex as sex,
-           sf.name as sfname,
-           js.name as jsname
-          
-        ';
-        $m=$model->alias('kd')->field($filed)->join($join)->find($uid);
-        print_r($m);
-        $this->data=$m;
+                $data['is_yf']=1;
 
+            }else
+            {
+                if($post['shishou_price']!='')
+                {
+                    $data['shishou_price']=$post['shishou_price'];
+                }
+                if($post['shuaka_price']!='')
+                {
+                    $data['shuaka_price']=$post['shuaka_price'];
+                }
+                if($post['other_price']!='')
+                {
+                    $data['other_price']=$post['other_price'];
+                }
+                if($post['youhui_total']!='')
+                {
+                    $data['youhui_total']=$post['youhui_total'];
+                }
+                if($post['youhui_price']!='')
+                {
+                    $data['youhui_price']=$post['youhui_price'];
+                }
+                $data['sf_status']=1;
+            }
+            
+            $result=M('KaiDan')->save($data);
+            if($result) {
+                //更新优惠券
+                if($post['youhui_id']!=''){
+                    $yhq_data=array(
+                            'utime'=>time(),
+                            'kd_id'=>$data['id']
+                        );
+                    M('Card')->where(array('id'=>$post['youhui_id']))->save($yhq_data);
+                }
+                add_log($this->onname.'：'.$data['name'].'提交成功');
+                $msg=lang('提交成功','handle');
+                $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
+                //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
+            }else{
+
+                $msg=lang('数据一样无更新','handle');
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);;parent.layer.close(index)</script>";
+            }
+
+        }else
+        {
+            $uid=I('get.id');
+            $map=array();
+            $model=M('KaiDan');
+            $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
+            $join[] = 'LEFT JOIN __KE_SHI__ ys ON kd.kd_id = ys.id';
+             
+            
+             $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
+              $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
+
+            
+
+            $filed = '
+                kd.id as id,
+                kd.sf_status as sf_status,
+                kd.yy_id as yy_id,
+                kd.uuid as uuid,
+                kd.kd_time as kd_time,
+                kd.sf_status,
+                kd.js_status,
+                kd.price_show,
+                kd.price_total,
+                jzys.name as sy_name,
+                u1.name as user_name,
+                u1.id as user_id,
+                ys.name as kd_name
+               
+             ';
+
+            $m=$model->alias('kd')->field($filed)->join($join)->where(array('kd.id'=>$uid))->find();
+            //print_r($m);
+            $this->data=$m;
+
+            
+            $this->display();
+        }
         
-        $this->display();
         
 
     }

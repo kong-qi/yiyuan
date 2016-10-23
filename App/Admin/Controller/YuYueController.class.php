@@ -88,7 +88,7 @@ class YuYueController extends AuthController {
             }
         }
       
-
+        
        /* if($shenfeng=='huifang')
         {
              $is_huifang=1;
@@ -209,7 +209,7 @@ class YuYueController extends AuthController {
             y1.jztime as jztime,
             y1.dztime as dztime,
             u1.name as user_name,u1.sex,u1.uuid as user_uuid,u1.id as user_id,
-           
+            
             a1.name as admin_name,
             k1.name as ks_name,
             k2.name as kst_name,
@@ -218,12 +218,14 @@ class YuYueController extends AuthController {
             yx.name as yx_name,
             wz.name as web_name,
             ae1.name as ae_name,
-            ae2.name as ae2_name
+            ae2.name as ae2_name,
+            ys.name as ys_name
         ';
         //管理会员用户
         $join[] = '__USER__ u1 ON y1.user_id = u1.id';
         //关联ADMIN
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON y1.admin_id = a1.id';
+        $join[] = 'LEFT JOIN __KE_SHI__ ys ON y1.ys_id = ys.id';
         //关科室1
         $join[] = 'LEFT JOIN __KE_SHI__ k1 ON y1.ks_id = k1.id';
         //关科室2
@@ -264,23 +266,29 @@ class YuYueController extends AuthController {
         }
 
         $list = $model->alias('y1')->field($filed)->join($join)->order('y1.ydatetime desc,y1.id desc')->where($map)->page( $page.','.$pagesize)->select();
-     
+        //print_r($list);
         $this->assign('list',$list);// 赋值数据集
 
 
         $menu_list= array(
           
-            'td-yuyue'=>array('name'=>'预约号','w'=>'','h'=>'','is_hide'=>''),
-            'td-name'=>array('name'=>'姓名','w'=>'','h'=>'','is_hide'=>''),
-            'td-sex'=>array('name'=>'性别','w'=>'','h'=>'','is_hide'=>''),
-            'td-ytime'=>array('name'=>'预约时间','w'=>'','h'=>'','is_hide'=>''),
-            'td-djtime'=>array('name'=>'登记时间','w'=>'','h'=>'','is_hide'=>''),
-            'td-ks'=>array('name'=>'预约科室','w'=>'','h'=>'','is_hide'=>''),
-            'td-bz'=>array('name'=>'预约病种','w'=>'','h'=>'','is_hide'=>''),
-            'td-ly'=>array('name'=>'预约来源','w'=>'','h'=>'','is_hide'=>''),
-            'td-status'=>array('name'=>'预约状态','w'=>'','h'=>'','is_hide'=>''),
-            'td-handle'=>array('name'=>'操作','w'=>'','h'=>'','is_hide'=>'')
+            'td-yuyue'=>array('name'=>lang('预约号'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-name'=>array('name'=>lang('姓名'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-sex'=>array('name'=>lang('性别'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-ytime'=>array('name'=>lang('预约时间'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-djtime'=>array('name'=>lang('登记时间'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-ks'=>array('name'=>lang('预约科室'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-bz'=>array('name'=>lang('预约病种'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-ly'=>array('name'=>lang('预约来源'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-ys_name'=>array('name'=>''),
+            'td-status'=>array('name'=>lang('预约状态'),'w'=>'','h'=>'','is_hide'=>''),
+            'td-handle'=>array('name'=>lang('操作'),'w'=>'','h'=>'','is_hide'=>'')
+           
             );
+        if($is_qiantai)
+        {
+            $menu_list['td-ys_name']=array('name'=>lang('接诊医生'),'w'=>'','h'=>'','is_hide'=>'');
+        }
         $this->menu_list=$menu_list;
         $show_rule=array(
             'is_website'=>$is_website,

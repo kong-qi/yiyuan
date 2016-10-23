@@ -75,48 +75,8 @@ $(function() {
 
     });
 
-    $(document).on('click', '.js_left_price', function(event) {
-
-
-        var onthis = $(this).parents(".price_item");
-
-
-        var getup = $(this).parents(".price_item").prev(".price_item");
-
-        if (getup.html() != null) {
-
-            $(getup).before(onthis);
-
-        }
-
-    });
-    //下移动
-    $(document).on('click', '.js_right_price', function(event) {
-
-        var onthis = $(this).parents(".price_item");
-        var getup = $(this).parents(".price_item").next(".price_item");
-        if (getup.html() != null) {
-
-            $(getup).after(onthis);
-
-        }
-
-    });
-    //删除
-    $(document).on('click', '.js_remove_price', function(event) {
-        var onthis = $(this).parents(".price_item");
-        layer.confirm('你确定要取消删除吗？', {
-            btn: ['删除', '取消'] //按钮
-        }, function(index) {
-
-            onthis.remove();
-            layer.close(index)
-        }, function(index) {
-
-            layer.close(index)
-        });
-
-    });
+    
+   
 })
 
 function tab() {
@@ -444,19 +404,33 @@ function return_price_json($item, $insert, $debug) {
     var debug = '';
 
     $($item).each(function(index, el) {
-        title=$(this).find('.price_title').text();
-        title2=$(this).find('.price_pj').val();
-        price=$(this).find('.price_jg').val();
-        num=$(this).find('.price_num').val();
-        total=$(this).find('.price_heji').val();
-        danwei=$(this).find('.price_dw').val();
-        ks_id=$(this).find('.price_ks').val();
-        kst_id=$(this).find('.price_kst').val();
+        title=$(this).find('.pr_name').text();//标题
+        title2=$(this).find('.pr_name').attr('data-ticket');//收据标题
+        price=$(this).find('.pr_price').val();//价格
+        num=$(this).find('.pr_num').val();//数量
+        total=$(this).find('.pr_heji').text();//小计
+        danwei=$(this).find('.pr_danwei').text();//单位
+        fid=$(this).find('.pr_name').attr('data-fid');//FID
+        id=$(this).find('.pr_name').attr('data-id');//id
+        xfname=$(this).find('.pr_name').attr('data-xfname');//类名
        
-        $array.push({ 'title': encodeURI(title), 'title2': encodeURI(title2), 'price':price,'num':num,'total':total,'danwei':danwei });
+       
+        $array.push(
+            { 
+                'title': encodeURI(title), 
+                'title2': encodeURI(title2), 
+                'price':price,
+                'num':num,
+                'total':total,
+                'danwei':danwei,
+                'fid':fid,
+                'xfname':xfname,
+                'id':id 
+            }
+        );
     });
     if ($array.length == '1') {
-        if ($array[0]['title'] == '' || $array[0]['title2'] == '' || $array[0]['ks_id'] == '' || $array[0]['kst_id'] == '' || $array[0]['danwei'] == '' || $array[0]['num'] == '' || $array[0]['total'] == '' ||  $array[0]['price'] == '') {
+        if ($array[0]['title'] == '' || $array[0]['xfname'] == '' || $array[0]['fid'] == '' || $array[0]['id'] == '' || $array[0]['title2'] == '' || $array[0]['ks_id'] == '' || $array[0]['kst_id'] == '' || $array[0]['danwei'] == '' || $array[0]['num'] == '' || $array[0]['total'] == '' ||  $array[0]['price'] == '') {
             return false;
         }
     }
@@ -468,7 +442,55 @@ function return_price_json($item, $insert, $debug) {
         console.log($result);
     }
     if ($insert) {
-        console.log($insert);
+       
+        $("input[name='" + $insert + "']").val($result);
+    }
+    return $result;
+
+}
+function return_price_json2($item, $insert, $debug) {
+    var $array = new Array();
+    var title = '';
+    var title2 = '';
+    var price = '';
+    var num='';
+    var total='';
+    var danwei='';
+    var ks_id='';
+    var kst_id='';
+
+    var debug = '';
+
+    $($item).each(function(index, el) {
+        total=$(this).find('.pr_heji').text();//小计
+        fid=$(this).find('.pr_name').attr('data-fid');//FID
+        id=$(this).find('.pr_name').attr('data-id');//id
+        xfname=$(this).find('.pr_name').attr('data-xfname');//类名
+       
+       
+        $array.push(
+            { 
+                'fid': fid, 
+                'total':  total, 
+                'xfname':xfname,
+                'id':id 
+            }
+        );
+    });
+    if ($array.length == '1') {
+        if ($array[0]['title'] == '' || $array[0]['xfname'] == '' || $array[0]['fid'] == '' || $array[0]['id'] == '' || $array[0]['title2'] == '' || $array[0]['ks_id'] == '' || $array[0]['kst_id'] == '' || $array[0]['danwei'] == '' || $array[0]['num'] == '' || $array[0]['total'] == '' ||  $array[0]['price'] == '') {
+            return false;
+        }
+    }
+    if ($debug) {
+        debug = $debug;
+    }
+    $result = JSON.stringify($array);
+    if (debug) {
+        console.log($result);
+    }
+    if ($insert) {
+       
         $("input[name='" + $insert + "']").val($result);
     }
     return $result;
@@ -681,7 +703,7 @@ function price_chane($url, $inserid,$ytotal, $more) {
             $ysum=Math.round($ysum);
             log(parseFloat($yprice));
             //验证是否为数字
-            reg=/^\d+\.?\d+$/;
+            reg=/^\d+(\.\d+)?$/;
             if(!reg.test($ysum))
             {
                 layer.msg("数据出错，请确认准确提交");

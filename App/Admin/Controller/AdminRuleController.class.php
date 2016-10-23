@@ -32,7 +32,7 @@ class AdminRuleController extends AuthController
             $page = $_GET['p'];
         }
 
-        $list = $model->where($map)->page($page . ',' . $pagesize)->select();
+        $list = $model->where($map)->page($page . ',' . $pagesize)->order('sort desc')->select();
         $list = get_tree_option($list, 0);
 
         $this->assign('list', $list);// 赋值数据集
