@@ -916,7 +916,7 @@ function js_status($checked=''){
     $arr=array(
         '0'=>'未结算',
         '1'=>'已结算',
-     
+
 
     );
     if($checked!='')
@@ -938,6 +938,49 @@ function btn_color($checked=''){
     }
     return $arr;
 }
+
+function get_select_jstatus($checkid = 'all')
+{
+    $checkid=trim($checkid);
+    $str='';
+    $check = '';
+    $rule = js_status();
+    foreach ($rule as $k => $v) {
+
+        if ($checkid == $k && $checkid!='') {
+            $check = 'selected="selected"';
+        } else {
+            $check = '';
+        }
+        $str .= "<option " . $check . " value='" . $k . "'>" . $v . "</option>";
+    }
+    return $str;
+
+
+}
+function get_select_sftatus($checkid = 'all')
+{
+    $checkid=trim($checkid);
+    $str = '';
+    $check = '';
+    $rule = sf_status();
+    foreach ($rule as $k => $v) {
+        if($checkid!='')
+        {
+            if ($checkid == $k ) {
+                $check = 'selected="selected"';
+            } else {
+                $check = '';
+            }
+        }
+
+        $str .= "<option " . $check . " value='" . $k . "'>" . $v . "</option>";
+    }
+    return $str;
+
+
+}
+
 
 function set_arr_to($table,$where){
     $map=array('checked'=>1);

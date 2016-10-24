@@ -8,7 +8,45 @@
 </block>
 <block name="right">
     <div class="right-box">
+        <div class="box">
+            <div class="col-sm-12">
+                <form action="" method="get" id="contact-form">
+                    <div class="col-sm-12" style="padding:0px;">
+                        <div class="ibox float-e-margins" id="shoujisf1">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">{{ :lang('筛查选项') }}</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content" style="padding-left:0px; padding-right:0px;" id="shoujisf3">
 
+                                <div class="roww">
+                                    <div class="col-sm-3" style="padding:0px;">
+                                        <div class="form-group">
+                                            <label class="col-sm-12 control-label">{{ :lang('日期选择') }}</label>
+                                            <div class="col-md-6">
+                                                <input name="stime" type="text" class="form-control layer-date" value="{{ :I('get.stime') }}" id="start" placeholder="YYYY-MM-DD" >
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="etime" type="text" class="form-control layer-date" value="{{ :I('get.etime') }}" id="end" placeholder="YYYY-MM-DD" data>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="col-sm-12 control-label">&nbsp;</label>
+                                    <button class="btn btn-primary" type="submit">确定筛选</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 
         <div class="box">
             <div class="box-title">
@@ -88,23 +126,7 @@
                     </table>
 
                 </div>
-                <div class="box">
-                    <!--<a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
-                       data-model="{{ :CONTROLLER_NAME }}"
-                       data-handle="del" data-handle-check="1" data-handle-value=""><span class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
-                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                       data-model="{{ :CONTROLLER_NAME }}"
-                       data-handle="sort" data-handle-check="1" data-handle-value="0"><span
-                            class="fa fa-arrows-v"></span> 排序</a>
-                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                       data-model="{{ :CONTROLLER_NAME }}"
-                       data-handle="checked" data-handle-check="1" data-handle-value="1"><span
-                            class="fa fa-check"></span> 审核通过</a>
-                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                       data-model="{{ :CONTROLLER_NAME }}"
-                       data-handle="checked" data-handle-check="1" data-handle-value="0"><span
-                            class="fa fa-ban"></span> 取消审核</a>-->
-                </div>
+
                 <div class="box">
 
                     <div class="pagee">{{ $page }}</div>
@@ -124,23 +146,49 @@
 
 </block>
 <block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
     <script>
 
 
-         $('#tianjiazh').on('click', function() {
-         layer.open({
-         type: 2,
-         title: "{{ :lang('添加','handle') }}",
-         shadeClose: true,
-         shade: 0.8,
-             area: ['400px', '500px'],
-         content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}?uuid=",
-         cancel: function(index){
-         //window.location.reload()
+        $('#tianjiazh').on('click', function () {
+            layer.open({
+                type: 2,
+                title: "{{ :lang('添加','handle') }}",
+                shadeClose: true,
+                shade: 0.8,
+                area: ['400px', '500px'],
+                content: "{{ :U(MODULE_NAME." / ".CONTROLLER_NAME." / add / ") }}?uuid=",
+                cancel: function (index) {
+                    //window.location.reload()
 
-         }
-         });
-         });
+                }
+            });
+        });
+        var start = {
+            elem: '#start',
+            format: 'YYYY-MM-DD',
+
+            max: '2099-06-16 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#end',
+            format: 'YYYY-MM-DD',
+            min: laydate.now(),
+            max: '2099-06-16 23:59:59',
+            istime: true,
+            istoday: false,
+            choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(start);
+        laydate(end);
         /* $('#tianjiazhxx').on('click', function() {
          $('#tianjiazhnn').hide()
          });*/

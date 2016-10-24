@@ -19,6 +19,8 @@ class CaiWuController extends AuthController
         $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
         $join[] = 'LEFT JOIN __ADMIN__ sf ON kd.sf_admin_id = sf.id';
 
+
+
         $page = 1;
         if (isset($_GET['p'])) {
             $page = $_GET['p'];
@@ -51,6 +53,18 @@ class CaiWuController extends AuthController
             sf.realname as sf_name
            
          ';
+        $stime=trim(strtotime(I('get.stime')));
+        $etime=trim(strtotime(I('get.etime')));
+        if($stime!=='' and $etime !='')
+        {
+            $timestr =  $stime. "," .$etime;
+            $map['kd.kd_time'] = array('between', $timestr);
+        }
+        $key=trim(I('get.keyword'));
+        if($key!='')
+        {
+            $map['u1.name']=$key;
+        }
 
         $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
 

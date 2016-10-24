@@ -8,11 +8,19 @@ class DianXiaoController extends AuthController {
         $this->check_group('gongzuoliang');
         $model=M('Gzl');
         $map=array();
-        if(IS_GET)
+        $stime=strtotime(I('get.stime'));
+        $etime=strtotime(I('get.etime'));
+        if($stime!=='' and $etime !='')
         {
-            $map=I('get.');
-
+            $timestr =  $stime. "," .$etime;
+            $map['g1.cdate'] = array('between', $timestr);
         }
+
+
+
+
+
+
         $join[] = 'LEFT JOIN __LAN_MU__ l1 ON g1.gj_id = l1.id';
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON g1.admin_id = a1.id';
 
@@ -42,7 +50,7 @@ class DianXiaoController extends AuthController {
         $count = $model->alias('g1')->join($join)->where($map)->count();// 查询满足要求的总记录数
 
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
-        $list =  $model->alias('g1')->field($filed)->join($join)->order('g1.cdate desc')->page( $page.','.$pagesize)->select();
+        $list =  $model->alias('g1')->field($filed)->join($join)->where($map)->order('g1.cdate desc')->page( $page.','.$pagesize)->select();
         $this->assign('list',$list);// 赋值数据集
 
         $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出

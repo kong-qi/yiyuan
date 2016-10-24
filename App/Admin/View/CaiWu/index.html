@@ -23,14 +23,14 @@
                                 </div>
                             </div>
                             <div class="ibox-content" style="padding-left:0px; padding-right:0px;" id="shoujisf3">
-                                <div class="roww">
+                                <!--<div class="roww">
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">收费状态</font></span>
-                                            <select class="form-control" name="fid" id="fid">
+                                            <select class="form-control" name="status" >
 
-                                                <option value="none">全部</option>
-                                                {{ :get_lanmu_onelist('shuofei',1,'','',I('get.fid')) }}
+
+                                                {{ :get_select_sftatus(I('status')) }}
 
                                             </select>
                                         </div>
@@ -38,42 +38,40 @@
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">结算状态</font></span>
-                                            <select class="form-control" name="tfid" id="tfid">
+                                            <select class="form-control" name="js_status" id="tfid">
 
-                                                <option value="none">所有类别</option>
 
+                                                {{ :get_select_jstatus(I('get.js_status')) }}
 
                                             </select>
                                         </div>
                                     </div>
+
+
+
+                                </div>-->
+                                <div class="roww">
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">病人姓名</font></span>
-                                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}"
-                                                   placeholder="费用名称/票据名称" class="form-control">
+                                            <span class="input-group-addon"><font color="">{{ :lang('病人姓名') }}</font></span>
+                                            <input name="keyword" type="text" name="user_name" value="{{ :I('get.keyword') }}"
+                                                   placeholder="" class="form-control">
                                         </div>
                                     </div>
-
-
-                                </div>
-                                <div class="roww">
                                     <div class="col-sm-3" style="padding:0px;">
                                         <div class="form-group">
-                                            <label class="col-sm-12 control-label">开单时间</label>
                                             <div class="col-md-6">
-                                                <input name="djstime" type="text" class="form-control layer-date"
-                                                       value="" placeholder="YYYY-MM-DD hh:mm:ss" id="shijian11">
+                                                <input name="stime" type="text" class="form-control layer-date" value="{{ :I('get.stime') }}" id="start" placeholder="{{ :lang('开单时间') }}" >
                                             </div>
                                             <div class="col-md-6">
-                                                <input name="djetime" type="text" class="form-control layer-date"
-                                                       value="" placeholder="YYYY-MM-DD hh:mm:ss" id="shijian12">
+                                                <input name="etime" type="text" class="form-control layer-date" value="{{ :I('get.etime') }}" id="end" placeholder="{{ :lang('开单时间') }}" data>
                                             </div>
                                         </div>
                                     </div>
 
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="col-sm-12 control-label">&nbsp;</label>
+
                                     <button class="btn btn-primary" type="submit">确定筛选</button>
                                 </div>
                             </div>
@@ -322,6 +320,32 @@
 
             select_all();
             del_confirm();
+
+            var start = {
+                elem: '#start',
+                format: 'YYYY-MM-DD',
+
+                max: '2099-06-16 23:59:59', //最大日期
+                istime: true,
+                istoday: false,
+                choose: function(datas){
+                    end.min = datas; //开始日选好后，重置结束日的最小日期
+                    end.start = datas //将结束日的初始值设定为开始日
+                }
+            };
+            var end = {
+                elem: '#end',
+                format: 'YYYY-MM-DD',
+                min: laydate.now(),
+                max: '2099-06-16 23:59:59',
+                istime: true,
+                istoday: false,
+                choose: function(datas){
+                    start.max = datas; //结束日选好后，重置开始日的最大日期
+                }
+            };
+            laydate(start);
+            laydate(end);
 
 
             //paix
