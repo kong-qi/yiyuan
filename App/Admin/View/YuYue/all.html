@@ -269,12 +269,13 @@
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
-                                            <th>{{ :lang('确诊日期') }}</th>
+                                            <th>{{ :lang('接诊日期') }}</th>
                                             <th>{{ :lang('姓名') }}</th>
                                             <th>{{ :lang('接诊医生') }}</th>
                                             <th>{{ :lang('科室') }}</th>
                                             <th>{{ :lang('质量评级') }}</th>
                                              <th>{{ :lang('详细') }}</th>
+                                            <th>{{ :lang('操作') }}</th>
                                         </tr>
                                         </thead>
                                         <tbody id="zhuti_zq">
@@ -306,26 +307,27 @@
     {{ :load_ueditor() }}
     <if condition="check_group('yuyue_showhf')">
         <script>
-        function hj_ajax(curr){
-        $.getJSON("{{ :U('Admin/Ajax/getHuifang') }}", {
-        page: curr || 1,
-        "uid":"{{ $data.user_id }}",
-        }, function(res){
-        $("#zhuti").empty().append(res.content);
-        //显示分页
-        laypage({
-        cont: 'lpage', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
-        pages: res.pages, //通过后台拿到的总页数
-        curr: curr || 1, //当前页
-        jump: function(obj, first){ //触发分页后的回调
-        if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
-        hj_ajax(obj.curr);
-        }
-        }
-        });
-        });
-        };
-        hj_ajax();
+            function hj_ajax(curr) {
+                $.getJSON("{{ :U('Admin/Ajax/getHuifang') }}", {
+                    page: curr || 1,
+                    "uid": "{{ $data.user_id }}",
+                }, function (res) {
+                    $("#zhuti").empty().append(res.content);
+                    //显示分页
+                    laypage({
+                        cont: 'lpage', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                        pages: res.pages, //通过后台拿到的总页数
+                        curr: curr || 1, //当前页
+                        jump: function (obj, first) { //触发分页后的回调
+                            if (!first) { //点击跳页触发函数自身，并传递当前页：obj.curr
+                                hj_ajax(obj.curr);
+                            }
+                        }
+                    });
+                });
+            }
+            ;
+            hj_ajax();
         </script>
     </if>
     <if condition="check_group('yishenjz_add')">
@@ -333,7 +335,7 @@
             function quzheng_ajax(curr) {
                 $.getJSON("{{ :U('Admin/Ajax/getCheckShow') }}", {
                     page: curr || 1,
-                    "uid": "{{ $data.user_id }}",
+                    "yid": "{{ $data.id }}",
                 }, function (res) {
                     $("#zhuti_zq").empty().append(res.content);
                     $(".js-open-more").click(function () {
@@ -390,6 +392,8 @@
             renwu_ajax();
         </script>
     </if>
+
+
     <script>
         bd_ueditor('content');
 
@@ -620,12 +624,8 @@
         function lj_ajax(){
 
         }
-        function yuyue_hao(){
-            $url="{{ :U('Admin/Ajax/create_number') }}";
-            $.get($url,function ($data) {
-                $(".ynumber").val($data);
-            })
-        }
+
 
     </script>
+
 </block>

@@ -12,7 +12,7 @@ function create_admin_id(){
  * @param $str
  * 是否审核
  */
-
+//取得登录的信息
 function admin($filed='',$group=''){
     if(session('admin_info'))
     {
@@ -104,6 +104,12 @@ function get_brly_rule($groupid){
     }
 
 }
+
+/**
+ * 传入ID，取得权限组信息
+ * @param $groupid
+ * @return mixed|Model|\Think\Model
+ */
 function get_group_info($groupid){
     //算出权限组
     $model=M('AdminGroup');
@@ -114,6 +120,12 @@ function get_group_info($groupid){
     }
 
 }
+
+/**
+ * 加载编辑器
+ * @param string $str
+ */
+
 function load_ueditor($str="content"){
     $dir=WEB_URL.'/Public/ueditor/';
     $str=' <script type="text/javascript" charset="utf-8" src="'.$dir.'ueditor.config.js"></script>
@@ -125,7 +137,11 @@ function load_ueditor($str="content"){
 
 }
 
-//类型
+/**
+ * 输出类型
+ * @param $str
+ * @param $array
+ */
 function echo_type($str,$array){
     if(array_key_exists($str,$array))
     {
@@ -151,7 +167,12 @@ function echo_type($str,$array){
     }
 }
 
-
+/**
+ * 语言设置
+ * @param $cn
+ * @param $type
+ * @return mixed
+ */
 function lang($cn,$type){
     $chang_lang='cn';
     if(cookie('lang'))
@@ -189,134 +210,7 @@ function lang($cn,$type){
     {
         return $cn;
     }
-    //return $lang_list[$chang_lang];
-    /*$lang=array(
-        'login'=>array(
-            '用户名不能为空'=>'Tên người dùng không thể để trống',
-            '密码不能为空'=>'Mật khẩu không thể để trống',
-            '验证码不正确'=>'Mã xác minh sai',
-            '管理员被禁用，请联系站长开启'=>'Quản trị viên là người khuyết tật, xin vui lòng liên hệ với quản trị trang web mở',
-            '用户名不存在'=>'Tên đăng nhập không tồn tại',
-            '密码错误'=>'mật khẩu sai',
-            '退出登录成功'=>'Đăng nhập thành công'
-        ),
-        'public'=>array(
-            '系统 提示信息'=>'Thông báo hệ thống',
-            '登录成功'=>'Đăng nhập thành công',
-            '如果你的浏览器没有自动跳转，请点击这里'=>'Nếu trình duyệt của bạn không hỗ trợ khung, xin vui lòng nhấn vào đây',
-            '等待时间'=>'thời gian chờ',
-            '还没有登录'=>'Bạn chưa đăng nhập'
-        ),
-        'menu'=>array(
-            '管理员'=>'quản trị viên',
-            '管理组'=>'Nhóm quản lý',
-            '权限规则'=>'quy định cho phép',
-            '权限设置'=>'Quyền',
-            '字典设置'=>'cài đặt từ điển',
-            '区域'=>'vùng',
-            '机构类别'=>'loại tổ chức',
-            '机构评定'=>'Cơ quan đánh giá',
-            '合作状态'=>'hợp tác Nhà nước',
-            '科室'=>'Sở',
-            '医生'=>'y khoa',
-            '病人来源'=>'nguồn bệnh nhân',
-            '咨询工具'=>'Công cụ tư vấn',
-            '预约质量'=>'phòng chất lượng',
-            '到诊质量'=>'Chất lượng quý khách đến thăm',
-            '收银台收费'=>'phí thu ngân',
-            '结算'=>'Thanh toán',
-            '回访'=>'Quay trở lại',
-            '回访方式'=>'Quay trở lại cách',
-            '回访类型'=>'trở loại',
-            '回访主题'=>'Quay trở lại chủ đề',
-            '回访状态'=>'thăm cấp Nhà nước',
-            '添加预约'=>'để thêm một cuộc hẹn',
-            '我的预约'=>'Đặt phòng của tôi',
-            '添加工作量'=>'thêm khối lượng công việc',
-            '预约报表'=>'báo cáo phòng',
-            '工作量报表'=>'báo cáo khối lượng công việc',
-            '添加机构'=>'cơ quan thêm',
-            '机构查询'=>'cơ chế truy vấn',
-            '预约列表'=>'danh sách đăng ký',
-            '添加消费'=>'Thêm tiêu thụ',
-            '消费报表'=>'Consumer Reports',
-            '病人查询'=>'truy vấn bệnh nhân',
-            '复诊列表'=>'danh sách giới thiệu',
-            '病人列表'=>'Danh sách bệnh nhân',
-            '开单列表'=>'Danh sách thanh toán',
-            '结算列表'=>'Xoá danh sách',
-            '定金列表'=>'danh mục tiền gửi',
-            '回访列表'=>'Quay trở lại danh sách',
-            '任务列表'=>'Danh sách nhiệm vụ',
-            '短信设置'=>'cài đặt SMS',
-            '优惠券'=>'phiếu',
-            '收费字典'=>'từ điển Pay',
-            '到诊评定'=>'Đánh giá Tham quan',
-            '回访字典'=>'từ điển trở lại',
-            '结算字典'=>'từ điển thanh toán',
-            '机构字典'=>'từ điển các tổ chức',
-            '网站字典'=>'từ điển website',
-            '科室字典'=>'từ điển Sở'
 
-
-
-
-        ),
-
-        'handle'=>array(
-            '添加账号'=>'Thêm tài khoản',
-            '已用'=>'Được sử dụng',
-            '启用'=>'cho phép',
-            '停用'=>'Vô hiệu hóa',
-            '更新成功'=>'Cập nhật thành công',
-            '更新失败'=>'cập nhật thất bại',
-            '数据错误'=>'dữ liệu lỗi',
-            '添加成功'=>'thêm thành công',
-            '添加失败'=>'Thêm Không',
-            '删除失败'=>'xóa thất bại',
-            '删除成功'=>'xóa thành công',
-            '添加'=>'thêm vào',
-            '删除'=>'xóa bỏ',
-            '编辑'=>'chỉnh sửa',
-            '确定'=>'xác định',
-            '提交'=>'đệ trình',
-            '修改'=>'sửa đổi',
-            '返回'=>'trả lại',
-            '操作'=>'điều hành',
-            '名字不能为空'=>'Tên không thể để trống',
-            '数据一样无更新'=>'Chưa cập nhật dữ liệu',
-            '排序'=>'Trình tự',
-            '你确定批量操作吗'=>'',
-            '没有选择'
-
-
-        ),
-        'filed'=>array(
-            '姓名'=>'Họ và tên',
-            '帐号'=>'số tài khoản',
-            '所属组'=>'nhóm sở hữu',
-            '排序'=>'Trình tự',
-            '编号'=>'số',
-            '状态'=>'trạng thái',
-            '创建时间'=>'tạo',
-            '操作'=>'làm',
-
-            '请选择'=>'Vui lòng chọn',
-            '名称'=>'tên',
-            '规则'=>'nguyên tắc',
-            '权限选择'=>'Chọn quyền',
-            '超级管理员'=>'super Administrator',
-            '内容'=>'Nội dung',
-            '英文名'=>'Anh',
-            '上级'=>'cha mẹ',
-            '批量用,分割'=>'Với chia lô',
-            '预约号前缀'=>'',
-            '是否付费'=>'',
-            '预约号前缀'=>'',
-            '是否统计到工作量'=>''
-
-        ),
-    );*/
     
 }
 //操作日志
@@ -340,11 +234,21 @@ function add_smslog($uid,$content='查看手机'){
     $log->add($data);
 
 }
+
+/**
+ * 取得权限规则
+ * @param $id
+ * @return mixed
+ */
 function get_rule($id){
     $map['fid']=$id;
     $rule=M('AdminRule')->where($map)->select();
     return $rule;
 }
+
+/**
+ * 字典导航
+ */
 function zidian_nav(){
     $rule=array(
         'keshi'=>'科室',
@@ -358,8 +262,7 @@ function zidian_nav(){
         'zixun'=>'咨询工具',
         'danzhen'=>'到诊评定',
         
-        'shuofei'=>'收费字典',
-        'jiesuan'=>'结算字典',
+       // 'shuofei'=>'收费字典',//'jiesuan'=>'结算字典',
         'huifang'=>'回访字典',
         'jigou'=>'机构字典',
         'website'=>'网站字典'
@@ -374,8 +277,8 @@ function zidian_nav(){
         'yuyuezl'=>U('Admin/YuYueZiDian/index',array('type'=>'yuyuezl')),
         'danzhen'=>U('Admin/DaoZhengZiDian/index',array('type'=>'daozhen')),
         'zixun'=>U('Admin/ZiXun/index',array('type'=>'zixun')),
-        'shuofei'=>U('Admin/ShouFeiZiDian/index',array('type'=>'shuofei')),
-        'jiesuan'=>U('Admin/JieSuanZiDian/index',array('type'=>'jiesuan')),
+        //'shuofei'=>U('Admin/ShouFeiZiDian/index',array('type'=>'shuofei')),
+        //'jiesuan'=>U('Admin/JieSuanZiDian/index',array('type'=>'jiesuan')),
         'huifang'=>U('Admin/HuiFangZiDian/index',array('type'=>'huifang')),
         'jigou'=>U('Admin/JiGouZiDian/index',array('type'=>'jigou')),
         'website'=>U('Admin/WebSiteZiDian/index',array('type'=>'website'))
@@ -393,6 +296,14 @@ function zidian_nav(){
     }
     echo $str;
 }
+
+/**
+ * 取得科室里面的信息
+ * @param int $id
+ * @param int $echo，返回select option
+ * @param string $checkid 是否选中
+ * @return mixed|string
+ */
 function get_keshi($id=0,$echo=1,$checkid=''){
     $rule=M('KeShi')->where(array('checked'=>1,'fid'=>0,'type'=>'keshi'))->select();
     $str='';
@@ -421,9 +332,9 @@ function get_keshi($id=0,$echo=1,$checkid=''){
 
 /**
  * 取得单个栏目信息
- * @param string $type
- * @param int $echo
- * @param string $fid
+ * @param string $type 类型
+ * @param int $echo 输出格式
+ * @param string $fid 父ID,FIRST 为根父ID
  * @param string $sid
  * @return mixed|string
  */
@@ -473,6 +384,17 @@ function get_lanmu_onelist($type="zixun",$echo=1,$fid="",$sid='',$checked=''){
     }
     return $rule;
 }
+
+/**
+ * 取得回访
+ * @param string $subtype
+ * @param string $type
+ * @param int $echo
+ * @param string $fid
+ * @param string $sid
+ * @param string $checked
+ * @return mixed|string
+ */
 function get_huifang_onelist($subtype='hf_theme',$type="huifang",$echo=1,$fid="",$sid='',$checked=''){
     $check='';
     $map=array();
@@ -520,6 +442,16 @@ function get_huifang_onelist($subtype='hf_theme',$type="huifang",$echo=1,$fid=""
     }
     return $rule;
 }
+
+/**
+ * 回访带查询条件
+ * @param $where
+ * @param int $echo
+ * @param string $fid
+ * @param string $sid
+ * @param string $checked
+ * @return mixed|string
+ */
 function get_huifang_where($where,$echo=1,$fid="",$sid='',$checked=''){
     $check='';
     $map=array();
@@ -587,6 +519,14 @@ function jigou_id(){
     return $arr;
 
 }
+
+/**
+ * 取得接诊医生,ADMIN表
+ * @param array $where
+ * @param int $echo
+ * @param string $checked
+ * @return mixed|string
+ */
 function get_doc($where=array(),$echo=1,$checked=''){
 
     $map=array();
@@ -654,6 +594,14 @@ function get_wangixao_where($where,$echo=1,$sid='',$checked=''){
     return $rule;
 }
 
+/**
+ * 取得地区
+ * @param int $echo
+ * @param string $fid
+ * @param string $sid
+ * @param string $checked
+ * @return mixed|string
+ */
 function get_area_list($echo=1,$fid="",$sid='',$checked=''){
     $check='';
     $map=array();
@@ -796,13 +744,14 @@ function echo_age($checked=''){
 
     for($i=10;$i<=80;$i++)
     {
-        if($i==25 or $checked==$i)
+        if( $checked==$i)
         {
             $checked="selected='selsected'";
         }else
         {
             $checked='';
         }
+
 
         $str.='<option '.$checked.' value="'.$i.'">'.$i.'</option>';
 
@@ -832,7 +781,12 @@ function create_ynumber(){
 
 };
 
-//select选中
+/**
+ * 设置select选中单个状态
+ * @param $str2 传入的变量，默认是请求
+ * @param $v 传入的值
+ * @return bool
+ */
 function set_on($str2,$v){
     $str=I("request.".$str2);
     if($str=='')
@@ -844,6 +798,13 @@ function set_on($str2,$v){
         echo "selected='selected'";
     }
 }
+
+/**
+ * 传值选中
+ * @param $str
+ * @param $v
+ * @return bool
+ */
 function set_on2($str,$v){
 
     if($str=='')
@@ -856,7 +817,7 @@ function set_on2($str,$v){
     }
 }
 /*
- * 取得日俄
+ * 取得日期
  */
 function get_date($type, $num = 1,$field='')
 {
@@ -912,6 +873,12 @@ function get_date($type, $num = 1,$field='')
         'lastday' => $lastday
     );
 }
+
+/**
+ * 天数设置，+1明天，-1昨天
+ * @param $num
+ * @return bool|string
+ */
 function get_days($num){
     $day=date("Y-m-d", strtotime($num . " day"));
     return $day;
@@ -937,6 +904,19 @@ function sf_status($checked=''){
         '0'=>'未收费',
         '1'=>'已收费',
         '2'=>'已收定金',
+
+    );
+    if($checked!='')
+    {
+        return $arr[$checked];
+    }
+    return $arr;
+}
+function js_status($checked=''){
+    $arr=array(
+        '0'=>'未结算',
+        '1'=>'已结算',
+     
 
     );
     if($checked!='')
@@ -1085,6 +1065,13 @@ function checked_on2($str,$id){
     }
     return '';
 }
+
+/**
+ * 分割字符串为数组，
+ * @param $str
+ * @param string $type
+ * @return array|bool
+ */
 function str_to_arr($str,$type=","){
     if($str){
         $newstr=explode($type,$str);

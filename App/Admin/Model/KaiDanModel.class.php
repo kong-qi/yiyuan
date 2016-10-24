@@ -1,7 +1,8 @@
 <?php
 namespace Admin\Model;
 use Think\Model;
-class KaiDanModel extends Model {
+use Think\Model\RelationModel;
+class KaiDanModel extends  RelationModel  {
     protected $_validate = array(
         /*array('name','require','名称为必须'), //默认情况下用正则进行验证
         array('fid','require','名称为必须'), //默认情况下用正则进行验证*/
@@ -14,5 +15,15 @@ class KaiDanModel extends Model {
         array('ctime','time',1,'function'),
         
 
+    );
+    //关联用户
+    protected $_link = array(
+        'User'=>array(
+            'mapping_type'      => self::BELONGS_TO,
+            'class_name'        => 'User',
+            'foreign_key'=>'user_id',
+
+
+        ),
     );
 }

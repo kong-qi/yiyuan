@@ -529,7 +529,7 @@
                 $year=$("#age").val();
                 $birthday=get_age_date("-"+$year);
                 $("#shengri").val($birthday);
-            }).trigger('change');
+            });
 
         });
 
@@ -593,7 +593,7 @@
             $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
             $tfid='{{ $data["lyt_id"] }}';
             log($tfid);
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             if($id=='')
             {
                 $("#lyt_id").empty().append( $str);
@@ -604,7 +604,7 @@
             get_ly2('{{ $data["lyt_id"] }}');
         }
         function get_ly2($id){
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
             $tfid='{{ $data["lytt_id"] }}';
             log($tfid);
@@ -627,7 +627,7 @@
             $url="{{ :U('Admin/Ajax/ajaxAreaList') }}";
             $tfid='{{ :I("get.areat_id") }}';
             log($tfid);
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             if($id=='')
             {
                 $("#areat_id").empty().append( $str);
@@ -644,7 +644,7 @@
             $next_id=$(this).attr('data-next');
             $id=$(this).val();
             $closeid=$(this).attr('data-close');
-            $str="<option value=''>无</option>";
+            $str="<option value=''>{{ :lang('无') }}</option>";
             if($id=='')
             {
                 $($closeid).empty().append($str);

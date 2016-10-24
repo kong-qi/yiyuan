@@ -12,19 +12,19 @@
                    
                     <div class="input-group m-b" style="margin-bottom:5px;">
                         <span class="input-group-addon">{{ :lang('名字','filed') }}</span>
-                        <input class="form-control" value="{{ $data.realname }}" type="text" />
+                        <input class="form-control" value="{{ $data.User.name }}" type="text" readonly="" />
                     </div>
                     <div class="input-group m-b" style="margin-bottom:5px;">
                         <span class="input-group-addon">{{ :lang('总价','filed') }}</span>
-                        <input class="form-control" value="{{ $data.realname }}" type="text" />
+                        <input class="form-control" value="{{ $data.price_total }}" type="text" readonly />
                     </div>
                     <div class="input-group m-b" style="margin-bottom:5px;">
                         <span class="input-group-addon">{{ :lang('预付款','filed') }}</span>
-                        <input class="form-control"  type="text" value="{{ $data.name }}" readonly />
+                        <input class="form-control"  type="text" value="{{ $data.yf_money }}" readonly />
                     </div>
                     <div class="input-group m-b" style="margin-bottom:5px;">
                         <span class="input-group-addon">{{ :lang('补交金额','filed') }}</span>
-                        <input class="form-control" name="name" type="text" value="{{ $data.name }}" readonly />
+                        <input class="form-control" name="bq_money" type="text" required min="0" placeholder="{{ :($data['price_total']-$data['yf_money']) }}" value="{{ $data.bq_money }}"/>
                     </div>
                     <div class="form-group" align="center" style="margin-bottom:5px;">
                         <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('确定','handle') }}</button>

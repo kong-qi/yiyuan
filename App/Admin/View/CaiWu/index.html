@@ -9,7 +9,7 @@
 <block name="right">
     <div class="right-box">
 
-       <div class="box">
+        <div class="box">
             <div class="col-sm-12">
                 <form action="" method="get" id="contact-form">
                     <div class="col-sm-12" style="padding:0px;">
@@ -28,10 +28,10 @@
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">收费状态</font></span>
                                             <select class="form-control" name="fid" id="fid">
-        
+
                                                 <option value="none">全部</option>
-                                                 {{ :get_lanmu_onelist('shuofei',1,'','',I('get.fid')) }}
-        
+                                                {{ :get_lanmu_onelist('shuofei',1,'','',I('get.fid')) }}
+
                                             </select>
                                         </div>
                                     </div>
@@ -39,36 +39,38 @@
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">结算状态</font></span>
                                             <select class="form-control" name="tfid" id="tfid">
-        
+
                                                 <option value="none">所有类别</option>
-        
-        
+
+
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">病人姓名</font></span>
-                                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}" placeholder="费用名称/票据名称" class="form-control">
+                                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}"
+                                                   placeholder="费用名称/票据名称" class="form-control">
                                         </div>
                                     </div>
-                                   
-        
-                                    
+
+
                                 </div>
                                 <div class="roww">
                                     <div class="col-sm-3" style="padding:0px;">
                                         <div class="form-group">
                                             <label class="col-sm-12 control-label">开单时间</label>
                                             <div class="col-md-6">
-                                                <input name="djstime" type="text" class="form-control layer-date" value="" placeholder="YYYY-MM-DD hh:mm:ss" id="shijian11">
+                                                <input name="djstime" type="text" class="form-control layer-date"
+                                                       value="" placeholder="YYYY-MM-DD hh:mm:ss" id="shijian11">
                                             </div>
                                             <div class="col-md-6">
-                                                <input name="djetime" type="text" class="form-control layer-date" value="" placeholder="YYYY-MM-DD hh:mm:ss" id="shijian12">
+                                                <input name="djetime" type="text" class="form-control layer-date"
+                                                       value="" placeholder="YYYY-MM-DD hh:mm:ss" id="shijian12">
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-sm-3">
                                     <label class="col-sm-12 control-label">&nbsp;</label>
@@ -83,269 +85,248 @@
         <div class="box">
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
-                
+
             </div>
-            
 
 
+            <if condition="$menu_list">
+                <div class="ibox-title">
+                    <h5><a class="collapse-link">{{ :lang('字段选择') }}</a>
 
-                <if condition="$menu_list">
-                    <div class="ibox-title">
-                        <h5><a class="collapse-link">字段选择</a>
-
-                            <div class="keep-open btn-group open" title="列">
-                                <div class="dropdown">
-                                    <button type="button" class="btn btn-default btn-outline dropdown-toggle"
-                                            data-toggle="dropdown" aria-expanded="true"
-                                            style="padding:0px 5px; border:0px">
-                                        <i class="glyphicon glyphicon-list"></i>
-                                        <span class="caret"></span>
-                                    </button>
+                        <div class="keep-open btn-group open" title="列">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-default btn-outline dropdown-toggle"
+                                        data-toggle="dropdown" aria-expanded="true"
+                                        style="padding:0px 5px; border:0px">
+                                    <i class="glyphicon glyphicon-list"></i>
+                                    <span class="caret"></span>
+                                </button>
 
 
-                                    <ul class="dropdown-menu" role="menu" style=" padding:10px">
-                                        <foreach name="menu_list" item="v" key="k">
+                                <ul class="dropdown-menu" role="menu" style=" padding:10px">
+                                    <foreach name="menu_list" item="v" key="k">
+                                        <if condition="$v['name'] neq ''">
                                             <li>
                                                 <div class="checkbox-inline f-label">
-                                                    <input type="checkbox" checked="" onclick="anxia('tdd{{ $k }}')"
-                                                           class="tdd{{ $k }}">
-                                                    <label>{{ :lang($v) }}</label>
+                                                    <input type="checkbox" checked="" data-change="select" data-class="{{ $k }}">
+                                                    <label>{{ $v['name'] }}</label>
                                                 </div>
                                             </li>
-                                        </foreach>
-
-
-                                    </ul>
-                                </div>
-                            </div>
-                        </h5>
-
-                    </div>
-
-                </if>
-                <div class="list-box">
-
-                    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table table-hover">
-
-                        <tbody>
-
-                        <tr>
-                            <if condition="$is_js">
-                                <th width="40" class="hidden-xs text-center">
-                                    <input name="chkall" type="checkbox" id="chkall"value="0"></th>
-                            </if>
-                            <th id="tdd2">{{ :lang('开单时间','filed') }}</th>
-                            <th id="tdd3">{{ :lang('姓名','filed') }}</th>
-
-                            <th id="tdd4">{{ :lang('收费详情','filed') }}</th>
-                     
-
-                            <th id="tdd9">{{ :lang('合计总价','filed') }}</th>
-                            <th id="tdd10">{{ :lang('手术医生','filed') }}</th>
-                            <th id="tdd11">{{ :lang('开单人','filed') }}</th>
-                            <th id="tdd12">{{ :lang('收费状态','filed') }}</th>
-                            <th id="tdd13">{{ :lang('操作','filed') }}</th>
-
-                          
-                        </tr>
-                        <if condition="$list">
-                           
-                            <volist name="list" id="v">
-                                <?php $show=(json_decode(htmlspecialchars_decode($v['price_show']),true));?>
-                               
-                                <tr>
-                                    <if condition="$is_js">
-                                        <td align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select" name="checkbox[]"
-                                                                  value="{{ $v.uuid }}"></td>
-                                    </if>
-                                  
-                                      <td data-log="1" id="tdd2" >{{ :to_time($v['kd_time'],'m-d-Y h:i:s') }}</td>
-                                    <td id="tdd3" >
-                                        <a href="#">{{ $v.user_name }}</a>
-                                        
-                                    </td>
-                                    <td id="tdd4">
-                                        <table class="table table-hover table-noboer">
-                                            <thead>
-                                                <tr>
-                                                    <td><span class="m-l">{{ :lang('名称') }}</span></td>
-                                                    <td>{{ :lang('单价') }}</td>
-                                                    <td>{{ :lang('单位') }}</td>
-                                                    <td>{{ :lang('数量') }}</td>
-                                                    <td>{{ :lang('合计金额') }}</td>
-                                                    
-                                                </tr>
-                                               
-                                                    <if condition="$show">
-                                                        <foreach name="show" item="sv" key="sk">
-                                                         <tr>
-                                                            <td><a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a> </td>
-                                                            <td>{{ :urldecode($sv['price']) }}</td>
-                                                            <td>{{ :urldecode($sv['danwei']) }}</td>
-                                                            <td>{{ :urldecode($sv['num']) }}</td>
-                                                            <td>{{ :urldecode($sv['total']) }}</td>
-                                                        </tr>
-                                                        </foreach>
-                                                    </if>
-                                               
-                                            </thead>
-                                        </table>
-                                    </td>
-                                       
-                                    </td>
-
-                                    <td id="tdd9" >{{ $v.price_total }}</td>
-                                    <td id="tdd10" >
-                                        {{ $v.sy_name }}
-                                    </td>
-                                    <td id="tdd11" >
-                                        {{ $v.kd_name }}
-                                    </td>
-                                    <td id="tdd12" >
-                                        <span class="{{ :btn_color($v['sf_status']) }}">{{ :sf_status($v['sf_status']) }}</span>
-                                        
-                                    </td>
-                                    <td id="tdd13" >
-                                        <if condition="$v['is_yf'] eq 1">
-                                            <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1' data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}" data-title="{{ :lang('输入补交金额') }}" class="btn btn-info ">{{ :lang('输入补交金额') }}</a>
-                                       
-                                            
                                         </if>
-                                       
-                                       <?php
-                                        if($v['sf_status']==0){
-                                       ?>
-                                            <if condition="check_group('shouyin_check')">
-                                            <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1' data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}" data-title="{{ :lang('收费') }}" class="btn btn-primary ">{{ :lang('收费') }}</a>
-                                            </if>
-                                            <if condition="check_group('kaidan_edit')">
-                                                
-                                                     <a href="javascript:void(0)" data-layer="1" data-w="90%" data-h="500px" data-url="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('编辑') }}</a>
-                                                
-                                            </if>
-                                            <if condition="check_group('kaidan_edit')">
-                                            <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
-                                                    <span class="fa fa-trash "></span>
-                                                    删{{ :lang('除') }}</a>
-                                             </if>
-                                        <?php }?>
-                                    </td>
-                                    
-                                </tr>
-
-                            </volist>
-                             
-                            <else/>
-                            <tr>
-                                <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
-                            </tr>
-                        </if>
-                        </tbody>
+                                    </foreach>
 
 
-                    </table>
+                                </ul>
+                            </div>
+                        </div>
+                    </h5>
 
                 </div>
-                 <if condition="$is_js">
-                    <div class="row">
-                       <div class="col-xs-6">
-                           <div class="m-b">
-                               
-                               <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                                  data-model="LanMu"
-                                  data-handle="checked" data-handle-check="1" data-handle-value="0"><span
-                                       class="fa fa-ban"></span> {{ :lang('结算','handle') }}</a>
-                   
-                           </div>
-                       </div>
-                 </if>
-               <!--  <div class="row">
-                   <div class="col-xs-6">
-                       <div class="m-b">
-                           <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
-                              data-model="LanMu"
-                              data-handle="del" data-handle-check="1" data-handle-value=""><span
-                                   class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
-                           <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                              data-model="LanMu"
-                              data-handle="sort" data-handle-check="1" data-handle-value="0"><span
-                                   class="fa fa-arrows-v"></span> {{ :lang('排序','handle') }}</a>
-                           <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                              data-model="LanMu"
-                              data-handle="checked" data-handle-check="1" data-handle-value="1"><span
-                                   class="fa fa-check"></span> {{ :lang('启用','handle') }}</a>
-                           <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                              data-model="LanMu"
-                              data-handle="checked" data-handle-check="1" data-handle-value="0"><span
-                                   class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
-               
-                       </div>
-                   </div>-->
-                   <div class="col-xs-6">
-               
-                       <div class="pagee">{{ $page }}</div>
-                   </div>
-               </div> 
+
+            </if>
+            <div class="list-box">
+
+                <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table table-hover">
+
+                    <tbody>
+
+                    <tr>
+
+                            <th width="40" class="hidden-xs text-center">
+                                <input name="chkall" type="checkbox" id="chkall" value="0"></th>
+                                <foreach name="menu_list" item="v" key="k">
+                                    <if condition="$v['name'] neq ''">
+                                        <th class="{{ $k }}">{{ $v['name'] }}</th>
+                                    </if>
+
+                                </foreach>
+
+
+
+
+                    </tr>
+                    <if condition="$list">
+
+                        <volist name="list" id="v">
+                            <?php $show=(json_decode(htmlspecialchars_decode($v['price_show']),true));?>
+
+                            <tr>
+
+                                    <td align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select"
+                                                                                name="checkbox[]"
+                                                                                value="{{ $v.uuid }}"></td>
+
+
+                                <td class="td_kd_time" >{{ :to_time($v['kd_time'],'m-d-Y h:i:s') }}</td>
+                                <if condition="$status neq 0">
+                                    <td class="td_sf_time">
+                                        {{ :to_time($v['kd_time'],'m-d-Y h:i:s') }}
+
+                                    </td>
+                                </if>
+                                <td class="td_user">
+                                    <a href="#" data-log="1" >{{ $v.user_name }}</a>
+
+                                </td>
+                                <td class="td_show_price">
+                                    <table class="table table-hover table-noboer">
+                                        <thead>
+                                        <tr>
+                                            <td><span class="m-l">{{ :lang('名称') }}</span></td>
+                                            <td>{{ :lang('单价') }}</td>
+                                            <td>{{ :lang('单位') }}</td>
+                                            <td>{{ :lang('数量') }}</td>
+                                            <td>{{ :lang('合计金额') }}</td>
+
+                                        </tr>
+
+                                        <if condition="$show">
+                                            <foreach name="show" item="sv" key="sk">
+                                                <tr>
+                                                    <td><a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a>
+                                                    </td>
+                                                    <td>{{ :urldecode($sv['price']) }}</td>
+                                                    <td>{{ :urldecode($sv['danwei']) }}</td>
+                                                    <td>{{ :urldecode($sv['num']) }}</td>
+                                                    <td>{{ :urldecode($sv['total']) }}</td>
+                                                </tr>
+                                            </foreach>
+                                        </if>
+
+                                        </thead>
+                                    </table>
+                                </td>
+
+                                </td>
+
+                                <td class="td_show_total">{{ $v.price_total }}</td>
+
+                                <td class="td_kd_name">
+                                    {{ $v.kd_name }}
+                                </td>
+                                <if condition="$status neq 0">
+                                <td class="td_sf_name">
+                                    {{ $v.sy_name }}
+                                </td>
+                                </if>
+                                <td class="td_sf_status">
+                                    <span class="{{ :btn_color($v['sf_status']) }}">{{ :sf_status($v['sf_status']) }}</span>
+                                </td>
+                                <td class="td_js_status">
+                                    <span class="{{ :btn_color($v['sf_status']) }}">{{ :js_status($v['js_status']) }}</span>
+
+                                </td>
+                                <td class="td_handle">
+                                    <php>if($v['sf_status']==0){</php>
+                                        <if condition="check_group('shouyin_check')">
+                                            <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1'
+                                               data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}"
+                                               data-title="{{ :lang('收费') }}" class="btn btn-primary ">{{ :lang('收费') }}</a>
+                                        </if>
+                                        <if condition="check_group('kaidan_edit')">
+
+                                            <a href="javascript:void(0)" data-layer="1" data-w="90%" data-h="500px"
+                                               data-url="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}"
+                                               class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('编辑') }}</a>
+
+                                        </if>
+                                        <if condition="check_group('kaidan_edit')">
+                                            <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}"
+                                               class="btn btn-xs btn-white" date-del="1">
+                                                <span class="fa fa-trash "></span>
+                                                删{{ :lang('除') }}</a>
+                                        </if>
+                                    <php>}elseif($v['sf_status']==2){</php>
+                                        <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1'
+                                           data-h="550px" data-url="{{ :U('Admin/CaiWu/edit',array('uuid'=>$v['uuid'])) }}"
+                                           data-title="{{ :lang('输入补交金额') }}" class="btn btn-info ">{{ :lang('输入补交金额')
+                                            }}</a>
+                                    <php>}elseif($v['sf_status']==1){</php>
+                                        <if condition="$v['js_status'] neq 1">
+                                            <a href="{{ :U('Admin/CaiWu/setJsStatus',array('id'=>$v['id'])) }}" date-js='1' class="btn btn-info ">{{ :lang('立即结算') }}</a>
+                                        </if>
+                                    <php>}</php>
+                                </td>
+
+
+                            </tr>
+
+                        </volist>
+
+                        <else/>
+                        <tr>
+                            <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
+                        </tr>
+                    </if>
+                    </tbody>
+
+
+                </table>
 
             </div>
-            <div class="cl"></div>
+            <if condition="$is_js">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="m-b">
+
+                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="js_status"
+                               data-model="KaiDan"
+                               data-handle="jiesuan" data-handle-check="1" data-handle-value="1"><span
+                                    class="fa fa-ban"></span> {{ :lang('结算','handle') }}</a>
+
+                        </div>
+                    </div>
+            </if>
+
+            <div class="col-xs-6">
+
+                <div class="pagee">{{ $page }}</div>
+            </div>
         </div>
+
+    </div>
+    <div class="cl"></div>
+    </div>
 
 
     </div>
 
 
-
-
-
-
 </block>
 <block name="add_foot_js">
-        <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
     <script type="text/javascript">
 
-        $(function(){
-            $(".js-click").click(function(){
-                $pd=$(this).parents('td').find(".show_price");
-                
-                layer.open({
-                  shadeClose: true,
-                  type: 1,
-                  title:'{{ :lang("查看开单详情") }}',
-                  skin: 'layui-layer-rim', //加上边框
-                  area: ['800px', '50%'], //宽高
-                  content: $pd.html()
-                });
-                
 
-            })
-        })
+            $(document).on("click", "[date-js='1']", function(event) {
+                $str = '{{ :lang("确定结算吗") }}？';
+                if (confirm($str)) {
+                    return true
+                }
+                return false;
+            });
+
     </script>
     <script>
+        function ge_js(){
 
+            layer.confirm('{{ :lang("确定结算吗") }}？', {
+                btn: ['{{ :lang("确定") }}','{{ :lang("取消") }}'] //按钮
+            }, function(){
+                return true;
+            }, function(){
+                return false;
+            });
+        }
         $(function () {
 
             select_all();
             del_confirm();
-            $("#fid").change(function (e,a) {
-                $id=$(this).val();
 
-                if($id!='none')
-                {
 
-                    $.getJSON("{{ :U('Admin/PriceZiDian/ajaxList/') }}?id="+ $id+"&tfid="+a,function (data) {
-                        console.log(data);
-                        $("#tfid").empty().append(data);
-                    })
-                }else
-                {
-                    $("#tfid").empty();
-                }
-
-            }).triggerHandler('change',"{{ :I('get.tfid') }}");;;
             //paix
             $("#sort").change(function () {
-                $v=$(this).find("option:selected").attr('data-type');
+                $v = $(this).find("option:selected").attr('data-type');
 
                 $("#sorttype").val($v);
             })
@@ -356,7 +337,7 @@
                 $value = $(this).attr('data-handle-value');
                 $filed = $(this).attr('data-handle-filed');
                 $sort = checked_sort_id();
-                $log="{{ $onname }}："+checked_log_name();
+                $log = "{{ $onname }}：" + checked_log_name();
                 //console.log($uuid);
                 //console.log($sort);
                 //console.log($log);
@@ -387,8 +368,8 @@
                                                     'value': $value,
                                                     'type': $type,
                                                     'filed': $filed,
-                                                    'sort':$sort,
-                                                    'log':$log,
+                                                    'sort': $sort,
+                                                    'log': $log,
                                                     'token': '{{ :token() }}'
                                                 },
                                                 cache: false,
@@ -406,7 +387,7 @@
                                                     } else {
                                                         swal({
                                                             title: data.msg,
-                                                            confirmButtonText:"{{ :lang('确定','handle') }}",
+                                                            confirmButtonText: "{{ :lang('确定','handle') }}",
                                                             type: "warning",
                                                             timer: 1000,
                                                         });
@@ -430,11 +411,14 @@
         });
         function anxia(tddid) { //隐藏表格
             if ($("." + tddid).is(":checked")) {
-                $("[id=" + tddid + "]").css('display', '');;
+                $("[id=" + tddid + "]").css('display', '');
+                ;
             } else {
-                $("[id=" + tddid + "]").css('display', 'none');;
+                $("[id=" + tddid + "]").css('display', 'none');
+                ;
             }
-        };
+        }
+        ;
         var shijian11 = {
             elem: '#shijian11',
             format: 'YYYY-MM-DD hh:mm:ss',

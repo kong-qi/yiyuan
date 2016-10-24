@@ -8,68 +8,72 @@
                     <span><img alt="image" class="img-circle" src="__IMG__/a6.jpg"/></span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="">
                                 <span class="cl">
-                               <span class="block m-t-xs"><strong class="font-bold">{{ :session('name') }}</strong></span>
+                               <span class="block m-t-xs"><strong class="font-bold">{{ :admin('realname') }}({{ :session('name') }})</strong></span>
                                 <span class="text-muted text-xs block"><?php echo (admin('',1)) ?><b class="caret"></b></span>
                                 </span>
                     </a>
-                    
+
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <!--<li><a href="" onClick="xiugaiimg('1')">修改头像</a>
                         </li>-->
-                        <li><a href="javascript:void(0)" data-url="{{ :U('Admin/Admin/pwd',array('uuid'=>session('uuid'))) }}" data-title="{{ :lang('修改密码') }}" data-w="30%" data-h="40%" data-layer="1">{{ :lang('修改密码') }}</a>
+                        <li><a href="javascript:void(0)"
+                               data-url="{{ :U('Admin/Admin/pwd',array('uuid'=>session('uuid'))) }}"
+                               data-title="{{ :lang('修改密码') }}" data-w="30%" data-h="40%" data-layer="1">{{
+                            :lang('修改密码') }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ :U('Admin/Login/outlogin') }}"
-                               onClick="if(confirm('确认退出?')) return true;else return false;">{{ :lang('安全退出') }}</a>
+                               onClick="if(confirm('{{ :lang('确认退出') }}?')) return true;else return false;">{{
+                            :lang('安全退出') }}</a>
                         </li>
                     </ul>
                 </div>
                 <div class="logo-element"><i class="icon icon-plus"></i></div>
             </li>
             <if condition="check_group('yuyue_add')">
-            <li>
-                <a class="J_menuItem" href="{{ :U('Admin/YuYue/add') }}"><i class="fa icon-paste"></i> <span
-                        class="nav-label">{{ :lang('添加咨询','menu') }}</span></a>
-            </li>
-                </if>
+                <li>
+                    <a class="J_menuItem" href="{{ :U('Admin/YuYue/add') }}"><i class="fa icon-paste"></i> <span
+                            class="nav-label">{{ :lang('添加咨询','menu') }}</span></a>
+                </li>
+            </if>
 
             <if condition="check_group('yuyue')">
-                <include file="Layout:Menu:yuyue" />
+                <include file="Layout:Menu:yuyue"/>
             </if>
             <if condition="check_group('gongzuoliang')">
-                 <include file="Layout:Menu:gzl" />
+                <include file="Layout:Menu:gzl"/>
             </if>
             <if condition="check_group('jiugouset')">
-                 <include file="Layout:Menu:jigou" />
+                <include file="Layout:Menu:jigou"/>
             </if>
             <if condition="check_group('days_price')">
-                 <include file="Layout:Menu:website" />
+                <include file="Layout:Menu:website"/>
             </if>
             <if condition="check_group('qiantaijz')">
-                 <include file="Layout:Menu:jiezhen" />
+                <include file="Layout:Menu:jiezhen"/>
             </if>
             <if condition="check_group('yishenjz')">
-                 <include file="Layout:Menu:yishen" />
+                <include file="Layout:Menu:yishen"/>
             </if>
             <if condition="check_group('shouyin')">
-                <include file="Layout:Menu:shouyin" />
+                <include file="Layout:Menu:shouyin"/>
             </if>
-            <if condition="check_group('hfrenwu') or check_group('huifangset')" >
-                <include file="Layout:Menu:huifang" />
+            <if condition="check_group('hfrenwu') or check_group('huifangset')">
+                <include file="Layout:Menu:huifang"/>
             </if>
             <if condition=" check_group('sms') OR check_group('group') ">
-                <include file="Layout:Menu:config" />
-                
+                <include file="Layout:Menu:config"/>
+
             </if>
             <if condition=" check_group('admin') OR check_group('group') OR check_group('rule')">
-                 <include file="Layout:Menu:admin" />
-            
+                <include file="Layout:Menu:admin"/>
+
             </if>
             <if condition="check_group('zidian') ">
-                <include file="Layout:Menu:zidian" />
+                <include file="Layout:Menu:zidian"/>
             </if>
             <if condition="check_group('tongji') ">
-                <include file="Layout:Menu:tongji" />
+                <include file="Layout:Menu:tongji"/>
             </if>
         </ul>
     </div>

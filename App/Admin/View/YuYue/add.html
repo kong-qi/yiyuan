@@ -44,7 +44,8 @@
                                     </div>
                                     <div class="col-sm-4" >
 
-                                        <select class="form-control"  required="required" id="kst_id" data-all="ksall_id"   name="kst_id" data-datachenge='1' data-close="#kstt_id"  data-type="ks"  data-next="kstt_id"  data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
+                                        <select class="form-control"  required="required" id="kst_id" data-all="ksall_id"
+                                                name="kst_id" data-datachenge='1' data-close="#kstt_id"  data-type="ks"  data-next="kstt_id"  data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}" >
                                             <option value="">{{ :lang('请选择二级科室','handle') }}</option>
 
                                         </select>
@@ -519,7 +520,7 @@
                 $year=$("#age").val();
                 $birthday=get_age_date("-"+$year);
                 $("#shengri").val($birthday);
-            }).trigger('change');
+            });
 
         });
 
@@ -531,7 +532,7 @@
             $next_id=$(this).attr('data-next');
             $id=$(this).val();
             $closeid=$(this).attr('data-close');
-            $str="<option value=''>无</option>";
+            $str="<option value=''>{{ :lang('无') }}</option>";
             if($id=='')
             {
                 $($closeid).empty().append($str);

@@ -439,12 +439,19 @@ class YuShenController extends AuthController {
            
          ';
         //是否只能看到自己开的单
-
-        if(check_group("kaidan_only") )
+        if(check_group('root'))
         {
-            
-            $map['kd.kd_id']=session('admin_id');
+
+        }else
+        {
+            if(check_group("kaidan_only")  )
+            {
+
+                $map['kd.kd_id']=session('admin_id');
+            }
         }
+
+
 
 
         $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数

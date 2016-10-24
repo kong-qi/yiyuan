@@ -126,6 +126,37 @@ class AjaxController extends AuthController
                 }
 
                 break;
+            case 'jiesuan':
+                $map = array(
+                    'uuid' => array(
+                        'in',
+                        $uuid
+                    )
+                );
+
+
+
+                    $data=array(
+                        $filed=>$value
+                    );
+                
+                $result=$model->where($map)->save($data);
+                if($result)
+                {
+                    add_log($log.'设置状态成功');
+                    echo json_encode([
+                        'error' => 0,
+                        'msg' => '成功'
+                    ]);
+                }else
+                {
+                    add_log($log.'设置状态失败');
+                    echo json_encode([
+                        'error' => 1,
+                        'msg' => '失败'
+                    ]);
+                }
+                break;
         }
 
 
@@ -624,10 +655,10 @@ class AjaxController extends AuthController
                     <a href="'.U('Admin/YuShen/quecheck_edit',array('id'=>$v['id'])).'"  class=" btn btn-xs btn-white"><span
                             class=" glyphicon-plus glyphicon-plus"></span>'.lang('修改').'</a>
                   ';
-                  $detail.='
+                  /*$detail.='
                     <a href="'.U('Admin/YuShen/quecheck_edit',array('id'=>$v['id'])).'"  class=" btn btn-xs btn-primary"><span
                             class=" glyphicon-plus glyphicon-plus"></span>'.lang('开单').'</a>
-                  ';
+                  ';*/
 
                   $v['ksttname']=$v['ksttname']==''?'':"~".$v['ksttname'];
                   $v['kstname']=$v['kstname']==''?'':"~".$v['kstname'];
