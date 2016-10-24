@@ -153,7 +153,7 @@ class CaiWuController extends AuthController
             );
 
             $model   =   D("KaiDan")->relation(true)->where($map)->find();
-            print_r($model);
+           
 
             if($model) {
                 $this->data =  $model;// 模板变量赋值
