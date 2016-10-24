@@ -9,78 +9,7 @@
 <block name="right">
     <div class="right-box">
 
-        <!-- <div class="box">
-            <div class="col-sm-12">
-                <form action="" method="get" id="contact-form">
-                    <div class="col-sm-12" style="padding:0px;">
-                        <div class="ibox float-e-margins" id="shoujisf1">
-                            <div class="ibox-title">
-                                <h5><a class="collapse-link">筛查选项</a></h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content" style="padding-left:0px; padding-right:0px;" id="shoujisf3">
-                                <div class="roww">
-                                    <div class="col-sm-3">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">所属一级科室</font></span>
-                                            <select class="form-control" name="fid" id="fid">
-        
-                                                <option value="none">所有类别</option>
-                                                <if condition="$subcategory">
-        
-                                                    <foreach name="subcategory" item="v" key="k">
-        
-                                                        <option value="{{ $v.id }}" {{ :$v['id']==I('get.fid')?"selected='selected'":'' }}>{{ $v.name }}</option>
-                                                    </foreach>
-                                                </if>
-        
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">所属二级级科室</font></span>
-                                            <select class="form-control" name="tfid" id="tfid">
-        
-                                                <option value="none">所有类别</option>
-        
-        
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">关键词</font></span>
-                                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}" placeholder="费用名称/票据名称" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="red">排序方式</font></span>
-                                            <input type="hidden" name="sorttype" id="sorttype">
-                                            <select name="sort" id="sort" class="form-control">
-                                                <option value="none" data-type="price" {{ :I('get.sort')=='none'?'selected="selected"':'' }}>默认</option>
-                                                <option value="asc" data-type="price" {{ :I('get.sort')=='asc'?'selected="selected"':'' }}>价格从底到高</option>
-                                                <option value="desc" data-type="price"　{{ :I('get.sort')=='desc'?'selected="selected"':'' }}>价格从高到底</option>
-                                            </select>
-                                        </div>
-                                    </div>
-        
-                                    <div class="col-sm-3">
-        
-                                        <button class="btn btn-primary" type="submit">确定筛选</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div> -->
+
         <div class="box">
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
@@ -92,7 +21,7 @@
 
                 <if condition="$menu_list">
                     <div class="ibox-title">
-                        <h5><a class="collapse-link">字段选择</a>
+                        <h5><a class="collapse-link">{{ :lang('字段选择') }}</a>
 
                             <div class="keep-open btn-group open" title="列">
                                 <div class="dropdown">
@@ -201,29 +130,22 @@
                                         
                                     </td>
                                     <td id="tdd13" >
-                                        <if condition="$v['is_yf'] eq 1">
-                                            <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1' data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}" data-title="{{ :lang('输入补交金额') }}" class="btn btn-info ">{{ :lang('输入补交金额') }}</a>
-                                       
-                                            
-                                        <if>
-                                        <if condition="$v['sf_status'] eq 0">
-                                            <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1' data-h="550px" data-url="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}" data-title="{{ :lang('收费') }}" class="btn btn-primary ">{{ :lang('收费') }}</a>
-                                        </if>
-                                       <?php
-                                        if($v['sf_status']==0){
-                                       ?>
-                                        
+                                        <php>
+                                            if($v[sf_status]==0)
+                                            {
+                                        </php>
                                             <if condition="check_group('kaidan_edit')">
-                                                
-                                                     <a href="javascript:void(0)" data-layer="1" data-w="90%" data-h="500px" data-url="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('编辑') }}</a>
-                                                
+
+                                                <a href="javascript:void(0)" data-layer="1" data-w="90%" data-h="500px" data-url="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('编辑') }}</a>
+
                                             </if>
                                             <if condition="check_group('kaidan_edit')">
-                                            <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
+                                                <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
                                                     <span class="fa fa-trash "></span>
                                                     删{{ :lang('除') }}</a>
-                                             </if>
-                                        <?php }?>
+                                            </if>
+                                        <php>}</php>
+
                                     </td>
                                     
                                 </tr>

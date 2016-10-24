@@ -36,7 +36,7 @@ class XiaoFeiZiDianController extends AuthController {
 
     public function add(){
         //权限选择
-       $this->check_group($type);
+       $this->check_group($this->rule_qz);
         if(IS_POST)
         {
 
@@ -85,7 +85,7 @@ class XiaoFeiZiDianController extends AuthController {
     public function edit(){
         //权限选择
 
-       $this->check_group($type);
+       $this->check_group($this->rule_qz);
         if(IS_POST)
         {
             $model =D('LanMu');
@@ -133,7 +133,7 @@ class XiaoFeiZiDianController extends AuthController {
     }
     public  function del(){
         //权限选择
-       $this->check_group($type);
+       $this->check_group($this->rule_qz);
         $id=I('get.id');
         $map=array(
             'uuid'=>$id
@@ -151,7 +151,7 @@ class XiaoFeiZiDianController extends AuthController {
     }
     public function handle($id){
         //权限选择
-       $this->check_group($type);
+       $this->check_group($this->rule_qz);
         $model =M('LanMu');
         $type=I('get.type');
         if($type=='true')

@@ -40,7 +40,7 @@ class XiaoFeiController extends AuthController {
         $count = $model->alias('g1')->join($join)->where($map)->count();// 查询满足要求的总记录数
 
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
-        $list =  $model->alias('g1')->field($filed)->join($join)->order('g1.id desc')->page( $page.','.$pagesize)->select();
+        $list =  $model->alias('g1')->field($filed)->join($join)->order('g1.cdate desc')->page( $page.','.$pagesize)->select();
         
         $this->assign('list',$list);// 赋值数据集
 

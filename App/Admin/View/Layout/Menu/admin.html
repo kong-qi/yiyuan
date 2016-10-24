@@ -5,9 +5,7 @@
         <span class="fa icon-chevron-left arrow"></span>
     </a>
     <ul class="nav nav-second-level">
-        <if condition=" check_group('admin')">
-        <li><a href="{{ :U('Admin/Admin/ysadd') }}" class="J_menuItem">{{ :lang('添加医生') }}</a>
-        </if>
+
         <if condition=" check_group('admin')">
         <li><a href="{{ :U('Admin/Admin/yslist') }}" class="J_menuItem">{{ :lang('医生列表') }}</a>
         </if>

@@ -32,7 +32,8 @@
                                 <input name="chkall" type="checkbox" id="chkall"value="0"></th>
                             <th width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
                             <th class="hidden-xs">{{ :lang('编号','filed') }}</th>
-                            <th>{{ :lang('名称','filed') }}</th>
+                            <th>{{ :lang('账号','filed') }}</th>
+                            <th>{{ :lang('真实名字','filed') }}</th>
                             <th >{{ :lang('所属组','filed') }}</th>
                             <th >{{ :lang('状态','filed') }}</th>
                             <th class="hidden-xs">{{ :lang('创建时间','filed') }}</th>
@@ -50,6 +51,7 @@
                                     </td>
                                     <td class="hidden-xs">{{ $v.id }}</td>
                                     <td>{{ $v.name }}</td>
+                                    <td>{{ $v.realname }}</td>
                                     <td >{{ :echo_list_str($v['groupid'],$gpdata) }}</td>
 
                                     <td >

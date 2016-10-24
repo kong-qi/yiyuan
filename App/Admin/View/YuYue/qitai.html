@@ -15,14 +15,10 @@
 
                         <div class="form-group">
                             <div class="input-group m-b" style="margin-bottom:5px;">
-                                
-                                <label class="input-group-addon">{{ :lang('就诊医生') }}</label>
-                                <select class="form-control" required="required" id="ks_id" name="ks_id">
-                                    <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                    {{ :get_keshi('0','1',$data['ks_id'] ) }}
-                                </select>
+                                <label class="input-group-addon">{{ :lang('接诊医生','handle') }}</label>
                                 <select class="form-control" required="required" id="ys_id" name="ys_id">
                                     <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                    {{ :get_doc(array(),1,$data['ys_id']) }}
 
                                 </select>
 
@@ -158,36 +154,7 @@
 
         });
 
-        $("#ks_id").change(function () {
-            $url = "{{ :U('Admin/Ajax/getYuShen') }}";
-            $next_id = "ys_id";
-            $id = $(this).val();
-            $.ajax({
-                'url': $url,
-                type: 'get',
-                data: {
-                    'id': $id,
-                    ysid: "{{ $data.ys_id }}"
-                },
-                cache: false,
-                dataType: 'json',
-                success: function (data) {
-                    if (data.content != '') {
-                        $str = '<option value="">{{ :lang("请选择") }}</option>';
-                        $str += data.content;
-                        $("#" + $next_id).empty().append($str);
 
-                    } else {
-                        $str = "<option value=''>{{ :lang('无') }}</option>";
-                        $("#" + $next_id).empty();
-                        $($closeid).empty().append($str);
-
-
-                    }
-
-                }
-            });
-        }).trigger('change');
 
 
     </script>

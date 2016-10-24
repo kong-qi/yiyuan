@@ -153,6 +153,7 @@ class QianTaiJieZhenController extends AuthController {
             }
         }else{
             $id=I('get.uuid');
+           
             //自己查看自己的
 
             $map=array(

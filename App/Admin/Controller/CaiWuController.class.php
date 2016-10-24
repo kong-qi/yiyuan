@@ -5,14 +5,13 @@ class CaiWuController extends AuthController {
     protected $rule_qz='shouyinn';
     public function index($status=0,$is_js=0){
         $this->check_group('shouyin');
-
         $map=array(
             'kd.sf_status'=>$status,
             'kd.js_status'=>$is_js
             );
         $model=M('KaiDan');
         $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
-        $join[] = 'LEFT JOIN __KE_SHI__ ys ON kd.kd_id = ys.id';
+        $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kd_id = ys.id';
          
         
          $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
@@ -35,7 +34,7 @@ class CaiWuController extends AuthController {
             kd.price_total,
             jzys.name as sy_name,
             u1.name as user_name,
-            ys.name as kd_name
+            ys.realname as kd_name
            
          ';
 

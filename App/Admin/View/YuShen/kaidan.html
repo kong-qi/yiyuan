@@ -109,24 +109,20 @@
                                 <tr>
                                     <td align="right">{{ :lang('开单人','filed') }}</td>
                                     <td>
-                                        
 
                                                 <div class="col-xs-3">
-                                                    <select class="form-control m-l" required="required" id="ks2_id" name="kd_kstid">
-                                                        <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                                        {{ :get_keshi('0','1',$data['ks_id'] ) }}
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <select class="form-control" required="required" id="ysz_id" name="kd_id">
+
+                                                    <select class="form-control" required="required" id="ys_id" name="kd_id">
                                                         <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                                        {{ :get_doc(array(),1,$data['ys_id']) }}
+
                                                     </select>
                                                 </div>
                                         
                                     </td>
                                 </tr>
                                 <else/>
-                                    <input type="hidden"  name="kd_id" value="{{ :session('ys_id') }}">
+                                    <input type="hidden"  name="kd_id" value="{{ :session('admin_id') }}">
                                 
                                 </if>
 

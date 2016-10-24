@@ -177,7 +177,7 @@ class YuShenController extends AuthController {
        
         $this->display();
     }
-    //接诊
+    //接诊add
     public function add(){
         //权限选择
         $this->check_group($this->rule_qz."_add");
@@ -402,14 +402,7 @@ class YuShenController extends AuthController {
         return $this->error(lang('删除失败','handle'));;
     }
     public function kaidanList(){
-       /* $a=0.58;
-        $b=10;
-        $sum=$a*$b;
-       
-        var_dump($sum)."<br/>";
-        echo "int".(int)$sum."<br/>";
-        echo "float".(float)$sum."<br/>";
-        var_dump($sum);*/
+
         
         $this->onname="开单列表";
         $this->assign('onname',$this->onname);
@@ -417,7 +410,7 @@ class YuShenController extends AuthController {
         $map=array();
         $model=M('KaiDan');
         $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
-        $join[] = 'LEFT JOIN __KE_SHI__ ys ON kd.kd_id = ys.id';
+        $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kd_id = ys.id';
          
         
          $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
@@ -433,6 +426,7 @@ class YuShenController extends AuthController {
             kd.sf_status as sf_status,
             kd.is_yf as is_yf,
             kd.id as id,
+            kd_id as kd_id,
             kd.uuid as uuid,
             kd.kd_time as kd_time,
             kd.sf_status,
@@ -441,14 +435,22 @@ class YuShenController extends AuthController {
             kd.price_total,
             jzys.name as sy_name,
             u1.name as user_name,
-            ys.name as kd_name
+            ys.realname as kd_name
            
          ';
+        //是否只能看到自己开的单
+
+        if(check_group("kaidan_only") )
+        {
+            
+            $map['kd.kd_id']=session('admin_id');
+        }
+
 
         $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
 
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
-        $list =  $model->alias('kd')->field($filed)->join($join)->order('kd.id desc')->page( $page.','.$pagesize)->select();
+        $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
          $menu_list= array(
           
             2=>'开单时间',

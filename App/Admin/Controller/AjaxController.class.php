@@ -574,8 +574,10 @@ class AjaxController extends AuthController
         $join[]='LEFT JOIN __KE_SHI__ ks3 ON jz.kstt_id = ks3.id';
         //用户，医生
         $join[]='LEFT JOIN __USER__ u1 ON jz.user_id = u1.id';
+       //手术医生
         $join[]='LEFT JOIN __KE_SHI__ ys ON jz.ysz_id = ys.id';
-        $join[]='LEFT JOIN __KE_SHI__ ys2 ON jz.ys_id = ys2.id';
+        //管理员的医生组
+        $join[]='LEFT JOIN __ADMIN__ ys2 ON jz.ys_id = ys2.id';
         $join[]='LEFT JOIN __LAN_MU__ zl ON jz.zl_id = zl.id';
 
         $filed = '
@@ -588,7 +590,7 @@ class AjaxController extends AuthController
            ks2.name as kstname,
            ks3.name as ksttname,
            u1.name as user_name,
-           ys2.name as yushen_name,
+           ys2.realname as yushen_name,
            ys.name as yushenss_name,
            zl.name as zlname
          ';

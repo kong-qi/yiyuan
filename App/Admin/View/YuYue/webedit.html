@@ -81,6 +81,13 @@
                         <input type="text" class="form-control" name="web_onname" value="{{ $data.web_onname }}">
 
                 </div>
+                <div class="input-group m-b" style="margin-bottom:5px;">
+                    <label class="input-group-addon">{{ :lang('详细聊天','handle') }}</label>
+
+
+                        <textarea class=""  name="zx_content" id="content"> {{ :htmlspecialchars_decode($data['zx_content']) }}</textarea>
+
+                </div>
                 <div class="form-group" align="center" style="margin-bottom:5px;">
                     <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('提交','handle') }}</button>
                 </div>
@@ -94,11 +101,11 @@
 </block>
 <block name="add_foot_js">
     <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
-    
+    {{ :load_ueditor() }}
     <script>
         
-        get_ly({{ $data.ly_id }});
-        get_ly2({{ $data.lyt_id }});
+        get_ly("{{ $data.ly_id }}");
+        get_ly2("{{ $data.lyt_id }}");
 
 
         $.validator.setDefaults({
@@ -153,6 +160,7 @@
             });
         }
         $().ready(function () {
+            bd_ueditor('content');
             $("#validate").validate(
                 {
 

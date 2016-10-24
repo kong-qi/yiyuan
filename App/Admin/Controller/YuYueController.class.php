@@ -30,6 +30,7 @@ class YuYueController extends AuthController {
                 //网站竞价来源
                 case 'website':
                      $is_website=1;
+
                     $map['y1.ly_id']=array('in', session('brid'));
                 break;
                 //回访人员
@@ -45,7 +46,7 @@ class YuYueController extends AuthController {
                 break;
                 case 'yishen':
                     $is_yishen=1;
-                    $map['y1.ys_id']=session('ys_id');
+                    $map['y1.ys_id']=session('admin_id');
                  case 'all':
                    
                 
@@ -219,13 +220,13 @@ class YuYueController extends AuthController {
             wz.name as web_name,
             ae1.name as ae_name,
             ae2.name as ae2_name,
-            ys.name as ys_name
+            ys.realname as ys_name
         ';
         //管理会员用户
         $join[] = '__USER__ u1 ON y1.user_id = u1.id';
         //关联ADMIN
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON y1.admin_id = a1.id';
-        $join[] = 'LEFT JOIN __KE_SHI__ ys ON y1.ys_id = ys.id';
+        $join[] = 'LEFT JOIN __ADMIN__ ys ON y1.ys_id = ys.id';
         //关科室1
         $join[] = 'LEFT JOIN __KE_SHI__ k1 ON y1.ks_id = k1.id';
         //关科室2

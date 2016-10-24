@@ -23,6 +23,7 @@ class AdminController extends AuthController {
 
         }
         ;
+        $map['groupid']=array('neq',12);
         $count =  $model->where($map)->count();// 查询满足要求的总记录数
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
    
@@ -62,12 +63,12 @@ class AdminController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.layer.close(index);</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.layer.close(index);window.location='".$backurl."'</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
                 }else{
 
                     $msg=lang('数据一样无更新','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index)</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);</script>";
                 }
             }else{
                 return $this->error($model->getError());
@@ -108,12 +109,12 @@ class AdminController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);parent.window.location='".$backurl."';</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);parent.window.location='".$backurl."';</script>";
                 }
             }else
             {
@@ -132,7 +133,8 @@ class AdminController extends AuthController {
         $this->onname='医生列表';
         $this->check_group('admin');
         $model=M(CONTROLLER_NAME);
-        $map=array('ys_id'=>array('neq',''));
+        $map=array();
+        $map['groupid']=12;
         
         $rule=M('AdminGroup')->select();
         $newrule=array();
@@ -175,12 +177,12 @@ class AdminController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
                    
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location='".$backurl."';</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/ysadd");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location='".$backurl."';</script>";
                 }
             }else
             {

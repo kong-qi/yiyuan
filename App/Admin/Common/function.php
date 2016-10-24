@@ -587,7 +587,36 @@ function jigou_id(){
     return $arr;
 
 }
+function get_doc($where=array(),$echo=1,$checked=''){
 
+    $map=array();
+    $map['checked']=1;
+    $map['groupid']=12;
+    $map=$where+$map;
+    $m=M('Admin')->where($map)->select();
+    $str='';
+    if($echo)
+    {
+        if(count($m)>0)
+        {
+            foreach ($m as $k=>$v)
+            {
+                if($checked==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option $check value='".$v['id']."'>".$v['realname']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $m;
+}
+//竞价使用
 function get_wangixao_where($where,$echo=1,$sid='',$checked=''){
     $check='';
     $map=array();
