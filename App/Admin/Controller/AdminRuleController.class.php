@@ -141,9 +141,9 @@ class AdminRuleController extends AuthController
             }
         } else {
             $id = I('get.id');
-            $map = [
+            $map = array(
                 'uuid' => $id
-            ];
+            );
 
             $model = M('AdminRule')->where($map)->find();
 
