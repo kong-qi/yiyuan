@@ -14,12 +14,12 @@ class AjaxController extends AuthController
         $filed=I('post.filed')==''?'':I('post.filed');
         $model = I('post.model');
         $log=I('post.log')==''?'':I('post.log');
-
-        if (!check_token($token)) {
-            echo json_encode(array(
+        $err_arr=array(
                 'error' => 1,
                 'msg' => '非法操作'
-            ));
+            );
+        if (!check_token($token)) {
+            echo json_encode($err_arr);
         }
 
         $model = M($model);
@@ -42,16 +42,16 @@ class AjaxController extends AuthController
                 $result = $model->where($map)->delete();
                 if ($result) {
                     add_log($log.'删除成功');
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 0,
                         'msg' => '删除成功'
-                    ]);
+                    ));
                 } else {
                     add_log($log.'删除失败');
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 1,
                         'msg' => '删除失败'
-                    ]);
+                    ));
                 }
 
                 break;
@@ -80,17 +80,17 @@ class AjaxController extends AuthController
                 if($result)
                 {
                     add_log($log.'设置状态成功');
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 0,
                         'msg' => '成功'
-                    ]);
+                    ));
                 }else
                 {
                     add_log($log.'设置状态失败');
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 1,
                         'msg' => '失败'
-                    ]);
+                    ));
                 }
                 break;
             case "sort":
@@ -112,17 +112,17 @@ class AjaxController extends AuthController
                 if($status)
                 {
                     add_log($log.'排序成功');
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 0,
                         'msg' => '成功'
-                    ]);
+                    ));
                 }else
                 {
                     add_log($log.'排序失败');
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 1,
                         'msg' => '失败'
-                    ]);
+                    ));
                 }
 
                 break;
@@ -144,17 +144,17 @@ class AjaxController extends AuthController
                 if($result)
                 {
                     add_log($log.'设置状态成功');
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 0,
                         'msg' => '成功'
-                    ]);
+                    ));
                 }else
                 {
                     add_log($log.'设置状态失败');
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 1,
                         'msg' => '失败'
-                    ]);
+                    ));
                 }
                 break;
         }
