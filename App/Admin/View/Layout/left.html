@@ -18,13 +18,12 @@
                         </li>-->
                         <li><a href="javascript:void(0)"
                                data-url="{{ :U('Admin/Admin/pwd',array('uuid'=>session('uuid'))) }}"
-                               data-title="{{ :lang('修改密码') }}" data-w="30%" data-h="40%" data-layer="1">{{
-                            :lang('修改密码') }}</a>
+                               data-title="{{ :lang('修改密码') }}" data-w="30%" data-h="40%" data-layer="1">
+                               {{ :lang('修改密码') }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ :U('Admin/Login/outlogin') }}"
-                               onClick="if(confirm('{{ :lang('确认退出') }}?')) return true;else return false;">{{
-                            :lang('安全退出') }}</a>
+                               onClick="if(confirm('{{ :lang('确认退出') }}?')) return true;else return false;">{{ :lang('安全退出') }}</a>
                         </li>
                     </ul>
                 </div>
