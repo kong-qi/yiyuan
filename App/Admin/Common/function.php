@@ -599,7 +599,7 @@ function get_wangixao_where($where,$echo=1,$sid='',$checked=''){
         $map['id']=array('in',$sid);
     }
 
-    $map['fid']=array('neq',0);
+    //$map['fid']=array('neq',0);
 
     $rule=M('LanMu')->where($map)->select();
     $str='';

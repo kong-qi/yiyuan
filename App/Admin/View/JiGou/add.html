@@ -42,7 +42,7 @@
                                 <td align="right">{{ :lang('机构类别') }}</td>
                                 <td align="right">
                                     <select name="fid" class="form-control" >
-                                        {{ :get_wangixao_where(array('type'=>'bingren','is_jigou'=>1),'jigou',jigou_id()) }}
+                                        {{ :get_wangixao_where(array('type'=>'bingren','is_jigou'=>1,'fid'=>array('neq',0)),'jigou',jigou_id()) }}
                                     </select>
                                 </td>
                             </tr>

@@ -13,9 +13,7 @@ class YuShenController extends AuthController {
 
         $model   =   D('YuYue')->relation(true)->where($map)->find();
 
-        $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren'),'1','',$model['xf_id']);
-
-        $this->rule=$rule;
+       
 
 
 
@@ -280,7 +278,7 @@ class YuShenController extends AuthController {
     public function postKaiDan(){
         //更新预约状is_kd为1，开单时间kdtime
         //权限选择
-        $thin->onname='开单';
+        $this->onname='开单';
         $this->check_group("kaidan_add");
         if(IS_POST){
             M()->startTrans();
@@ -384,64 +382,7 @@ class YuShenController extends AuthController {
   
          $this->display();
     }
-    public function edit(){
-        //权限选择
 
-        $this->check_group($this->rule_qz."_edit");
-        if(IS_POST)
-        {
-            $model =D('XiaoFei');
-
-            if($model->create()) {
-                $data=$model->create();
-                $id=$data['id'];
-                if(($data['pwd'])!='')
-                {
-                    $data['pwd']=sha1($data['pwd']);
-                }else
-                {
-                    unset($data['pwd']);
-                }
-
-                $result =   $model->save($data);
-
-                if($result) {
-                    $msg=lang('更新成功','handle');
-                     add_log($this->onname.'：'.$data['name'].'更新成功');
-                    $msg=lang('更新成功','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
-                    //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
-                }else{
-
-                    $msg=lang('数据一样无更新','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);;parent.layer.close(index)</script>";
-                }
-            }else{
-                return $this->error($model->getError());
-            }
-        }else{
-            $id=I('get.uuid');
-            $map=array(
-            'uuid'=>$id
-            );
-
-            $model   =   M('XiaoFei')->where($map)->find();
-            
-            $rule=get_wangixao_where(array('is_website'=>'1','type'=>'bingren'),'1','',$model['xf_id']);
-           
-            $this->rule=$rule;
-
-
-          
-            if($model) {
-                $this->data =  $model;// 模板变量赋值
-            }else{
-                return $this->error(lang('数据错误','handle'));
-            }
-            $this->display();
-        }
-    }
     public  function del(){
         //权限选择
         $this->check_group($this->rule_qz."_del");
@@ -459,36 +400,6 @@ class YuShenController extends AuthController {
         }
         add_log($this->onname.'：'.$data['name'].'删除失败');
         return $this->error(lang('删除失败','handle'));;
-    }
-    public function handle($id){
-        //权限选择
-        $this->check_group($this->rule_qz."_edit");
-        $model =M("XiaoFei");
-        $type=I('get.type');
-        if($type=='true')
-        {
-            $status=1;
-        }else
-        {
-            $status=0;
-        }
-        $data['id'] =$id;
-        $data['checked'] = $status;
-
-
-        if($model->save($data)){
-
-            return  $this->success(lang('更新成功','handle'));
-            $msg=lang('更新成功','handle');
-            $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-            echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
-        }else
-        {
-            $msg=lang('更新失败','handle');
-            return  $this->success(lang('更新失败','handle'));
-            $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index ");
-            echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
-        }
     }
     public function kaidanList(){
        /* $a=0.58;
