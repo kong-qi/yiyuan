@@ -81,11 +81,12 @@ class CardController extends AuthController {
 
 			if($result) {
 			    add_log($this->onname.'：'.$name.'添加成功');
+                $backurl=U('Admin/Card/index');
 			    $msg=lang('添加成功','handle');
-			    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+			    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location.href='".$backurl."';</script>";
 			}else{
 			    $msg=lang('添加失败','handle');
-			    add_log($this->onname.'：'.$name.'添加失败','/Admin/add');
+			    add_log($this->onname.'：'.$name.'添加失败');
 			    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
 			}
 		}
