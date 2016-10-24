@@ -183,10 +183,10 @@ class AdminRuleController extends AuthController
         $ajaxtype = I('get.type');
 
         if (!check_token($token)) {
-            echo json_encode([
+            echo json_encode(array(
                 'error' => 1,
                 'msg' => '非法操作'
-            ]);
+            ));
         }
 
         $model = D('AdminRule');
@@ -201,15 +201,15 @@ class AdminRuleController extends AuthController
 
                 $result = $model->where($map)->delete();
                 if ($result) {
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 0,
                         'msg' => '删除成功'
-                    ]);
+                    ));
                 } else {
-                    echo json_encode([
+                    echo json_encode(array(
                         'error' => 1,
                         'msg' => '删除失败'
-                    ]);
+                    ));
                 }
 
                 break;
