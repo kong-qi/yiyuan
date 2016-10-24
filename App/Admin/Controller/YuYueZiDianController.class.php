@@ -68,11 +68,11 @@ class YuYueZiDianController extends AuthController {
             if($result) {
                 add_log($this->onname.'：'.$name.'添加成功');
                 $msg=lang('添加成功','handle');
-                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');;parent.window.location.reload()</script>";
             }else{
                 $msg=lang('添加失败','handle');
                 add_log($this->onname.'：'.$name.'添加失败','/Admin/add');
-                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');;parent.window.location.reload()</script>";
             }
 
 
@@ -107,11 +107,11 @@ class YuYueZiDianController extends AuthController {
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');;parent.window.location.reload()</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
                 }else{
                     $msg=lang('数据一样无更新','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');;parent.window.location.reload()</script>";
                 }
             }else{
                 return $this->error($model->getError());

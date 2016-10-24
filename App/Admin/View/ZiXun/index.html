@@ -32,6 +32,7 @@
                             <th width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
                             <th class="hidden-xs">{{ :lang('编号','filed') }}</th>
                             <th>{{ :lang('名称','filed') }}</th>
+                             <th>{{ :lang('是否统计到工作量','filed') }}</th>
                             <th >{{ :lang('状态','filed') }}</th>
                             <th >{{ :lang('操作','handle') }}</th>
                         </tr>
@@ -46,20 +47,37 @@
                                     </td>
                                     <td class="hidden-xs">{{ $v.id }}</td>
                                     <td data-log="1">{{ $v.name }}</td>
-
                                     <td >
                                         <if condition="check_group($rule_qz)">
-                                        <if condition="$v['checked']">
-                                            <a href="{{ :U(MODULE_NAME.'/'.CONTROLLER_NAME.'/handle/',array('id'=>$v['id'],'type'=>'false'))
-                                            }}" class="btn btn-white btn-sm">
-                                            {{ :lang('已用','handle') }}
-                                            </a>
-                                            <else/>
-                                            <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/handle/",array('id'=>$v['id'],'type'=>'true'))
-                                            }}" class="btn btn-white btn-sm">
-                                            <font color=red>{{ :lang('停用','handle') }}</font>
-                                            </a>
+                                            <if condition="$v['is_tongji']">
+                                                <a href="{{ :U(MODULE_NAME.'/'.CONTROLLER_NAME.'/handle/',array('id'=>$v['id'],'type'=>'false','field'=>'is_tongji'))
+                                                }}" class="btn btn-white btn-sm">
+                                                {{ :lang('是','handle') }}
+                                                </a>
+                                                <else/>
+                                                <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/handle/",array('id'=>$v['id'],'type'=>'true','field'=>'is_tongji'))
+                                                }}" class="btn btn-white btn-sm">
+                                                <font color=red>{{ :lang('否','handle') }}</font>
+                                                </a>
+                                            </if>
+                                            
+                                            
                                         </if>
+                                    </td>
+                        
+                                    <td >
+                                        <if condition="check_group($rule_qz)">
+                                            <if condition="$v['checked']">
+                                                <a href="{{ :U(MODULE_NAME.'/'.CONTROLLER_NAME.'/handle/',array('id'=>$v['id'],'type'=>'false'))
+                                                }}" class="btn btn-white btn-sm">
+                                                {{ :lang('已用','handle') }}
+                                                </a>
+                                                <else/>
+                                                <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/handle/",array('id'=>$v['id'],'type'=>'true'))
+                                                }}" class="btn btn-white btn-sm">
+                                                <font color=red>{{ :lang('停用','handle') }}</font>
+                                                </a>
+                                            </if>
                                             <else/>
                                             <if condition="$v['checked']">
                                                 <a href="#" class="btn btn-white btn-sm">
@@ -153,7 +171,7 @@
          area: ['500px', '380px'],
          content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}",
          cancel: function(index){
-         window.location.reload()
+            //window.location.reload()
 
          }
          });
@@ -172,7 +190,7 @@
                 area: ['500px', '380px'],
                 content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=" + title,
                 cancel: function (index) {
-                    window.location.reload()
+                    //window.location.reload()
 
                 }
             });

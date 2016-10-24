@@ -63,7 +63,7 @@ class AdminController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.layer.close(index);window.location='".$backurl."'</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
                 }else{
 
@@ -109,12 +109,12 @@ class AdminController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);parent.window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location='".$backurl."';;parent.layer.close(index);</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);parent.window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location='".$backurl."';parent.layer.close(index);</script>";
                 }
             }else
             {
@@ -177,7 +177,7 @@ class AdminController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
                    
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name);parent.window.location='".$backurl."'; parent.layer.msg('".$msg."');</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
@@ -351,5 +351,74 @@ class AdminController extends AuthController {
             $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index ");
             echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);window.location='".$backurl."';</script>";
         }
+    }
+
+    public function excel()
+    {
+        if (IS_POST) {
+            $file=I('post.file');
+            error_reporting(E_ALL); //开启错误
+            set_time_limit(0); //脚本不超时
+            date_default_timezone_set('Europe/London'); //设置时间
+            header('Content-type: text/html; charset=utf-8');
+
+            vendor('PHPExcel.Classes.PHPExcel');
+            $type = pathinfo($file);
+            $type = strtolower($type["extension"]);
+            $type=$type==='csv' ? $type : 'Excel5';
+            ini_set('max_execution_time', '0');
+            $file = WEB_ROOT.pic_url($file,'','file');
+            // 判断使用哪种格式
+            $objReader = \PHPExcel_IOFactory::createReader('Excel2007');
+            $objPHPExcel = $objReader->load($file);
+            $sheet = $objPHPExcel->getSheet(0);
+            // 取得总行数
+            $highestRow = $sheet->getHighestRow();
+            // 取得总列数
+            $highestColumn = $sheet->getHighestColumn();
+            //循环读取excel文件,读取一条,插入一条
+
+            //从第一行开始读取数据
+            for($j=1;$j<=$highestRow;$j++){
+                //从A列读取数据
+                for($k='A';$k<=$highestColumn;$k++){
+                    // 读取单元格
+                    if($j!=1)
+                    {
+                        $data[$j][]=$objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue();
+                    }
+
+                }
+            }
+
+            foreach ($data as $k=>$v)
+            {
+                $dataList[] = array(
+                    'ctime' => time(),
+                    'uuid' => create_uuid(),
+                    'name' => $v[0],
+                    'realname'=>$v[1],
+                    'pwd' => sha1($v[2]),
+                    'groupid' => $v[3],
+                    'uniqid'=>create_uniqid(),
+                    'checked'=>1
+                );
+            }
+           
+
+            $model = D('Admin');
+            $result = $model->addAll($dataList);
+            if ($result) {
+
+                $msg = lang('添加成功', 'handle');
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');;parent.window.location.reload()</script>";
+            } else {
+                $msg = lang('添加失败', 'handle');
+
+                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');;parent.window.location.reload()</script>";
+            }
+
+        }
+        $this->display();
     }
 }

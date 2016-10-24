@@ -16,6 +16,8 @@
                 {{ :lang($onname,'menu') }}
                 <h3 class="pull-right">
                     <a href=#" id="tianjiazh" class="btn btn-xs btn-success" > <span class="fa fa-pencil-square-o"></span> {{ :lang('添加','handle') }}</a>
+                    <a href=#" id="tianjiazh2" class="btn btn-xs btn-success"> <span
+                        class="fa fa-pencil-square-o"></span> {{ :lang('导入数据','handle') }}</a>
                 </h3>
             </div>
             <div class="box-content">
@@ -151,19 +153,33 @@
 
 
          $('#tianjiazh').on('click', function() {
-         layer.open({
-         type: 2,
-         title: "{{ :lang('添加','handle') }}",
-         shadeClose: true,
-         shade: 0.8,
-         area: ['310px', '380px'],
-         content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}?uuid=",
-         cancel: function(index){
-         //window.location.reload()
+             layer.open({
+             type: 2,
+             title: "{{ :lang('添加','handle') }}",
+             shadeClose: true,
+             shade: 0.8,
+             area: ['310px', '380px'],
+             content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}?uuid=",
+             cancel: function(index){
+                 //window.location.reload()
 
-         }
+             }
+             });
          });
-         });
+         $('#tianjiazh2').on('click', function() {
+            layer.open({
+                type: 2,
+                title: "{{ :lang('添加','handle') }}",
+                shadeClose: true,
+                shade: 0.8,
+                area: ['80%', '400px'],
+                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/excel/") }}",
+                cancel: function(index){
+                    //window.location.reload()
+
+                }
+            });
+        });
         /* $('#tianjiazhxx').on('click', function() {
          $('#tianjiazhnn').hide()
          });*/
