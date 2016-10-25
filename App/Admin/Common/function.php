@@ -887,11 +887,11 @@ function get_days($num){
 }
 function yuyue_status($checked=''){
     $arr=array(
-        '1'=>'已预约',
-        '2'=>'已到院',
-        '3'=>'已接诊',
-        '4'=>'已改期',
-        '5'=>'逾期未到'
+        '1'=>lang('已预约'),
+        '2'=>lang('已到院'),
+        '3'=>lang('已接诊'),
+        '4'=>lang('已改期'),
+        '5'=>lang('逾期未到')
     );
     if($checked!='')
     {
@@ -901,9 +901,9 @@ function yuyue_status($checked=''){
 }
 function sf_status($checked=''){
     $arr=array(
-        '0'=>'未收费',
-        '1'=>'已收费',
-        '2'=>'已收定金',
+        '0'=>lang('未收费'),
+        '1'=>lang('已收费'),
+        '2'=>lang('已收定金'),
 
     );
     if($checked!='')
@@ -914,8 +914,8 @@ function sf_status($checked=''){
 }
 function js_status($checked=''){
     $arr=array(
-        '0'=>'未结算',
-        '1'=>'已结算',
+        '0'=>lang('未结算'),
+        '1'=>lang('已结算'),
 
 
     );
