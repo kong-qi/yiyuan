@@ -261,7 +261,7 @@
 
                 <if condition="$menu_list">
                     <div class="ibox-title">
-                        <h5><a class="collapse-link">字段选择</a>
+                        <h5><a class="collapse-link">{{ :lang('字段选择','handle') }}</a>
 
                             <div class="keep-open btn-group open" title="列">
                                 <div class="dropdown">
@@ -608,7 +608,7 @@
             $url="{{ :U('Admin/Ajax/ajaxAreaList') }}";
             $tfid='{{ :I("get.areat_id") }}';
             log($tfid);
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             if($id=='')
             {
                 $("#areat_id").empty().hide().append( $str);
@@ -632,7 +632,7 @@
                 $next_id = $(this).attr('data-next');
                 $id = $(this).val();
                 $closeid = $(this).attr('data-close');
-                $str = "<option value=''>无</option>";
+                $str = "<option value=''>{{ :lang('无') }}</option>";
                 if ($id == '') {
                     $($closeid).empty().append($str);
 
@@ -667,13 +667,13 @@
 
                         if (data.content != '') {
 
-                            $str = '<option value="">请选择</option>';
+                            $str = '<option value="">{{ :lang("请选择") }}</option>';
                             $str += data.content;
 
                             $("#" + $next_id).empty().append($str);
 
                         } else {
-                            $str = "<option value=''>无</option>";
+                            $str = "<option value=''>{{ :lang('无') }}</option>";
                             $("#" + $next_id).empty();
                             $($closeid).empty().append($str);
 
