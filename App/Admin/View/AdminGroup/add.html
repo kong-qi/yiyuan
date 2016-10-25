@@ -31,11 +31,11 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">是否是咨询人员</td>
+                                <td align="right">{{ :lang('是否是咨询人员') }}</td>
                                 <td align="right">
                                     <select name="is_zixun" class="form-control" id="">
-                                        <option value="0">否</option>
-                                        <option value="1">是</option>
+                                        <option value="0">{{ :lang('否') }}</option>
+                                        <option value="1">{{ :lang('是') }}</option>
                                     </select>
                                 </td>
                             </tr>
@@ -49,7 +49,7 @@
                                 </td>
                             </tr> -->
                             <tr>
-                                <td align="right">对应病人来源</td>
+                                <td align="right">{{ :lang('对应病人来源') }}</td>
                                 <td>
                                     <div class="form-group" style="">
 
@@ -83,7 +83,7 @@
                                             <label class="col-sm-12">{{ $lv_v.name }}</label>
                                             <div class="col-sm-12">
                                                 <label class="checkbox-inline f-label">
-                                                    <input type="checkbox" name="ruleid[]"  value="root">超级管理员
+                                                    <input type="checkbox" name="ruleid[]"  value="root">{{ :lang('超级管理员') }}
                                                 </label>
                                             </div>
                                         </div>
@@ -101,7 +101,7 @@
                                                         $subrule=get_rule($lv_v['id']);
                                                         ?>
                                                         <label class="checkbox-inline f-label">
-                                                            <input type="checkbox" name="ruleid[]" value="{{ $lv_v.ename }}">进入{{ $lv_v.name }}&nbsp;&nbsp;</label>
+                                                            <input type="checkbox" name="ruleid[]" value="{{ $lv_v.ename }}">{{ :lang('进入') }}{{ $lv_v.name }}&nbsp;&nbsp;</label>
                                                         <if condition="$subrule">
                                                             <foreach name="subrule" item="sv" key="k2">
                                                                 <label class="checkbox-inline f-label">

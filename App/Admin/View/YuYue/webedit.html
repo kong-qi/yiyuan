@@ -129,7 +129,7 @@
             $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
             $tfid='{{ $data.lyt_id }}';
             log($tfid);
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             if($id=='')
             {
                 $("#lyt_id").empty().append( $str);
@@ -140,7 +140,7 @@
             get_ly2("{{ $data['lyt_id'] }}");
         }
         function get_ly2($id){
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
             $tfid='{{ :I("get.lytt_id") }}';
             log($tfid);

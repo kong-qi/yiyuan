@@ -26,8 +26,8 @@
                             <div class="ibox-title">
                                 <h5><a class="collapse-link">{{ :lang('基本信息','handle') }}</a></h5>
                                 <div class="ibox-tools" style="margin-top:-8px;">
-                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">保存内容</button>
-                                    <button class="btn btn-white" type="reset" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">重置</button>
+                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">{{ :lang('保存内容') }}</button>
+                                    <button class="btn btn-white" type="reset" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">{{ :lang('重置') }}</button>
                                 </div>
                             </div>
                             <div class="ibox-content">
@@ -559,7 +559,7 @@
             $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
             $tfid='{{ $data["kst_id"] }}';
             log($tfid);
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             if($id=='')
             {
                 $("#kstt_id").empty().append( $str);
@@ -570,7 +570,7 @@
             get_tks2('{{ $data["kst_id"] }}');
         }
         function get_tks2($id){
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
             $tfid='{{ :$data["kstt_id"] }}';
             log($tfid);

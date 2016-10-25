@@ -126,20 +126,20 @@
                             </tr>
 
                             <tr>
-                                <td align="right">机构照片</td>
+                                <td align="right">{{ :lang('机构照片') }}</td>
                                 <td class="enmoreinsert_file">
                                     <input type="hidden" name="thumbs" value="" size="80"
                                            class="input insert_input">
                                     <button type="button" class="btn btn-xs btn-success"
                                             onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.enmoreinsert_file','2')">
-                                    <span class="fa fa-image"></span> 上传相册</button>
+                                    <span class="fa fa-image"></span> {{ :lang('上传相册') }}</button>
                                     <div class="insert_img_more insert_img_more_en">
 
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td align="right">合作介绍</td>
+                                <td align="right">{{ :lang('合作介绍') }}</td>
                                 <td>
                                     <textarea name="content" id="" cols="80" rows="10"
                                               class="textarea form-control"></textarea>
@@ -147,7 +147,7 @@
                                 </td>
                             </tr>
                              <tr>
-                                <td align="right">机构备注</td>
+                                <td align="right">{{ :lang('机构备注') }}</td>
                                 <td>
                                     <textarea name="mark" cols="80" rows="10"
                                               class="textarea  form-control"></textarea>

@@ -127,14 +127,14 @@
                                 </tr>
 
                                 <tr>
-                                    <td align="right">机构照片</td>
+                                    <td align="right">{{ :lang('机构照片') }}</td>
                                     <td class="enmoreinsert_file">
                                         <input type="hidden" name="thumbs"
                                                value="{{ :htmlspecialchars_decode($data['thumbs']) }}" size="80"
                                                class="input insert_input">
                                         <button type="button" class="btn btn-xs btn-success"
                                                 onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array('type'=>'images')) }}','.enmoreinsert_file','2')">
-                                        <span class="fa fa-image"></span> 上传相册</button>
+                                        <span class="fa fa-image"></span> {{ :lang('上传相册') }}</button>
                                         <div class="insert_img_more insert_img_more_en">
 
                                             <?php
@@ -150,13 +150,13 @@
                                                                      src="'.pic_url($v['path']).'" alt="">
                                             <p class="m_t_10"><a href="javascript:void(0)"
                                                                  class="btn btn-white btn-xs js_left_pic"><i
-                                                    class="fa fa-angle-left"></i>上移</a>
+                                                    class="fa fa-angle-left"></i>{{ :lang('上移') }}</a>
                                                 <a href="javascript:void(0)"
                                                    class="btn btn-white btn-xs js_right_pic"><i
-                                                        class="fa fa-angle-right"></i>下移</a>
+                                                        class="fa fa-angle-right"></i>{{ :lang('下移') }}</a>
                                                 <a href="javascript:void(0)"
                                                    class="btn btn-danger btn-xs js_remove_pic"><i
-                                                        class="fa fa-trash"></i>删除</a></p></li>
+                                                        class="fa fa-trash"></i>{{ :lang('删除') }}</a></p></li>
                                             ';
                                             }
 
@@ -166,7 +166,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="right">合作介绍</td>
+                                    <td align="right">{{ :lang('合作介绍') }}</td>
                                     <td>
                                     <textarea name="content" id="" cols="80" rows="10"
                                               class="textarea form-control" >{{ $data.content }}</textarea>
@@ -174,7 +174,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="right">机构备注</td>
+                                    <td align="right">{{ :lang('机构备注') }}</td>
                                     <td>
                                     <textarea name="mark" cols="80" rows="10"
                                               class="textarea  form-control">{{ $data.mark }}</textarea>

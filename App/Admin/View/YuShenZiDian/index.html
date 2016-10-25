@@ -15,7 +15,7 @@
                     <div class="col-sm-12" style="padding:0px;">
                         <div class="ibox float-e-margins" id="shoujisf1">
                             <div class="ibox-title">
-                                <h5><a class="collapse-link">筛查选项</a></h5>
+                                <h5><a class="collapse-link">{{ :lang('筛查选项') }}</a></h5>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-down" id="shoujisf2"></i>
@@ -26,10 +26,10 @@
                                 <div class="roww">
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
-                                            <span class="input-group-addon"><font color="">所属科室</font></span>
+                                            <span class="input-group-addon"><font color="">{{ :lang('所属科室') }}</font></span>
                                             <select class="form-control" name="fid" id="register0">
 
-                                                <option value="">所有类别</option>
+                                                <option value="">{{ :lang('所有类别') }}</option>
                                                 <if condition="$subcategory">
                                                     <?php $n=0;$lb=array();$cl=array()?>
                                                     <foreach name="subcategory" item="v" key="k">
@@ -66,7 +66,7 @@
 
                                     <div class="col-sm-3">
 
-                                        <button class="btn btn-primary" type="submit">确定筛选</button>
+                                        <button class="btn btn-primary" type="submit">{{ :lang('确定筛选') }}</button>
                                     </div>
                                 </div>
                             </div>

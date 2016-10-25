@@ -119,7 +119,7 @@
                                                class="input insert_input">
                                         <button type="button" class="btn btn-xs btn-success"
                                                 onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
-                                        <span class="fa fa-image"></span> 上传相册</button>
+                                        <span class="fa fa-image"></span> {{ :lang('上传相册') }}</button>
                                         <div class="insert_img_more insert_img_more_en">
 
                                         </div>
@@ -184,7 +184,7 @@
             $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
             $tfid = '{{ $data.kst_id }}';
             log($tfid);
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             if ($id == '') {
                 $("#kstt_id").empty().append($str);
             }
@@ -194,7 +194,7 @@
             get_tks2('');
         }
         function get_tks2($id) {
-            $str = "<option value=''>无</option>";
+            $str = "<option value=''>{{ :lang('无') }}</option>";
             $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
             $tfid = '{{ $data.kstt_id }}';
             log($tfid);

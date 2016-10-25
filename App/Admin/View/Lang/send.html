@@ -13,22 +13,22 @@
                         <div class="ibox-content">
                             <div class="col-sm-4">
                                 <div class="input-group m-b">
-                                    <span class="input-group-addon"><font color="">短信模板</font></span>
+                                    <span class="input-group-addon"><font color="">{{ :lang('短信模板') }}</font></span>
                                     <select class="form-control" name="theme" id="" data-auto-value="1" data-auto-id="#content">
-                                        <option value="">选择模板</option>
+                                        <option value="">{{ :lang('选择模板') }}</option>
                                         {{ :get_sms_tpl() }}
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group m-b">
-                                    <span class="input-group-addon">姓名</span>
+                                    <span class="input-group-addon">{{ :lang('姓名') }}</span>
                                     <input name="number" value="{{ $data.name }}" type="text" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="input-group m-b">
-                                    <span class="input-group-addon">手机号</span>
+                                    <span class="input-group-addon">{{ :lang('手机号') }}</span>
                                     <input name="tel" value="{{ $data.tel }}" type="text" class="form-control" />
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                             <div class="col-sm-12" style="margin-top:5px; margin-bottom:5px;">
                                 <input type="hidden" value="send" name="action">
                                 <input type="hidden" value="" name="yyid">
-                                <button class="btn btn-primary" type="submit" name="submit1">确认发送</button>
+                                <button class="btn btn-primary" type="submit" name="submit1">{{ :lang('确认发送') }}</button>
                             </div>
                         </div>
                     </form>
