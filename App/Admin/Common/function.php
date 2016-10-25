@@ -173,7 +173,7 @@ function echo_type($str,$array){
  * @param $type
  * @return mixed
  */
-function lang($cn,$type){
+function lang($cn,$type=''){
     $chang_lang='cn';
     if(cookie('lang'))
     {

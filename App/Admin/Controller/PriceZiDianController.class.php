@@ -188,32 +188,38 @@ class PriceZiDianController extends AuthController {
             // 取得总列数
             $highestColumn = $sheet->getHighestColumn();
             //循环读取excel文件,读取一条,插入一条
-
-            //从第一行开始读取数据
-            for($j=1;$j<=$highestRow;$j++){
+            $highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);//将，A,B,D,这些转为0,1,2,3,4
+            for($j=2;$j<=$highestRow;$j++){
                 //从A列读取数据
-                for($k='A';$k<=$highestColumn;$k++){
+                for($k=0;$k<=$highestColumnIndex;$k++){
                     // 读取单元格
-                    //去掉第一行说明
-                    if($j!=1)
-                    {
-                        $data[$j][]=$objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue();
-                    }
-
+                    $strs[$k]=$objPHPExcel->getActiveSheet()->getCellByColumnAndRow($k, $j)->getValue();
                 }
+                $data[] = array(
+                 'a'=>"$strs[0]",
+                 'b'=>"$strs[1]",
+                 'c'=>"$strs[2]",
+                 'd'=>"$strs[3]",
+                 'e'=>"$strs[4]",
+                 'f'=>"$strs[5]",
+                 'g'=>"$strs[6]",
+                
+
+               
+                );
             }
             foreach ($data as $k=>$v)
             {
                 $dataList[] = array(
                     'ctime' => time(),
                     'uuid' => create_uuid(),
-                    'name' => $v[0],
-                    'ticket_name'=>$v[1],
-                    'fid' => $v[2],
-                    'price'=>$v[3],
-                    'danwei'=>$v[4],
-                    'is_update'=>$v[5],
-                    'code'=>$v[6],
+                    'name' => $v['a'],
+                    'ticket_name'=>$v['b'],
+                    'fid' => $v['c'],
+                    'price'=>$v['d'],
+                    'danwei'=>$v['e'],
+                    'is_update'=>$v['f'],
+                    'code'=>$v['g'],
                     'admin_id' => session('admin_id')
                 );
             }

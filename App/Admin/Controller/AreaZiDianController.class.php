@@ -113,27 +113,35 @@ class AreaZiDianController extends AuthController
             // 取得总列数
             $highestColumn = $sheet->getHighestColumn();
             //循环读取excel文件,读取一条,插入一条
+            //循环读取excel文件,读取一条,插入一条
+             $highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);//将，A,B,D,这些转为0,1,2,3,4
 
             //从第一行开始读取数据
-            for($j=1;$j<=$highestRow;$j++){
+            for($j=2;$j<=$highestRow;$j++){
                 //从A列读取数据
-                for($k='A';$k<=$highestColumn;$k++){
+                for($k=0;$k<=$highestColumnIndex;$k++){
                     // 读取单元格
-                    if($j!=1)
-                    {
-                        $data[$j][]=$objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue();
-                    }
+                   
+                    
+                        $strs[$k]=$objPHPExcel->getActiveSheet()->getCellByColumnAndRow($k, $j)->getValue();
+                    
 
                 }
+                $data[] = array(
+                 'a'=>"$strs[0]",
+                 'b'=>"$strs[1]",
+               
+                );
             }
+            
             foreach ($data as $k=>$v)
             {
                 $dataList[] = array(
                     'ctime' => time(),
                     'uuid' => create_uuid(),
-                    'name' => $v[1],
+                    'name' => $v['b'],
                     'type' => 'area',
-                    'fid' => $v[0],
+                    'fid' => $v['a'],
                     'admin_id' => session('admin_id')
                 );
             }

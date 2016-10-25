@@ -377,35 +377,41 @@ class AdminController extends AuthController {
             // 取得总列数
             $highestColumn = $sheet->getHighestColumn();
             //循环读取excel文件,读取一条,插入一条
-
+             $highestColumnIndex = \PHPExcel_Cell::columnIndexFromString($highestColumn);//将，A,B,D,这些转为0,1,2,3,4
             //从第一行开始读取数据
-            for($j=1;$j<=$highestRow;$j++){
+            for($j=2;$j<=$highestRow;$j++){
                 //从A列读取数据
-                for($k='A';$k<=$highestColumn;$k++){
+                for($k=0;$k<=$highestColumnIndex;$k++){
                     // 读取单元格
-                    if($j!=1)
-                    {
-                        $data[$j][]=$objPHPExcel->getActiveSheet()->getCell("$k$j")->getValue();
-                    }
+                   
+                    
+                        $strs[$k]=$objPHPExcel->getActiveSheet()->getCellByColumnAndRow($k, $j)->getValue();
+                    
 
                 }
+                $data[] = array(
+                 'a'=>"$strs[0]",
+                 'b'=>"$strs[1]",
+                 'c'=>"$strs[2]",
+                 'd'=>"$strs[3]",
+                );
             }
-
+            
             foreach ($data as $k=>$v)
             {
                 $dataList[] = array(
                     'ctime' => time(),
                     'uuid' => create_uuid(),
-                    'name' => $v[0],
-                    'realname'=>$v[1],
-                    'pwd' => sha1($v[2]),
-                    'groupid' => $v[3],
+                    'name' => $v['a'],
+                    'realname'=>$v['b'],
+                    'pwd' => sha1($v['c']),
+                    'groupid' => $v['d'],
                     'uniqid'=>create_uniqid(),
                     'checked'=>1
                 );
             }
+            
            
-
             $model = D('Admin');
             $result = $model->addAll($dataList);
             if ($result) {
@@ -421,4 +427,5 @@ class AdminController extends AuthController {
         }
         $this->display();
     }
+   
 }
