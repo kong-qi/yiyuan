@@ -134,7 +134,7 @@
                                             <span class="input-group-addon">{{ :lang('意向评定','handle') }}</span>
 
                                                 <select class="form-control" name="yx_id" id="yx_id">
-                                                    <option value="">全部</option>
+                                                    <option value="">{{ :lang('全部','handle') }}</option>
                                                     {{ :get_lanmu_onelist('yuyuezl',1,'','',I('get.yx_id')) }}
                                                 </select>
 
@@ -146,7 +146,7 @@
 
 
                                             <select class="form-control" name="zx_id" id="zx_id">
-                                                <option value="">全部</option>
+                                                <option value="">{{ :lang('全部','handle') }}</option>
                                                 {{ :get_lanmu_onelist('zixun',1,'','',I('get.zx_id')) }}
                                             </select>
 
@@ -159,7 +159,7 @@
 
 
                                             <select class="form-control" name="status" >
-                                                <option value="">全部</option>
+                                                <option value="">{{ :lang('全部','handle') }}</option>
                                                 <if condition="$status">
                                                     <foreach name="status" item="lv" key="lkey">
                                                         <option value="{{ $lkey }}" {{ :$lkey==I('get.status')?"selected='selected'":'' }}>{{ $lv }}</option>
