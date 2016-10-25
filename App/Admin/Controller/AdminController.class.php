@@ -63,7 +63,7 @@ class AdminController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location.reload();parent.layer.close(index);</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
                 }else{
 
