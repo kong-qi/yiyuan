@@ -9,7 +9,21 @@
 <block name="right">
     <div class="right-box">
         <div class="box">
-            
+            <form action='' method="get" id="contact-form">
+                <div class="col-sm-3">
+                    <div class="input-group m-b">
+                        <span class="input-group-addon"><font color="">{{ :lang('关键词','handle') }}</font></span>
+                        <input name="keyword" type="text" value="{{ :I('get.keyword') }}"
+                               placeholder="{{ :lang('名字') }}" class="form-control">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                   
+                    <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
+                    <!-- <a href="{{ :U('Admin/YuYue/index',$_SERVER['QUERY_STRING']) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}{{ $_SERVER['QUERY_STRING'] }}</a> -->
+
+                </div>
+            </form>
         </div>
 
         <div class="box">

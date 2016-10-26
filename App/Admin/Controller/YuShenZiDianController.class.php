@@ -48,7 +48,7 @@ class YuShenZiDianController extends AuthController {
             $model=D('KeShi');
 
             $name=I('post.name');
-            $fid=I('post.fid');
+           
             if($name=='')
             {
                 $msg=lang('名字不能为空','handle');
@@ -64,7 +64,7 @@ class YuShenZiDianController extends AuthController {
                     'uuid'=>create_uuid(),
                     'name'=>$v,
                     'type'=>'yushen',
-                    'fid'=>$fid,
+                
                     'admin_id'=>session('admin_id')
                 );
             }

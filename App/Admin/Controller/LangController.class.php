@@ -11,10 +11,10 @@ class LangController extends AuthController {
         $this->check_group($this->rule_qz);
         $model=M('Lang');
         $map=array();
-        if(IS_GET)
+        $key=trim(I('get.keyword'));
+        if($key!='')
         {
-            $map=I('get.');
-
+            $map['_string']=" name like '%".$key."%' or ename like '%".$key."%'" ;
         }
         
 
