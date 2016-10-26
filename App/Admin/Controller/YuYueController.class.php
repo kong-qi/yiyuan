@@ -9,7 +9,7 @@ class YuYueController extends AuthController
     public function index($shenfeng = 'zixun')
     {
 
-        //print_r(session('group'));
+        print_r(session('group'));
         $this->check_group($this->rule_qz."_show");
         $map = array();
         $is_website = 0;
@@ -46,7 +46,15 @@ class YuYueController extends AuthController
                     break;
                 case 'yishen':
                     $is_yishen = 1;
-                    $map['y1.ys_id'] = session('admin_id');
+                    if(!check_group('root'))
+                    {
+                        if(check_group('kaidan_only'))
+                        {
+                            $map['y1.ys_id'] = session('admin_id');
+                        }
+                    }
+                    
+                    
                     break;
                 case 'all':
 
