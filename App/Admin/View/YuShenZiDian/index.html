@@ -32,7 +32,7 @@
                             <th width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
                             <th class="hidden-xs">{{ :lang('编号','filed') }}</th>
                             <th>{{ :lang('名称','filed') }}</th>
-                            <th>{{ :lang('所属','filed') }}</th>
+                            
                             <th >{{ :lang('状态','filed') }}</th>
                             <th >{{ :lang('操作','handle') }}</th>
                         </tr>
@@ -47,10 +47,7 @@
                                     </td>
                                     <td class="hidden-xs">{{ $v.id }}</td>
                                     <td data-log="1">{{ $v.name }}</td>
-                                    <td>
-
-                                        <lable class="badge badge-{{ :$lb[$v['fid']] }}">{{ :$cl[$v['fid']] }}</lable>
-                                    </td>
+                                    
                                     <td >
                                         <if condition="check_group($rule_qz)">
                                             <if condition="$v['checked']">
@@ -111,18 +108,18 @@
                 </div>
                 <div class="box">
                     <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
-                       data-model="LanMu"
+                       data-model="KeShi"
                        data-handle="del" data-handle-check="1" data-handle-value=""><span class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
                     <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                       data-model="LanMu"
+                       data-model="KeShi"
                        data-handle="sort" data-handle-check="1" data-handle-value="0"><span
                             class="fa fa-arrows-v"></span> {{ :lang('排序','handle') }}</a>
                     <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                       data-model="LanMu"
+                       data-model="KeShi"
                        data-handle="checked" data-handle-check="1" data-handle-value="1"><span
                             class="fa fa-check"></span> {{ :lang('启用','handle') }}</a>
                     <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                       data-model="LanMu"
+                       data-model="KeShi"
                        data-handle="checked" data-handle-check="1" data-handle-value="0"><span
                             class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
                 </div>
