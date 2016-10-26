@@ -5,7 +5,7 @@ return array(
     'WEB_ROOT'=>str_replace("\\","/",dirname(str_replace("Common\\Conf","",dirname(__FILE__))))."/",
     'TMPL_TEMPLATE_SUFFIX'  =>  '.html',
     'SITE_NAME'=>'网站管理系统',
-    'URL_MODEL'=>0,
+    'URL_MODEL'=>2,
     'UPLOAD'=>WEB_ROOT."/upload",
     'UPLOAD_URL'=>"/upload",
     'FILE_PAGES'=>'20',
@@ -19,7 +19,7 @@ return array(
     ),
 
     'URL_CASE_INSENSITIVE' =>true,
-    'SHOW_PAGE_TRACE' =>1,
+    'SHOW_PAGE_TRACE' =>0,
     'LOAD_EXT_CONFIG' => 'db',
     'MODULE_ALLOW_LIST' => array('Admin'),//去掉Home
     'TMPL_L_DELIM'          =>  '{{ ',            // 模板引擎普通标签开始标记
