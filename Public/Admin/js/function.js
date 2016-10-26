@@ -47,8 +47,8 @@ $(function() {
     //删除
     $(document).on('click', '.js_remove_pic', function(event) {
         var onthis = $(this).parents(".itempic");
-        layer.confirm('你确定要取消删除吗？', {
-            btn: ['删除', '取消'] //按钮
+        layer.confirm(lang.del_msg+'？', {
+            btn: [lang.del, lang.cancel] //按钮
         }, function(index) {
 
             onthis.remove();
@@ -61,8 +61,8 @@ $(function() {
     });
     $(document).on('click', '.js_file_remove', function(event) {
         var onthis = $(this).parents(".js_file_id");
-        layer.confirm('你确定要取消删除吗？', {
-            btn: ['删除', '取消'] //按钮
+        layer.confirm(lang.del_msg+'？', {
+            btn: [lang.del, lang.cancel] //按钮
         }, function(index) {
 
             onthis.empty();
@@ -126,7 +126,7 @@ function select_all() {
 function del_confirm() {
     $(document).on("click", "[date-del='1']", function(event) {
 
-        $str = '确定删除吗？';
+        $str = lang.del_msg+'？';
         if (confirm($str)) {
             return true
         }
@@ -208,11 +208,11 @@ function upload_file($url, $inserid, $more, $style, $type) {
     console.log($style);
     var ly = layer.open({
         type: 2,
-        title: '上传文件',
+        title: lang.upfile,
         //shadeClose: true,
         shade: 0.8,
         closeBtn: 1,
-        btn: ['确定', '取消'],
+        btn: [lang.ok, lang.cancel],
         area: ['50%', '80%'],
         content: $url, //iframe的url
 
@@ -224,15 +224,15 @@ function upload_file($url, $inserid, $more, $style, $type) {
                 if ($pic_more != '1') {
                     $htmlstr = '';
                     if (list_pic.size() == 0) {
-                        alert('请选择图片');
+                        alert(lang.changpic);
                     } else {
                         list_pic.each(function(index, el) {
                             imgpic = $(this).find('img').attr('src');
                             imgsrc = $(this).find('img').attr('data-src');
                             $htmlstr += '<li class="itempic"> <img  data-url="' + imgsrc + '" src="' + imgpic + '" alt="" width="220"> ' + $more_input +
-                                '<p class="m_t_10"> <a href="javascript:void(0)" class="btn btn-white btn-xs js_left_pic"><i class="fa fa-angle-left"></i>上移</a> ' +
-                                '<a href="javascript:void(0)" class="btn btn-white btn-xs js_right_pic"><i class="fa fa-angle-right"></i>下移</a> ' +
-                                '<a href="javascript:void(0)" class="btn btn-danger btn-xs js_remove_pic"><i class="fa fa-trash"></i>删除</a> </p> </li>';
+                                '<p class="m_t_10"> <a href="javascript:void(0)" class="btn btn-white btn-xs js_left_pic"><i class="fa fa-angle-left"></i>'+lang.upmove+'</a> ' +
+                                '<a href="javascript:void(0)" class="btn btn-white btn-xs js_right_pic"><i class="fa fa-angle-right"></i>'+lang.downmove+'</a> ' +
+                                '<a href="javascript:void(0)" class="btn btn-danger btn-xs js_remove_pic"><i class="fa fa-trash"></i>'+lang.del+'</a> </p> </li>';
                         });
                         $($inserid).find(".insert_img_more").append($htmlstr);
                         //console.log($htmlstr);
@@ -244,7 +244,7 @@ function upload_file($url, $inserid, $more, $style, $type) {
 
                     if (list_pic.size() > 0) {
                         if (list_pic.size() != 1) {
-                            alert('只能选择一张');
+                            alert(lang.piconly);
                             return false;
                         } else {
                             imghtml = list_pic.find('img').attr('src');
@@ -258,7 +258,7 @@ function upload_file($url, $inserid, $more, $style, $type) {
                         }
 
                     } else {
-                        alert('请点击选择，没有选择');
+                        alert(lang.nochange);
                     }
                 }
             }
@@ -571,7 +571,7 @@ function get_age(str) {
         var Y = new Date().getFullYear();
         return (Y - r[1]);
     }
-    return ("输入的日期格式错误！");
+    return (lang.dateerror);
 }
 //根据年龄算出出生年月
 function get_age_date(year) {
@@ -624,8 +624,8 @@ $("[data-show-phone='1']").on('click',  function(event) {
     vid=$(this).attr('data-vid');
     type=$(this).attr('data-type');
     url=$(this).attr('data-url');
-    layer.confirm('确定查看手机号码？', {
-      btn: ['确定','取消'] //按钮
+    layer.confirm(lang.showphone+'？', {
+      btn: [lang.ok,lang.cancel] //按钮
     }, function(){
         
         $.get(url, {uid: uid}, function(data, textStatus, xhr) {
@@ -639,12 +639,12 @@ $("[data-show-phone='1']").on('click',  function(event) {
                 {
                     $(vid).test(data.phone)
                 }
-                 layer.msg('查看成功', {icon: 1});
+                 layer.msg(lang.showok, {icon: 1});
                  $("[data-show-phone='1']").unbind('click');
                 
             }else
             {
-                layer.msg('该用户没有手机号码');
+                layer.msg(lang.nophone);
             }   
         });
     }, function(){

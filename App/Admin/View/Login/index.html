@@ -22,20 +22,20 @@
 
                     <select name="lang" id=""  class="form-control">
                         
-                        <option value="vn">越南语/tiếng Việt</option>
-                        <option value="cn">中文/Trung Quốc</option>
+                        <option value="vn">tiếng Việt/越南语</option>
+                        <option value="cn">Trung Quốc/中文</option>
                     </select>
                 </div>
                 <if condition="C('CHECK_YZM')">
                     <div class="form-group" id="captcha-container">
-                        <input type="text" class="form-control" placeholder="验证码/Codes" id="code" name="yzm"
+                        <input type="text" class="form-control" placeholder="Codes/验证码" id="code" name="yzm"
                                style="display:inline-block;width:195px;" required="required">
-                        <img src="{{ :U('Admin/Code/index') }}" alt="验证码/Codes" title="点击刷新/Bấm Refresh"
+                        <img src="{{ :U('Admin/Code/index') }}" alt="Codes/验证码" title="Bấm Refresh/点击刷新"
                              style="width:100px; height:35px;">
                     </div>
                 </if>
-                <button name="dl" type="submit" class="btn btn-danger block full-width m-b">登 录/
-                    đăng nhập</button>
+                <button name="dl" type="submit" class="btn btn-danger block full-width m-b">
+                    đăng nhập/登 录</button>
             </form>
             <!--<button name="dl" type="submit" class="btn btn-warning block full-width m-b"><i class="icon icon-qq"></i> QQ快速登录</button>-->
         </div>
@@ -44,7 +44,7 @@
     <script language="javascript">
         var captcha_img = $('#captcha-container').find('img')
         var verifyimg = captcha_img.attr("src");
-        captcha_img.attr('title', '点击刷新');
+        captcha_img.attr('title', '{{ :lang("点击刷新") }}');
         captcha_img.click(function () {
             if (verifyimg.indexOf('?') > 0) {
                 $(this).attr("src", verifyimg + '&random=' + Math.random());
