@@ -5,7 +5,7 @@ return array(
     'WEB_ROOT'=>str_replace("\\","/",dirname(str_replace("Common\\Conf","",dirname(__FILE__))))."/",
     'TMPL_TEMPLATE_SUFFIX'  =>  '.html',
     'SITE_NAME'=>'网站管理系统',
-    'URL_MODEL'=>2,
+    'URL_MODEL'=>0,
     'UPLOAD'=>WEB_ROOT."/upload",
     'UPLOAD_URL'=>"/upload",
     'FILE_PAGES'=>'20',
