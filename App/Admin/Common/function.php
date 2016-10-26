@@ -329,6 +329,34 @@ function get_keshi($id=0,$echo=1,$checkid=''){
     }
     return $rule;
 }
+/*
+
+ */
+function get_shyishen($checkid='',$echo=1){
+    $rule=M('KeShi')->where(array('checked'=>1,'type'=>'yushen'))->select();
+    $str='';
+    $check='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checkid==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option ". $check." value='".$v['id']."'>".$v['name']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
 
 /**
  * 取得单个栏目信息
@@ -556,6 +584,7 @@ function get_doc($where=array(),$echo=1,$checked=''){
     }
     return $m;
 }
+
 //竞价使用
 function get_wangixao_where($where,$echo=1,$sid='',$checked=''){
     $check='';
@@ -892,6 +921,19 @@ function yuyue_status($checked=''){
         '3'=>lang('已接诊'),
         '4'=>lang('已改期'),
         '5'=>lang('逾期未到')
+    );
+    if($checked!='')
+    {
+        return $arr[$checked];
+    }
+    return $arr;
+}
+function btn_yycolor($checked=''){
+     $arr=array(
+        '1'=>'badge badge-grey',
+        '2'=>'badge badge-info',
+        '3'=>'badge  badge-green',
+
     );
     if($checked!='')
     {

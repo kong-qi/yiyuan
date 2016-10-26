@@ -75,16 +75,11 @@
                                 <tr>
                                     <td align="right">{{ :lang('手术医生') }}</td>
                                     <td align="right">
-
-                                        <div class="col-xs-3">
-                                            <select class="form-control" required="required" id="ks2_id" name="jzks_id">
-                                                <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                                {{ :get_keshi('0','1',$data['ks_id'] ) }}
-                                            </select>
-                                        </div>
+                                
                                         <div class="col-xs-3">
                                             <select class="form-control" required="required" id="ysz_id" name="ysz_id">
                                                 <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                                {{ :get_shyishen() }}
                                             </select>
                                         </div>
                                     </td>
@@ -236,7 +231,7 @@
                 }
             });
 
-            $("#ks2_id").change(function () {
+            /*$("#ks2_id").change(function () {
                 $url = "{{ :U('Admin/Ajax/getYuShen') }}";
                 $next_id = "ysz_id";
                 $id = $(this).val();
@@ -265,7 +260,7 @@
 
                     }
                 });
-            }).trigger('change');
+            }).trigger('change');*/
         });
 
     </script>

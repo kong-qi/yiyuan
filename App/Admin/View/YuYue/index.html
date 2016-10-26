@@ -183,7 +183,7 @@
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">{{ :lang('关键词','handle') }}</font></span>
                                             <input name="keyword" type="text" value="{{ :I('get.keyword') }}"
-                                                   placeholder="姓名/手机/预约号" class="form-control">
+                                                   placeholder="{{ :lang('姓名/手机/预约号') }}" class="form-control">
                                         </div>
                                     </div>
 
@@ -352,14 +352,10 @@
 
 
                                     <td class="td-status">
-                                        <select name="" id="js-chenage" disabled>
-
-                                            <if condition="$status">
-                                                <foreach name="status" item="lv" key="lkey">
-                                                    <option value="{{ $lkey }}" {{ :$lkey==$v['ystatus']?"selected='selected'":'' }}>{{ $lv }}</option>
-                                                </foreach>
-                                            </if>
-                                        </select>
+                                        <span class="{{ :btn_yycolor($v['ystatus']) }}">
+                                        {{ :lang(yuyue_status($v['ystatus'])) }}
+                                        </span>
+                                       
 
                                     </td>
                                     <td class="td-handle">

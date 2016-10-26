@@ -10,7 +10,7 @@ class YuYueController extends AuthController
     {
 
         //print_r(session('group'));
-        $this->check_group($this->rule_qz . "_show");
+        $this->check_group($this->rule_qz."_show");
         $map = array();
         $is_website = 0;
         $is_huifang = 0;

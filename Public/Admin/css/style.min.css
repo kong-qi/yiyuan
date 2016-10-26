@@ -5973,3 +5973,16 @@ body.fixed-sidebar.mini-navbar .navbar-static-side {
 .icon-remove-sign:before {
     content: "\f00d";
 }
+
+.badge-green
+{
+	    background-color: #5cb85c;
+}
+.badge-blue
+{
+	background-color: #428bca;
+}
+.badge-grey
+{
+	    background-color: #777;
+}

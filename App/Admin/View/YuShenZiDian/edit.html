@@ -13,28 +13,6 @@
                         <span class="input-group-addon">{{ :lang('名称','filed') }}</span>
                         <input class="form-control" name="name" type="text" value="{{ $data.name }}" required  />
                     </div>
-                    <div class="input-group m-b" style="margin-bottom:5px;">
-                        <span class="input-group-addon">{{ :lang('所属科室','filed') }}</span>
-                        <select name="fid" class="form-control" required>
-
-
-                            <if condition="$rule">
-
-
-                                <foreach name="rule" item="lv_v" key="k">
-                                    <?php
-						      					    $space=str_repeat("&nbsp;", $lv_v['depth'] * 4);
-						      			            ?>
-                                    <option {{ :($data['fid']==$lv_v['id']?"selected='selected'":"") }}  {{ :($lv_v['last']==1?'disabled':'') }} {{ :($lv_v['id']==$data['id']?'disabled':'') }} value="{{ $lv_v['id'] }}">{{ $space }}|-{{ $lv_v['name']
-                                    }}
-                                    </option>
-                                    ;
-                                </foreach>
-                            </if>
-                        </select>
-                    </div>
-
-
 
                     <div class="form-group" align="center" style="margin-bottom:5px;">
                         <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('确定','handle') }}</button>
