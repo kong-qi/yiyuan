@@ -5,7 +5,7 @@ class SmsController extends AuthController {
     protected $rule_qz='sms';
 
 
-    public function index1(){
+    public function index(){
         //权限选择
 
         $this->check_group($this->rule_qz);
@@ -172,7 +172,5 @@ class SmsController extends AuthController {
         
         $this->display();
     }
-    public function index(){
-        file_put_contents("E:/website/ertongjie/hello.txt", time());
-    }
+   
 }
