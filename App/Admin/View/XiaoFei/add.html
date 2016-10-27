@@ -30,7 +30,7 @@
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('消费额','filed') }}</span>
-                            <input class="form-control" required min="0" name="prices" value="" type="text"/>
+                            <input class="form-control" required min="0" name="prices" data-price="vn" value="" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('消费日期','filed') }}</span>
@@ -52,6 +52,7 @@
 </block>
 <block name="add_foot_js">
     <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script src="__JS__/accounting.min.js"></script>
     <script>
         var shengri = {
             elem: '#shengri',
@@ -80,6 +81,19 @@
         $().ready(function () {
             $("#validate").validate();
         });
+        var options = {
+            symbol : "vn",
+            decimal : ".",
+            thousand: ",",
+            precision : 2,
+            format: "%s%v"
+        };
 
+        $('[data-price="vn"]').on(" keydown",function(){
+            $v=$(this).val();
+            $fv=accounting.formatMoney($v, options);
+            console.log($fv);
+            $(this).val($fv);
+        })
     </script>
 </block>
