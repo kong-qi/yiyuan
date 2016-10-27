@@ -24,5 +24,12 @@ class YuYueModel extends RelationModel {
 
 
             ),
+        'Bing'=>array(
+            'mapping_type'      => self::BELONGS_TO,
+            'class_name'        => 'KeShi',
+            'foreign_key'=>'kstt_id',
+
+
+            ),
         );
 }

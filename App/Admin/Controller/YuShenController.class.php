@@ -136,6 +136,48 @@ class YuShenController extends AuthController {
             }
         }
     }
+    public function beijin(){
+        if(IS_POST)
+        {
+             
+             $model=D('JieZhen');
+
+             if($data=$model->create())
+             {
+               
+               
+                $result =    $model->save($data);
+                
+
+                if($result ) {
+
+                  
+                  
+                    $msg=lang('更新背景成功','handle');
+
+                    add_log($this->onname.'：'.$data['name'].'更新背景成功');
+
+                    return $this->success($msg );
+                    // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }else{
+                   
+                    add_log($this->onname.'：'.$data['name'].'照片一样，无需更新');
+                    $msg=lang('照片一样，无需更新','handle');
+                    return $this->success($msg);
+                    //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }
+            }
+        }else
+        {
+            $m=D('JieZhen')->relation(true)->find($id);
+        
+            $this->data=$m;
+           
+            
+            $this->display();
+        }
+    }
     public function index(){
         //权限选择
         $this->check_group($this->rule_qz);
@@ -427,6 +469,7 @@ class YuShenController extends AuthController {
             kd.is_yf as is_yf,
             kd.id as id,
             kd_id as kd_id,
+            kd.jz_id as jz_id,
             kd.uuid as uuid,
             kd.kd_time as kd_time,
             kd.sf_status,
@@ -528,6 +571,28 @@ class YuShenController extends AuthController {
             
             $this->display();
         }
+    }
+    public function kaidanPrint($id){
+        $m=M('JieZhen');
+        $filed='
+            jz.jztime as jztime,
+            u1.name as user_name,
+            u1.age as age,
+            jz.jz_content as jz_content,
+            a1.name as jz_name,
+            y1.mark as mark
+
+        ';
+        $map=array(
+            'jz.id'=>$id
+            );
+        $join[] = 'LEFT JOIN __YU_YUE__ y1 ON jz.yy_id = y1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ a1 ON jz.ys_id = a1.id';
+        $join[] = 'LEFT JOIN __USER__ u1 ON jz.user_id = u1.id';
+        $data=$m->alias('jz')->field($filed)->where($map)->join($join)->find();
+        //print_r($data);
+        $this->data=$data;
+        $this->display();
     }
     public function kaidanDel(){
         //权限选择

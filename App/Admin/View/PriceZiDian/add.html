@@ -21,8 +21,8 @@
                             <input class="form-control" name="ticket_name" type="text" value="" required placeholder="">
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
-                            <span class="input-group-addon">{{ :lang('单价','filed') }}</span>
-                            <input class="form-control" name="price" type="text" value="" required min="0" placeholder="">
+                            <span class="input-group-addon" >{{ :lang('单价','filed') }}</span>
+                            <input class="form-control" data-price="vn" name="price" type="text" value="" required  placeholder="">
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('单位','filed') }}</span>
@@ -76,7 +76,20 @@
 
         });
         $().ready(function () {
-            $("#validate").validate();
+            $("#validate").validate(
+                {
+                    submitHandler: function (form) {
+                        if(!submonery())
+                        {
+                        
+                            layer.msg('{{ :lang("请检查金额") }}');
+                            return false;
+                        }
+                        
+                        //return false;
+                        form.submit();
+                    }
+            });
         });
         $("#fid").change(function () {
            $id=$(this).val();

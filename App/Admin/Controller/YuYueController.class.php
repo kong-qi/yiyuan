@@ -194,7 +194,13 @@ class YuYueController extends AuthController
             y1.mark as mark,
             y1.jztime as jztime,
             y1.dztime as dztime,
-            u1.name as user_name,u1.sex,u1.uuid as user_uuid,u1.id as user_id,
+
+            u1.name as user_name,
+            u1.age as age,
+            u1.sex,
+            u1.uuid as user_uuid,
+            u1.id as user_id,
+
             
             a1.name as admin_name,
             k1.name as ks_name,
@@ -205,7 +211,11 @@ class YuYueController extends AuthController
             wz.name as web_name,
             ae1.name as ae_name,
             ae2.name as ae2_name,
-            ys.realname as ys_name
+            ys.realname as ys_name,
+
+    
+            jz.jz_smcontent as jz_smcontent,
+            ssys.name as ysz_name
         ';
         //管理会员用户
         $join[] = '__USER__ u1 ON y1.user_id = u1.id';
@@ -233,6 +243,12 @@ class YuYueController extends AuthController
         $join[] = 'LEFT JOIN __AREA__ ae1 ON y1.area_id = ae1.id';
         //意向
         $join[] = 'LEFT JOIN __AREA__ ae2 ON y1.areat_id = ae2.id';
+        //接诊
+        $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON y1.id = jz.yy_id';
+        //手术医生
+        $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = y1.ysz_id';
+       
+      
 
 
         $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
@@ -250,22 +266,16 @@ class YuYueController extends AuthController
         //print_r($list);
         $this->assign('list', $list);// 赋值数据集
 
-
-        $menu_list = array(
-
-            'td-yuyue' => array('name' => lang('预约号'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-name' => array('name' => lang('姓名'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-sex' => array('name' => lang('性别'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-ytime' => array('name' => lang('预约时间'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-djtime' => array('name' => lang('登记时间'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-ks' => array('name' => lang('预约科室'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-bz' => array('name' => lang('预约病种'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-ly' => array('name' => lang('预约来源'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-ys_name' => array('name' => ''),
-            'td-status' => array('name' => lang('预约状态'), 'w' => '', 'h' => '', 'is_hide' => ''),
-            'td-handle' => array('name' => lang('操作'), 'w' => '', 'h' => '', 'is_hide' => '')
-
-        );
+        $type_arr='defalut';
+        $staus=I('get.status');
+        $tpl='';
+        if($shenfeng=='yishen' && $staus==3)
+        {
+            $type_arr="yishen_s3";
+            $tpl='yishen_s3';
+        }
+        $menu_list = $this->getFiledArray($type_arr);
+        //print_r($menu_list);
         if ($is_qiantai) {
             $menu_list['td-ys_name'] = array('name' => lang('接诊医生'), 'w' => '', 'h' => '', 'is_hide' => '');
         }
@@ -280,8 +290,56 @@ class YuYueController extends AuthController
         //print_r($show_rule);
         $this->assign($show_rule);
         $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
-        $this->display();
 
+        if($tpl!='')
+        {
+             $this->display('YuYue:tpl:'.$tpl);
+        }else
+        {
+            $this->display();
+        }
+        
+
+    }
+    public function getFiledArray($type){
+        switch ($type) {
+            case 'yishen_s3':
+                    $menu_list = array(
+
+                        'td-yuyue' => array('name' => lang('预约号'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-name' => array('name' => lang('姓名'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-sex' => array('name' => lang('性别'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-ytime' => array('name' => lang('年龄'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-djtime' => array('name' => lang('接诊时间'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-ks' => array('name' => lang('接诊小结'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-bz' => array('name' => lang('接诊医生'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-ly' => array('name' => lang('手术医生'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                       
+                        'td-status' => array('name' => lang('预约状态'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-handle' => array('name' => lang('操作'), 'w' => '', 'h' => '', 'is_hide' => '')
+
+                    );
+                break;
+            
+            default:
+                $menu_list = array(
+
+                    'td-yuyue' => array('name' => lang('预约号'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-name' => array('name' => lang('姓名'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-sex' => array('name' => lang('性别'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-ytime' => array('name' => lang('预约时间'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-djtime' => array('name' => lang('登记时间'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-ks' => array('name' => lang('预约科室'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-bz' => array('name' => lang('预约病种'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-ly' => array('name' => lang('预约来源'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                   
+                    'td-status' => array('name' => lang('预约状态'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-handle' => array('name' => lang('操作'), 'w' => '', 'h' => '', 'is_hide' => '')
+
+                );
+                break;
+        }
+        return $menu_list;
     }
 
     public function getDetail()

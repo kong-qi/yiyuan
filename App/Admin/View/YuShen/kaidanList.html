@@ -104,10 +104,10 @@
                                                         <foreach name="show" item="sv" key="sk">
                                                          <tr>
                                                             <td><a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a> </td>
-                                                            <td>{{ :urldecode($sv['price']) }}</td>
+                                                            <td data-price="vnlist">{{ :urldecode($sv['price']) }}</td>
                                                             <td>{{ :urldecode($sv['danwei']) }}</td>
                                                             <td>{{ :urldecode($sv['num']) }}</td>
-                                                            <td>{{ :urldecode($sv['total']) }}</td>
+                                                            <td data-price="vnlist">{{ :urldecode($sv['total']) }}</td>
                                                         </tr>
                                                         </foreach>
                                                     </if>
@@ -118,7 +118,7 @@
                                        
                                     </td>
 
-                                    <td id="tdd9" >{{ $v.price_total }}</td>
+                                    <td id="tdd9" data-price="vnlist">{{ $v.price_total }}</td>
                                     <td id="tdd10" >
                                         {{ $v.sy_name }}
                                     </td>
@@ -126,12 +126,12 @@
                                         {{ $v.kd_name }}
                                     </td>
                                     <td id="tdd12" >
-                                        <span class="{{ :btn_color($v['sf_status']) }}">{{ :sf_status($v['sf_status']) }}</span>
+                                        <span class="{{ :btn_color($v['sf_status']) }}" >{{ :sf_status($v['sf_status']) }}</span>
                                         
                                     </td>
                                     <td id="tdd13" >
                                         <php>
-                                            if($v[sf_status]==0)
+                                            if($v['sf_status']==0)
                                             {
                                         </php>
                                             <if condition="check_group('kaidan_edit')">
@@ -144,6 +144,8 @@
                                                     <span class="fa fa-trash "></span>
                                                     {{ :lang('删除') }}</a>
                                             </if>
+                                        <php>}elseif($v['sf_status']==1){</php>
+                                            <a href="{{ :U('Admin/YuShen/kaidanPrint',array('id'=>$v['jz_id'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('打印') }}</a>
                                         <php>}</php>
 
                                     </td>

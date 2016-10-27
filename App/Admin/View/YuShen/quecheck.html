@@ -77,38 +77,30 @@
                                     <td align="right">
                                 
                                         <div class="col-xs-3">
-                                            <select class="form-control" required="required" id="ysz_id" name="ysz_id">
+                                            <select class="form-control" id="ysz_id" name="ysz_id">
                                                 <option value="">{{ :lang('请选择医生','handle') }}</option>
                                                 {{ :get_shyishen() }}
                                             </select>
                                         </div>
+                                        <div class="col-xs-6">
+                                            <p style="margin-top: 10px;float: left; margin-right: 10px;">{{ :lang('病人质量评定','handle') }}</p> 
+                                        
+                                            <select class="form-control" name="zl_id" required style="width:200px;float: left;">
+                                                <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
+                                                {{ :get_lanmu_onelist('daozhen','1','','',$data['dz_id']) }}
+                                            </select>
+                                        </div>
                                     </td>
                                 </tr>
-                                <!-- <tr>
-                                    <td align="right">{{ :lang('消费状态') }}</td>
-                                    <td align="right">
-                                       <php>$sfstatus=sf_status()</php>
-                                        <select class="form-control" name="sf_status" >
-                                            <if condition="$sfstatus">
-                                                <foreach name="sfstatus" item="v" key="k">
-                                                    <option value="{{ $k }}">{{ $v }}</option>
-                                                </foreach>
-                                            </if>
-
-                                        </select>
-                                    </td>
-                                </tr>-->
+                               
                                 <tr>
                                     <td align="right">{{ :lang('病人质量评定','handle') }}</td>
                                     <td align="right">
-                                        <select class="form-control" name="zl_id" required>
-                                            <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
-                                            {{ :get_lanmu_onelist('daozhen','1','','',$data['dz_id']) }}
-                                        </select>
+                                        
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="right">{{ :lang('病人术前术后照片') }}</td>
+                                    <td align="right">{{ :lang('照片') }}</td>
                                     <td class="enmoreinsert_file">
                                         <input type="hidden" name="thumbs" value="" size="80"
                                                class="input insert_input">
@@ -121,6 +113,18 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td align="right">{{ :lang('咨询小结') }}</td>
+                                    <td>
+                                      
+                                             <input type="text" name="jz_smcontent" class="form-control"  value="{{ $data.Bing.name }}">
+
+                                           
+                                        
+
+                                    </td>
+                                </tr>
+
+                                <tr>
                                     <td align="right">{{ :lang('咨询总结') }}</td>
                                     <td>
                                         <div class="input-group m-b" style="margin-bottom:5px;">
@@ -131,6 +135,7 @@
 
                                     </td>
                                 </tr>
+                              
 
 
                                 </tbody>
@@ -175,6 +180,7 @@
 
     <script>
         bd_ueditor('mark',120);
+        
         function get_tks($id) {
             $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
             $tfid = '{{ $data.kst_id }}';

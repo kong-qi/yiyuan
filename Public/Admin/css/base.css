@@ -768,3 +768,47 @@ fieldset[disabled] .btn-green.active {
   background-color: #5cb85c;
   border-color: #4cae4c;
 }
+.money {
+  font-size: 16px;
+  color: #EE2C2C;
+}
+.ntable {
+  background: #fff;
+}
+.ntable th,
+.ntable td {
+  padding: 10px;
+}
+.table_auto {
+  margin: 0 auto;
+}
+.table_tr_border {
+  border: 1px solid #ccc;
+}
+.table_tr_border tr,
+.table_tr_border td {
+  border-bottom: 1px solid #ccc;
+}
+.table_td_border {
+  border: 1px solid #ccc;
+  border-left: none;
+}
+.table_td_border tr,
+.table_td_border td {
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+.table_td_border th {
+  font-weight: bold;
+}
+.f14 {
+  font-size: 14px;
+}
+.text-body {
+  line-height: 1.8em;
+}
+@media print {
+  .Noprn {
+    display: none;
+  }
+}

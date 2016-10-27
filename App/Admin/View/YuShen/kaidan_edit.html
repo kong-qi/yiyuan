@@ -97,11 +97,11 @@
                                                                     data-id="{{ :urldecode($sv['id']) }}" 
                                                                     data-ticket="{{ :urldecode($sv['title2']) }}">{{ :urldecode($sv['title']) }}</a></td>
                                                                 <td>
-                                                                    <input readonly="readonly" name="price_price[]" min="0" type="text" value="{{ :urldecode($sv['price']) }}" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td>
+                                                                    <input readonly="readonly" name="price_price[]" data-price="vn" type="text" value="{{ :urldecode($sv['price']) }}" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td>
                                                                 <td> <span class="badge pr_danwei">{{ :urldecode($sv['danwei']) }}</span></td>
                                                                 <td>
                                                                     <input type="text" min="0" value="{{ :urldecode($sv['num']) }}" name="price_num[]" class="form-control pr_num" style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td>
-                                                                <td><span class="pr_heji">{{ :urldecode($sv['total']) }}</span></td>
+                                                                <td><span class="pr_heji" data-price="vnlist">{{ :urldecode($sv['total']) }}</span></td>
                                                                 <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> 上移</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> 下移</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> 删除</a> </td>
                                                             </tr>
                                                         </foreach>
@@ -117,7 +117,7 @@
                                                     <tr>
                                                         <td colspan="4" class="text-right"><span class="label label-primary">{{ :lang('总价','filed') }}</span></td>
                                                         <td>
-                                                            <input type="text" required name="price_total" value="0"
+                                                            <input type="text" required name="price_total" data-price="vn" value="{{ $data.price_total }}"
                                                                    size="80" class="form-control" readonly="" style="width: 120px;" id="price_total">
                                                         </td>
                                                         <td></td>
@@ -138,17 +138,13 @@
                                     <td>
                                         
 
-                                                <div class="col-xs-3">
-                                                    <select class="form-control m-l" required="required" id="ks2_id" name="kd_kstid">
-                                                        <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                                        {{ :get_keshi('0','1',$data['kd_kstid'] ) }}
-                                                    </select>
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <select class="form-control" required="required" id="ysz_id" name="kd_id">
-                                                        <option value="">{{ :lang('请选择医生','handle') }}</option>
-                                                    </select>
-                                                </div>
+                                        <div class="col-xs-3">
+                                           <select class="form-control" required="required" id="ys_id" name="kd_id">
+                                               <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                               {{ :get_doc(array(),1,$data['kd_id']) }}
+
+                                           </select>
+                                        </div>
                                         
                                     </td>
                                 </tr>
@@ -242,6 +238,11 @@
                         layer.msg('{{ :lang("请选择消费项目") }}');
                         return false;
                     }
+                    unshowmonery();
+                    submonery();
+                    //还原
+                    $tprice= $("#price_total").val();
+                    $("#price_total").val(accounting.unformat($tprice));
                     // return false;
                     $(form).ajaxSubmit();
                 }
@@ -259,6 +260,8 @@
                 $xf_id=$(this).attr('data-fid');//类别ID
                 $xf_name=$(this).attr('data-xfname');//类别名字
                 $price=$(this).attr('data-price');//价格
+                 $price=accounting.formatMoney($price, { symbol: "",  format: "%s %v" ,precision:0});
+
                 $name=$(this).attr('data-name');//名字
                 $ticket_name=$(this).attr('data-ticket');//票据
                 $danwei=$(this).attr('data-danwei');//单位
@@ -279,7 +282,7 @@
                     $edit_price_status=' readonly="readonly" ';
                 }
 
-                $str='<tr class="show_price_all ajax-price-id-'+$id+'"> <td><input type="hidden"  name="ticket_name[]" value="'+$ticket_name+'"> <input type="hidden"  name="price_name[]" value="'+$name+'"> <input type="hidden" name="price_xfname[]" value="'+$xf_name+'"> <input type="hidden" name="price_fid[]" value="'+$xf_id+'"> <input type="hidden" class="input_price"  name="price_id[]" value="'+$id+'"> <input type="hidden" name="price_danwei[]" value="'+$danwei+'"> <input type="hidden" class="input_heji" name="price_heji[]" value="'+$price+'">  <a href="javascript:;" class="m-l pr_name" data-xfname="'+$xf_name+'" data-fid="'+$xf_id+'" data-id="'+$id+'" data-ticket="'+$ticket_name+'">'+$name+'</a></td> <td><input '+$edit_price_status+' name="price_price[]" min="0" type="text" value="'+$price+'" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td> <td> <span class="badge pr_danwei">'+$danwei+'</span></td> <td><input type="text" min="0" value="'+$num+'" name="price_num[]" class="form-control pr_num" style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td> <td><span class="pr_heji">'+$price+'</span></td> <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ :lang('上移') }}</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ :lang('下移') }}</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> {{ :lang('删除') }}</a> </td> </tr>';
+                $str='<tr class="show_price_all ajax-price-id-'+$id+'"> <td><input type="hidden"  name="ticket_name[]" value="'+$ticket_name+'"> <input type="hidden"  name="price_name[]" value="'+$name+'"> <input type="hidden" name="price_xfname[]" value="'+$xf_name+'"> <input type="hidden" name="price_fid[]" value="'+$xf_id+'"> <input type="hidden" class="input_price"  name="price_id[]" value="'+$id+'"> <input type="hidden" name="price_danwei[]" value="'+$danwei+'"> <input type="hidden" class="input_heji" name="price_heji[]" value="'+$price+'">  <a href="javascript:;" class="m-l pr_name" data-xfname="'+$xf_name+'" data-fid="'+$xf_id+'" data-id="'+$id+'" data-ticket="'+$ticket_name+'">'+$name+'</a></td> <td><input '+$edit_price_status+' name="price_price[]" type="text" value="'+$price+'" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td> <td> <span class="badge pr_danwei">'+$danwei+'</span></td> <td><input type="text" min="0" value="'+$num+'" name="price_num[]" class="form-control pr_num" style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td> <td><span class="pr_heji">'+$price+'</span></td> <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ :lang('上移') }}</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ :lang('下移') }}</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> {{ :lang('删除') }}</a> </td> </tr>';
                 //log($str);
                 $("#add_price").append($str);
                  js_total();
@@ -287,45 +290,63 @@
             });
             //价格改变
             $(document).on('change','.pr_price',function(){
-                
+               
                 $pt=$(this).parents(".show_price_all");
                  
-               
+                 
                  $p=$(this).val();
+                 //还原价格
+                 $p=accounting.unformat($p);
 
                  $t=$pt.find(".pr_heji");
                  
                  $num=$pt.find(".pr_num").val();
 
-
-                 $t.text($num*$p);
-                 js_total();
+                 $heji=$num*$p;
 
                  //更新input
+                 //又返回自己
+               
+
                  $pt.find(".input_price").val($p);
-                 $pt.find(".input_heji").val($num*$p);
+                 $pt.find(".input_heji").val($heji);
+                 $heji=accounting.formatMoney( $heji, { symbol: "",  format: "%s %v" ,precision:0});
+                 $t.text($heji);//
+                 js_total();
+
 
             });
+             $(document).on('blur','.pr_price',function(){
+                 price=$(this).val();
+                 price=accounting.formatMoney( price, { symbol: "",  format: "%s %v" ,precision:0});
+                 $(this).val(price);
+             });
             
             //数量变化
             $(document).on('change','.pr_num',function(){
-                
+              
                 $pt=$(this).parents(".show_price_all");
                  
-               
+                
                  $num=$(this).val();
+
                  $price=$pt.find(".pr_price").val();
+                 //价格还原
+                 $price=accounting.unformat($price);
+                 $heji=$price*$num;
+                 $pt.find(".input_price").val($price);
+                 $pt.find(".input_heji").val($heji);
                  
-                 $pt.find(".pr_heji").text($price*$num);
+
+                 $pt.find(".pr_heji").text($heji);
                  js_total();
                   //更新input
-                 $pt.find(".input_price").val($price);
-                 $pt.find(".input_heji").val($price*$num);
+                
 
             });
             //-数量按钮
             $(document).on('click','.js-add-num',function(){
-                
+              
                 $pt=$(this).parents(".show_price_all");
                 
                 
@@ -340,37 +361,45 @@
                  }
                  $obj_num.val($num);
                  $price=$pt.find(".pr_price").val();
-                 $pt.find(".pr_heji").text($price*$num);
-                 js_total();
-                  //更新input
+                 //价格还原
+                 $price=accounting.unformat($price);
+                 $heji=$price*$num;
+                   //更新input
                  $pt.find(".input_price").val($price);
-                 $pt.find(".input_heji").val($price*$num);
+                 $pt.find(".input_heji").val($heji);
+                 $heji=accounting.formatMoney( $heji, { symbol: "",  format: "%s %v" ,precision:0});
+                 $pt.find(".pr_heji").text($heji);
+                 js_total();
+                
 
 
             });
             //---
             $(document).on('click','.js-del-num',function(){
-                $pt=$(this).parents(".show_price_all");
+               
+                 $pt=$(this).parents(".show_price_all");
                 
                 
                 $obj_num=$pt.find(".pr_num");
                 $num=$obj_num.val(); 
-               
-                if($num>1)
+                if($num>=1)
                  {
                     $num--;
                  }else
                  {
                     $num=1;
                  }
-                 log($num);
                  $obj_num.val($num);
                  $price=$pt.find(".pr_price").val();
-                 $pt.find(".pr_heji").text($price*$num);
-                 js_total();
-                  //更新input
+                 //价格还原
+                 $price=accounting.unformat($price);
+                 $heji=$price*$num;
+                   //更新input
                  $pt.find(".input_price").val($price);
-                 $pt.find(".input_heji").val($price*$num);
+                 $pt.find(".input_heji").val($heji);
+                 $heji=accounting.formatMoney( $heji, { symbol: "",  format: "%s %v" ,precision:0});
+                 $pt.find(".pr_heji").text($heji);
+                 js_total();
 
             });
             //删除
@@ -455,24 +484,37 @@
          
         });
         function js_total(){
+            //去掉HTML价格显示
+            //
+            
+           
             $ysum=0;
             pr_price=$(".pr_price");
             pr_num=$(".price_num");
             pr_heji=$(".pr_heji");
+           
 
             $input_price=$(".input_price");
             $input_heji=$(".input_heji");
 
             //循环合计
             pr_heji.each(function(){
-                $ysum+=parseFloat($(this).text());
+                $v=$(this).text();
+                $v=accounting.unformat($v);
+               
+                $ysum+=parseFloat($v);
                 
                 
             });
             $ysum=Math.round($ysum);
+
+            $ysum=accounting.formatMoney($ysum, { symbol: "",  format: "%s %v" ,precision:0});
+          
             $total.val($ysum);
+            //最后显示
+          
+            
             
         }
-
     </script>
 </block>

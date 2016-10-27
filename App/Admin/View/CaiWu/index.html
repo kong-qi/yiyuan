@@ -183,10 +183,10 @@
                                                 <tr>
                                                     <td><a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a>
                                                     </td>
-                                                    <td>{{ :urldecode($sv['price']) }}</td>
+                                                    <td data-price="vnlist">{{ :urldecode($sv['price']) }}</td>
                                                     <td>{{ :urldecode($sv['danwei']) }}</td>
                                                     <td>{{ :urldecode($sv['num']) }}</td>
-                                                    <td>{{ :urldecode($sv['total']) }}</td>
+                                                    <td data-price="vnlist">{{ :urldecode($sv['total']) }}</td>
                                                 </tr>
                                             </foreach>
                                         </if>
@@ -197,7 +197,7 @@
 
                                 </td>
 
-                                <td class="td_show_total">{{ $v.price_total }}</td>
+                                <td class="td_show_total money" data-price="vnlist">{{ $v.price_total }}</td>
 
                                 <td class="td_kd_name">
                                     {{ $v.kd_name }}

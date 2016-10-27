@@ -414,7 +414,9 @@ function return_price_json($item, $insert, $debug) {
         id=$(this).find('.pr_name').attr('data-id');//id
         xfname=$(this).find('.pr_name').attr('data-xfname');//类名
        
-       
+       //还原价格
+        price=accounting.unformat(price);
+        total=accounting.unformat(total);
         $array.push(
             { 
                 'title': encodeURI(title), 
@@ -732,6 +734,7 @@ function monery(){
             $v=$(this).val();
             $fv=accounting.formatMoney($v, { symbol: "",  format: "%s %v" ,precision:0});
             $(this).val($fv);
+
         });
     });
     
@@ -761,12 +764,41 @@ function submonery(){
     });
     return status;
 }
+function showmonery(){
+    $('[data-price="vnlist"]').each(function(index, el) {
+            
+            $v=$(this).text();
+            $v=accounting.formatMoney($v, { symbol: "",  format: "%s %v" ,precision:0});
+            $(this).text($v);
+            
+        
+    });
+}
+function unshowmonery(){
+    $('[data-price="vnlist"]').each(function(index, el) {
+            
+            $v=$(this).text();
+            $v=accounting.unformat($v);
+            $(this).text($v);
+            
+        
+    });
+}
 
-$('[data-price="vnlist"]').each(function(index, el) {
-        
-        $v=$(this).text();
-        $v=accounting.formatMoney($v, { symbol: "",  format: "%s %v" ,precision:0});
-        $(this).text($v);
-        
-    
-});
+function editmonery(){
+    status=0;
+    $('[data-price="vn"]').each(function(index, el) {
+        $v=$(this).val();
+        $fv=accounting.formatMoney($v, { symbol: "",  format: "%s %v" ,precision:0});
+        $(this).val($fv);
+    });
+    return status;
+}
+//列表显示格式
+showmonery();
+//默认input状态，显示格式
+editmonery();
+//输入之后，设置格式
+monery();
+//点击输入原
+unmonery()

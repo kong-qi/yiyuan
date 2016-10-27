@@ -18,15 +18,15 @@
 
                          <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('点击量','filed') }}</span>
-                            <input class="form-control" required min="0" name="clicks" value="{{ $data.clicks }}" type="text"/>
+                            <input class="form-control" data-price="vn" required min="0" name="clicks" value="{{ $data.clicks }}" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('展现量','filed') }}</span>
-                            <input class="form-control" required min="0" name="shows" value="{{ $data.shows }}" type="text"/>
+                            <input class="form-control" data-price="vn" required min="0" name="shows" value="{{ $data.shows }}" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('消费额','filed') }}</span>
-                            <input class="form-control" required min="0" name="prices" value="{{ $data.prices }}" type="text"/>
+                            <input class="form-control" data-price="vn" required min="0" name="prices" value="{{ $data.prices }}" type="text"/>
                         </div>
                        <div class="input-group m-b" style="margin-bottom:5px;">
                            <span class="input-group-addon">{{ :lang('消费日期','filed') }}</span>
@@ -72,22 +72,20 @@
             }, errorClass: "error", validClass: "no-error"
 
         });
-        $().ready(function() {
-            // validate the comment form when it is submitted
-            var e = "<i class='fa fa-times-circle'></i> ";
-
-            // validate signup form on keyup and submit
-            $("#validate").validate({
-                rules: {
-                    name:{
-                        required:1,
-                        ename:1
-                    },
-
-                    realname: "required",
-                    "groupid[]":{required:1}
-
-                },
+        $().ready(function () {
+            $("#validate").validate(
+                {
+                    submitHandler: function (form) {
+                        if(!submonery())
+                        {
+                        
+                            layer.msg('{{ :lang("请检查金额") }}');
+                            return false;
+                        }
+                        
+                        //return false;
+                        form.submit();
+                    }
             });
         });
 

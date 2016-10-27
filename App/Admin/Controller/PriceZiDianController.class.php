@@ -115,6 +115,7 @@ class PriceZiDianController extends AuthController {
 
             if($model->create())
             {
+              
                 $data=$model->create();
                 $result =    $model->add();
                 if($result) {

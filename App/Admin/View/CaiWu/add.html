@@ -24,7 +24,7 @@
                     <dd ><span class="title">{{ :lang('收费名称') }}</span></dd>
                     <dd  class="w150">{{ :lang('价格') }}<span class="text-grey">{{ :($sv['price']) }}</span></dd>
                     <dd class="w120">{{ :lang('开单数量') }}<span class="text-primary">{{ :($sv['num']) }}</span></dd>
-                    <dd class="w150">{{ :lang('合计金额') }}<span class="text-danger">{{ :($sv['total']) }}</span></dd>
+                    <dd class="w150">{{ :lang('合计金额') }}<span class="text-danger" >{{ :($sv['total']) }}</span></dd>
                     <div class="cl"></div>
                 </dl>
                 <?php
@@ -34,9 +34,9 @@
                     echo '
                         <dl class="sf_show">
                             <dd ><span class="title">'.urldecode($sv['title']).'</span></dd>
-                            <dd  class="w150"><span class="text-grey">'.($sv['price']).'</span></dd>
+                            <dd  class="w150"><span class="text-grey" data-price="vnlist">'.($sv['price']).'</span></dd>
                             <dd class="w120"><span class="text-primary">'.($sv['num']).'</span></dd>
-                            <dd class="w150"><span class="text-danger">'.($sv['total']).'</span></dd>
+                            <dd class="w150"><span class="text-danger" data-price="vnlist">'.($sv['total']).'</span></dd>
                             <div class="cl"></div>
                         </dl>
                        
@@ -72,13 +72,13 @@
               </div>
               <div class="sf_part m-r js-qk">
                   <p >
-                     <strong>{{ :lang('应收金额') }}：{{ :$data['price_total'] }}</strong>
+                     <strong>{{ :lang('应收金额') }}：<span data-price="vnlist">{{ :$data['price_total'] }}</span> </strong>
                   </p>
                   <p>
                     
                       {{ :lang('优惠码') }}: <input class="input js-input-youhui"  type="text" name="youhui_code" value="" placeholder="{{ :lang('输入优惠码') }}"> <span class="label label-danger"> {{ :lang('优惠价') }}：<span class="js-yhj"></span>元</span>
                   </p>
-                  <p>{{ :lang('优惠后') }}：<span class="js-yhh">{{ $data['price_total'] }}</span></p>
+                  <p>{{ :lang('优惠后') }}：<span class="js-yhh" data-price="vnlist">{{ $data['price_total'] }}</span></p>
                   <p>
                       {{ :lang('实收现金') }}: <input class="input js-xj" type="text" name="shishou_price" > {{ :lang('刷卡') }}: <input class="input js-sk" name="shuaka_price" type="text">  {{ :lang('其他') }}: <input class="input js-qt" type="text" name="other_price">
                   </p>
@@ -164,6 +164,7 @@
                     if(t_total>p_total)
                     {
                       layer.msg('{{ :lang("付款金额大于应付金额，请检查") }}');
+                       return false;
                     }
                   }
                   
@@ -228,6 +229,7 @@
       $yhhou=$total-$yh;
        log($yhhou);
       $("input[name='youhui_total']").val($yhhou);
+      $yhhou=accounting.formatMoney( $yhhou, { symbol: "",  format: "%s %v" ,precision:0});
       $(".js-yhh").text($yhhou);
     }
     </script>

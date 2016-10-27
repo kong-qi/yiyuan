@@ -19,7 +19,7 @@
                     </div>
                     <div class="input-group m-b" style="margin-bottom:5px;">
                         <span class="input-group-addon">{{ :lang('单价','filed') }}</span>
-                        <input class="form-control" name="price" type="text" value="{{ $data.price }}" required min="0" placeholder="">
+                        <input class="form-control" data-price="vn" name="price" type="text" value="{{ $data.price }}" required placeholder="">
                     </div>
                     <div class="input-group m-b" style="margin-bottom:5px;">
                         <span class="input-group-addon">{{ :lang('单位','filed') }}</span>
@@ -69,13 +69,20 @@
             }, errorClass: "error", validClass: "no-error"
 
         });
-        $().ready(function() {
-            // validate the comment form when it is submitted
-            var e = "<i class='fa fa-times-circle'></i> ";
-
-            // validate signup form on keyup and submit
-            $().ready(function () {
-                $("#validate").validate();
+        $().ready(function () {
+            $("#validate").validate(
+                {
+                    submitHandler: function (form) {
+                        if(!submonery())
+                        {
+                        
+                            layer.msg('{{ :lang("请检查金额") }}');
+                            return false;
+                        }
+                        
+                        //return false;
+                        form.submit();
+                    }
             });
         });
 

@@ -92,9 +92,9 @@
 
                                     <td class="hidden-xs">{{ :date('d-m-Y',($v['cdate'])) }}</td>
                                     <td >{{ $v.name }}</td>
-                                    <td>{{ $v.clicks }}</td>
-                                    <td >{{ $v.shows }}</td>
-                                    <td data-price="vnlist">{{ $v.prices }}</td>
+                                    <td data-price="vnlist">{{ $v.clicks }}</td>
+                                    <td data-price="vnlist">{{ $v.shows }}</td>
+                                    <td data-price="vnlist" class="money">{{ $v.prices }}</td>
                                     <td>{{ :$v['admin_rname']==''? $v['admin_name']: $v['admin_rname'] }}</td>
                                     <td >
 
@@ -154,7 +154,7 @@
             layer.open({
                 type: 2,
                 title: "{{ :lang('添加','handle') }}",
-                shadeClose: true,
+                //shadeClose: true,
                 shade: 0.8,
                 area: ['400px', '500px'],
                 content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}?uuid=",
@@ -198,7 +198,7 @@
             layer.open({
                 type: 2,
                 title: "{{ :lang('修改','handle') }}",
-                shadeClose: true,
+                //shadeClose: true,
                 shade: 0.8,
                 area: ['400px', '500px'],
                 content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=" + title,
