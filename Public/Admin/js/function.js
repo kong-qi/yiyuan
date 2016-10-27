@@ -724,4 +724,49 @@ function price_chane($url, $inserid,$ytotal, $more) {
 
 
 
+};
+function monery(){
+
+    $('[data-price="vn"]').each(function(index, el) {
+        $(this).on('focusout',function(){
+            $v=$(this).val();
+            $fv=accounting.formatMoney($v, { symbol: "",  format: "%s %v" ,precision:0});
+            $(this).val($fv);
+        });
+    });
+    
 }
+function unmonery(){
+    $('[data-price="vn"]').each(function(index, el) {
+        $(this).on('focus',function(){
+            $v=$(this).val();
+            if($v!='')
+            {
+                $v=accounting.unformat($v);
+                $(this).val($v);
+            }
+          
+        });
+    });
+}
+function submonery(){
+    status=0;
+    $('[data-price="vn"]').each(function(index, el) {
+       
+            $v=$(this).val();
+            $v=accounting.unformat($v);
+            $(this).val($v);
+            $status=1;
+        
+    });
+    return status;
+}
+
+$('[data-price="vnlist"]').each(function(index, el) {
+        
+        $v=$(this).text();
+        $v=accounting.formatMoney($v, { symbol: "",  format: "%s %v" ,precision:0});
+        $(this).text($v);
+        
+    
+});
