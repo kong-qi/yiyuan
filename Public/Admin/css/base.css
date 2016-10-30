@@ -184,31 +184,43 @@ select {
   content: '';
   display: block;
 }
-.table {
-  background-color: #F9F9F9;
-  color: #666666;
-  border-left: 1px dotted #CCCCCC;
-  border-top: 1px dotted #CCCCCC;
+/* .table
+{
+	background-color: #F9F9F9;
+ 	color: #666666;
+ 	border-left: 1px dotted #CCCCCC;
+ 	border-top: 1px dotted #CCCCCC;
+ 	th,td
+ 	{
+ 		 
+		 border-bottom: 1px dotted #CCCCCC;
+ 	}
+ 	td.has-success
+ 	{
+ 		.input
+ 		{
+ 			border-color: #1ab394;
+ 			color: #3c763d;
+ 		}
+ 	}
+ 	td.has-error
+ 	{
+ 		.input
+ 		{
+ 			border-color: #ed5565;
+ 			color: #ed5565;
+ 		}
+ 	}
+ 	th {
+ 	 background-color: #EEEEEE;
+ 	 height: 16px;
+ 	
+ 	}
+ 	.child {
+ 	 background-color: #FFFFFF;
+ 	}
 }
-.table th,
-.table td {
-  border-bottom: 1px dotted #CCCCCC;
-}
-.table td.has-success .input {
-  border-color: #1ab394;
-  color: #3c763d;
-}
-.table td.has-error .input {
-  border-color: #ed5565;
-  color: #ed5565;
-}
-.table th {
-  background-color: #EEEEEE;
-  height: 16px;
-}
-.table .child {
-  background-color: #FFFFFF;
-}
+ */
 .table-noboer {
   border: none;
 }
@@ -258,14 +270,26 @@ select {
 }
 .box {
   margin-bottom: 2%;
+  background: #fff;
 }
 .box-title {
   border-bottom: 1px solid #D7D7D7;
   color: #666666;
   font-size: 16px;
-  padding-bottom: 18px;
-  margin-bottom: 15px;
 }
+.box-title:after {
+  clear: both;
+  display: block;
+  content: "";
+}
+/*.box-title
+{
+	border-bottom: 1px solid #D7D7D7;
+	color: #666666;
+	font-size: 16px;
+	padding-bottom: 18px;
+	margin-bottom: 15px;
+} */
 .none {
   display: none;
 }
@@ -517,10 +541,14 @@ select {
   padding-left: 20px;
 }
 .right-box {
-  border-left: 1px solid #FFF;
-  padding: 30px 22px 50px 22px;
-  min-height: 550px;
+  /* border-left: 1px solid #FFF;
+	    padding: 30px 22px 50px 22px;
+	    min-height:550px;
+	    padding-top: 15px; */
+  padding-bottom: 20px;
   padding-top: 15px;
+  padding-right: 10px;
+  margin-bottom: 20px;
 }
 .box-content:after {
   clear: both;
@@ -548,6 +576,7 @@ select {
   color: #FFF;
 }
 .pager {
+  border-top: 1px solid #ededed;
   padding: 15px;
 }
 .pager span,
@@ -811,4 +840,26 @@ fieldset[disabled] .btn-green.active {
   .Noprn {
     display: none;
   }
+}
+.w180 {
+  width: 180px !important;
+}
+.wb50 {
+  width: 49% !important;
+  box-sizing: border-box;
+}
+.wb30 {
+  width: 32.5% !important;
+  box-sizing: border-box;
+}
+.wb70 {
+  width: 65% !important;
+  box-sizing: border-box;
+}
+.kqline {
+  border-top: 1px solid #ededed;
+}
+.wbox {
+  background: #fff;
+  padding: 10px 0;
 }

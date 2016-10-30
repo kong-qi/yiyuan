@@ -2518,7 +2518,8 @@ body, body.full-height-layout #page-wrapper, body.full-height-layout #wrapper, h
 }
 
 #page-wrapper {
-	min-height: auto;
+	//min-height: auto;
+	height: 100%;
 }
 body.boxed-layout {
 	background: url('patterns/shattered.png');
@@ -2631,6 +2632,8 @@ video {
 }
 #wrapper {
 	width: 100%;
+	
+	overflow: hidden;
 	overflow-x: hidden;
 	background-color: #2f4050;
 }
@@ -2641,7 +2644,7 @@ video {
 	padding: 0px;
 }
 #page-wrapper {
-	padding: 0 15px;
+	padding: 0 0 0 15x;
 	position: inherit;
 	margin: 0 0 0 220px;
 }
@@ -2785,8 +2788,10 @@ nav.page-tabs .page-tabs-content {
 	left: auto;
 }
 #content-main {
-    height: calc(100% - 81px);
-    overflow-x: hidden;
+    //height: calc(100% - 81px);
+    height: 100%;
+    padding: 10px;
+    overflow: hidden;
 }
 .fixed-nav #content-main {
 	height: calc(100% - 81px);
@@ -2809,7 +2814,7 @@ nav.page-tabs .page-tabs-content {
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
 	border-top: 1px solid #e7eaec;
 	line-height: 1.42857;
-	padding: 6px 0px 6px 4px;
+	padding: 6px 6px 6px 4px;
 	vertical-align: middle;
 }
 .panel.blank-panel {
@@ -3021,7 +3026,9 @@ table.table-mail tr td {
 	background-color: #f9f8f8;
 }
 .ibox-content {
+	padding: 10px;
 	clear: both;
+
 }
 .ibox-heading {
 	background-color: #f3f6fb;
@@ -5986,3 +5993,4 @@ body.fixed-sidebar.mini-navbar .navbar-static-side {
 {
 	    background-color: #777;
 }
+

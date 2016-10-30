@@ -301,6 +301,9 @@ class YuYueController extends AuthController
         
 
     }
+    public function demo(){
+        $this->display();
+    }
     public function getFiledArray($type){
         switch ($type) {
             case 'yishen_s3':
@@ -357,6 +360,12 @@ class YuYueController extends AuthController
         if (IS_POST) {
 
             $model = D("YuYue");
+            $user=D('User');
+            $ydata=$model->create();
+            $udata=$user->create();
+            print_r($ydata);
+            print_r($udata);
+            exit();
             $postdata = I('post.');
             if ($model->create()) {
                 M()->startTrans();

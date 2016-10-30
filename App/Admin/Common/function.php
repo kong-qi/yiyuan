@@ -265,7 +265,8 @@ function zidian_nav(){
        // 'shuofei'=>'收费字典',//'jiesuan'=>'结算字典',
         'huifang'=>'回访字典',
         'jigou'=>'机构字典',
-        'website'=>'网站字典'
+        'website'=>'网站字典',
+        'user'=>'个人属性'
     );
     $url=array(
         'xiaofei'=>U('Admin/XiaoFeiZiDian/index',array('type'=>'xiaofei')),
@@ -281,6 +282,7 @@ function zidian_nav(){
         //'jiesuan'=>U('Admin/JieSuanZiDian/index',array('type'=>'jiesuan')),
         'huifang'=>U('Admin/HuiFangZiDian/index',array('type'=>'huifang')),
         'jigou'=>U('Admin/JiGouZiDian/index',array('type'=>'jigou')),
+        'user'=>U('Admin/UserZiDian/index',array('type'=>'user')),
         'website'=>U('Admin/WebSiteZiDian/index',array('type'=>'website'))
     );
     $str='';
@@ -927,6 +929,41 @@ function yuyue_status($checked=''){
         return $arr[$checked];
     }
     return $arr;
+}
+
+function yuyue_leibie($checked=''){
+    $arr=array(
+
+        '1'=>lang('初诊'),
+        '2'=>lang('复诊'),
+        '3'=>lang('复查'),
+        '4'=>lang('再消费'),
+        '5'=>lang('其他')
+    );
+    if($checked!='')
+    {
+        return $arr[$checked];
+    }
+    return $arr;
+}
+function yuyue_option_leibie($checked='none'){
+    $arr=yuyue_leibie();
+    $str='';
+    foreach ($arr as $key => $v) {
+        # code...
+        
+        if($key==$checked)
+        {
+            $on="selected='selected'";
+        }else
+        {
+            $on='';
+        }
+
+        $str.="<option value='".$key."' ".$on.">".$v."</option>";
+
+    }
+    return $str;
 }
 function btn_yycolor($checked=''){
      $arr=array(

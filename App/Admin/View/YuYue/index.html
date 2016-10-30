@@ -11,8 +11,8 @@
     <div class="right-box">
         <if condition="I('get.show')">
         <else/>
-        <div class="box">
-            <div class="col-sm-12">
+        <div class="ibox">
+            
                 <form action='' method="get" id="contact-form">
                     
                     <div class="col-sm-12" style="padding:0px;">
@@ -247,16 +247,12 @@
                         </div>
                     </div>
                 </form>
-            </div>
+            
         </div>
         </if>
-        <div class="box">
+        <div class="ibox">
 
-            <div class="box-content">
-
-
-
-                </div>
+          
 
 
                 <if condition="$menu_list">
@@ -294,122 +290,128 @@
                     </div>
 
                 </if>
-                <div class="list-box">
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table width="100%"  class="table table-striped table-hover table-bordered">
 
-                    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table table-hover">
+                            <tbody>
 
-                        <tbody>
-
-                        <tr>
-                            <th width="40" class="hidden-xs text-center"><input name="chkall" type="checkbox" id="chkall" value="0"></th>
-
-                                <foreach name="menu_list" item="v" key="k">
-                                    <if condition="$v['name'] neq ''">
-                                        <th class="{{ $k }}">{{ $v['name'] }}</th>
-                                    </if>
-
-                                </foreach>
-
-                        </tr>
-                        <if condition="$list">
-
-                            <volist name="list" id="v">
-
-                                <tr class="js-tr">
-
-                                    <td align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select"
-                                                                                name="checkbox[]"
-                                                                                value="{{ $v.yuuid }}"></td>
-
-                                  
-                                    <td class="td-yuyue" ><span class="js-open-more glyphicon glyphicon-plus m-r"></span>{{ $v.ynumber }}
-                                    </td>
-                                    <td data-log="1" class="td-name">{{ $v.user_name }}</td>
-                                    <td class="td-sex">
-
-                                        <lable class="badge badge-info">{{ :lang($v['sex']) }}</lable>
-                                    </td>
-                                    <td class="td-ytime">
-                                        <lable class="text-success">{{ :to_time($v['ydatetime'],'d-m-Y H:i:s') }}</lable>
-                                    </td>
-
-                                    <td class="td-djtime">
-                                        <lable class="text-info">{{ :to_time($v['yctime'],'d-m-Y H:i:s') }}</lable>
-                                    </td>
-                                    <td class="td-ks">{{ $v.ks_name }}</td>
-
-                                    <td class="td-bz">{{ $v.kstt_name }}</td>
-                                    <td class="td-ly">
-                                        {{ $v.ly_name }}
-                                    </td>
-                                    <if condition="$is_qiantai">
-                                    
-                                    <td class="td-ys_name">
-                                        {{ $v.ys_name }}
-                                    </td>
-                                  
-                                    </if>
-
-
-                                    <td class="td-status">
-                                        <span class="{{ :btn_yycolor($v['ystatus']) }}">
-                                        {{ :lang(yuyue_status($v['ystatus'])) }}
-                                        </span>
-                                       
-
-                                    </td>
-                                    <td class="td-handle">
-                                        <!-- //网站竞价人员 -->
-                                        <div class="box">
-                                           
-                                        <!-- /竞价更正 -->
-                                        <if condition="$is_website ">
-                                           
-                                            <include file="Menu:website" />
-                                            <!--//回访人员-->
-                                        <elseif condition="$is_huifang"/>
-                                            
-                                            <include file="Menu:huifang" />
-                                            <!--//前台-->
-                                        <elseif condition="$is_qiantai"/>
-                                            
-                                            <include file="Menu:qiantai" />
-                                        <elseif condition="$is_yishen"/>
-                                             <include file="Menu:yishen" />
-                                            <!--//医生-->
-                                        <else/>
-                                            <include file="Menu:other" />
-                                        
-                                        </if>
-                                        </div>
-                                       
-                                    </td>
-                                </tr>
-                                <tr class="js-tr" style="display: none">
-                                    <td colspan="12">
-                                        <div class="box m-t" style="border-bottom: 1px solid #ccc">
-                                            <label for="" class="badge badge-info">{{ :lang('咨询小结','handle') }}</label> {{ $v.zx_mark }}
-                                        </div>
-                                        <div class="box m-t" style="border-bottom: 1px solid #ccc">
-                                            <label for="" class="badge badge-info">{{ :lang('备注','handle') }}</label> {{ $v.mark }}
-                                        </div>
-                                        <div class="box text-center"  >
-                                            <a href="javascript:void(0)" class="btn btn-success js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.yuuid }}" data->{{ :lang('查看更多','handle') }}</a>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                            </volist>
-
-                            <else/>
                             <tr>
-                                <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
+                                <th width="40" class="hidden-xs text-center"><input name="chkall" type="checkbox" id="chkall" value="0"></th>
+
+                                    <foreach name="menu_list" item="v" key="k">
+                                        <if condition="$v['name'] neq ''">
+                                            <th class="{{ $k }}">{{ $v['name'] }}</th>
+                                        </if>
+
+                                    </foreach>
+
                             </tr>
-                        </if>
-                        </tbody>
+                            <if condition="$list">
+
+                                <volist name="list" id="v">
+
+                                    <tr class="js-tr">
+
+                                        <td align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select"
+                                                                                    name="checkbox[]"
+                                                                                    value="{{ $v.yuuid }}"></td>
+
+                                      
+                                        <td class="td-yuyue" ><span class="js-open-more glyphicon glyphicon-plus m-r"></span>{{ $v.ynumber }}
+                                        </td>
+                                        <td data-log="1" class="td-name">{{ $v.user_name }}</td>
+                                        <td class="td-sex">
+
+                                            <lable class="badge badge-info">{{ :lang($v['sex']) }}</lable>
+                                        </td>
+                                        <td class="td-ytime">
+                                            <lable class="text-success">{{ :to_time($v['ydatetime'],'d-m-Y H:i:s') }}</lable>
+                                        </td>
+
+                                        <td class="td-djtime">
+                                            <lable class="text-info">{{ :to_time($v['yctime'],'d-m-Y H:i:s') }}</lable>
+                                        </td>
+                                        <td class="td-ks">{{ $v.ks_name }}</td>
+
+                                        <td class="td-bz">{{ $v.kstt_name }}</td>
+                                        <td class="td-ly">
+                                            {{ $v.ly_name }}
+                                        </td>
+                                        <if condition="$is_qiantai">
+                                        
+                                        <td class="td-ys_name">
+                                            {{ $v.ys_name }}
+                                        </td>
+                                      
+                                        </if>
 
 
-                    </table>
+                                        <td class="td-status">
+                                            <span class="{{ :btn_yycolor($v['ystatus']) }}">
+                                            {{ :lang(yuyue_status($v['ystatus'])) }}
+                                            </span>
+                                           
+
+                                        </td>
+                                        <td class="td-handle">
+                                            <!-- //网站竞价人员 -->
+                                            <div class="box">
+                                               
+                                            <!-- /竞价更正 -->
+                                            <if condition="$is_website ">
+                                               
+                                                <include file="Menu:website" />
+                                                <!--//回访人员-->
+                                            <elseif condition="$is_huifang"/>
+                                                
+                                                <include file="Menu:huifang" />
+                                                <!--//前台-->
+                                            <elseif condition="$is_qiantai"/>
+                                                
+                                                <include file="Menu:qiantai" />
+                                            <elseif condition="$is_yishen"/>
+                                                 <include file="Menu:yishen" />
+                                                <!--//医生-->
+                                            <else/>
+                                                <include file="Menu:other" />
+                                            
+                                            </if>
+                                            </div>
+                                           
+                                        </td>
+                                    </tr>
+                                    <tr class="js-tr" style="display: none">
+                                        <td colspan="12">
+                                            <div class=" m-t p-xs" style="border-bottom: 1px solid #ccc">
+                                                <label for="" class="badge badge-info">{{ :lang('咨询小结','handle') }}</label> {{ $v.zx_mark }}
+                                            </div>
+                                            <div class=" m-t p-xs" style="border-bottom: 1px solid #ccc">
+                                                <label for="" class="badge badge-info">{{ :lang('备注','handle') }}</label> {{ $v.mark }}
+                                            </div>
+                                            <div class=" text-center p-xs"  >
+                                                <a href="javascript:void(0)" class="btn btn-success js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.yuuid }}" data->{{ :lang('查看更多','handle') }}</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </volist>
+
+                                <else/>
+                                <tr>
+                                    <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
+                                </tr>
+                            </if>
+                            </tbody>
+
+
+                        </table>
+                    </div>
+                     <div class="pagee m-t">
+                        <div class="pull-right">
+                            {{ $page }}
+                        </div>
+                     </div>
 
                 </div>
                 <!--<div class="row">

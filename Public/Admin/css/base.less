@@ -186,7 +186,7 @@ select {
 	display: block;
 }
 
-.table
+/* .table
 {
 	background-color: #F9F9F9;
  	color: #666666;
@@ -222,7 +222,7 @@ select {
  	 background-color: #FFFFFF;
  	}
 }
-.table-noboer
+ */.table-noboer
 
 {
 	border: none;
@@ -290,16 +290,30 @@ select {
 .box
 {
 	margin-bottom: 2%;
+	background: #fff;
+}
+.box-title
+{
+	border-bottom: 1px solid #D7D7D7;
+	color: #666666;
+	font-size: 16px;
+	
+}
+.box-title:after
+{
+	clear: both;
+	display: block;
+	content: "";
 }
 
-.box-title
+/*.box-title
 {
 	border-bottom: 1px solid #D7D7D7;
 	color: #666666;
 	font-size: 16px;
 	padding-bottom: 18px;
 	margin-bottom: 15px;
-}
+} */
 .none
 {
 	display: none;
@@ -622,10 +636,14 @@ select {
 }
 .right-box
 {
-	border-left: 1px solid #FFF;
-    padding: 30px 22px 50px 22px;
-    min-height:550px;
-    padding-top: 15px;
+	/* border-left: 1px solid #FFF;
+	    padding: 30px 22px 50px 22px;
+	    min-height:550px;
+	    padding-top: 15px; */
+	    padding-bottom: 20px;
+	    padding-top:15px;
+	    padding-right: 10px;
+	    margin-bottom: 20px;
 }
 
 //去除浮动
@@ -666,7 +684,7 @@ select {
 //分页
 .pager
 {
-	
+	border-top: 1px solid #ededed;
 	padding: 15px;
 	span,a
 	{
@@ -1013,4 +1031,32 @@ fieldset[disabled] .btn-green.active {
 }
 @media print {
  .Noprn{ display:none;}
+}
+
+.w180{
+	width: 180px !important;;
+}
+.wb50
+{
+	width: 49% !important;
+	box-sizing: border-box;
+}
+.wb30
+{
+	width: 32.5% !important;
+	box-sizing: border-box;
+}
+.wb70
+{
+	width: 65% !important;
+	box-sizing: border-box;
+}
+.kqline
+{
+	border-top:1px solid #ededed;
+}
+.wbox
+{
+	background: #fff;
+	padding: 10px 0;
 }
