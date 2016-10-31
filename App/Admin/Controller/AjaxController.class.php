@@ -316,7 +316,7 @@ class AjaxController extends AuthController
             }
             
         }
-        print_r($data);
+        //print_r($data);
         return $this->ajaxReturn($data);
     }
     public function ajaxLaiYuanList($id){
@@ -413,14 +413,17 @@ class AjaxController extends AuthController
     }
 
     public  function check_phone(){
-        $name=I('get.name');
+       
         $phone=I("get.phone");
 
         $Model = new \Think\Model();
-        $result=$Model->query("SELECT u1.id,u1.name,y1.ydatetime,y1.admin_id,a1.name as admin_name,a1.realname,y1.ks_id,k1.name 
+       /* $result=$Model->query("SELECT u1.id,u1.name,u1.sfcard,u1.tel2,u1.zhiye,u1.xueli,u1.is_jiehun,u1.level,u1.level_card,u1.intro_name,u1.email,u1.zalo,u1.facebook,u1.phone_bank,u1.address,u1.bingshi,u1.birthday,u1.age,u1.sex,y1.ydatetime,y1.admin_id,a1.name as admin_name,a1.realname,y1.ks_id,k1.name 
         as ksname,y1.kstt_id,k2.`name` as kstname from __PREFIX__user as u1 LEFT JOIN __PREFIX__yu_yue 
         as y1 on y1.user_id=u1.id  LEFT JOIN __PREFIX__admin as a1 on a1.id=y1.admin_id LEFT JOIN 
-        __PREFIX__ke_shi as k1 on k1.id=y1.ks_id LEFT JOIN __PREFIX__ke_shi as k2 on k2.id=y1.kstt_id  where u1.name='".$name."' and u1.tel='".$phone."'");
+        __PREFIX__ke_shi as k1 on k1.id=y1.ks_id LEFT JOIN __PREFIX__ke_shi as k2 on k2.id=y1.kstt_id  where  u1.tel='".$phone."'");*/
+        $result=$Model->query("SELECT u1.id,u1.name,u1.sfcard,u1.tel2,u1.zhiye,u1.xueli,u1.is_jiehun,u1.level,u1.level_card,u1.intro_name,u1.email,u1.zalo,u1.facebook,u1.phone_bank,u1.address,u1.bingshi,u1.birthday,u1.age,u1.sex from __PREFIX__user as u1 LEFT JOIN __PREFIX__yu_yue 
+        as y1 on y1.user_id=u1.id  LEFT JOIN __PREFIX__admin as a1 on a1.id=y1.admin_id LEFT JOIN 
+        __PREFIX__ke_shi as k1 on k1.id=y1.ks_id LEFT JOIN __PREFIX__ke_shi as k2 on k2.id=y1.kstt_id  where  u1.tel='".$phone."'");
 
 
         if(count($result)>0)

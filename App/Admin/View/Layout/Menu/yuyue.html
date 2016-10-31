@@ -1,13 +1,23 @@
 <li>
     <a href="#">
         <i class="fa fa-columns"></i>
-        <span class="nav-label">{{ :lang('预约列表','menu') }}</span>
+        <span class="nav-label">{{ :lang('预网电咨询','menu') }}</span>
         <span class="fa icon-chevron-left arrow"></span>
     </a>
     <ul class="nav nav-second-level">
+        <if condition="check_group('yuyue_add')">
+           <li>
+                <a class="J_menuItem" href="{{ :U('Admin/YuYue/add') }}"><span
+                        class="nav-label">{{ :lang('添加咨询预约') }}</span></a>
+            </li>
+        </if>
         <li>
             <a class="J_menuItem"
-               href="{{ :U('Admin/YuYue/index') }}">{{ :lang('全部预约','menu') }}</a>
+               href="{{ :U('Admin/YuYue/index') }}">{{ :lang('全部预约列表','menu') }}</a>
+        </li>
+        <li>
+            <a class="J_menuItem"
+               href="{{ :U('Admin/YuYue/zxindex') }}">{{ :lang('仅咨询列表','menu') }}</a>
         </li>
         <li>
             <a class="J_menuItem"
@@ -32,6 +42,12 @@
         <li>
             <a class="J_menuItem"
                href="{{ :U('Admin/YuYue/index') }}?ystime={{ :get_days(1) }}&yetime={{ :get_days(1) }}&status=1&show=none">{{ :lang('明天预到','menu') }}</a>
+        </li>
+         <li>
+            <a class="J_menuItem" href="{{ :U('Admin/DianXiao/add') }}">{{ :lang('添加咨询工作量','menu') }}</a>
+            </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/DianXiao/index') }}">{{ :lang('咨询工作量列表','menu') }}</a>
         </li>
 
     </ul>

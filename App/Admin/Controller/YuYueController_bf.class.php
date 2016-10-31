@@ -6,19 +6,97 @@ class YuYueController extends AuthController
     protected $rule_qz = 'yuyue';
 
 
-    public function index()
+    public function index($shenfeng = 'zixun')
     {
+
         //print_r(session('group'));
         $this->check_group($this->rule_qz."_show");
         $map = array();
-       
+        $is_website = 0;
+        $is_huifang = 0;
+        $is_yishen = 0;
+        $is_qiantai = 0;
 
         //自己查看自己的
         if (!check_group('root')) {
             if (check_group('yuyue_only')) {
                 $map['y1.admin_id'] = session('admin_id');
             }
-        } 
+
+            switch ($shenfeng) {
+                case 'zixun':
+
+                    break;
+                //网站竞价来源
+                case 'website':
+                    $is_website = 1;
+
+                    $map['y1.ly_id'] = array('in', session('brid'));
+                    break;
+                //回访人员
+                case 'huifang':
+                    $is_huifang = 1;
+
+
+                    break;
+                case 'qiantai':
+
+                    $is_qiantai = 1;
+
+                    break;
+                case 'yishen':
+                    $is_yishen = 1;
+                    if(!check_group('root'))
+                    {
+                        if(check_group('kaidan_only'))
+                        {
+                            $map['y1.ys_id'] = session('admin_id');
+                        }
+                    }
+                    
+                    
+                    break;
+                case 'all':
+
+
+                default:
+                    # code...
+                    break;
+            }
+
+        } else {
+            switch ($shenfeng) {
+                case 'zixun':
+                    //$is_qiantai=1;
+                    break;
+                //网站竞价来源
+                case 'website':
+                    $is_website = 1;
+
+                    break;
+                //回访人员
+                case 'huifang':
+                    $is_huifang = 1;
+
+
+                    break;
+                case 'qiantai':
+
+                    $is_qiantai = 1;
+
+                    break;
+                case 'yishen':
+                    $is_yishen = 1;
+
+                case 'all':
+
+
+                default:
+                    # code...
+                    break;
+            }
+        }
+
 
         if (IS_GET) {
             $getdata = I('get.');
@@ -36,7 +114,6 @@ class YuYueController extends AuthController
                 'yx_id',
                 'zx_id',
                 'user_id',
-                'leibie',
                 'admin_id',
                 'status'
 
@@ -52,7 +129,7 @@ class YuYueController extends AuthController
                 }
 
             }
-            //创建时间为预约时间
+            //时间1476806399
             if ($getdata['djstime'] != '' && $getdata['djetime'] != '') {
                 $getdata['djstime'] .= " 00:00:00";
 
@@ -63,7 +140,6 @@ class YuYueController extends AuthController
                 $map['y1.ctime'] = array('between', $timestr);
 
             }
-            //预约时间为预到时间
             if ($getdata['ystime'] != '' && $getdata['yetime'] != '') {
                 $getdata['ystime'] .= " 00:00:00";
                 $getdata['yetime'] .= " 23:59:59";
@@ -73,7 +149,6 @@ class YuYueController extends AuthController
                 $map['y1.ydatetime'] = array('between', $timestr2);
 
             }
-            
             if ($getdata['dzstime'] != '' && $getdata['dzetime'] != '') {
                 $getdata['dzstime'] .= " 00:00:00";
                 $getdata['dzetime'] .= " 23:59:59";
@@ -93,6 +168,7 @@ class YuYueController extends AuthController
                 $key = I('get.keyword');
                 $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or y1.ynumber like '%" . $key . "%'";
             }
+
 
         }
 
@@ -118,38 +194,28 @@ class YuYueController extends AuthController
             y1.mark as mark,
             y1.jztime as jztime,
             y1.dztime as dztime,
-            y1.leibie as leibie,
 
             u1.name as user_name,
             u1.age as age,
             u1.sex,
             u1.uuid as user_uuid,
             u1.id as user_id,
-            u1.tel as tel,
-            u1.sfcard as card,
-            u1.birthday as birthday,
 
             
             a1.name as admin_name,
             k1.name as ks_name,
             k2.name as kst_name,
             k3.name as kstt_name,
-            k4.name as bz_name,
             zx.name as zx_name,
             yx.name as yx_name,
             wz.name as web_name,
             ae1.name as ae_name,
             ae2.name as ae2_name,
             ys.realname as ys_name,
+
     
             jz.jz_smcontent as jz_smcontent,
-            ssys.name as ysz_name,
-
-            xueli.name as xueli,
-            zhiye.name as zhiye,
-            hunyin.name as jiehun,
-            level.name as  level,
-            phone.name  as pbank
+            ssys.name as ysz_name
         ';
         //管理会员用户
         $join[] = '__USER__ u1 ON y1.user_id = u1.id';
@@ -162,8 +228,6 @@ class YuYueController extends AuthController
         $join[] = 'LEFT JOIN __KE_SHI__ k2 ON y1.kst_id = k2.id';
         //关科室3
         $join[] = 'LEFT JOIN __KE_SHI__ k3 ON y1.kstt_id = k3.id';
-        //最终兵种
-        $join[] = 'LEFT JOIN __KE_SHI__ k4 ON y1.ksall_id = k4.id';
         //关咨询工具
         $join[] = 'LEFT JOIN __LAN_MU__ zx ON y1.zx_id = zx.id';
         //网站
@@ -174,6 +238,7 @@ class YuYueController extends AuthController
         $join[] = 'LEFT JOIN __LAN_MU__ ly1 ON y1.ly_id = ly1.id';
         $join[] = 'LEFT JOIN __LAN_MU__ ly2 ON y1.lyt_id = ly2.id';
         $join[] = 'LEFT JOIN __LAN_MU__ ly3 ON y1.lytt_id = ly3.id';
+
         //区域
         $join[] = 'LEFT JOIN __AREA__ ae1 ON y1.area_id = ae1.id';
         //意向
@@ -182,21 +247,16 @@ class YuYueController extends AuthController
         $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON y1.id = jz.yy_id';
         //手术医生
         $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = y1.ysz_id';
-
-        //关联学历
-        $join[] = 'LEFT JOIN __LAN_MU__ xueli ON u1.xueli = xueli.id';
-        //职业
-        $join[] = 'LEFT JOIN __LAN_MU__ zhiye ON u1.zhiye = zhiye.id'; 
-        //婚姻
-        $join[] = 'LEFT JOIN __LAN_MU__ hunyin ON u1.is_jiehun = hunyin.id'; 
-        //会员级别
-        $join[] = 'LEFT JOIN __LAN_MU__ level ON u1.level = level.id'; 
-        //手机品牌
-        $join[] = 'LEFT JOIN __LAN_MU__ phone ON u1.phone_bank = phone.id'; 
-
        
+      
+
+
         $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
+
+
         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+
+
         $page = 1;
         if (isset($_GET['p'])) {
             $page = $_GET['p'];
@@ -205,219 +265,61 @@ class YuYueController extends AuthController
         $list = $model->alias('y1')->field($filed)->join($join)->order('y1.ydatetime desc,y1.id desc')->where($map)->page($page . ',' . $pagesize)->select();
         //print_r($list);
         $this->assign('list', $list);// 赋值数据集
+
         $type_arr='defalut';
+        $staus=I('get.status');
+        $tpl='';
+        if($shenfeng=='yishen' && $staus==3)
+        {
+            $type_arr="yishen_s3";
+            $tpl='yishen_s3';
+        }
         $menu_list = $this->getFiledArray($type_arr);
+        //print_r($menu_list);
+        if ($is_qiantai) {
+            $menu_list['td-ys_name'] = array('name' => lang('接诊医生'), 'w' => '', 'h' => '', 'is_hide' => '');
+        }
         $this->menu_list = $menu_list;
+        $show_rule = array(
+            'is_website' => $is_website,
+            'is_huifang' => $is_huifang,
+            'is_qiantai' => $is_qiantai,
+            'is_yishen' => $is_yishen
+
+        );
+        //print_r($show_rule);
+        $this->assign($show_rule);
         $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
-       $this->display();
-    }
-    public function zxindex() {
-        //print_r(session('group'));
-        $this->check_group($this->rule_qz."_show");
-        $map = array();
-       
 
-        //自己查看自己的
-        if (!check_group('root')) {
-            if (check_group('yuyue_only')) {
-                $map['y1.admin_id'] = session('admin_id');
-            }
-        } 
-
-        if (IS_GET) {
-            $getdata = I('get.');
-
-            $y_arr = array(
-                'ks_id',
-                'kst_id',
-                'kstt_id',
-                'ly_id',
-                'lyt_id',
-                'lytt_id',
-                'area_id',
-                'areat_id',
-                'yx_id',
-                'zx_id',
-                'user_id',
-                'admin_id',
-                'leibie',
-                
-
-            );
-            //print_r($getdata);
-            foreach ($getdata as $key => $v) {
-                if ($v != '') {
-
-                    if (in_array($key, $y_arr)) {
-
-                        $map["y1." . $key] = $v;
-                    }
-                }
-
-            }
-          
-
-            if (I('get.user_id') != '') {
-                $map['y1.user_id'] = I('get.user_id');
-
-            }
-            if (I('get.keyword') != '') {
-                $key = I('get.keyword');
-                $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%'";
-            }
-
+        if($tpl!='')
+        {
+             $this->display('YuYue:tpl:'.$tpl);
+        }else
+        {
+            $this->display();
         }
-
-        $model = M('ZiXun');
-        $filed = '
-            u1.name as user_name,
-            u1.age as age,
-            u1.sex,
-            u1.uuid as user_uuid,
-            u1.id as user_id,
-            u1.tel as tel,
-            u1.sfcard as card,
-            u1.birthday as birthday,
-            
-            ly1.name as ly_name,
-            ly2.name as lyt_name,
-            ly3.name as lytt_name,
-
-            y1.uuid as yuuid,
-            y1.zx_content as zx_content,
-            y1.zx_mark,
-            y1.id as yid,
-            y1.admin_id,
-            y1.ctime as yctime,
-            y1.mark as mark,
-
-           
-
-            a1.name as admin_name,
-
-            k1.name as ks_name,
-            k2.name as kst_name,
-            k3.name as kstt_name,
-            zx.name as zx_name,
-            yx.name as yx_name,
-            wz.name as web_name,
-            ae1.name as ae_name,
-            ae2.name as ae2_name,
-            xueli.name as xueli,
-            zhiye.name as zhiye,
-            hunyin.name as jiehun,
-            level.name as  level,
-            phone.name  as pbank
-           
-        ';
-        //管理会员用户
-        $join[] = '__USER__ u1 ON y1.user_id = u1.id';
-        //关联ADMIN
-        $join[] = 'LEFT JOIN __ADMIN__ a1 ON y1.admin_id = a1.id';
-        //关科室1
-        $join[] = 'LEFT JOIN __KE_SHI__ k1 ON y1.ks_id = k1.id';
-        //关科室2
-        $join[] = 'LEFT JOIN __KE_SHI__ k2 ON y1.kst_id = k2.id';
-        //关科室3
-        $join[] = 'LEFT JOIN __KE_SHI__ k3 ON y1.kstt_id = k3.id';
-        //关咨询工具
-        $join[] = 'LEFT JOIN __LAN_MU__ zx ON y1.zx_id = zx.id';
-        //网站
-        $join[] = 'LEFT JOIN __LAN_MU__ wz ON y1.web_id = wz.id';
-        //意向
-        $join[] = 'LEFT JOIN __LAN_MU__ yx ON y1.zx_id = yx.id';
-        //病人来源
-        $join[] = 'LEFT JOIN __LAN_MU__ ly1 ON y1.ly_id = ly1.id';
-        $join[] = 'LEFT JOIN __LAN_MU__ ly2 ON y1.lyt_id = ly2.id';
-        $join[] = 'LEFT JOIN __LAN_MU__ ly3 ON y1.lytt_id = ly3.id';
-        //区域
-        $join[] = 'LEFT JOIN __AREA__ ae1 ON y1.area_id = ae1.id';
-        //意向
-        $join[] = 'LEFT JOIN __AREA__ ae2 ON y1.areat_id = ae2.id';
-
-        //关联学历
-        $join[] = 'LEFT JOIN __LAN_MU__ xueli ON u1.xueli = xueli.id';
-        //职业
-        $join[] = 'LEFT JOIN __LAN_MU__ zhiye ON u1.zhiye = zhiye.id'; 
-        //婚姻
-        $join[] = 'LEFT JOIN __LAN_MU__ hunyin ON u1.is_jiehun = hunyin.id'; 
-        //会员级别
-        $join[] = 'LEFT JOIN __LAN_MU__ level ON u1.level = level.id'; 
-        //手机品牌
-        $join[] = 'LEFT JOIN __LAN_MU__ phone ON u1.phone_bank = phone.id'; 
-       
-       
-        $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
-        $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
-        $page = 1;
-        if (isset($_GET['p'])) {
-            $page = $_GET['p'];
-        }
-
-        $list = $model->alias('y1')->field($filed)->join($join)->order('y1.ctime desc,y1.id desc')->where($map)->page($page . ',' . $pagesize)->select();
-        //print_r($list);
-        $this->assign('list', $list);// 赋值数据集
-
-        $type_arr='zixun';
-       
-        $menu_list = $this->getFiledArray($type_arr);
         
-        $this->menu_list = $menu_list;
-       
 
-      
-        $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
-       $this->display();
+    }
+    public function demo(){
+        $this->display();
     }
     public function getFiledArray($type){
         switch ($type) {
             case 'yishen_s3':
-                   $menu_list = array(
-
-                        'td-1' => array('name' => lang('预约号'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-3' => array('name' => lang('性别'), 'filed'=>'sex','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-4' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-5' => array('name' => lang('生日'), 'filed'=>'birthday','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-6' => array('name' => lang('职业'), 'filed'=>'zhiye','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-7' => array('name' => lang('婚姻'), 'filed'=>'jiehun','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-8' => array('name' => lang('咨询时间'), 'filed'=>'birthday','diy'=>'', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-9' => array('name' => lang('预约时间'), 'filed'=>'zhiye','diy'=>'', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-10' => array('name' => lang('具体病种'), 'filed'=>'jiehun','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-11' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-12' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-13' => array('name' => lang('网站来源'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-14' => array('name' => lang('来源类别'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-15' => array('name' => lang('咨询方式'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-16' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-17' => array('name' => lang('预约状态'), 'filed'=>'zx_mark','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-
-                       
-                        
-
-                    );
-                break;
-            case 'zixun':
                     $menu_list = array(
 
+                        'td-yuyue' => array('name' => lang('预约号'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-name' => array('name' => lang('姓名'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-sex' => array('name' => lang('性别'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-ytime' => array('name' => lang('年龄'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-djtime' => array('name' => lang('接诊时间'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-ks' => array('name' => lang('接诊小结'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-bz' => array('name' => lang('接诊医生'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-ly' => array('name' => lang('手术医生'), 'w' => '', 'h' => '', 'is_hide' => ''),
                        
-                        'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-2' => array('name' => lang('性别'), 'filed'=>'sex','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-3' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-4' => array('name' => lang('生日'), 'filed'=>'birthday','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-5' => array('name' => lang('职业'), 'filed'=>'zhiye','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-6' => array('name' => lang('婚姻'), 'filed'=>'jiehun','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-7' => array('name' => lang('身份证'), 'filed'=>'card','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-8' => array('name' => lang('会员级别'), 'filed'=>'level','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-9' => array('name' => lang('手机品牌'), 'filed'=>'pbank','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-10' => array('name' => lang('咨询工具'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-11' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-12' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-13' => array('name' => lang('网站来源'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-14' => array('name' => lang('咨询小结'), 'filed'=>'zx_mark','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-15' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-16' => array('name' => lang('咨询时间'), 'filed'=>'yctime','diy'=>'', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
-                        
+                        'td-status' => array('name' => lang('预约状态'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-handle' => array('name' => lang('操作'), 'w' => '', 'h' => '', 'is_hide' => '')
 
                     );
                 break;
@@ -425,30 +327,23 @@ class YuYueController extends AuthController
             default:
                 $menu_list = array(
 
-                    'td-1' => array('name' => lang('预约号'), 'filed'=>'ynumber','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                    'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-3' => array('name' => lang('性别'), 'filed'=>'sex','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-4' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-5' => array('name' => lang('生日'), 'filed'=>'birthday','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                    'td-6' => array('name' => lang('职业'), 'filed'=>'zhiye','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                    'td-7' => array('name' => lang('婚姻'), 'filed'=>'jiehun','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                    'td-8' => array('name' => lang('咨询时间'), 'filed'=>'yctime','diy'=>'', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-9' => array('name' => lang('预约时间'), 'filed'=>'ydatetime','diy'=>'', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-10' => array('name' => lang('具体病种'), 'filed'=>'bz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-11' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-12' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-13' => array('name' => lang('网站来源'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                    'td-14' => array('name' => lang('来源类别'), 'filed'=>'leibie','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                    'td-15' => array('name' => lang('咨询方式'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-16' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-17' => array('name' => lang('预约状态'), 'filed'=>'ystatus','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-yuyue' => array('name' => lang('预约号'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-name' => array('name' => lang('姓名'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-sex' => array('name' => lang('性别'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-ytime' => array('name' => lang('预约时间'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-djtime' => array('name' => lang('登记时间'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-ks' => array('name' => lang('预约科室'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-bz' => array('name' => lang('预约病种'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-ly' => array('name' => lang('预约来源'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                   
+                    'td-status' => array('name' => lang('预约状态'), 'w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-handle' => array('name' => lang('操作'), 'w' => '', 'h' => '', 'is_hide' => '')
 
                 );
                 break;
         }
         return $menu_list;
     }
-
 
     public function getDetail()
     {
@@ -533,8 +428,6 @@ class YuYueController extends AuthController
                     //用户存在时，更新操作，预约添加操作
                     if ($has_user_id != ''){
                         $data['user_id']=$udata['id']=$has_user_id;
-                        //取消更新admin_id
-                        
                         $result = $model->add($data);
                         $uresult=$user->save($udata);
                         if($result && $uresult)
@@ -583,13 +476,13 @@ class YuYueController extends AuthController
                         {
                             M()->commit();
                             add_log($this->onname . '：' . $data['name'] . '添加成功');
-                            $msg = lang('添加咨询成功', 'handle');
-                            return $this->success($msg , $backurl);
+                            $msg = lang('添加成功', 'handle');
+                            return $this->success($msg . "预约号为：" . $data['ynumber'], $backurl);
                         }else
                         {
                             M()->rollback();
                             add_log($this->onname . '：' . $data['name'] . '添加失败');
-                            $msg = lang('添加咨询失败', 'handle');
+                            $msg = lang('添加失败', 'handle');
                             return $this->success($msg);
                         }
                     }else
@@ -682,17 +575,38 @@ class YuYueController extends AuthController
         //权限选择
         $base = I('get.base');
         //网站更新信息
-        $this->burl = U('Admin/YuYue/index');
+        $this->burl = U('Admin/YuYue/index') . "?" . base64_decode($base);
 
         $this->check_group('yuyue_edit');
         if (IS_POST) {
             $model = D('YuYue');
-            $user=D('User');
             $postdata = I('post.');
             if ($model->create()) {
                 $data = $model->create();
-                $udata=$user->create();
-                $udata['id'] = $data['user_id'];
+
+                $user_arr = array(
+                    'name',
+                    'qq',
+                    'sex',
+                    'birthday',
+                    'age',
+                    'tel',
+                    'is_jiehun',
+                    'admin_id',
+                    'email',
+                    'othetel'
+
+                );
+                $user = array();
+                foreach ($user_arr as $uv) {
+                    if ($postdata[$uv] != '') {
+                        $user[$uv] = $postdata[$uv];
+                    }
+
+                }
+                //如果为空，则返回null
+
+                $user['id'] = $data['user_id'];
 
 
                 foreach ($data as $k => $v) {
@@ -700,14 +614,9 @@ class YuYueController extends AuthController
                         unset($data[$k]);
                     }
                 }
-                 foreach ($udata as $k => $v) {
-                    if ($v == '') {
-                        unset($udata[$k]);
-                    }
-                }
 
-                if (count($udata) > 1) {
-                    M("User")->save($udata);
+                if (count($user) > 1) {
+                    M("User")->save($user);
                 }
 
                 $result = $model->save($data);
@@ -718,8 +627,8 @@ class YuYueController extends AuthController
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.lo</script>";
                     return $this->success($msg);
                 } else {
-                    $msg = lang('更新成功', 'handle');
-                    return $this->success(lang('更新成功', 'handle'));
+                    $msg = lang('数据一样无更新', 'handle');
+                    return $this->success(lang('无更新', 'handle'));
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
                 }
             } else {
@@ -785,23 +694,23 @@ class YuYueController extends AuthController
         return $this->display();
     }
 
-    public  function del(){
+    public function del()
+    {
         //权限选择
-        $this->check_group($this->rule_qz."_del");
-        $id=I('get.id');
-        $map=array(
-            'uuid'=>$id
+        $this->check_group('yushen');
+        $id = I('get.id');
+        $map = array(
+            'uuid' => $id
         );
-        $model   =   D("YuYue");
-        $data=$model->where($map)->find();
-        $result=$model->where($map)->delete();
-        if($result)
-        {
-            add_log($this->onname.'：'.$data['name'].'删除成功');
-            return  $this->success(lang('删除成功','handle'));;
+        $model = D('Price');
+        $data = $model->where($map)->find();
+        $result = $model->where($map)->delete();
+        if ($result) {
+            add_log($this->onname . '：' . $data['name'] . '删除成功');
+            return $this->success(lang('删除成功', 'handle'));;
         }
-        add_log($this->onname.'：'.$data['name'].'删除失败');
-        return $this->error(lang('删除失败','handle'));;
+        add_log($this->onname . '：' . $data['name'] . '删除失败');
+        return $this->error(lang('删除失败', 'handle'));;
     }
 
     public function handle($id)

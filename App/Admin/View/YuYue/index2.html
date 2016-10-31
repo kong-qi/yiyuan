@@ -25,7 +25,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="ibox-content" style="padding-left:0px; padding-right:0px; display: none;" >
+                            <div class="ibox-content" style="padding-left:0px; padding-right:0px;" >
                                 <div class="roww">
 
                                     <div class="col-sm-3">
@@ -369,22 +369,26 @@
                                         <td class="td-handle">
                                             <!-- //网站竞价人员 -->
                                             <div class="box">
-                                                <include file="Menu:add_huifang" />
-                                                <include file="Menu:show_huifang" />
-                                                <include file="Menu:send_sms" />
-                                                <if condition=" check_group($rule_qz.'_edit')">
-                                                    <a href="{{ :U('Admin/YuYue/edit?id='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}"
-                                                    class="btn btn-xs btn-white" >
-                                                    <span class="fa fa-edit "></span>
-                                                    {{ :lang('修改','handle') }}</a>
-                                                </if>
-                                                <if condition=" check_group($rule_qz.'_del')">
-                                                    <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['yuuid'])) }}"
-                                                    class="btn btn-xs btn-white" date-del="1">
-                                                    <span class="fa fa-trash "></span>
-                                                    {{ :lang('删除','handle') }}</a>
-                                                </if>
+                                                <include file="Menu:qiantai" />
+                                            <!-- /竞价更正 -->
+                                            <if condition="$is_website ">
+                                               
+                                                <include file="Menu:website" />
+                                                <!--//回访人员-->
+                                            <elseif condition="$is_huifang"/>
+                                                
+                                                <include file="Menu:huifang" />
+                                                <!--//前台-->
+                                            <elseif condition="$is_qiantai"/>
+                                                
+                                               
+                                            <elseif condition="$is_yishen"/>
+                                                 <include file="Menu:yishen" />
+                                                <!--//医生-->
+                                            <else/>
+                                                <include file="Menu:other" />
                                             
+                                            </if>
                                             </div>
                                            
                                         </td>

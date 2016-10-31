@@ -8,6 +8,9 @@
 function create_admin_id(){
     return session('admin_id');
 }
+function echo_html($str){
+    return htmlspecialchars_decode($str);
+}
 /**
  * @param $str
  * 是否审核
@@ -689,7 +692,7 @@ function onkefu($type='is_zixun',$merg=0,$aid='',$ready=''){
         $option='';
         //查询组
         $Model = new \Think\Model();
-        $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1')");
+        $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1') and checked='1'");
         if(count($admin_arr)>0)
         {
             foreach ($admin_arr as $key=>$v)
@@ -710,15 +713,11 @@ function onkefu($type='is_zixun',$merg=0,$aid='',$ready=''){
             $real='disabled';
         }
         $str='
-            <div class="form-group">
-                                    <label class="col-sm-12">'.lang('咨询客服').'</label>
-                                    <div class="col-sm-12">
-                                        <select class="form-control" '.$real.' name="admin_id" required id="userinfoZxy">
-                                            <option value="">'.lang('请先选择咨询客户').'</option>
-                                            '.  $option.'
-                                        </select>
-                                    </div>
-           </div>
+                    <select class="form-control inline wb50" '.$real.' name="admin_id" required id="userinfoZxy">
+                        <option value="">'.lang('请先选择咨询客户').'</option>
+                        '.  $option.'
+                    </select>
+          
         ';
     }else
     {
@@ -736,7 +735,7 @@ function onkefu2($type='is_zixun',$merg=0,$aid=''){
         $option='';
         //查询组
         $Model = new \Think\Model();
-        $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1')");
+        $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1') and checked='1'");
         if(count($admin_arr)>0)
         {
             foreach ($admin_arr as $key=>$v)
@@ -921,8 +920,7 @@ function yuyue_status($checked=''){
         '1'=>lang('已预约'),
         '2'=>lang('已到院'),
         '3'=>lang('已接诊'),
-        '4'=>lang('已改期'),
-        '5'=>lang('逾期未到')
+        '4'=>lang('逾期未到')
     );
     if($checked!='')
     {
@@ -1134,7 +1132,7 @@ function get_yushen_ks($id=0,$echo=1,$checkid=''){
     }
     return $rule;
 }
-function to_time($time,$f='Y-m-d H:i:s'){
+function to_time($time,$f='m-d-Y H:i:s'){
     return date($f,$time);
 }
 function to_date_time($time,$f='Y-m-d H:i:s'){
