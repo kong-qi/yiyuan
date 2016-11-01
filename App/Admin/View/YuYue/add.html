@@ -38,7 +38,7 @@
                                
                                 <div class="form-group">
                                     <select class="form-control inline wb50" required name="zx_id" id="userinfo0">
-                                        <option value="">{{ :lang('请先选择咨询方式') }}</option>
+                                        <option value="">{{ :lang('请选择咨询方式') }}</option>
                                         {{ :get_lanmu_onelist('zixun') }}
                                     </select>
                                      <if condition="check_group('root')">
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="form-group">
                                     <select name="phone_bank" class="form-control inline wb30">
-                                        <option value="">{{ :lang('手机品牌') }}</option> {{ :get_huifang_onelist('bank','user') }}
+                                        <option value="">{{ :lang('手机型号') }}</option> {{ :get_huifang_onelist('bank','user') }}
                                     </select>
                                     <input type="text" class="form-control inline wb70" name="address" placeholder="{{ :lang('详细地址') }}">
                                 </div>
@@ -120,7 +120,7 @@
                             <div class="ibox-content">
                                 <div class="form-group">
                                     <select class="form-control inline wb50" name="web_id" id="">
-                                        <option value="">{{ :lang('请先选择网站','handle') }}</option>
+                                        <option value="">{{ :lang('请选择网站','handle') }}</option>
                                         <php>echo get_lanmu_onelist('website',1,'first');</php>
                                     </select>
                                     <input type="text" class="form-control inline wb50" name="web_key" placeholder="{{ :lang('搜索关键词','handle') }}">
@@ -181,25 +181,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="ibox">
-                            <div class="ibox-title">
-                                <h5><a class="collapse-link">{{ :lang('咨询信息') }}</a></h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="form-group">
-                                    <textarea class="form-control" placeholder="{{ :lang('咨询小结') }}" name="zx_mark"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-12">{{ :lang('详细聊天','handle') }}</label>
-                                    <textarea class="" name="zx_content" id="content"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                      
                         <div class="ibox">
                             <div class="ibox-title">
                                 <h5><a class="collapse-link">{{ :lang('预约信息') }}</a></h5>
@@ -212,11 +194,11 @@
                             <div class="ibox-content">
                                 <div class="form-group">
                                     <select class="form-control wb50 inline" name="leibie">
-                                        <option value="">{{ :lang('请选择来源类别','handle') }}</option>
+                                        <option value="">{{ :lang('请选择来院类别','handle') }}</option>
                                         {{ :yuyue_option_leibie() }}
                                     </select>
                                     <select class="form-control wb50 inline" name="yx_id">
-                                        <option value="">{{ :lang('请先选择意向评定','handle') }}</option>
+                                        <option value="">{{ :lang('请选择意向评定','handle') }}</option>
                                         {{ :get_lanmu_onelist('yuyuezl') }}
                                     </select>
                                 </div>
@@ -259,6 +241,25 @@
                                             </select>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5><a class="collapse-link">{{ :lang('咨询信息') }}</a></h5>
+                                <div class="ibox-tools">
+                                    <a class="collapse-link">
+                                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                    <textarea class="form-control" placeholder="{{ :lang('咨询小结') }}" name="zx_mark"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-12">{{ :lang('详细聊天','handle') }}</label>
+                                    <textarea class="" name="zx_content" id="content"></textarea>
                                 </div>
                             </div>
                         </div>

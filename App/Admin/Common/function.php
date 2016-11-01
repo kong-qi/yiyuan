@@ -714,7 +714,7 @@ function onkefu($type='is_zixun',$merg=0,$aid='',$ready=''){
         }
         $str='
                     <select class="form-control inline wb50" '.$real.' name="admin_id" required id="userinfoZxy">
-                        <option value="">'.lang('请先选择咨询客户').'</option>
+                        <option value="">'.lang('请选择咨询员').'</option>
                         '.  $option.'
                     </select>
           

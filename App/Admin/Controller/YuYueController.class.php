@@ -164,7 +164,7 @@ class YuYueController extends AuthController
         $join[] = 'LEFT JOIN __KE_SHI__ k3 ON y1.kstt_id = k3.id';
         //最终兵种
         $join[] = 'LEFT JOIN __KE_SHI__ k4 ON y1.ksall_id = k4.id';
-        //关咨询工具
+        //关咨询方式
         $join[] = 'LEFT JOIN __LAN_MU__ zx ON y1.zx_id = zx.id';
         //网站
         $join[] = 'LEFT JOIN __LAN_MU__ wz ON y1.web_id = wz.id';
@@ -320,7 +320,7 @@ class YuYueController extends AuthController
         $join[] = 'LEFT JOIN __KE_SHI__ k2 ON y1.kst_id = k2.id';
         //关科室3
         $join[] = 'LEFT JOIN __KE_SHI__ k3 ON y1.kstt_id = k3.id';
-        //关咨询工具
+        //关咨询方式
         $join[] = 'LEFT JOIN __LAN_MU__ zx ON y1.zx_id = zx.id';
         //网站
         $join[] = 'LEFT JOIN __LAN_MU__ wz ON y1.web_id = wz.id';
@@ -410,7 +410,7 @@ class YuYueController extends AuthController
                         'td-7' => array('name' => lang('身份证'), 'filed'=>'card','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                         'td-8' => array('name' => lang('会员级别'), 'filed'=>'level','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                         'td-9' => array('name' => lang('手机品牌'), 'filed'=>'pbank','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-10' => array('name' => lang('咨询工具'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-10' => array('name' => lang('咨询方式'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-11' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-12' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-13' => array('name' => lang('网站来源'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
