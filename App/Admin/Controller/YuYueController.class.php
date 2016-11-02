@@ -12,7 +12,7 @@ class YuYueController extends AuthController
         //print_r(session('group'));
         $this->check_group($this->rule_qz."_show");
         $map = array();
-       
+        $this->assign('is_search',I('get.is_search'));
 
         //自己查看自己的
         if (!check_group('root')) {
@@ -653,7 +653,7 @@ class YuYueController extends AuthController
         $this->check_group("zixun_show");
         $map = array();
        
-
+        $this->assign('is_search',I('get.is_search'));
         //自己查看自己的
         if (!check_group('root')) {
             if (check_group('yuyue_only')) {

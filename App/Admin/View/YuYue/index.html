@@ -14,7 +14,15 @@
         <div class="ibox">
             
                 <form action='' method="get" id="contact-form">
-                    
+                    <input type="hidden" name="is_search" value="1">
+                    <php>
+                        $is_search_on="";
+                       
+                        if($is_search==0)
+                        {
+                            $is_search_on="display: none;";
+                        }
+                    </php>
                     <div class="col-sm-12" style="padding:0px; margin-bottom: 0">
                         <div class="ibox float-e-margins" >
                             <div class="ibox-title">
@@ -25,7 +33,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="ibox-content" style="padding-left:0px; padding-right:0px; display: none;" >
+                            <div class="ibox-content" style="padding-left:0px; padding-right:0px;{{ :$is_search_on }}" >
                                 <div class="roww">
 
                                     <div class="col-sm-3">

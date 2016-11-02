@@ -9,7 +9,8 @@ class HuiFangZiDianController extends AuthController {
         'hf_type'=>'回访类型',
         'hf_theme'=>'回访主题',
         'hf_status'=>'回访状态',
-        'hf_go'=>'客户流向'
+        'hf_go'=>'客户流向',
+        'hf_result'=>'回访结果'
     );
 
     public function index($type){

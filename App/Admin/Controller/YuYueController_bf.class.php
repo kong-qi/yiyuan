@@ -16,7 +16,9 @@ class YuYueController extends AuthController
         $is_huifang = 0;
         $is_yishen = 0;
         $is_qiantai = 0;
-
+        //是否搜索
+     
+      
         //自己查看自己的
         if (!check_group('root')) {
             if (check_group('yuyue_only')) {
