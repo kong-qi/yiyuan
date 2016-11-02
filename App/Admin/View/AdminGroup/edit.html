@@ -86,12 +86,20 @@
                                 <td align="right">{{ :lang('权限选择','filed') }}</td>
                                 <td>
                                     <div class="rule">
-
+                                       
                                         <?php
                                         $rule=get_rule(0);
                                         ?>
+                                        
                                         <if condition="$rule">
-
+                                            <div class="form-group">
+                                                <label class="col-sm-12">{{ $lv_v.name }}</label>
+                                                <div class="col-sm-12">
+                                                    <label class="checkbox-inline f-label">
+                                                        <input type="checkbox" name="ruleid[]" {{ $}} value="root">{{ :lang('超级管理员') }}
+                                                    </label>
+                                                </div>
+                                            </div>
                                             <foreach name="rule" item="lv_v" key="k">
                                                 <div class="form-group" style="border:1px dotted #CCCCCC;padding-top: 5px;">
                                                     <label class="col-sm-12">{{ $lv_v.name }}</label>
