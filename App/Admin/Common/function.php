@@ -475,6 +475,47 @@ function get_huifang_onelist($subtype='hf_theme',$type="huifang",$echo=1,$fid=""
     }
     return $rule;
 }
+function get_huifang_onelist_li($subtype='hf_theme',$type="huifang",$echo=1,$fid="",$sid='',$checked=''){
+    $check='';
+    $map=array();
+    $map['checked']=1;
+    $map['type']=$type;
+    $map['subtype']=$subtype;
+    if($fid!='')
+    {
+        if($fid=='first')
+        {
+            $map['fid']=0;
+        }else
+        {
+            $map['fid']=array('in',$fid);
+        }
+
+    }
+    if($sid!='')
+    {
+        $map['id']=array('in',$sid);
+    }
+
+
+
+    $rule=M('LanMu')->where($map)->select();
+    $str='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+               
+                $str.=' <li data-id="'.$v['id'].'"><a href="#">'.$v['name'].'</a></li>';
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
 
 /**
  * 回访带查询条件
@@ -567,6 +608,35 @@ function get_doc($where=array(),$echo=1,$checked=''){
     $map['groupid']=12;
     $map=$where+$map;
     $m=M('Admin')->where($map)->select();
+    $str='';
+    if($echo)
+    {
+        if(count($m)>0)
+        {
+            foreach ($m as $k=>$v)
+            {
+                if($checked==$v['id'])
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option $check value='".$v['id']."'>".$v['realname']."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $m;
+}
+function get_huifang_er($echo=1,$checked='',$where=array()){
+
+    $map=array();
+    $map['checked']=1;
+    $map['groupid']=12;
+    $map=$where+$map;
+    $m=M()->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_hf='1') and checked='1'");
     $str='';
     if($echo)
     {
@@ -921,6 +991,18 @@ function yuyue_status($checked=''){
         '2'=>lang('已到院'),
         '3'=>lang('已接诊'),
         '4'=>lang('逾期未到')
+    );
+    if($checked!='')
+    {
+        return $arr[$checked];
+    }
+    return $arr;
+}
+function ren_status($checked=''){
+    $arr=array(
+        '0'=>lang('未回访'),
+        '1'=>lang('已回访'),
+       
     );
     if($checked!='')
     {

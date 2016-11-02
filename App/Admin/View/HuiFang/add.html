@@ -8,12 +8,13 @@
 
         <div class="animated fadeInUp">
             <div class="col-sm-12 ">
-                <form action="{{ :U('Admin/HuiFang/getlistadd') }}" method="post" id="huifang_form" class="form-horizontal" enctype="multipart/form-data">
+                <form action="{{ :U('Admin/HuiFang/getlistadd') }}" method="post" id="validate" class="form-horizontal" enctype="multipart/form-data">
                     <div class="ibox float-e-margins m-t">
                         <div class="ibox-content">
                             <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('病人名字') }}</label>
-                                <div class="col-sm-12">
+                                <div class="input-group">
+                                    <label class="input-group-addon">{{ :lang('病人名字') }}</label>
+                                    <input type="hidden" name="renwu_id" value="{{ :I('get.rw_id') }}">
                                     <input type="hidden" name="close_frame" value="1">
                                     <input type="hidden" name="bktab" value="1">
                                     <input type="hidden" readonly name="admin_id" value="{{ :session('admin_id') }}">
@@ -22,54 +23,81 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('回访主题') }}</label>
-                                <div class="col-sm-12">
-                                    <select  id="hf_name" name="name" class="form-control">
-                                        {{ :get_huifang_onelist() }}
-                                    </select>
+                                <div class="input-group">
+                                    <label class="input-group-addon">{{ :lang('联系电话') }}</label>
+                                   
+                                    <input data-show-phone="1" data-url="{{ :U('Admin/Ajax/showPhone') }}" data-vid="#showphone" id="showphone" data-type="input" data-uid="{{ $data.id }}" class="form-control" value="{{ :hide_tel($data['tel'],2,5) }}"  readonly>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('回访类型') }}</label>
-                                <div class="col-sm-12">
+                               <div class="input-group">
+                                    <label class="input-group-addon">{{ :lang('回访主题') }}</label>
+                                
+                                    <div class="input-group-btn">
+                                      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ :lang('选择') }} <span class="caret"></span></button>
+                                      <ul class="dropdown-menu" role="menu" data-chang-value="1">
+
+                                        {{ :get_huifang_onelist_li() }}
+                                      </ul>
+                                    </div><!-- /btn-group -->
+                                    <input type="text" required class="form-control" name="name" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                               <div class="input-group">
+                                    <label class="input-group-addon">{{ :lang('回访类型') }}</label>
+                                
                                     <select  id="hf_type" name="type" class="form-control">
                                         {{ :get_huifang_onelist('hf_type') }}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('回访方式') }}</label>
-                                <div class="col-sm-12">
+                               <div class="input-group">
+                                    <label class="input-group-addon">{{ :lang('回访方式') }}</label>
+                                
                                     <select  id="hf_way" name="ways" class="form-control">
                                         {{ :get_huifang_onelist('hf_way') }}
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('客户流向') }}</label>
-                                <div class="col-sm-12" >
+                               <div class="input-group">
+                                    <label class="input-group-addon">{{ :lang('客户流向') }}</label>
+                                
                                     <select  id="hf_go" name="goplace" class="form-control">
                                         {{ :get_huifang_onelist('hf_go') }}
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('回访状态') }}</label>
-                                <div class="col-sm-12" >
+                            <!-- <div class="form-group">
+                               <div class="input-group">
+                                <label class="input-group-addon">{{ :lang('回访状态') }}</label>
+                                
                                     <select name="status" class="form-control">
                                         {{ :get_huifang_onelist('hf_status') }}
                                     </select>
                                 </div>
-                            </div>
-
+                            </div> -->
                             <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('下次回访时间') }}</label>
-                                <div class="col-sm-12">
-                                    <input class="form-control layer-date" required onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})" placeholder="YYYY-MM-DD hh:mm" value="" name="ntime" id="hf_time" >
+                               <div class="input-group">
+                                <label class="input-group-addon">{{ :lang('回访结果') }}</label>
+                                
+                                    <select name="result_cont" class="form-control">
+                                        {{ :get_huifang_onelist('hf_result') }}
+                                    </select>
                                 </div>
                             </div>
+
+                            <!-- <div class="form-group">
+                                <div class="input-group">
+                                    <label class="input-group-addon">{{ :lang('下次回访时间') }}</label>
+                               
+                                    <input class="form-control layer-date" required onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})" placeholder="YYYY-MM-DD hh:mm" value="" name="ntime" id="hf_time" >
+                                </div>
+                            </div> -->
                             <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('回访小结') }}</label>
+                                <label >{{ :lang('回访记录') }}</label>
                                 <div class="col-sm-12">
                                     <textarea class="summernote" name="content" id="content"></textarea>
                                 </div>
@@ -106,7 +134,7 @@
         });
         $().ready(function () {
             $("#validate").validate();
-            bd_ueditor('content');
+            bd_ueditor('content',100);
         });
 
     </script>

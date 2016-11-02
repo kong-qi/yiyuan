@@ -31,6 +31,12 @@ class HuiFangController extends AuthController {
             {
                 $result =    $model->add();
                 $data=$model->create();
+                $renwu_id=$data['renwu_id'];
+                if($renwu_id!='')
+                {
+                    $rdata=['id'=>$renwu_id,'status'=>1];
+                    M('RenWu')->save($rdata);
+                }
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     if($isclose)
@@ -66,11 +72,83 @@ class HuiFangController extends AuthController {
 
     public function index(){
         //权限选择
+        $map=array();
+        $this->assign('is_search',I('get.is_search'));
+        $this->check_group("huihfrenwu_list");
+        $model = M('HuiFang');
+        $join[] = 'LEFT JOIN __USER__ u1 ON rewu.user_id = u1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ a1 ON rewu.admin_id = a1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ fp ON rewu.handle_id = fp.id';
+        $filed ='
+        rewu.id as id,
+        rewu.status as status,
+        rewu.uuid as uuid,
+        rewu.name as name,
+        rewu.type_text as type_text,
+        rewu.ctime as ctime,
+        rewu.rtime as rtime,
+        a1.name as create_name,
+        fp.name as handle_name,
+        u1.name as user_name,
+        u1.tel as tel,
+        u1.id as user_id
+        ';
+        if(I('get.keyword')!='')
+        {
+             $key=I('get.keyword');
+            $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or rewu.name like '%" . $key . "%'";
+        }
+         $status='';
+         if(I('get.status')!='')
+         {
+            $status=I('get.status');
+            $map['status']=$status;
+         }
+         $count = $model->alias('rewu')->join($join)->where($map)->count();// 查询满足要求的总记录数
+         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+         $page = 1;
+         if (isset($_GET['p'])) {
+             $page = $_GET['p'];
+         }
 
-        $this->check_group('huifangset');
+         $list = $model->alias('rewu')->field($filed)->join($join)->order('rewu.ctime desc,rewu.id desc')->where($map)->page($page . ',' . $pagesize)->select();
+         //print_r($list);
+         $this->assign('list', $list);// 赋值数据集
+         $type_arr='';
+         $menu_list = $this->getFiledArray($type_arr);
+         
+         $this->menu_list = $menu_list;
 
+        
+        $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
+        
+        $this->display();
 
+    }
+    public function getFiledArray($type){
+        switch ($type) {
+           
+            
+            default:
+                $menu_list = array(
 
+                    
+                    'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-2' => array('name' => lang('电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('回访类型'), 'filed'=>'type_text','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-4' => array('name' => lang('回访状态'), 'filed'=>'status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+                    'td-7' => array('name' => lang('待回访日期'), 'filed'=>'rtime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('创建日期'), 'filed'=>'ctime','diy'=>'text-blue', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-6' => array('name' => lang('创建人'), 'filed'=>'create_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-8' => array('name' => lang('指定回访人'), 'filed'=>'handle_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+                   
+
+                );
+                break;
+        }
+        return $menu_list;
     }
 
     public function add($uid){

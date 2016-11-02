@@ -362,6 +362,8 @@
                                                         <span class="{{ :btn_yycolor(($v['leibie']+1)) }}">
                                                         {{ :lang(yuyue_leibie($v['leibie'])) }}
                                                         </span>
+                                                    <elseif condition="$mv['filed'] eq sex"/>    
+                                                    {{ lang($v['sex']) }}  
                                                     <elseif condition="$mv['filed'] eq user_name"/>
                                                         
                                                              <a href="javascript:void(0)" class=" js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.yuuid }}" > {{ $v[$mv['filed']] }}</a>

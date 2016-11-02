@@ -161,7 +161,10 @@
             } else {
                 this.default_text = this.options.placeholder_text_single || this.options.placeholder_text || AbstractChosen.default_single_text;
             }
-            return this.results_none_found = this.form_field.getAttribute("data-no_results_text") || this.options.no_results_text || AbstractChosen.default_no_result_text;
+            
+            this.results_none_found = this.form_field.getAttribute("data-no_results_text") || this.options.no_results_text || AbstractChosen.default_no_result_text;
+            
+            return this.results_none_found;
         };
 
         AbstractChosen.prototype.mouse_enter = function() {

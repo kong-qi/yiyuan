@@ -10,18 +10,17 @@
         <div class="animated fadeInUp">
                 <div class="col-sm-12">
 
-                    <form action="{{ :U('Admin/RenWu/getlistrenwuadd') }}" method="post" id="validate" class="form-horizontal" enctype="multipart/form-data">
-                        <input type="hidden" name="bktab" value="3">
-                        <input type="hidden" readonly name="admin_id" value="{{ :session('admin_id') }}">
-                        <input type="hidden" name="status" value="0">
-                        <input type="hidden" name="user_id" value="{{ $data.id }}">
+                    <form action="" method="post" id="validate" class="form-horizontal" enctype="multipart/form-data">
+                        <input type="hidden" name="id" value="{{ $data.id }}">
+                      
                        
+                        <input type="hidden" name="status" value="0">
                         <div class="ibox float-e-margins">
                             <div class="ibox-content">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <label class="input-group-addon">{{ :lang('病人名字') }}</label>
-                                        <input class="form-control" value="{{ $data.name }}" name="uname" readonly>
+                                        <input class="form-control" value="{{ $user_name }}" name="uname" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -30,15 +29,14 @@
                                    
                                         <input type="hidden" name="type_text">
                                         <select  id="hf_type" name="type_id" class="form-control" data-set-option='1' data-name="type_text">
-                                            {{ :get_huifang_onelist('hf_type') }}
+                                           
+                                            {{ :get_huifang_onelist('hf_type','huifang',1,'','',$data['type_id']) }}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
                                         <label class="input-group-addon">{{ :lang('任务主题') }}</label>
-                                    
-                                        
                                         
                                             <div class="input-group-btn">
                                               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">{{ :lang('选择') }} <span class="caret"></span></button>
@@ -47,7 +45,7 @@
                                                 {{ :get_huifang_onelist_li() }}
                                               </ul>
                                             </div><!-- /btn-group -->
-                                            <input type="text" required class="form-control" name="name" id="rw_name" >
+                                            <input type="text" required class="form-control" value="{{ $data.name }}" name="name" id="rw_name" >
                                           
                                     </div>
                                 </div>
@@ -58,7 +56,7 @@
                                         <label class="input-group-addon">{{ :lang('回访日期') }}</label>
                                    
                                         <input class="form-control layer-date" required placeholder="YYYY-MM-DD"
-                                               value="" onclick="laydate({istime: false, format: 'YYYY-MM-DD', min:laydate.now()})" name="rtime" id="rw_time">
+                                               value="{{ :to_time($data['rtime'],'Y-m-d') }}" onclick="laydate({istime: false, format: 'YYYY-MM-DD', min:laydate.now()})" name="rtime" id="rw_time">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -67,13 +65,13 @@
                                    
                                        
                                         <select   name="handle_id" class="form-control"  >
-                                            {{ :get_huifang_er(1,session('admin_id')) }}
+                                            {{ :get_huifang_er(1,$data['handle_id']) }}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('添加') }}</button>
+                                        <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('更新') }}</button>
                                     </div>
                                 </div>
                             </div>

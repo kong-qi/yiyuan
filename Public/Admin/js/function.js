@@ -639,7 +639,7 @@ $("[data-show-phone='1']").on('click',  function(event) {
                     $(vid).val(data.phone)
                 }else
                 {
-                    $(vid).test(data.phone)
+                    $(vid).text(data.phone)
                 }
                  layer.msg(lang.showok, {icon: 1});
                  $("[data-show-phone='1']").unbind('click');
@@ -816,3 +816,16 @@ $('[data-btn="handle"]').parent('a').hover(function(){
     
     $(this).find(".js-data-name").stop().text('');
 });
+
+$('[data-chang-value="1"] li').click(function(){
+    p=$(this).parents(".input-group");
+    v=$(this).text();
+    p.find("input").val(v);
+});
+$(document).on("change","[data-set-option='1']",function(){
+    name=$(this).attr('data-name');
+   
+    v=$(this).find("option:selected").text();
+    log(v);
+     $("[name='"+name+"']").val(v);
+}).trigger('change');

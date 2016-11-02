@@ -1,0 +1,22 @@
+
+<if condition="check_group('btn_huifang_add')">
+    <a href="javascript:void(0))"
+       class="btn btn-xs btn-white"
+       data-url="{{ :U('Admin/HuiFang/add',array('uid'=>$v['user_id'],'rw_id'=>$v['id'])) }}" data-title="{{ :lang('添加回访记录') }}" 
+       data-close="1" data-w="550px" data-h="60%" data-layer="1" data-uuid="{{ $v.user_uuid }}"  >
+        <span class="fa fa-bookmark btn-font"  data-name="{{ :lang('添加回访记录') }}" data-btn="handle"></span><span class="js-data-name"></span>
+        </a>
+</if>
+<include file="Menu:sms_send" />
+<if condition=" check_group('hfrenwu_edit')">
+    <a href="{{ :U('Admin/RenWu/edit?id='.$v['uuid']) }}"
+    class="btn btn-xs btn-white" >
+    <span class="fa fa-edit btn-font" data-name="{{ :lang('修改') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+</if>
+<if condition=" check_group('zixun_del')">
+    <a href="{{ :U('Admin/RenWu/del',array('id'=>$v['uuid'])) }}"
+    class="btn btn-xs btn-white" date-del="1">
+    <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span>
+   </a>
+</if>
+<!-- 查看对话，修改，预约，回访，添加回访任务，短信。 -->
