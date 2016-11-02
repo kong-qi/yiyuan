@@ -93,7 +93,7 @@ class AdminController extends AuthController {
     public function add(){
 
         //权限选择
-        $save=array('12','1');
+        $save=array('12');
         $this->saveArea=$save;
         $this->check_group('admin_add');
         if(IS_POST)
@@ -123,6 +123,7 @@ class AdminController extends AuthController {
         }else
         {
             $rule=M('AdminGroup')->where(array('checked'=>1))->select();
+
             $this->assign('rule',$rule);// 赋值数据集
             $this->display();
         }
@@ -198,7 +199,7 @@ class AdminController extends AuthController {
     }
     public function ysedit(){
         //权限选择
-        $save=array('12');
+        $save=array();
         $this->saveArea=$save;
         $this->check_group('admin_edit');
         if(IS_POST)
@@ -252,7 +253,7 @@ class AdminController extends AuthController {
     }
     public function edit(){
         //权限选择
-        $save=array('12','1');
+        $save=array();
         $this->saveArea=$save;
         $this->check_group('admin_edit');
         if(IS_POST)

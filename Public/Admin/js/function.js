@@ -806,9 +806,10 @@ unmonery()
 
 $('[data-btn="handle"]').parent('a').hover(function(){
     name=$(this).find('[data-btn="handle"]').attr('data-name');
-    $(this).find('[data-btn="handle"]').hide();
-    
-    $(this).find(".js-data-name").stop().text(name);
+ 
+    layer.tips(name, $(this), {
+      tips: [1, '#0FA6D8'] //还可配置颜色
+    });
 },function(){
     
     $(this).find('[data-btn="handle"]').show();

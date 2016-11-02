@@ -96,7 +96,7 @@
                                                 <label class="col-sm-12">{{ $lv_v.name }}</label>
                                                 <div class="col-sm-12">
                                                     <label class="checkbox-inline f-label">
-                                                        <input type="checkbox" name="ruleid[]" {{ $}} value="root">{{ :lang('超级管理员') }}
+                                                        <input type="checkbox" name="ruleid[]" {{ :checked_on2($data['ruleid'],'root')!=''?"checked='checked'":"" }} value="root">{{ :lang('超级管理员') }}
                                                     </label>
                                                 </div>
                                             </div>

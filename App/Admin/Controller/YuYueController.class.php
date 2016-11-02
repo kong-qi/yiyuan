@@ -9,7 +9,7 @@ class YuYueController extends AuthController
     public function index()
     {
         
-        print_r(session('group'));
+        //print_r(session('group'));
         $this->check_group($this->rule_qz."_show");
         $map = array();
        
