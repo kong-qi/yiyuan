@@ -62,12 +62,12 @@
                                                 <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/",array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white"><span
                                                         class="fa fa-pencil-square "></span> {{ :lang('编辑','handle') }}</a>
                                                     </if>
-                                                <!-- <if condition=" check_group('rule_edit')">
+                                                <if condition=" check_group('rule_edit')">
                                                 
                                                 <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/del/",array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
                                                 <span class="fa fa-trash "></span>
                                                 {{ :lang('删除','handle') }}</a>
-                                                </if> -->
+                                                </if> 
                                             </div>
                                         </td>
                                     </tr>

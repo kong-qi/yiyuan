@@ -15,5 +15,22 @@ class ZiXunModel extends RelationModel {
         //array('admin_id','create_admin_id',1,'function')
 
     );
+     //关联用户
+    protected $_link = array(
+        'User'=>array(
+            'mapping_type'      => self::BELONGS_TO,
+            'class_name'        => 'User',
+            'foreign_key'=>'user_id',
+
+
+            ),
+        'Bing'=>array(
+            'mapping_type'      => self::BELONGS_TO,
+            'class_name'        => 'KeShi',
+            'foreign_key'=>'kstt_id',
+
+
+            ),
+        );
    
 }

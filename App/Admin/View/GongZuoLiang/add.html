@@ -3,43 +3,49 @@
     <script src="__JS__/jquery.validate.js"></script>
 </block>
 <block name="right">
-    <div class="animated fadeInUp">
-        <form action="" method="post" id="validate">
-            <input type="hidden" name="id" value="{{ $data.id }}">
-            <div class="ibox float-e-margins" style="margin-bottom:0px;">
-               <div class="ibox-content">
+    <div class="right-box">
+
+
+        <div class="animated fadeInUp">
+            <form action="" method="post" id="validate">
+
+                <div class="ibox float-e-margins" style="margin-bottom:0px;">
+                    <div class="ibox-content">
                         <div class="input-group m-b" style="margin-bottom:5px;">
-                            <span class="input-group-addon">{{ :lang('名字','filed') }}</span>
+                            <span class="input-group-addon">{{ :lang('咨询方式','filed') }}</span>
+
                             <select name="gj_id" class="form-control" required>
                                 <option value="">{{ :lang('请选择','filed') }}</option>
                                 {{ $rule }}
                             </select>
                         </div>
 
-                        <!--<div class="input-group m-b" style="margin-bottom:5px;">
+                       <!-- <div class="input-group m-b" style="margin-bottomxi:5px;">
                             <span class="input-group-addon">{{ :lang('对话咨询量','filed') }}</span>
-                            <input class="form-control" required min="0" name="duihualiang" value="{{ $data.duihualiang }}" type="text"/>
+                            <input class="form-control" required min="0" name="duihualiang" value="" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('有效咨询量','filed') }}</span>
-                            <input class="form-control" required min="0" name="zixunliang" value="{{ $data.zixunliang }}" type="text"/>
+                            <input class="form-control" required min="0" name="zixunliang" value="" type="text"/>
                         </div>-->
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('A级对话量','filed') }}</span>
-                            <input class="form-control" required min="0" name="aduihua" value="{{ $data.aduihua }}" type="text"/>
+                            <input class="form-control" required min="0" name="aduihua" value="" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('B级对话量','filed') }}</span>
-                            <input class="form-control" required min="0" name="bduihua" value="{{ $data.bduihua }}" type="text"/>
+                            <input class="form-control" required min="0" name="bduihua" value="" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('C级对话量','filed') }}</span>
-                            <input class="form-control" required min="0" name="cduihua" value="{{ $data.cduihua }}" type="text"/>
+                            <input class="form-control" required min="0" name="cduihua" value="" type="text"/>
                         </div>
-                       <div class="input-group m-b" style="margin-bottom:5px;">
-                           <span class="input-group-addon">{{ :lang('咨询日期','filed') }}</span>
-                           <input id="shengri" class="form-control"  required  name="cdate" value="{{ :date('Y-m-d',time()) }}" type="text"/>
-                       </div>
+                        <div class="input-group m-b" style="margin-bottom:5px;">
+                            <span class="input-group-addon">{{ :lang('咨询日期','filed') }}</span>
+                            <input id="shengri" class="form-control"  required  name="cdate" value="{{ :date('Y-m-d',time()) }}" type="text"/>
+                        </div>
+
+
 
 
 
@@ -47,8 +53,9 @@
                             <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('提交','handle') }}</button>
                         </div>
                     </div>
-            </div>
-        </form>
+                </div>
+            </form>
+        </div>
     </div>
 
 </block>
@@ -56,39 +63,33 @@
     <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
     <script>
 
-
-
-
         $.validator.setDefaults({
             highlight: function (e) {
                 $(e).closest("td").removeClass("has-success").addClass("has-error")
             }, success: function (e) {
                 e.closest("td").removeClass("has-error").addClass("has-success")
             }, errorElement: "span", errorPlacement: function (e, r) {
-                e.insertBefore(r.parents(".ibox-content"));
+                 e.insertBefore(r.parents(".ibox-content"));
                 //e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
             }, errorClass: "error", validClass: "no-error"
 
         });
-        $().ready(function() {
-            // validate the comment form when it is submitted
-            var e = "<i class='fa fa-times-circle'></i> ";
+        $().ready(function () {
+            $("#validate").validate();
+            var shengri = {
+                elem: '#shengri',
+                format: 'YYYY-MM-DD',
+               
+                istime: false,
+                oclear: false,
+                choose: function (dates) { //选择好日期的回调
 
-            // validate signup form on keyup and submit
-            $("#validate").validate({
-                rules: {
-                    name:{
-                        required:1,
-                        ename:1
-                    },
+                    $("#shengri").val();
 
-                    realname: "required",
-                    "groupid[]":{required:1}
-
-                },
-            });
+                }
+            };
+            laydate(shengri);
         });
-
 
     </script>
 </block>

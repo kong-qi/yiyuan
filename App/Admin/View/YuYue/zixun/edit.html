@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="form-group">
                                     <select name="phone_bank" class="form-control inline wb30">
-                                        <option value="">{{ :lang('手机品牌') }}</option> {{ :get_huifang_onelist('bank','user',1,'','',$data['User']['phone_bank']) }}
+                                        <option value="">{{ :lang('手机型号') }}</option> {{ :get_huifang_onelist('bank','user',1,'','',$data['User']['phone_bank']) }}
                                     </select>
                                     <input type="text" class="form-control inline wb70" name="address" placeholder="{{ :lang('详细地址') }}"  value="{{ $data.User.<address>
                                         
@@ -165,7 +165,7 @@
                             </div>
                             <div class="ibox-content">
                                 <div class="form-group">
-                                    <select class="form-control inline wb30"  required="required" id="ly_id"   name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id"  data-type="ly"  data-next="lyt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+                                    <select class="form-control inline wb30"   id="ly_id"   name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id"  data-type="ly"  data-next="lyt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
 
                                     <option value="">{{ :lang('请选择','handle') }}</option>
                                         <?php
@@ -205,6 +205,12 @@
 
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <select class="form-control wb50 inline" name="yx_id">
+                                        <option value="">{{ :lang('请选择意向评定','handle') }}</option>
+                                        {{ :get_lanmu_onelist('yuyuezl',1,'','',$data['yx_id']) }}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="ibox">
@@ -226,71 +232,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="ibox">
-                            <div class="ibox-title">
-                                <h5><a class="collapse-link">{{ :lang('预约信息') }}</a></h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="form-group">
-                                    <select class="form-control wb50 inline" name="leibie">
-                                        <option value="">{{ :lang('请选择来源类别','handle') }}</option>
-                                        {{ :yuyue_option_leibie($data['leibie']) }}
-                                    </select>
-                                    <select class="form-control wb50 inline" name="yx_id">
-                                        <option value="">{{ :lang('请选择意向评定','handle') }}</option>
-                                        {{ :get_lanmu_onelist('yuyuezl',1,'','',$data['yx_id']) }}
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-12">{{ :lang('预约日期','handle') }}</label>
-                                    <div class="col-sm-12">
-                                        <div class="col-sm-7">
-                                            <input  name="ydate" type="text" value="{{ $data.ydate }}" id="ydate" class="form-control" placeholder="YYYY-MM-DD" onclick="laydate({istime: true, format: 'YYYY-MM-DD', min:laydate.now(),istime: false})" value="">
-                                            <p class="m-t">
-                                                <label for="" data-setdate="1" data-set="0" class="label label-success" style="margin-bottom: 5px; display: inline-block;">{{ :lang('今天','handle') }}</label>
-                                                <label for="" data-setdate="1" data-set="1" class="label label-success" style="margin-bottom: 5px; display: inline-block;">{{ :lang('明天','handle') }}</label>
-                                                <label for="" data-setdate="1" data-set="2" class="label label-success" style="margin-bottom: 5px; display: inline-block;">{{ :lang('后天','handle') }}</label>
-                                                <label for="" data-setdate="1" data-set="7" class="label label-success" style="margin-bottom: 5px; display: inline-block;">{{ :lang('下周左右','handle') }}</label>
-                                                <label for="" data-setdate="1" data-set="30" class="label label-success" style="margin-bottom: 5px; display: inline-block;">{{ :lang('下月左右','handle') }}</label>
-                                            </p>
-                                        </div>
-                                        <div class="col-sm-5">
-                                            <input name="ytime" id="ytime" value="{{ $data.ytime }}" type="text" class="form-control clockpicker" placeholder="hh:mm" value="{{ :date('H:i',time()) }}" >
-                                            <p class="m-t">
-                                                <label for="" data-settime="1" data-set="00:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('时间不定','handle') }}</label>
-                                                <label for="" data-settime="1" data-set="09:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('9点','handle') }}</label>
-                                                <label for="" data-settime="1" data-set="10:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('10点','handle') }}</label>
-                                                <label for="" data-settime="1" data-set="11:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('11点','handle') }}</label>
-                                                <label for="" data-settime="1" data-set="14:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('14点','handle') }}</label>
-                                                <label for="" data-settime="1" data-set="15:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('15点','handle') }}</label>
-                                                <label for="" data-settime="1" data-set="16:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('16点','handle') }}</label>
-                                                <label for="" data-settime="1" data-set="17:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('17点','handle') }}</label>
-                                            </p>
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control inline wb30" name="ks_id" id="ks_id" onchange="get_tks(this.value)">
-                                               <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                                {{ :get_keshi('0','1',$data['ks_id'] ) }}
-                                            </select>
-                                            <select class="form-control inline wb30" id="kst_id" name="kst_id" onchange="get_tks2(this.value)">
-                                                <option value="">{{ :lang('请选择二级科室','handle') }}</option>
-
-                                            </select>
-                                           <select class="form-control inline wb30" id="kstt_id" name="kstt_id">
-                                                 <option value="">{{ :lang('请选择具体病种','handle') }}</option>
-
-
-                                           </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 

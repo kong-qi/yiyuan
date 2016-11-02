@@ -1,0 +1,15 @@
+<include file="Menu:huifang_add" />
+<include file="Menu:huifang_show" />
+<include file="Menu:sms_send" />
+<if condition=" check_group($rule_qz.'_edit')">
+    <a href="{{ :U('Admin/YuYue/edit?id='.$v['yuuid'].'&base='.base64_encode($_SERVER['QUERY_STRING'])) }}"
+    class="btn btn-xs btn-white" >
+    <span class="fa fa-edit btn-font" data-name="{{ :lang('修改') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+</if>
+<if condition=" check_group($rule_qz.'_del')">
+    <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['yuuid'])) }}"
+    class="btn btn-xs btn-white" date-del="1">
+    <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span>
+   </a>
+</if>
+<!-- 修改，删除，短信，回访，添加回访任务。 -->

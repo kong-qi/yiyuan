@@ -1,9 +1,0 @@
-
-<if condition=" check_group('huifangset_add')">
-    <a href="javascript:void(0))"
-       class="btn btn-xs btn-white"
-       data-url="{{ :U('Admin/HuiFang/add',array('uid'=>$v['user_id'])) }}" data-title="添加回访" data-close="1" data-w="550px" data-h="60%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
-    >
-        <span class="fa fa-edit "></span>
-        {{ :lang('添加回访','handle') }}</a>
-</if>

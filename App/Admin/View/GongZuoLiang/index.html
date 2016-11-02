@@ -9,7 +9,7 @@
 <block name="right">
     <div class="right-box">
 
-        <div class="box">
+        <div class="ibox">
             <div class="col-sm-12">
                 <form action="" method="get" id="contact-form">
                     <div class="col-sm-12" style="padding:0px;">
@@ -22,24 +22,52 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="ibox-content" style="padding-left:0px; padding-right:0px;" id="shoujisf3">
+                            <div class="ibox-content" style="" id="shoujisf3">
 
                                 <div class="roww">
                                     <div class="col-sm-3" style="padding:0px;">
-                                        <div class="form-group">
-                                            <label class="col-sm-12 control-label">{{ :lang('日期选择') }}</label>
-                                            <div class="col-md-6">
+                                       <div class="input-group m-b">
+                                            <span class="input-group-addon">{{ :lang('日期选择') }}</span>
+                                            
                                                 <input name="stime" type="text" class="form-control layer-date" value="{{ :I('get.stime') }}" id="start" placeholder="YYYY-MM-DD" >
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input name="etime" type="text" class="form-control layer-date" value="{{ :I('get.etime') }}" id="end" placeholder="YYYY-MM-DD" data>
-                                            </div>
+                                                
+                                          
+                                                <input name="etime" type="text" class="form-control layer-date " value="{{ :I('get.etime') }}" id="end" placeholder="YYYY-MM-DD" data>
+                                          
                                         </div>
                                     </div>
+                                   <div class="col-sm-3">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">{{ :lang('咨询员','handle') }}</span>
+
+                                            <select class="form-control" name="admin_id" id="is_fz">
+                                               <option value="">{{ :lang('全部','handle') }}</option>
+                                               <if condition="$zxer">
+                                                   <foreach name="zxer" item="v">
+                                                       <option value="{{ $v.id }}" {{ :$v['id']==I('get.admin_id')?"selected='selected'":"" }}>{{ $v.realname }}</option>
+                                                   </foreach>
+                                               </if>
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="input-group m-b">
+                                            <span class="input-group-addon">{{ :lang('咨询方式','handle') }}</span>
+
+                                            <select class="form-control" name="gj_id" id="is_fz">
+                                               <option value="">{{ :lang('全部','handle') }}</option>
+                                               {{ $rule }}
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    
+                                    
 
                                 </div>
                                 <div class="col-sm-3">
-                                    <label class="col-sm-12 control-label">&nbsp;</label>
+                                   
                                     <button class="btn btn-primary" type="submit">{{ :lang('确定筛选') }}</button>
                                 </div>
                             </div>
@@ -49,17 +77,18 @@
             </div>
         </div>
 
-        <div class="box">
-            <div class="box-title">
-                {{ :lang($onname,'menu') }}
-                <h3 class="pull-right">
-                     <a href="javascript:void(0)" class="btn btn-xs btn-success" id="tianjiazh">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>   {{ :lang($onname,'menu') }}</h5>
+             
+                <div class="ibox-tools">
+                     <a href="javascript:void(0)" class="btn btn-xs btn-success" id="tianjiazh" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">
                         </span> {{ :lang('添加','handle') }}
                         
                     </a>
-                </h3>
+                </div>
             </div>
-            <div class="box-content">
+            <div class="ibox-content">
 
                 <div class="list-box">
 
@@ -72,7 +101,7 @@
                                 <input name="chkall" type="checkbox" id="chkall"value="0"></th>
                             <th >{{ :lang('咨询时间','filed') }}</th>
                            
-                            <th>{{ :lang('名称','filed') }}</th>
+                            <th>{{ :lang('咨询方式','filed') }}</th>
                             <th>{{ :lang('咨询总量','filed') }}</th>
                             <th >{{ :lang('有效对话量','filed') }}</th>
                             <th >{{ :lang('A级对话量','filed') }}</th>

@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
-class DianXiaoController extends AuthController {
-    protected $onname='工作量录入';
+class GongZuoLiangController extends AuthController {
+    protected $onname='咨询工作量';
     protected $rule_qz='gongzuoliang';
     public function index(){
         //权限选择
@@ -15,11 +15,26 @@ class DianXiaoController extends AuthController {
             $timestr =  $stime. "," .$etime;
             $map['g1.cdate'] = array('between', $timestr);
         }
+        if(I('get.admin_id')!='')
+        {
+            $map['g1.admin_id']=I('get.admin_id');
+        }
+        $gj_id='';
+        if(I('get.gj_id')!='')
+        {
+            $map['g1.gj_id']=I('get.gj_id');
+            $gj_id=I('get.gj_id');
+        }
 
 
 
+        //找出咨询员
+        //$zixuner=M('Gzl')->field('admin_id as id')->group('admin_id')->select();
+        $zixuner=m()->query("select * from __PREFIX__admin where id in (select admin_id as id from __PREFIX__gzl group by admin_id )");
+        $this->assign('zxer',$zixuner);
 
-
+        $rule=get_huifang_where(array('is_tongji'=>'1','type'=>'zixun'),'1','','', $gj_id);
+        $this->rule=$rule;
 
         $join[] = 'LEFT JOIN __LAN_MU__ l1 ON g1.gj_id = l1.id';
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON g1.admin_id = a1.id';
@@ -77,7 +92,7 @@ class DianXiaoController extends AuthController {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';parent.layer.close(index);</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location='".$backurl."';parent.layer.close(index);</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');

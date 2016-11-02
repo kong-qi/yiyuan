@@ -802,3 +802,16 @@ editmonery();
 monery();
 //点击输入原
 unmonery()
+
+
+$('[data-btn="handle"]').parent('a').hover(function(){
+    name=$(this).find('[data-btn="handle"]').attr('data-name');
+    $(this).find('[data-btn="handle"]').hide();
+    
+    $(this).find(".js-data-name").stop().text(name);
+},function(){
+    
+    $(this).find('[data-btn="handle"]').show();
+    
+    $(this).find(".js-data-name").stop().text('');
+});

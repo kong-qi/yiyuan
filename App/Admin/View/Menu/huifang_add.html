@@ -1,0 +1,8 @@
+<if condition="check_group('btn_huifang_add')">
+    <a href="javascript:void(0))"
+       class="btn btn-xs btn-white"
+       data-url="{{ :U('Admin/HuiFang/add',array('uid'=>$v['user_id'])) }}" data-title="{{ :lang('添加回访任务') }}" 
+       data-close="1" data-w="550px" data-h="60%" data-layer="1" data-uuid="{{ $v.user_uuid }}"  >
+        <span class="fa fa-bookmark btn-font"  data-name="{{ :lang('添加回访任务') }}" data-btn="handle"></span><span class="js-data-name"></span>
+        </a>
+</if>

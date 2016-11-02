@@ -1,5 +1,5 @@
-<if condition=" check_group('yuyue_showhf')">
+<if condition=" check_group('btn_huifang')">
     <a href="javascript:void(0)"  data-url="{{ :U('Admin/HuiFang/getlist',array('uid'=>$v['user_id'])) }}" data-title="查看回访" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
        class="btn btn-xs btn-white"><span
-            class="fa fa-pencil-square "></span> {{ :lang('回访/任务','handle') }}</a>
+            class="fa fa-book btn-font" data-name="{{ :lang('回访') }}" data-btn="handle"></span> <span class="js-data-name"></span></a>
 </if>
