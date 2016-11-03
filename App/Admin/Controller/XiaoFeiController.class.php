@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 class XiaoFeiController extends AuthController {
-    protected $onname='每日消费';
+    protected $onname='广告费';
     protected $rule_qz='days_price';
     public function index(){
         //权限选择
@@ -60,6 +60,7 @@ class XiaoFeiController extends AuthController {
         {
 
             $model=D('XiaoFei');
+            $close=I('get.close');
 
             if($model->create())
             {
@@ -70,13 +71,22 @@ class XiaoFeiController extends AuthController {
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.window.location='".$backurl."';</script>";
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/add");
+                    if($close!=1)
+                    {
+                        $this->success($msg,$backurl);
+                        //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); window.location='".$backurl."';</script>";
+                    }else
+                    {
+                        $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                        echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.window.location='".$backurl."';</script>";
+                    }
+                   
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
                     $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.window.location='".$backurl."';</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); </script>";
                 }
             }else
             {

@@ -157,7 +157,7 @@
                 //shadeClose: true,
                 shade: 0.8,
                 area: ['400px', '500px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}?uuid=",
+                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/",array('close'=>1)) }}",
                 cancel: function (index) {
                     //window.location.reload()
 
