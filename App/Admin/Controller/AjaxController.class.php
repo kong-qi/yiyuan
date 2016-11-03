@@ -232,6 +232,23 @@ class AjaxController extends AuthController
     function anli(){
        
     }
+    function getYuYueNumber(){
+        
+        $date=I('get.date');
+        if($date=='')
+        {
+            $date=date('Y-m-d',time());
+        }
+        
+            $m=M()->query("select count(*) as total from __PREFIX__zi_xun where FROM_UNIXTIME(    ctime,'%Y-%m-%d') = str_to_date('".$date."','%Y-%m-%d')");
+            $m2=M()->query("select count(*) as total from __PREFIX__yu_yue where FROM_UNIXTIME(    ctime,'%Y-%m-%d') = str_to_date('".$date."','%Y-%m-%d')");
+            $data=array(
+                'zxtotal'=>$m[0]['total'],
+                'yytotal'=>$m2[0]['total']
+                );
+            $this->ajaxReturn($data);
+          
+    }
     public function ajaxKeShiList($id=''){
         if($id=='')
         {

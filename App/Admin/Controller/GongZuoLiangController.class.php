@@ -59,6 +59,7 @@ class GongZuoLiangController extends AuthController {
             g1.aduihua,
             g1.bduihua,
             g1.cduihua,
+            g1.dduihua,
             g1.ctime as ctime
          ';
 

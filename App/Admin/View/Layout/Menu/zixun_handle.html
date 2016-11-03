@@ -1,0 +1,44 @@
+<if condition="check_group('yuyue_add')">
+   <li>
+        <a class="J_menuItem" href="{{ :U('Admin/YuYue/add') }}"><span
+                class="nav-label">{{ :lang('添加咨询预约') }}</span></a>
+    </li>
+</if>
+<if condition="check_group('yuyue_show')">
+    <li>
+        <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/index') }}">{{ :lang('全部预约列表','menu') }}</a>
+    </li>
+</if>
+<if condition="check_group('zixun_show')">
+    <li>
+        <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/zxindex') }}">{{ :lang('仅咨询列表','menu') }}</a>
+    </li>
+</if>
+<if condition="check_group('yuyue_other')">
+    <li>
+        <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/index',array('djstime'=>date('Y-m-d'),'djetime'=>date('Y-m-d'),'status'=>1,'show'=>'none')) }}">{{ :lang('今日预约','menu') }}</a>
+    </li>
+    <li>
+        <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/index',array('ystime'=>date('Y-m-d'),'yetime'=>date('Y-m-d'),'status'=>1,'show'=>'none')) }}">{{ :lang('今日预到','menu') }}</a>
+    </li>
+    <li>
+        <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/index',array('dzstime'=>date('Y-m-d'),'dzetime'=>date('Y-m-d'),'status'=>2,'show'=>'none')) }}">{{ :lang('今日已到','menu') }}</a>
+    </li>
+    <li>
+        <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/index',array('djstime'=>get_days(-1),'djetime'=>get_days(-1),'status'=>1,'show'=>'none')) }}">{{ :lang('昨日预约','menu') }}</a>
+    </li>
+    <li>
+        <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/index',array('dzstime'=>get_days(-1),'dzetime'=>get_days(-1),'status'=>2,'show'=>'none')) }}{{ :U('Admin/YuYue/index') }}">{{ :lang('昨日已到','menu') }}</a>
+    </li>
+    <li>
+        <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/index',array('ystime'=>get_days(1),'yetime'=>get_days(1),'status'=>2,'show'=>'none')) }}">{{ :lang('明天预到','menu') }}</a>
+    </li>
+</if>

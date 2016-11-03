@@ -13,7 +13,6 @@
                     <div class="ibox-content">
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('咨询方式','filed') }}</span>
-
                             <select name="gj_id" class="form-control" required>
                                 <option value="">{{ :lang('请选择','filed') }}</option>
                                 {{ $rule }}
@@ -30,15 +29,19 @@
                         </div>-->
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('A级对话量','filed') }}</span>
-                            <input class="form-control" required min="0" name="aduihua" value="" type="text"/>
+                            <input class="form-control" required min="0" name="aduihua" readonly="" value="" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('B级对话量','filed') }}</span>
-                            <input class="form-control" required min="0" name="bduihua" value="" type="text"/>
+                            <input class="form-control" required min="0" name="bduihua" value="" readonly="" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('C级对话量','filed') }}</span>
                             <input class="form-control" required min="0" name="cduihua" value="" type="text"/>
+                        </div>
+                        <div class="input-group m-b" style="margin-bottom:5px;">
+                            <span class="input-group-addon">{{ :lang('D级对话量','filed') }}</span>
+                            <input class="form-control" required min="0" name="dduihua" value="" type="text"/>
                         </div>
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('咨询日期','filed') }}</span>
@@ -84,12 +87,27 @@
                 oclear: false,
                 choose: function (dates) { //选择好日期的回调
 
-                    $("#shengri").val();
+                    
+                    get_yuyue_number(dates);
 
                 }
             };
             laydate(shengri);
         });
+        //计算咨询和预约数
+        get_yuyue_number();
+        function get_yuyue_number(date){
+            url="{{ :U('Admin/Ajax/getYuYueNumber') }}";
+            date=date ||  get_date(0);
+            $.get(url,{'date':date},function(data){
+              
+                
+                    $("input[name='aduihua']").val(data.zxtotal);
+                    $("input[name='bduihua']").val(data.yytotal);
+                
+            });
+            
+        }
 
     </script>
 </block>

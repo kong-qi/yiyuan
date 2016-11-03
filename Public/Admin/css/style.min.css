@@ -5994,3 +5994,8 @@ body.fixed-sidebar.mini-navbar .navbar-static-side {
 	    background-color: #777;
 }
 
+
+.btn a
+{
+	color: #fff;
+}

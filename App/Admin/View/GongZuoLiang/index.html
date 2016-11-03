@@ -107,7 +107,8 @@
                             <th >{{ :lang('A级对话量','filed') }}</th>
                             <th >{{ :lang('B级对话量','filed') }}</th>
                             <th >{{ :lang('C级对话量','filed') }}</th>
-                             <th>{{ :lang('添加者') }}</th>
+                            <th >{{ :lang('D级对话量','filed') }}</th>
+                            <th>{{ :lang('添加者') }}</th>
 
 
                             <th >{{ :lang('操作','handle') }}</th>
@@ -121,11 +122,12 @@
                                     <td class="hidden-xs">{{ :date('d-m-Y',($v['cdate'])) }}</td>
                                    
                                      <td >{{ $v.name }}</td>
+                                    <td>{{ :$v['aduihua']+$v['bduihua']+$v['cduihua']+$v['dduihua'] }}</td>
                                     <td>{{ :$v['aduihua']+$v['bduihua']+$v['cduihua'] }}</td>
-                                    <td>{{ :$v['aduihua']+$v['bduihua'] }}</td>
                                     <td >{{ $v.aduihua }}</td>
                                     <td >{{ $v.bduihua }}</td>
                                     <td >{{ $v.cduihua }}</td>
+                                    <td >{{ $v.dduihua }}</td>
                                      <td>{{ :$v['admin_rname']==''? $v['admin_name']: $v['admin_rname'] }}</td>
 
 

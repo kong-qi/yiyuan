@@ -1,16 +1,17 @@
 <li>
     <a href="#">
         <i class="fa fa-unlink"></i>
-        <span class="nav-label">{{ :lang('合作机构','menu') }}</span>
+        <span class="nav-label">{{ :lang('市场部','menu') }}</span>
         <span class="fa icon-chevron-left arrow"></span>
     </a>
     <ul class="nav nav-second-level">
+         <include file="Layout:Menu:zixun_handle"/>
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/JiGou/add') }}">{{ :lang('机构录入','menu') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/JiGou/add') }}">{{ :lang('添加合作机构','menu') }}</a>
         
         </li>
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/JiGou/index') }}">{{ :lang('机构查询','menu') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/JiGou/index') }}">{{ :lang('全部合作机构','menu') }}</a>
         </li>
     </ul>
 </li>

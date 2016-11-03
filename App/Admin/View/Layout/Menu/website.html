@@ -1,16 +1,36 @@
 <li>
     <a href="#">
         <i class="fa fa-bar-chart-o"></i>
-        <span class="nav-label">{{ :lang('广告','menu') }}</span>
+        <span class="nav-label">{{ :lang('广告部','menu') }}</span>
         <span class="fa icon-chevron-left arrow"></span>
     </a>
     <ul class="nav nav-second-level">
+       
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'website')) }}">{{ :lang('补充信息','menu') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/XiaoFei/add') }}">{{ :lang('输入广告费','menu') }}</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/XiaoFei/index') }}">{{ :lang('广告消费列表','menu') }}</a>
+        </li>
+        <if condition="check_group('yuyue_show')">
+           <li>
+               <a class="J_menuItem"
+                      href="{{ :U('Admin/YuYue/index') }}">{{ :lang('补充来源和对话','menu') }}</a>
+           </li>
+           <li>
+                <a class="J_menuItem"
+                      href="{{ :U('Admin/YuYue/index') }}">{{ :lang('进入预约','menu') }}</a>
+           </li>
+        </if>
+        <if condition="check_group('yuyue_seven_show')">
+            <li>
+                <a class="J_menuItem"
+                   href="{{ :U('Admin/YuYue/index',array('djstime'=>get_days(-6),'djetime'=>date('Y-m-d'),'status'=>1,'show'=>'none')) }}">{{ :lang('最近七天预约','menu') }}</a>
+            </li>
+            
+        </if>
+       
+       
 
-        </li>
-        <li>
-            <a class="J_menuItem" href="{{ :U('Admin/XiaoFei/index') }}">{{ :lang('录入消费','menu') }}</a>
-        </li>
     </ul>
 </li>

@@ -304,7 +304,7 @@ class YuYueController extends AuthController
 
         //权限选择
         $this->check_group($this->rule_qz."_add");
-
+        $backurl=U('Admin/YuYue/add');
 
         if (IS_POST) {
 
