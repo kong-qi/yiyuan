@@ -34,7 +34,7 @@ class HuiFangController extends AuthController {
                 $renwu_id=$data['renwu_id'];
                 if($renwu_id!='')
                 {
-                    $rdata=['id'=>$renwu_id,'status'=>1];
+                    $rdata=array('id'=>$renwu_id,'status'=>1);
                     M('RenWu')->save($rdata);
                 }
                 if($result) {
