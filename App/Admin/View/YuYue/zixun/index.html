@@ -272,8 +272,8 @@
                                             <td class="{{ $mk }} {{ $mv['diy'] }}" {{ $ishow }}>
                                             <if condition="$mv['is_time']">
                                                     {{ :to_time($v[$mv['filed']]) }}
-                                                <elseif condition="sex">
-                                                    {{ lang($v[$mv['filed']]) }}
+                                                <elseif condition="sex"/>
+                                                    {{ :lang($v[$mv['filed']]) }}
                                                 <else/>
                                                     {{ $v[$mv['filed']] }}
                                             </if>
