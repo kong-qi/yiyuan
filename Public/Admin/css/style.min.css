@@ -2712,7 +2712,7 @@ body.body-small .footer.fixed {
 	margin-bottom: 5px;
 }
 .content-tabs {
-	position: fixed;
+	position: relative;
 	height: 42px;
 	background: #fafafa;
 	line-height: 40px;
@@ -2789,10 +2789,10 @@ nav.page-tabs .page-tabs-content {
 	left: auto;
 }
 #content-main {
-    //height: calc(100% - 81px);
-    height: 100%;
+    height: calc(100% - 101px);
+   
     padding: 10px;
-    padding-top: 60px;
+   
     box-sizing: border-box;
     overflow: hidden;
 }
