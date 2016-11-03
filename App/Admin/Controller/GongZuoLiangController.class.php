@@ -92,12 +92,12 @@ class GongZuoLiangController extends AuthController {
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location='".$backurl."';parent.layer.close(index);</script>";
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/add");
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';parent.layer.close(index);</script>";
                 }else{
                     add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
                     $msg=lang('添加失败','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/add");
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);</script>";
                 }
             }else
