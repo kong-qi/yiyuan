@@ -58,6 +58,7 @@ class RenWuController extends AuthController {
         //权限选择
         $map=array();
         $this->assign('is_search',I('get.is_search'));
+        $this->assign('status',I('get.status'));
         $this->check_group("huihfrenwu_list");
         $model = M('RenWu');
         //是否只能查看自己的
@@ -71,6 +72,50 @@ class RenWuController extends AuthController {
                  $map['_string']="rewu.admin_id ='".session('admin_id')."'";
             }
         }
+        if(I('get.handle_id')!='')
+        {
+            $map['handle_id']=$this->handle_id=I('get.handle_id');
+
+        }
+        if(I('get.admin_id')!='')
+        {
+            $map['admin_id']=$this->admin_id=I('get.admin_id');
+        }
+
+        //预约时间为预到时间
+        $getdata=I('get.');
+        if ($getdata['crstime'] != '' && $getdata['cretime'] != '') {
+            $getdata['crstime'] .= " 00:00:00";
+            $getdata['cretime'] .= " 23:59:59";
+            echo "d";
+            $timestr2 = strtotime($getdata['crstime']) . "," . strtotime($getdata['cretime']);
+
+            $map['rewu.ctime'] = array('between', $timestr2);
+
+        }
+        
+        if ($getdata['dzstime'] != '' && $getdata['dzetime'] != '') {
+            $getdata['dzstime'] .= " 00:00:00";
+            $getdata['dzetime'] .= " 23:59:59";
+
+            $timestr2 = strtotime($getdata['dzstime']) . "," . strtotime($getdata['dzetime']);
+
+            $map['rewu.rtime'] = array('between', $timestr2);
+
+        }
+
+        //创建时间为预约时间
+        if ($getdata['hfstime'] != '' && $getdata['hfetime'] != '') {
+            $getdata['hfstime'] .= " 00:00:00";
+
+            $getdata['hfetime'] .= " 23:59:59";
+
+            $timestr = strtotime($getdata['hfstime']) . "," . strtotime($getdata['hfetime']);
+
+            $map['rewu.hftime'] = array('between', $timestr);
+
+        }
+
 
         $join[] = 'LEFT JOIN __USER__ u1 ON rewu.user_id = u1.id';
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON rewu.admin_id = a1.id';
@@ -84,6 +129,7 @@ class RenWuController extends AuthController {
         lx.name as type_text,
         rewu.ctime as ctime,
         rewu.rtime as rtime,
+        rewu.hftime as hftime,
         a1.realname as create_name,
         fp.realname as handle_name,
         u1.name as user_name,
@@ -95,11 +141,17 @@ class RenWuController extends AuthController {
              $key=I('get.keyword');
             $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or rewu.name like '%" . $key . "%'";
         }
+        $type_arr='';
          $status='';
          if(I('get.status')!='')
          {
             $status=I('get.status');
             $map['status']=$status;
+            if( $status!=0)
+            {
+                 $type_arr='yhf';
+            }
+           
          }
          $count = $model->alias('rewu')->join($join)->where($map)->count();// 查询满足要求的总记录数
          $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
@@ -111,7 +163,7 @@ class RenWuController extends AuthController {
          $list = $model->alias('rewu')->field($filed)->join($join)->order('rewu.ctime desc,rewu.id desc')->where($map)->page($page . ',' . $pagesize)->select();
          //print_r($list);
          $this->assign('list', $list);// 赋值数据集
-         $type_arr='';
+         
          $menu_list = $this->getFiledArray($type_arr);
          
          $this->menu_list = $menu_list;
@@ -124,22 +176,42 @@ class RenWuController extends AuthController {
     }
     public function getFiledArray($type){
         switch ($type) {
-           
+           case 'yhf':
+                $menu_list = array(
+
+                    
+                    'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-2' => array('name' => lang('联系电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('回访类型'), 'filed'=>'type_text','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+                     'td-4' => array('name' => lang('回访主题'), 'filed'=>'name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+                    'td-7' => array('name' => lang('回访时间'), 'filed'=>'hftime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-8' => array('name' => lang('回访人'), 'filed'=>'handle_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('创建日期'), 'filed'=>'ctime','diy'=>'text-blue', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-6' => array('name' => lang('创建人'), 'filed'=>'create_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+                    
+                   
+
+                );
+           break;
             
             default:
                 $menu_list = array(
 
                     
                     'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-2' => array('name' => lang('电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-2' => array('name' => lang('联系电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-3' => array('name' => lang('回访类型'), 'filed'=>'type_text','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-4' => array('name' => lang('回访状态'), 'filed'=>'status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
                      'td-4' => array('name' => lang('回访主题'), 'filed'=>'name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     
                     'td-7' => array('name' => lang('待回访日期'), 'filed'=>'rtime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-8' => array('name' => lang('回访人'), 'filed'=>'handle_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-5' => array('name' => lang('创建日期'), 'filed'=>'ctime','diy'=>'text-blue', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-6' => array('name' => lang('创建人'), 'filed'=>'create_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-8' => array('name' => lang('指定回访人'), 'filed'=>'handle_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
                     
                    
 

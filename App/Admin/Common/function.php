@@ -1214,7 +1214,7 @@ function get_yushen_ks($id=0,$echo=1,$checkid=''){
     }
     return $rule;
 }
-function to_time($time,$f='m-d-Y H:i:s'){
+function to_time($time,$f='d-m-Y H:i:s'){
     return date($f,$time);
 }
 function to_date_time($time,$f='Y-m-d H:i:s'){

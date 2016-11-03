@@ -244,7 +244,7 @@
                     $tprice= $("#price_total").val();
                     $("#price_total").val(accounting.unformat($tprice));
                     // return false;
-                    $(form).ajaxSubmit();
+                    form.submit();;
                 }
             });
             $(".go-search").click(function() {

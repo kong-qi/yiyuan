@@ -19,7 +19,7 @@ class HuiFangController extends AuthController {
         return $this->display();
     }
     public function getlistadd(){
-        $this->check_group($this->rule_qz."_add");
+        $this->check_group("huifangset_add");
         $isclose=I('post.close_frame');
         if(IS_POST)
         {
@@ -37,9 +37,11 @@ class HuiFangController extends AuthController {
                 $renwu_id=$data['renwu_id'];
                 if($renwu_id!='')
                 {
-                    $rdata=array('id'=>$renwu_id,'status'=>1);
+                    $rdata=array('id'=>$renwu_id,'status'=>1,'hftime'=>time());
+
                     M('RenWu')->save($rdata);
                 }
+                
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     if($isclose)
@@ -226,6 +228,50 @@ class HuiFangController extends AuthController {
             }
             $this->user=get_user($model->user_id);
             $this->display();
+        }
+    }
+    public function rwedit(){
+        //权限选择
+
+        $this->check_group('huifang_edit');
+        if(IS_POST)
+        {
+            $model =D('HuiFang');
+
+            if($model->create()) {
+                $data=$model->create();
+
+                $result =   $model->save($data);
+
+               
+                if($result) {
+                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    $msg=lang('更新成功','handle');
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location.reload();</script>";
+                    //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
+                }else{
+                    $msg=lang('数据一样无更新','handle');
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                }
+            }else{
+                return $this->error($model->getError());
+            }
+        }else{
+            $id=I('get.id');
+            $map=array(
+                'renwu_id'=>$id
+            );
+
+            $model= M('HuiFang')->where($map)->find();
+
+            if($model) {
+                $this->data =  $model;// 模板变量赋值
+
+            }else{
+                return $this->error(lang('数据错误','handle'));
+            }
+            $this->user=get_user($model->user_id);
+            $this->display("edit");
         }
     }
     public  function del(){

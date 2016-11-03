@@ -31,7 +31,7 @@
                                         <option value="女" selected="selected">{{ :lang('女','handle') }}</option>
                                     </select>
                                     <select name="age" id="age" class="form-control inline wb30">
-                                        <option value="">{{ :lang('年龄') }}</option>} {{ :echo_age() }}
+                                        <option value="">{{ :lang('年龄') }}</option> {{ :echo_age() }}
                                     </select>
                                     <input class="form-control  inline wb30" name="birthday" placeholder="{{ :lang('生日','handle') }}" id="shengri">
                                 </div>
@@ -353,7 +353,7 @@
                         $ksaid.val($area1);
                     }
                 }
-                $(form).ajaxSubmit();
+                form.submit();;
             }
         });
         //默认选择来源触发事
@@ -427,10 +427,12 @@
             oclear: false,
             choose: function(dates) { //选择好日期的回调
 
-                $v = $("#shengri").val();
-                if ($v != '') {
-                    $("#age").val(get_age($v));
-                }
+                $v = dates;
+                $v=(get_age($v));
+                
+                    log($v);
+                    $("#age").val($v);
+                
             }
         };
 

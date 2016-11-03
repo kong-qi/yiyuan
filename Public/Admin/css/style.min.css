@@ -2712,10 +2712,11 @@ body.body-small .footer.fixed {
 	margin-bottom: 5px;
 }
 .content-tabs {
-	position: relative;
+	position: fixed;
 	height: 42px;
 	background: #fafafa;
 	line-height: 40px;
+	z-index: 999;
 }
 .content-tabs .roll-nav, .page-tabs-list {
 	position: absolute;
@@ -2791,6 +2792,8 @@ nav.page-tabs .page-tabs-content {
     //height: calc(100% - 81px);
     height: 100%;
     padding: 10px;
+    padding-top: 60px;
+    box-sizing: border-box;
     overflow: hidden;
 }
 .fixed-nav #content-main {

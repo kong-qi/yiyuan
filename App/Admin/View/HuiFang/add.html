@@ -97,10 +97,10 @@
                                 </div>
                             </div> -->
                             <div class="form-group">
-                                <label >{{ :lang('回访记录') }}</label>
-                                <div class="col-sm-12">
+                                <label class="input-group-addon">{{ :lang('回访记录') }}</label>
+                               
                                     <textarea class="summernote" name="content" id="content"></textarea>
-                                </div>
+                                
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
@@ -133,7 +133,7 @@
 
         });
         $().ready(function () {
-            $("#validate").validate();
+            $("#validate").validate({});
             bd_ueditor('content',100);
         });
 

@@ -561,10 +561,10 @@ class YuYueController extends AuthController
                     add_log($this->onname . '：' . $data['name'] . '更新成功');
                     $msg = lang('更新成功', 'handle');
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.lo</script>";
-                    return $this->success($msg);
+                    return $this->success($msg,$this->burl);
                 } else {
                     $msg = lang('更新成功', 'handle');
-                    return $this->success(lang('更新成功', 'handle'));
+                    return $this->success(lang('更新成功', 'handle'),$this->burl);
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
                 }
             } else {

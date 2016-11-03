@@ -43,10 +43,63 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
+                                         <div class="input-group m-b">
+                                            <span class="input-group-addon"><font color="">{{ :lang('回访人','handle') }}</font></span>
+                                            <select   name="handle_id" class="form-control"  >
+                                                <option value="">{{ :lang('全部') }}</option>
+                                              
+                                                {{ :get_huifang_er(1,$handle_id) }}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-sm-3" style="padding:0px;">
+                                        <div class="form-group">
+                                           <php>if($status!=1){</php>
+                                            <div class="col-md-6">
+                                                <input name="dzstime" type="text" class="form-control layer-date"
+                                                       value="{{ :I('get.dzstime') }}" placeholder="{{ :lang('待回访时间段') }}" value=""
+                                                       id="shijian31">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="dzetime" type="text" class="form-control layer-date"
+                                                       value="{{ :I('get.dzetime') }}" placeholder="{{ :lang('待回访时间段') }}" value=""
+                                                       id="shijian32">
+                                            </div>
+                                            <php>}else{</php>
+                                                <div class="col-md-6">
+                                                    <input name="hfstime" type="text" class="form-control layer-date"
+                                                           value="{{ :I('get.hfstime') }}" placeholder="{{ :lang('回访时间段') }}" value=""
+                                                           id="shijian31">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input name="hfetime" type="text" class="form-control layer-date"
+                                                           value="{{ :I('get.hfetime') }}" placeholder="{{ :lang('回访时间段') }}" value=""
+                                                           id="shijian32">
+                                                </div>
+                                            <php>}</php>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" style="padding:0px;">
+                                        <div class="form-group">
+                                           
+                                            <div class="col-md-6">
+                                                <input name="crstime" type="text" class="form-control layer-date"
+                                                       value="{{ :I('get.crstime') }}" placeholder="{{ :lang('任务创建时间段') }}" value=""
+                                                       id="shijian21">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="cretime" type="text" class="form-control layer-date"
+                                                       value="{{ :I('get.cretime') }}" placeholder="{{ :lang('任务创建时间段') }}" value=""
+                                                       id="shijian22">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
                                         
                                         <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
 
-                                       <a href="" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
+                                       <a href="{{ :U('Admin/RenWu/index',array('status'=>I('get.status'))) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
 
                                     </div>
 
@@ -187,7 +240,7 @@
 
                                 <else/>
                                 <tr>
-                                    <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
+                                    <td colspan="10" class="text-center">{{ :C('NOTTHING') }}</td>
                                 </tr>
                             </if>
                             </tbody>
@@ -323,8 +376,50 @@
         
      
         
+    var shijian21 = {
+        elem: '#shijian21',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian22.min = datas; //开始日选好后，重置结束日的最小日期
+            shijian22.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var shijian22 = {
+        elem: '#shijian22',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian21.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
 
+    var shijian31 = {
+        elem: '#shijian31',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian32.min = datas; //开始日选好后，重置结束日的最小日期
+            shijian32.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var shijian32 = {
+        elem: '#shijian32',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian31.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(shijian21);
+    laydate(shijian22);
+    laydate(shijian31);
+    laydate(shijian32);
 
     </script>
-
+    
 </block>
