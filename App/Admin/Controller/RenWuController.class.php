@@ -87,7 +87,7 @@ class RenWuController extends AuthController {
         if ($getdata['crstime'] != '' && $getdata['cretime'] != '') {
             $getdata['crstime'] .= " 00:00:00";
             $getdata['cretime'] .= " 23:59:59";
-            echo "d";
+           
             $timestr2 = strtotime($getdata['crstime']) . "," . strtotime($getdata['cretime']);
 
             $map['rewu.ctime'] = array('between', $timestr2);

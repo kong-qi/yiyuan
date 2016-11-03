@@ -121,7 +121,36 @@ class HuiFangController extends AuthController {
             $status=I('get.status');
             $map['status']=$status;
          }
-      
+         //预约时间为预到时间
+         $getdata=I('get.');
+         if ($getdata['crstime'] != '' && $getdata['cretime'] != '') {
+             $getdata['crstime'] .= " 00:00:00";
+             $getdata['cretime'] .= " 23:59:59";
+            
+             $timestr2 = strtotime($getdata['crstime']) . "," . strtotime($getdata['cretime']);
+
+             $map['h1.ctime'] = array('between', $timestr2);
+
+         }
+         if(I('get.is_search')==1)
+         {
+            $sdata=I('get.');
+            $ndata=array();
+            unset($sdata['crstime']);
+            unset($sdata['cretime']);
+            unset($sdata['keyword']);
+            unset($sdata['is_search']);
+            foreach ($sdata as $key => $value) {
+                if($value!='')
+                {
+                    $ndata["h1.".$key]=$value;
+                }
+                
+            }
+            $map=$ndata+$map;
+            
+         }
+         
          $count = $model->alias('h1')->join($join)->where($map)->count();// 查询满足要求的总记录数
          $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '20';
          $page = 1;

@@ -16,7 +16,7 @@
                     <input type="hidden" name="is_search" value="1">
                      <php>
                         $is_search_on="";
-                       
+                        $sdata=I('get.');
                         if($is_search==0)
                         {
                             $is_search_on="display: none;";
@@ -34,7 +34,70 @@
                             </div>
                             <div class="ibox-content" style="padding-left:0px; padding-right:0px; {{ :$is_search_on }}" >
                                 <div class="roww">
-                                    
+                                    <div class="col-sm-3">
+                                         <div class="input-group ">
+                                            <span class="input-group-addon"><font color="">{{ :lang('回访类型','handle') }}</font></span>
+                                            <select   name="type" class="form-control"  >
+                                                <option value="">{{ :lang('全部') }}</option>
+                                              
+                                                 {{ :get_huifang_onelist('hf_type','huifang',1,'','',$sdata['type']) }}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="input-group ">
+                                            <span class="input-group-addon"><font color="">{{ :lang('回访方式','handle') }}</font></span>
+                                            <select  id="hf_go" name="ways" class="form-control">
+                                                <option value="">{{ :lang('全部') }}</option>
+                                                 {{ :get_huifang_onelist('hf_way','huifang',1,'','',$sdata['ways']) }}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="input-group ">
+                                            <span class="input-group-addon"><font color="">{{ :lang('回访结果','handle') }}</font></span>
+                                            <select name="result_cont" class="form-control">
+                                                <option value="">{{ :lang('全部') }}</option>
+                                                {{ :get_huifang_onelist('hf_result','huifang',1,'','',$sdata['result_cont']) }}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="input-group ">
+                                            <span class="input-group-addon"><font color="">{{ :lang('客户流向','handle') }}</font></span>
+                                            <select   name="goplace" class="form-control"  >
+                                                <option value="">{{ :lang('全部') }}</option>
+                                              
+                                                {{ :get_huifang_onelist('hf_go','huifang',1,'','',$sdata['goplace']) }}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="input-group ">
+                                            <span class="input-group-addon"><font color="">{{ :lang('回访人','handle') }}</font></span>
+                                            <select   name="admin_id" class="form-control"  >
+                                                <option value="">{{ :lang('全部') }}</option>
+                                              
+                                                {{ :get_huifang_er(1,$handle_id) }}
+                                            </select>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-sm-3" style="padding:0px;">
+                                        <div class="form-group">
+                                           
+                                            <div class="col-md-6">
+                                                <input name="crstime" type="text" class="form-control layer-date"
+                                                       value="{{ :I('get.crstime') }}" placeholder="{{ :lang('回访时间段') }}" value=""
+                                                       id="shijian21">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input name="cretime" type="text" class="form-control layer-date"
+                                                       value="{{ :I('get.cretime') }}" placeholder="{{ :lang('回访时间段') }}" value=""
+                                                       id="shijian22">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">{{ :lang('关键词','handle') }}</font></span>
@@ -46,7 +109,7 @@
                                         
                                         <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
 
-                                       <a href="" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
+                                       <a href="{{ :U('Admin/HuiFang/index') }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
 
                                     </div>
 
@@ -325,7 +388,27 @@
             
 
         });
-        
+        var shijian21 = {
+            elem: '#shijian21',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            choose: function (datas) {
+                shijian22.min = datas; //开始日选好后，重置结束日的最小日期
+                shijian22.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var shijian22 = {
+            elem: '#shijian22',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            choose: function (datas) {
+                shijian21.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(shijian21);
+        laydate(shijian22);
      
         
 
