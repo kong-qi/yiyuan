@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 class HuiFangController extends AuthController {
-    protected $onname='回访';
+    protected $onname='回访管理';
     protected $rule_qz='huifangset';
     protected $subjg=array(
         'hf_way'=>'回访方式',
@@ -29,8 +29,11 @@ class HuiFangController extends AuthController {
 
             if($model->create())
             {
-                $result =    $model->add();
+                
                 $data=$model->create();
+                $data['ntime']=time();
+                $data['status']=1;
+                $result =    $model->add($data);
                 $renwu_id=$data['renwu_id'];
                 if($renwu_id!='')
                 {
@@ -76,27 +79,39 @@ class HuiFangController extends AuthController {
         $this->assign('is_search',I('get.is_search'));
         $this->check_group("huihfrenwu_list");
         $model = M('HuiFang');
-        $join[] = 'LEFT JOIN __USER__ u1 ON rewu.user_id = u1.id';
-        $join[] = 'LEFT JOIN __ADMIN__ a1 ON rewu.admin_id = a1.id';
-        $join[] = 'LEFT JOIN __ADMIN__ fp ON rewu.handle_id = fp.id';
-        $filed ='
-        rewu.id as id,
-        rewu.status as status,
-        rewu.uuid as uuid,
-        rewu.name as name,
-        rewu.type_text as type_text,
-        rewu.ctime as ctime,
-        rewu.rtime as rtime,
-        a1.name as create_name,
-        fp.name as handle_name,
-        u1.name as user_name,
-        u1.tel as tel,
-        u1.id as user_id
-        ';
+        $join[] = 'LEFT JOIN __USER__ u1 ON h1.user_id = u1.id';
+        $join[] = 'LEFT JOIN __LAN_MU__ l2 ON l2.id = h1.type';//类型
+        $join[] = 'LEFT JOIN __LAN_MU__ l3 ON l3.id = h1.ways';//方式
+        $join[] = 'LEFT JOIN __LAN_MU__ l4 ON l4.id = h1.result_cont';//结果
+        $join[] = 'LEFT JOIN __LAN_MU__ l5 ON l5.id = h1.goplace';//去向
+        $join[] = 'LEFT JOIN __ADMIN__ a1 ON h1.admin_id = a1.id';
+        $filed = '
+           h1.ctime,
+           h1.status as status,
+           h1.uuid as uuid,
+           h1.content as content,
+           l2.name as type,
+           l3.name as ways,
+           l5.name as goplace,
+           u1.name as user_name ,
+           u1.tel as tel,
+           u1.id as user_id,
+           h1.name as name,
+           l4.name as result_cont,
+           a1.realname as admin_name
+         ';
         if(I('get.keyword')!='')
         {
              $key=I('get.keyword');
-            $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or rewu.name like '%" . $key . "%'";
+            $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or h1.name like '%" . $key . "%'";
+        }
+        //是否只能查看自己的
+        if(!check_group('root'))
+        {
+            if(check_group('huifangset_only'))
+            {
+                 $map['_string']="h1.admin_id ='".session('admin_id')."'";
+            }
         }
          $status='';
          if(I('get.status')!='')
@@ -104,21 +119,21 @@ class HuiFangController extends AuthController {
             $status=I('get.status');
             $map['status']=$status;
          }
-         $count = $model->alias('rewu')->join($join)->where($map)->count();// 查询满足要求的总记录数
-         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+      
+         $count = $model->alias('h1')->join($join)->where($map)->count();// 查询满足要求的总记录数
+         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '20';
          $page = 1;
          if (isset($_GET['p'])) {
              $page = $_GET['p'];
          }
 
-         $list = $model->alias('rewu')->field($filed)->join($join)->order('rewu.ctime desc,rewu.id desc')->where($map)->page($page . ',' . $pagesize)->select();
+         $list = $model->alias('h1')->field($filed)->join($join)->order('h1.ctime desc,h1.id desc')->where($map)->page($page . ',' . $pagesize)->select();
          //print_r($list);
          $this->assign('list', $list);// 赋值数据集
          $type_arr='';
          $menu_list = $this->getFiledArray($type_arr);
          
          $this->menu_list = $menu_list;
-
         
         $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
         
@@ -135,13 +150,15 @@ class HuiFangController extends AuthController {
                     
                     'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-2' => array('name' => lang('电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-3' => array('name' => lang('回访类型'), 'filed'=>'type_text','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('回访类型'), 'filed'=>'type','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-4' => array('name' => lang('回访状态'), 'filed'=>'status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    
-                    'td-7' => array('name' => lang('待回访日期'), 'filed'=>'rtime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-5' => array('name' => lang('创建日期'), 'filed'=>'ctime','diy'=>'text-blue', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-6' => array('name' => lang('创建人'), 'filed'=>'create_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-8' => array('name' => lang('指定回访人'), 'filed'=>'handle_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('回访方式'), 'filed'=>'ways','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-6' => array('name' => lang('回访主题'), 'filed'=>'name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-7' => array('name' => lang('回访结果'), 'filed'=>'result_cont','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-8' => array('name' => lang('客户流向'), 'filed'=>'goplace','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-9' => array('name' => lang('回访时间'), 'filed'=>'ctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-10' => array('name' => lang('回访人'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                  
                     
                    
 
@@ -150,10 +167,22 @@ class HuiFangController extends AuthController {
         }
         return $menu_list;
     }
-
+    public function show($id){
+        $m=M('HuiFang')->where(array('uuid'=>$id))->find();
+        $this->assign('data',$m);
+        $this->display();
+    }
     public function add($uid){
         //权限选择
         $this->check_group($this->rule_qz."_add");
+        $rwid=I('get.rw_id');
+        $lx_id='';
+        if($rwid!='')
+        {
+            $renwu=M('RenWu')->where(array('id'=>$rwid))->find();
+            $lx_id=$renwu['type_id'];
+        }
+        $this->assign('type_id',$lx_id);
         $this->data=get_user($uid);
         return $this->display();
 
@@ -161,24 +190,14 @@ class HuiFangController extends AuthController {
     public function edit(){
         //权限选择
 
-        $this->check_group('huifang');
+        $this->check_group('huifang_edit');
         if(IS_POST)
         {
-            $model =D('LanMu');
+            $model =D('HuiFang');
 
             if($model->create()) {
                 $data=$model->create();
-                $id=$data['id'];
-                if(($data['pwd'])!='')
-                {
-                    $data['pwd']=sha1($data['pwd']);
-                }else
-                {
-                    unset($data['pwd']);
-                }
-
                 $result =   $model->save($data);
-
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
@@ -192,12 +211,12 @@ class HuiFangController extends AuthController {
                 return $this->error($model->getError());
             }
         }else{
-            $id=I('get.uuid');
+            $id=I('get.id');
             $map=array(
                 'uuid'=>$id
             );
 
-            $model   =   M('LanMu')->where($map)->find();
+            $model= M('HuiFang')->where($map)->find();
 
             if($model) {
                 $this->data =  $model;// 模板变量赋值
@@ -205,7 +224,7 @@ class HuiFangController extends AuthController {
             }else{
                 return $this->error(lang('数据错误','handle'));
             }
-            $this->assign('subcategory',$this->subjg);
+            $this->user=get_user($model->user_id);
             $this->display();
         }
     }

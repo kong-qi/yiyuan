@@ -60,19 +60,32 @@ class RenWuController extends AuthController {
         $this->assign('is_search',I('get.is_search'));
         $this->check_group("huihfrenwu_list");
         $model = M('RenWu');
+        //是否只能查看自己的
+        if(!check_group('root'))
+        {
+            if(check_group('hfrenwu_only') && check_group('hfrenwu_only_handle'))
+            {
+                 $map['_string']="rewu.admin_id ='".session('admin_id')."' or rewu.handle_id ='".session('admin_id')."'";
+            }elseif(check_group('hfrenwu_only'))
+            {
+                 $map['_string']="rewu.admin_id ='".session('admin_id')."'";
+            }
+        }
+
         $join[] = 'LEFT JOIN __USER__ u1 ON rewu.user_id = u1.id';
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON rewu.admin_id = a1.id';
         $join[] = 'LEFT JOIN __ADMIN__ fp ON rewu.handle_id = fp.id';
+        $join[] = 'LEFT JOIN __LAN_MU__ lx ON lx.id = rewu.type_id';
         $filed ='
         rewu.id as id,
         rewu.status as status,
         rewu.uuid as uuid,
         rewu.name as name,
-        rewu.type_text as type_text,
+        lx.name as type_text,
         rewu.ctime as ctime,
         rewu.rtime as rtime,
-        a1.name as create_name,
-        fp.name as handle_name,
+        a1.realname as create_name,
+        fp.realname as handle_name,
         u1.name as user_name,
         u1.tel as tel,
         u1.id as user_id
@@ -121,6 +134,7 @@ class RenWuController extends AuthController {
                     'td-2' => array('name' => lang('电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-3' => array('name' => lang('回访类型'), 'filed'=>'type_text','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-4' => array('name' => lang('回访状态'), 'filed'=>'status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                     'td-4' => array('name' => lang('回访主题'), 'filed'=>'name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     
                     'td-7' => array('name' => lang('待回访日期'), 'filed'=>'rtime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-5' => array('name' => lang('创建日期'), 'filed'=>'ctime','diy'=>'text-blue', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
@@ -162,8 +176,8 @@ class RenWuController extends AuthController {
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
-                    return '';
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    
+                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
                 }else{
                     $msg=lang('数据一样无更新','handle');

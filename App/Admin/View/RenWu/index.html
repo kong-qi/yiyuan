@@ -160,7 +160,7 @@
                                                     {{ :to_time($v[$mv['filed']]) }}
                                                 <elseif condition="$mv['filed'] eq status"/>
 
-                                                  <span class="{{ :btn_yycolor(($mv['leibie']+1)) }}">
+                                                  <span class="{{ :btn_yycolor(($v['status']+1)) }}">
                                                   {{ :lang(ren_status($v[$mv['filed']])) }}
                                                   </span>
                                                 <elseif condition="$mv['filed'] eq tel"/>
@@ -170,9 +170,6 @@
                                             </if>
                                             
                                             </td>
-                                               
-                                            
-                                           
                                         </foreach>
                                         <td>
                                             <div style="width: 230px;">

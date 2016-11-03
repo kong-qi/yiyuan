@@ -16,16 +16,15 @@
                 <div class="panel-heading">
                     <div class="panel-options">
                         <ul class="nav nav-tabs">
-
-                            <if condition="check_group('yuyue_showhf')">
-                                <li class="active"><a data-toggle="tab" href="tabs_panels.html#tab-3" aria-expanded="false"><span class="hidden-xs">{{ :lang('回访列表') }}</span><span class="visible-xs">{{ :lang('回访') }}《/span></a> </li>
-                                <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-4" aria-expanded="false"><span class="hidden-xs">{{ :lang('添加回访') }}</span><span class="visible-xs">{{ :lang('添加') }}</span></a> </li>
-
-                           </if>
-                            <if condition="check_group('yuyue_hfsrenwu')">
-                                <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-5" aria-expanded="false"><span class="hidden-xs">{{ :lang('回访任务') }}</span><span class="visible-xs">{{ :lang('任务') }}</span></a> </li>
-                                <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-6" aria-expanded="false"><span class="hidden-xs">{{ :lang('添加任务') }}</span><span class="visible-xs">{{ :lang('添加') }}</span></a> </li>
-
+                            
+                            <if condition="check_group('huihfrenwu_list')">
+                                <li class=" active"><a data-toggle="tab" href="tabs_panels.html#tab-5" aria-expanded="false"><span class="hidden-xs">{{ :lang('待回访任务') }}</span><span class="visible-xs">{{ :lang('待回任务') }}</span></a> </li>
+                                <li class=" "><a data-toggle="tab" href="tabs_panels.html#tab-10" aria-expanded="false"><span class="hidden-xs">{{ :lang('已回访任务') }}</span><span class="visible-xs">{{ :lang('已回任务') }}</span></a> </li>
+                               <!--  <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-6" aria-expanded="false"><span class="hidden-xs">{{ :lang('添加任务') }}</span><span class="visible-xs">{{ :lang('添加') }}</span></a> </li> -->
+                            </if>
+                            <if condition="check_group('huifangset_list')">
+                                 <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-3" aria-expanded="false"><span class="hidden-xs">{{ :lang('回访记录') }}</span><span class="visible-xs">{{ :lang('回访') }}</span></a> </li>
+                                <!--  <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-4" aria-expanded="false"><span class="hidden-xs">{{ :lang('添加回访') }}</span><span class="visible-xs">{{ :lang('添加') }}</span></a> </li> -->
                             </if>
 
                         </ul>
@@ -34,25 +33,25 @@
                 <div class="panel-body" style="padding:5px 0px 0px 0px;">
                     <div class="tab-content">
 
-                        <div id="tab-3" class="tab-pane active" style="background: #fff">
+                        <div id="tab-3" class="tab-pane" style="background: #fff">
                             <div class="col-sm-12">
                                 <div class="ibox-content">
                                     <div class="box " style="padding-top: 10px">
                                         {{ :lang('名字') }}：<a href="#" class="">{{ $data.name }} </a>
                                     </div>
 
-                                    <table class="table table-hover">
+                                    <table class="table table-striped table-hover table-bordered">
                                         <thead>
                                         <tr>
-
-                                            <th>{{ :lang('回访主题') }}</th>
+                                           
                                             <th>{{ :lang('回访类型') }}</th>
-                                            <th>{{ :lang('回访方式') }}</th>
                                             <th>{{ :lang('回访状态') }}</th>
+                                            <th>{{ :lang('回访方式') }}</th>
+                                            <th>{{ :lang('回访主题') }}</th>
                                             <th>{{ :lang('客户流向') }}</th>
-                                            <th>{{ :lang('下次回访') }}</th>
-                                            <th>{{ :lang('下次小结') }}</th>
-                                            <th>{{ :lang('操作') }}</th>
+                                            <th>{{ :lang('回访结果') }}</th>
+                                            <th>{{ :lang('回访时间') }}</th>
+                                            <th>{{ :lang('回访人') }}</th>
                                         </tr>
                                         </thead>
                                         <tbody id="zhuti">
@@ -144,30 +143,62 @@
                                 </form>
                             </div>
                         </div>
-                        <div id="tab-5" class="tab-pane">
+                        <div id="tab-5" class="tab-pane active">
                             <div class="col-sm-12">
                                 <div class="ibox-content">
                                     <div class="box " style="padding-top: 10px">
                                         {{ :lang('名字') }}：<a href="#" class="">{{ $data.name }} </a>
                                     </div>
-                                    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table table-hover"> 
+                                    <table class="table table-striped table-hover table-bordered"> 
                                         <thead>
                                         <tr>
 
                                             <th>{{ :lang('任务主题') }}</th>
-
-
-                                            <th>{{ :lang('任务状态') }}</th>
-
+                                            <th>{{ :lang('任务类型') }}</th>
+                                            <th>{{ :lang('状态') }}</th>
                                             <th>{{ :lang('回访时间') }}</th>
-                                            <th>{{ :lang('操作') }}</th>
+                                            <th>{{ :lang('创建时间') }}</th>
+                                            <th>{{ :lang('创建人') }}</th>
+                                            <th>{{ :lang('指定人') }}</th>
+                                           
                                         </tr>
                                         </thead>
                                         <tbody id="zhuti2">
                                         </tbody>
                                         <tr>
-                                            <td colspan="6">
+                                            <td colspan="7">
                                                 <div id="lpage2" class="m-t"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-10" class="tab-pane">
+                            <div class="col-sm-12">
+                                <div class="ibox-content">
+                                    <div class="box " style="padding-top: 10px">
+                                        {{ :lang('名字') }}：<a href="#" class="">{{ $data.name }} </a>
+                                    </div>
+                                    <table class="table table-striped table-hover table-bordered"> 
+                                        <thead>
+                                        <tr>
+
+                                            <th>{{ :lang('任务主题') }}</th>
+                                            <th>{{ :lang('任务类型') }}</th>
+                                            <th>{{ :lang('状态') }}</th>
+                                            <th>{{ :lang('回访时间') }}</th>
+                                            <th>{{ :lang('创建时间') }}</th>
+                                            <th>{{ :lang('创建人') }}</th>
+                                            <th>{{ :lang('指定人') }}</th>
+                                           
+                                        </tr>
+                                        </thead>
+                                        <tbody id="zhuti10">
+                                        </tbody>
+                                        <tr>
+                                            <td colspan="7">
+                                                <div id="lpage10" class="m-t"></div>
                                             </td>
                                         </tr>
                                     </table>
@@ -223,7 +254,7 @@
     <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
     <script src="__JS__/layer/laypage/laypage.js"></script>
     {{ :load_ueditor() }}
-    <if condition="check_group('yuyue_showhf')">
+    <if condition="check_group('huifangset_list')">
         <script>
             function hj_ajax(curr) {
                 $.getJSON("{{ :U('Admin/Ajax/getHuifang') }}", {
@@ -241,19 +272,47 @@
                             if (!first) { //点击跳页触发函数自身，并传递当前页：obj.curr
                                 hj_ajax(obj.curr);
                             }
+                            $('[ data-layer="1"]').on("click", function() {
+                                url = $(this).attr('data-url');
+                                id = $(this).attr('data-uuid');
+                                title = $(this).attr('data-title');
+                                close=$(this).attr('data-close');
+                                if(!close)
+                                {
+                                    close=true;
+                                }else
+                                {
+                                    close=false;
+                                }
+                                w=$(this).attr('data-w');
+                                h=$(this).attr('data-h');
+                                layer.open({
+                                    type: 2,
+                                    title: title,
+                                    shadeClose: close,
+                                    shade: 0.8,
+                                    area: ['60%', '50%'],
+                                    content: url,
+                                    cancel: function(index) {
+
+
+                                    }
+                                });
+                            });
                         }
                     });
                 });
             }
             ;
-        hj_ajax();
+            hj_ajax();
         </script>
     </if>
-    <if condition="check_group('yuyue_hfsrenwu')">
+    <if condition="check_group('huihfrenwu_list')">
         <script>
             function renwu_ajax(curr){
                 $.getJSON("{{ :U('Admin/Ajax/getHuifangRenWu') }}", {
                     page: curr || 1,
+                    'status':0,
                     "uid":"{{ $data.id }}",
                 }, function(res){
                     console.log(res);
@@ -271,11 +330,33 @@
                     });
                 });
             };
+            function renwu2_ajax(curr){
+                $.getJSON("{{ :U('Admin/Ajax/getHuifangRenWu') }}", {
+                    page: curr || 1,
+                    'status':1,
+                    "uid":"{{ $data.id }}",
+                }, function(res){
+                    console.log(res);
+                    $("#zhuti10").empty().append(res.content);
+                    //显示分页
+                    laypage({
+                        cont: 'lpage10', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                        pages: res.pages, //通过后台拿到的总页数
+                        curr: curr || 1, //当前页
+                        jump: function(obj, first){ //触发分页后的回调
+                            if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                                renwu2_ajax(obj.curr);
+                            }
+                        }
+                    });
+                });
+            };
             renwu_ajax();
+            renwu2_ajax();
         </script>
     </if>
     <script>
-        bd_ueditor('content');
+        //bd_ueditor('content');
 
         $.validator.setDefaults({
             highlight: function (e) {

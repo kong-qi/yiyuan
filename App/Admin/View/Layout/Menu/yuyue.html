@@ -23,7 +23,7 @@
                    href="{{ :U('Admin/YuYue/zxindex') }}">{{ :lang('仅咨询列表','menu') }}</a>
             </li>
         </if>
-        <if condition="check_group('yuyue_show')">
+        <if condition="check_group('yuyue_other')">
             <li>
                 <a class="J_menuItem"
                    href="{{ :U('Admin/YuYue/index') }}?djstime={{ :date('Y-m-d') }}&djetime={{ :date('Y-m-d') }}&status=1&show=none">{{ :lang('今日预约','menu') }}</a>

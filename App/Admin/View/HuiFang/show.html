@@ -1,0 +1,35 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+        <div class="ibox-content">
+            {{ :echo_html($data['content']) }}
+        </div>      
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    {{ :load_ueditor() }}
+    <script>
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.insertBefore(r.parents(".ibox-content"));
+                //e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+        $().ready(function () {
+            $("#validate").validate();
+            bd_ueditor('content',100);
+        });
+
+    </script>
+</block>

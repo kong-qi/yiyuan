@@ -29,7 +29,7 @@
                                    
                                         <input type="hidden" name="type_text">
                                         <select  id="hf_type" name="type_id" class="form-control" data-set-option='1' data-name="type_text">
-                                           
+                                            <option value="">{{ :lang('请选择') }}</option>
                                             {{ :get_huifang_onelist('hf_type','huifang',1,'','',$data['type_id']) }}
                                         </select>
                                     </div>

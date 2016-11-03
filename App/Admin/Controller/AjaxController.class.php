@@ -485,52 +485,70 @@ class AjaxController extends AuthController
    public function getHuifang(){
        $uid=I('request.uid');
        $page=I('request.page');
-       $pagesize=50;
-       $map=array('h1.user_id'=>$uid);
-
-       $hf=M('HuiFang');
-       $join[] = 'LEFT JOIN __LAN_MU__ l1 ON l1.id = h1.name';
-       $join[] = 'LEFT JOIN __LAN_MU__ l2 ON l2.id = h1.type';
-       $join[] = 'LEFT JOIN __LAN_MU__ l3 ON l3.id = h1.ways';
-       $join[] = 'LEFT JOIN __LAN_MU__ l4 ON l4.id = h1.status';
-       $join[] = 'LEFT JOIN __LAN_MU__ l5 ON l5.id = h1.goplace';
+       $pagesize=20;
+       $map=array();
+       $map['h1.user_id']=$uid;
+       $this->check_group("huihfrenwu_list");
+       $model = M('HuiFang');
+       $join[] = 'LEFT JOIN __USER__ u1 ON h1.user_id = u1.id';
+       $join[] = 'LEFT JOIN __LAN_MU__ l2 ON l2.id = h1.type';//类型
+       $join[] = 'LEFT JOIN __LAN_MU__ l3 ON l3.id = h1.ways';//方式
+       $join[] = 'LEFT JOIN __LAN_MU__ l4 ON l4.id = h1.result_cont';//结果
+       $join[] = 'LEFT JOIN __LAN_MU__ l5 ON l5.id = h1.goplace';//去向
+       $join[] = 'LEFT JOIN __ADMIN__ a1 ON h1.admin_id = a1.id';
        $filed = '
-          h1.ntime,
-          h1.uuid as huuid,
-          h1.content as cont,
-          l1.name as hf_name,
-          l2.name as hf_type,
-          l3.name as hf_ways,
-          l4.name as hf_status,
-          l5.name as hf_fangxiang
-          
+          h1.ctime,
+          h1.status as status,
+          h1.uuid as uuid,
+          h1.content as content,
+          l2.name as type,
+          l3.name as ways,
+          l5.name as goplace,
+          u1.name as user_name ,
+          u1.tel as tel,
+          u1.id as user_id,
+          h1.name as name,
+          l4.name as result_cont,
+          a1.realname as admin_name
         ';
-       $total=$hf->alias('h1')->join($join)->where($map)->count();// 查询满足要求的总记录数
-       $pages=ceil($total/$pagesize);
-       $hf=$hf->alias('h1')->field($filed)->join($join)->where($map)->order('h1.id asc')->page($page,$pagesize)->select();
+      
+       //是否只能查看自己的
+       if(!check_group('root'))
+       {
+           if(check_group('huifangset_only'))
+           {
+                $map['_string']="h1.admin_id ='".session('admin_id')."'";
+           }
+       }
+               
+        $total = $model->alias('h1')->join($join)->where($map)->count();// 
+        $pages=ceil($total/$pagesize);
+        
+
+        $list = $model->alias('h1')->field($filed)->join($join)->order('h1.ctime desc,h1.id desc')->where($map)->page($page . ',' . $pagesize)->select();
+       
 
        $content='';
+       $status=array(
+           '1'=>'已回访',
+           '0'=>'待回访'
+       );
        if($total)
        {
-           foreach ($hf as $k=>$v)
+           foreach ($list as $k=>$v)
            {
-               $content.="<tr style='background: #fff'>";
-               $delurl=U('Admin/HuiFang/del',array('id'=>$v['huuid']));
-                $del='<a href="'.$delurl.'" class="btn btn-xs btn-white" > <span class="fa fa-trash "></span>
-                                                        删除</a>
-                ';
-               $content.="
-               <td>".$v['hf_name']."</td>
-                <td>".$v['hf_type']."</td>
-                <td>".$v['hf_ways']."</td>
-                <td>".$v['hf_status']."</td>
-                <td>".$v['hf_fangxiang']."</td>
-                
-                <td>".(to_date_time(($v['ntime']),'d-m-Y'))."</td>
-                <td>".htmlspecialchars_decode($v['cont'])."</td>
-                <td>".$del."</td>
-                ";
-
+              
+               $content.="<tr>
+               <td>".$v['type']."</td>
+               <td><span class='".btn_yycolor($v['status']+1)."'>".$status[$v['status']]."</span></td>
+               <td>".$v['ways']."</td>
+               <td class='text-blue'><a data-close='' data-w='600px' data-title='".lang('查看情况')."' data-h='500px' data-layer='1' data-url='".U('Admin/HuiFang/show',array('id'=>$v['uuid']))."' class='text-blue' >".$v['name']."</a></td>
+               <td>".$v['goplace']."</td>
+               <td>".$v['result_cont']."</td>
+               <td class='text-info'>".to_time($v['ctime'])."</td>
+               
+               <td>".$v['admin_name']."</td>
+              ";
                $content.="</tr>";
            }
        }
@@ -544,45 +562,74 @@ class AjaxController extends AuthController
    public function getHuifangRenWu(){
         $uid=I('request.uid');
         $page=I('request.page');
-        $pagesize=50;
+        $pagesize=20;
         $map=array('user_id'=>$uid);
-        $total=M('RenWu')->where($map)->count();
-        $pages=ceil($total/$pagesize);
-        $hf=M('RenWu')->where($map)->page($page,$pagesize)->order('rtime desc')->select();
 
+        if(I('get.status')!='')
+        {
+         
+           $map['status']=I('get.status');
+        }
+        $model = M('RenWu');
+        //是否只能查看自己的
+        if(!check_group('root'))
+        {
+            if(check_group('hfrenwu_only') && check_group('hfrenwu_only_handle'))
+            {
+                 $map['_string']="rewu.admin_id ='".session('admin_id')."' or rewu.handle_id ='".session('admin_id')."'";
+            }elseif(check_group('hfrenwu_only'))
+            {
+                 $map['_string']="rewu.admin_id ='".session('admin_id')."'";
+            }
+        }
+
+        $join[] = 'LEFT JOIN __USER__ u1 ON rewu.user_id = u1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ a1 ON rewu.admin_id = a1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ fp ON rewu.handle_id = fp.id';
+        $join[] = 'LEFT JOIN __LAN_MU__ lx ON lx.id = rewu.type_id';
+        $filed ='
+        rewu.id as id,
+        rewu.status as status,
+        rewu.uuid as uuid,
+        rewu.name as name,
+        lx.name as type_text,
+        rewu.ctime as ctime,
+        rewu.rtime as rtime,
+        a1.realname as create_name,
+        fp.realname as handle_name,
+        u1.name as user_name,
+        u1.tel as tel,
+        u1.id as user_id
+        ';
+        
+         
+         $total = $model->alias('rewu')->join($join)->where($map)->count();// 查询满足要求的总记录数
+         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+         $pages=ceil($total/$pagesize);
+        
+
+        $list = $model->alias('rewu')->field($filed)->join($join)->order('rewu.ctime desc,rewu.id desc')->where($map)->page($page . ',' . $pagesize)->select();
+        //print_r($list);
         $content='';
         $status=array(
             '1'=>'已回访',
             '0'=>'待回访'
         );
-        $seturl='';
-        $yz='';
+        
         if($total)
         {
 
-            foreach ($hf as $k=>$v)
+            foreach ($list as $k=>$v)
             {
-                if($v['status']=='1')
-                {
-                    $seturl=U('Admin/RenWu/handle',array('id'=>$v['id'],'type'=>'false'));
-                    $yz=' <font >'.lang($status[$v['status']],'handel').'</font>';
-                }else
-                {
-                    $seturl=U('Admin/RenWu/handle',array('id'=>$v['id'],'type'=>'true'));
-                    $yz=' <font color=red>'.lang($status[$v['status']],'handel').'</font>';
-                }
-                $content.="<tr style='background: #fff'>";
-                $delurl=U('Admin/RenWu/del',array('id'=>$v['uuid']));
-                $del='<a href="'.$delurl.'" class="btn btn-xs btn-white" > <span class="fa fa-trash "></span>
-                                                        删除</a>
-                ';
-                $content.="
-               <td>".$v['name']."</td>
-              
-                <td><a href='".$seturl."' class='btn btn-white'>".$yz."</a></td>
-          
-                <td>".to_date_time(($v['rtime']),'d-m-Y')."</td>
-                <td>".$del."</td>
+               
+                $content.="<tr>
+                <td class='text-blue'>".$v['name']."</td>
+                <td>".$v['type_text']."</td>
+                <td><span class='".btn_yycolor($v['status']+1)."'>".$status[$v['status']]."</span></td>
+                <td class='text-blue'>".to_time($v['rtime'])."</td>
+                <td class='text-info'>".to_time($v['ctime'])."</td>
+                <td>".$v['create_name']."</td>
+                <td>".$v['handle_name']."</td>
                ";
                 $content.="</tr>";
             }

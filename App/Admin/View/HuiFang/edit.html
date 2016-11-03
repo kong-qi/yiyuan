@@ -14,19 +14,16 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon">{{ :lang('病人名字') }}</label>
-                                    <input type="hidden" name="renwu_id" value="{{ :I('get.rw_id') }}">
                                     <input type="hidden" name="close_frame" value="1">
                                     <input type="hidden" name="bktab" value="1">
-                                    <input type="hidden" readonly name="admin_id" value="{{ :session('admin_id') }}">
-                                    <input type="hidden" name="user_id" value="{{ $data.id }}">
-                                    <input class="form-control" value="{{ $data.name }}" name="uname" readonly>
+                                    <input class="form-control" value="{{ $user.name }}" name="uname" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
                                     <label class="input-group-addon">{{ :lang('联系电话') }}</label>
                                    
-                                    <input data-show-phone="1" data-url="{{ :U('Admin/Ajax/showPhone') }}" data-vid="#showphone" id="showphone" data-type="input" data-uid="{{ $data.id }}" class="form-control" value="{{ :hide_tel($data['tel'],2,5) }}"  readonly>
+                                    <input data-show-phone="1" data-url="{{ :U('Admin/Ajax/showPhone') }}" data-vid="#showphone" id="showphone" data-type="input" data-uid="{{ $user.id }}" class="form-control" value="{{ :hide_tel($user['tel'],2,5) }}"  readonly>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -40,7 +37,7 @@
                                         {{ :get_huifang_onelist_li() }}
                                       </ul>
                                     </div><!-- /btn-group -->
-                                    <input type="text" required class="form-control" name="name" >
+                                    <input type="text" required class="form-control" name="name" value="{{ $data.name }}" >
                                 </div>
                             </div>
                             <div class="form-group">
@@ -48,7 +45,7 @@
                                     <label class="input-group-addon">{{ :lang('回访类型') }}</label>
                                 
                                     <select  id="hf_type" name="type" class="form-control">
-                                        {{ :get_huifang_onelist('hf_type','huifang',1,'','',$type_id) }}
+                                        {{ :get_huifang_onelist('hf_type','huifang',1,'','',$data['type']) }}
                                     </select>
                                 </div>
                             </div>
@@ -57,7 +54,8 @@
                                     <label class="input-group-addon">{{ :lang('回访方式') }}</label>
                                 
                                     <select  id="hf_way" name="ways" class="form-control">
-                                        {{ :get_huifang_onelist('hf_way') }}
+                                        {{ :get_huifang_onelist('hf_way','huifang',1,'','',$data['ways']) }}
+
                                     </select>
                                 </div>
                             </div>
@@ -66,7 +64,7 @@
                                     <label class="input-group-addon">{{ :lang('客户流向') }}</label>
                                 
                                     <select  id="hf_go" name="goplace" class="form-control">
-                                        {{ :get_huifang_onelist('hf_go') }}
+                                        {{ :get_huifang_onelist('hf_go','huifang',1,'','',$data['goplace']) }}
                                     </select>
                                 </div>
                             </div>
@@ -84,7 +82,7 @@
                                 <label class="input-group-addon">{{ :lang('回访结果') }}</label>
                                 
                                     <select name="result_cont" class="form-control">
-                                        {{ :get_huifang_onelist('hf_result') }}
+                                        {{ :get_huifang_onelist('hf_result','huifang',1,'','',$data['result_cont']) }}
                                     </select>
                                 </div>
                             </div>
@@ -99,13 +97,13 @@
                             <div class="form-group">
                                 <label >{{ :lang('回访记录') }}</label>
                                 <div class="col-sm-12">
-                                    <textarea class="summernote" name="content" id="content"></textarea>
+                                    <textarea class="summernote" name="content" id="content">{{ :echo_html($data['content']) }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
 
-                                    <button class="btn btn-primary" type="submit">{{ :lang('添加') }}</button>
+                                    <button class="btn btn-primary" type="submit">{{ :lang('更新') }}</button>
                                 </div>
                             </div>
                         </div>
