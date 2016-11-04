@@ -888,16 +888,20 @@ function onkefu2($type='is_zixun',$merg=0,$aid=''){
 //年龄设置
 function echo_age($checked=''){
     $str='';
-
+    $checked='';
     for($i=10;$i<=80;$i++)
     {
-        if( $checked==$i)
+        if($checked!='')
         {
-            $checked="selected='selsected'";
-        }else
-        {
-            $checked='';
+            if( $checked==$i)
+            {
+                $checked="selected='selsected'";
+            }else
+            {
+                $checked='';
+            }
         }
+      
 
 
         $str.='<option '.$checked.' value="'.$i.'">'.$i.'</option>';

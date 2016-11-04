@@ -30,10 +30,10 @@
                                         <option value="男">{{ :lang('男','handle') }}</option>
                                         <option value="女" selected="selected">{{ :lang('女','handle') }}</option>
                                     </select>
-                                    <select name="age" id="age" class="form-control inline wb30">
+                                    <select name="age" id="age" class="form-control js-age inline wb30">
                                         <option value="">{{ :lang('年龄') }}</option> {{ :echo_age() }}
                                     </select>
-                                    <input class="form-control  inline wb30" name="birthday" placeholder="{{ :lang('生日','handle') }}" id="shengri">
+                                    <input class="form-control js-sz inline wb30" name="birthday" placeholder="{{ :lang('生日','handle') }}" id="shengri">
                                 </div>
                                
                                 <div class="form-group">
@@ -419,34 +419,35 @@
             $("#ydate").val(get_date($v));
         });
 
-        var shengri = {
-            elem: '#shengri',
-            format: 'YYYY-MM-DD',
-         
-            istime: false,
-            oclear: false,
-            choose: function(dates) { //选择好日期的回调
 
-                $v = dates;
-                $v=(get_age($v));
-                
-                    log($v);
-                    $("#age").val($v);
-                
-            }
-        };
-
-        laydate(shengri);
-
-        //生日变化
-        $("#age").change(function() {
-            $year = $("#age").val();
-            //$birthday = get_age_date("-" + $year);
-            //$("#shengri").val($birthday);
-        });
 
     });
+    
+     var shengri = {
+         elem: '#shengri',
+         format: 'YYYY-MM-DD',
+         max: laydate.now(-365*10),
+         istime: false,
+         oclear: false,
+         choose: function(dates) { //选择好日期的回调
+            
+             $v = dates;
+             $v=(get_age($v));
+             
+          
+             $("#age").val($v);
+             
+         }
+     };
 
+     laydate(shengri);
+   
+     //年龄变化
+    /* $("#age").change(function() {
+         //$year = $("#age").val();
+         //$birthday = get_age_date("-" + $year);
+         //$("#shengri").val($birthday);
+     });*/
 
 
     $("[data-datachenge='1']").change(function() {
