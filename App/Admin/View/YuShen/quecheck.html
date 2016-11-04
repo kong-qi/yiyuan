@@ -6,35 +6,39 @@
     <div class="right-box">
 
 
-        <div class="box">
-            <div class="box-title">
+        <div class="ibox">
+            <div class="ibox-title">
                 {{ :lang($onname,'menu') }}
-                <h3 class="pull-right ">
-                    <a href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>2)) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
-                </h3>
+                <div class="ibox-tools">
+                    <a href="{{ :U('Admin/YuShen/index',array('status'=>2)) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                </div>
+               
+                
+               
             </div>
-            <div class="box-content">
-                <div class="form-warp">
-
-                    <form action="{{ :U('Admin/YuShen/add') }}" method="post" id="validate">
+            <div class="ibox-content">
+                <form action="{{ :U('Admin/YuShen/add') }}" method="post" id="validate">
                         <input type="hidden" name="yy_id" value="{{ $data.id }}">
                         <input type="hidden" name="user_id" value="{{ $data.user_id }}">
                         <input type="hidden" name="ys_id" value="{{ $data.ys_id }}">
-
-                        <input
-                            type="hidden" name="">
-                        <div class="tab-box">
-                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table "
-                                   style="background: #fff">
-                                <tbody>
-                                <tr>
-                                    <th width="131" class="text-center">{{ :lang('名称','filed') }}</th>
-                                    <th>{{ :lang('内容','filed') }}</th>
-                                </tr>
+                    <div class="col-sm-8">
+                        <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table "
+                               style="background: #fff">
+                            <tbody>
+                               
                                <tr>
                                    <td align="right">{{ :lang('病人姓名') }}</td>
                                    <td>
-                                       <input type="text" class="form-control" readonly="" value="{{ :$data['User']['name'] }}">
+                                       <input type="text" class="form-control inline wb30" readonly="" value="{{ :$data['User']['name'] }}">
+                                       <select required="" class="form-control inline wb30" name="zl_id" required>
+                                           <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
+                                           {{ :get_lanmu_onelist('daozhen') }}
+                                       </select>
+                                       <select class="form-control inline wb30" id="ysz_id" name="ysz_id">
+                                           <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                           {{ :get_shyishen() }}
+                                       </select>
+
                                    </td>
                                </tr>
                                 <tr>
@@ -71,86 +75,60 @@
                                         </div>
                                     </td>
                                 </tr>
-
-                                <tr>
-                                    <td align="right">{{ :lang('手术医生') }}</td>
-                                    <td align="right">
-                                
-                                        <div class="col-xs-3">
-                                            <select class="form-control" id="ysz_id" name="ysz_id">
-                                                <option value="">{{ :lang('请选择医生','handle') }}</option>
-                                                {{ :get_shyishen() }}
-                                            </select>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <p style="margin-top: 10px;float: left; margin-right: 10px;">{{ :lang('病人质量评定','handle') }}</p> 
-                                        
-                                            <select class="form-control" name="zl_id" required style="width:200px;float: left;">
-                                                <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
-                                                {{ :get_lanmu_onelist('daozhen','1','','',$data['dz_id']) }}
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
                                
                                 <tr>
-                                    <td align="right">{{ :lang('病人质量评定','handle') }}</td>
-                                    <td align="right">
-                                        
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('照片') }}</td>
-                                    <td class="enmoreinsert_file">
-                                        <input type="hidden" name="thumbs" value="" size="80"
-                                               class="input insert_input">
-                                        <button type="button" class="btn btn-xs btn-success"
-                                                onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
-                                        <span class="fa fa-image"></span> {{ :lang('上传相册') }}</button>
-                                        <div class="insert_img_more insert_img_more_en">
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('咨询小结') }}</td>
+                                    <td align="right">{{ :lang('接诊小结') }}</td>
                                     <td>
+                                        <textarea required="" name="jz_smcontent" class="jz-xj form-control">{{ $data.Bing.name }}</textarea>
                                       
-                                             <input type="text" name="jz_smcontent" class="form-control"  value="{{ $data.Bing.name }}">
-
-                                           
-                                        
-
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <td align="right">{{ :lang('咨询总结') }}</td>
                                     <td>
-                                        <div class="input-group m-b" style="margin-bottom:5px;">
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-b" style="margin-bottom:5px;">
 
+                                                <textarea name="jz_content" id="mark" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['mark']) }}</textarea>
+                                            </div>
 
-                                            <textarea name="jz_content" id="mark" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['mark']) }}</textarea>
                                         </div>
+                                        <div class="col-sm-6 enmoreinsert_file">
+                                            <input type="hidden" name="thumbs" value="" size="80" class="input insert_input">
+                                            <div class="insert_img_more insert_img_more_en">
 
+                                            </div>
+                                        </div>
+                                       
                                     </td>
                                 </tr>
-                              
-
-
-                                </tbody>
-                                <tfooter>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
-                                        </td>
-                                    </tr>
-                                </tfooter>
-                            </table>
-                        </div>
-                    </form>
-                </div>
+                            </tbody>
+                            <tfooter>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>
+                            </tfooter>
+                        </table>
+                    </div>
+                    <div class="col-sm-4">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                <button type="button" class="btn btn-xs btn-success"
+                                        onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
+                                <span class="fa fa-image"></span> {{ :lang('上传相册') }}</button>
+                                <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
+                                </td>
+                               
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+               
             </div>
             <div class="cl"></div>
         </div>
@@ -184,7 +162,7 @@
         function get_tks($id) {
             $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
             $tfid = '{{ $data.kst_id }}';
-            log($tfid);
+          
             $str = "<option value=''>{{ :lang('无') }}</option>";
             if ($id == '') {
                 $("#kstt_id").empty().append($str);
@@ -193,12 +171,13 @@
                 $("#kst_id").show().empty().append(json.content);
             });
             get_tks2('');
+             jxie();
         }
         function get_tks2($id) {
             $str = "<option value=''>{{ :lang('无') }}</option>";
             $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
             $tfid = '{{ $data.kstt_id }}';
-            log($tfid);
+          
             if ($id == '') {
                 $("#kstt_id").empty().append($str);
             }
@@ -210,6 +189,7 @@
                     $("#kstt_id").empty().append($str);
                 }
             });
+            jxie();
         }
         $.validator.setDefaults({
             highlight: function (e) {
@@ -236,7 +216,10 @@
                     form.submit();;
                 }
             });
-
+            $("#kstt_id").change(function(){
+                v=$(this).text();
+                $(".jz-xj").val(v);
+            });
             /*$("#ks2_id").change(function () {
                 $url = "{{ :U('Admin/Ajax/getYuShen') }}";
                 $next_id = "ysz_id";
@@ -268,6 +251,9 @@
                 });
             }).trigger('change');*/
         });
-
+        function jxie(){
+           
+            //$(".jz-xj").val($("#kstt_id").text());
+        }
     </script>
 </block>
