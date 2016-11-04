@@ -58,7 +58,6 @@
 
                                                 <select class="form-control" id="kst_id" name="kst_id"
                                                         onchange="get_tks2(this.value)">
-                                                    <o
                                                     <option value="">{{ :lang('请选择二级科室','handle') }}</option>
 
                                                 </select>
@@ -85,7 +84,7 @@
                                 </tr>
 
                                 <tr>
-                                    <td align="right">{{ :lang('咨询总结') }}</td>
+                                    <td align="right">{{ :lang('接诊记录') }}</td>
                                     <td>
                                         <div class="col-sm-6">
                                             <div class="input-group m-b" style="margin-bottom:5px;">
@@ -105,13 +104,13 @@
                                 </tr>
                             </tbody>
                             <tfooter>
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        
-                                    </td>
-                                </tr>
-                            </tfooter>
+                                    <tr>
+                                        <td></td>
+                                        <td class="text-center">
+                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
+                                        </td>
+                                    </tr>
+                                </tfooter>
                         </table>
                     </div>
                     <div class="col-sm-4">
@@ -188,8 +187,9 @@
                 } else {
                     $("#kstt_id").empty().append($str);
                 }
+                jxie();
             });
-            jxie();
+            
         }
         $.validator.setDefaults({
             highlight: function (e) {
@@ -211,14 +211,14 @@
                 submitHandler: function (form) {
                     //设置表单参数
                     //最终区域
-
                     return_pic_json(".enmoreinsert_file .itempic", "thumbs", 1);
                     form.submit();;
                 }
             });
             $("#kstt_id").change(function(){
-                v=$(this).text();
-                $(".jz-xj").val(v);
+               v=($(this).find("option:selected").text());
+
+               $('.jz-xj').val(v);
             });
             /*$("#ks2_id").change(function () {
                 $url = "{{ :U('Admin/Ajax/getYuShen') }}";
@@ -253,7 +253,7 @@
         });
         function jxie(){
            
-            //$(".jz-xj").val($("#kstt_id").text());
+            $(".jz-xj").val($("#kstt_id").find("option:selected").text());
         }
     </script>
 </block>

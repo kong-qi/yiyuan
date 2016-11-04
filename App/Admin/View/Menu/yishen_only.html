@@ -1,0 +1,22 @@
+<if condition="$v['ystatus'] eq 3">
+	<if condition="check_group('yishenjz_edit')">
+	<php>
+	   if($v['jztime']!=''){
+	</php>
+	<a href="{{ :U('Admin/YuShen/quecheck_edit',array('id'=>$v['qz_id'])) }}" class="btn btn-xs btn-success">
+
+	     <span class="fa fa-external-link-square btn-font" data-name="{{ :lang('修改接诊') }}" data-btn="handle"></span><span class="js-data-name"></span>
+	 </a>
+	<php>}</php>
+	</if>
+	<!-- <a href="{{ :U('Admin/YuShen/quecheck_show',array('yid'=>$v['qz_id'])) }}" class="btn btn-xs btn-success">
+	
+	     <span class="fa fa-external-link-square btn-font" data-name="{{ :lang('查看接诊') }}" data-btn="handle"></span><span class="js-data-name"></span>
+	 </a> -->
+	<a href="{{ :U('Admin/YuShen/kaidan',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="80%" data-h="80%" data-uuid="{{ $v.user_uuid }}">
+	      <span class="fa fa-plus btn-font" data-name="{{ :lang('开单') }}" data-btn="handle"></span><span class="js-data-name"></span>
+	 </a>
+
+</if>
+                            
+ <include file="Menu:duihua_show" />

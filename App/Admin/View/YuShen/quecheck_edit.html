@@ -6,33 +6,40 @@
     <div class="right-box">
 
 
-        <div class="box">
-            <div class="box-title">
+        <div class="ibox">
+            <div class="ibox-title">
                 {{ :lang($onname,'menu') }}
-                <h3 class="pull-right ">
-                    <a href="{{ :U('Admin/YuShen/showcheck',array('yid'=>$data['yy_id'])) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
-                </h3>
+                <div class="ibox-tools">
+                    <a href="{{ :U('Admin/YuShen/index',array('status'=>3,'list_type'=>'only')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                </div>
+               
+                
+               
             </div>
-            <div class="box-content">
-                <div class="form-warp">
-
-                    <form action="" method="post" id="validate">
+            <div class="ibox-content">
+                <form action="" method="post" id="validate">
                         <input type="hidden" name="id" value="{{ $data.id }}">
                         <input type="hidden" name="yy_id" value="{{ $data.yy_id }}">
-                        <div class="tab-box">
-                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table "
-                                   style="background: #fff">
-                                <tbody>
-                                <tr>
-                                    <th width="131" class="text-center">{{ :lang('名称','filed') }}</th>
-                                    <th>{{ :lang('内容','filed') }}</th>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('病人姓名') }}</td>
-                                    <td>
-                                        <input type="text" class="form-control" readonly="" value="{{ :$data['User']['name'] }}">
-                                    </td>
-                                </tr>
+                    <div class="col-sm-8">
+                        <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table "
+                               style="background: #fff">
+                            <tbody>
+                               
+                               <tr>
+                                   <td align="right">{{ :lang('病人姓名') }}</td>
+                                   <td>
+                                       <input type="text" class="form-control inline wb30" readonly="" value="{{ :$data['User']['name'] }}">
+                                       <select required="" class="form-control inline wb30" name="zl_id" required>
+                                           <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
+                                            {{ :get_lanmu_onelist('daozhen','1','','',$data['zl_id']) }}
+                                       </select>
+                                       <select class="form-control inline wb30" id="ysz_id" name="ysz_id">
+                                           <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                           {{ :get_shyishen($data['ysz_id']) }}
+                                       </select>
+
+                                   </td>
+                               </tr>
                                 <tr>
                                     <td align="right">{{ :lang('科室') }}</td>
                                     <td align="right">
@@ -43,7 +50,7 @@
                                                 <select class="form-control" name="ks_id" id="ks_id"
                                                         onchange="get_tks(this.value)">
                                                     <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                                    {{ :get_keshi('0','1',$data['ks_id'] ) }}
+                                                     {{ :get_keshi('0','1',$data['ks_id'] ) }}
                                                 </select>
                                             </div>
                                             <div class="col-sm-4">
@@ -67,111 +74,84 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                               
                                 <tr>
-                                    <td align="right">{{ :lang('医生') }}</td>
-                                    <td align="right">
-
-                                       <!--  <div class="col-xs-3">
-                                           <select class="form-control" required="required" id="ks2_id" name="jzks_id">
-                                               <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                               {{ :get_keshi('0','1',$data['jzks_id'] ) }}
-                                           </select>
-                                       </div> -->
-                                        <div class="col-xs-3">
-                                            
-                                            <select class="form-control" required="required" id="ysz_id" name="ysz_id">
-                                                 {{ :get_shyishen('23') }}
-                                            </select>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <!-- <tr>
-                                    <td align="right">{{ :lang('消费状态') }}</td>
-                                    <td align="right">
-                                       <php>$sfstatus=sf_status()</php>
-                                        <select class="form-control" name="sf_status" >
-                                            <if condition="$sfstatus">
-                                                <foreach name="sfstatus" item="v" key="k">
-                                                    <option value="{{ $k }}">{{ $v }}</option>
-                                                </foreach>
-                                            </if>
-
-                                        </select>
-                                    </td>
-                                </tr>-->
-                                <tr>
-                                    <td align="right">{{ :lang('病人质量评定','handle') }}</td>
-                                    <td align="right">
-                                        <select class="form-control" name="zl_id" required>
-                                            <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
-                                            {{ :get_lanmu_onelist('daozhen','1','','',$data['zl_id']) }}
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('病人术前术后照片') }}</td>
-                                    <td class="enmoreinsert_file">
-                                        <input type="hidden" name="thumbs" value="" size="80"
-                                               class="input insert_input">
-                                        <button type="button" class="btn btn-xs btn-success"
-                                                onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
-                                        <span class="fa fa-image"></span> 上传相册</button>
-                                        <div class="insert_img_more insert_img_more_en">
-                                            <?php
-                                                $picurl=json_decode(htmlspecialchars_decode($data['thumbs']),true);
-                                            
-                                            if($picurl)
-                                            {
-                                            
-                                            foreach($picurl as $v)
-                                            {
-                                            echo '
-                                            <li class="itempic"><img data-url="'.$v['path'].'"
-                                                                     src="'.pic_url($v['path']).'" alt="">
-                                                <p class="m_t_10"><a href="javascript:void(0)"
-                                                                     class="btn btn-white btn-xs js_left_pic"><i
-                                                        class="fa fa-angle-left"></i>上移</a>
-                                                    <a href="javascript:void(0)"
-                                                       class="btn btn-white btn-xs js_right_pic"><i
-                                                            class="fa fa-angle-right"></i>下移</a>
-                                                    <a href="javascript:void(0)"
-                                                       class="btn btn-danger btn-xs js_remove_pic"><i
-                                                            class="fa fa-trash"></i>删除</a></p></li>
-                                            ';
-                                            }
-                                            
-                                            }
-                                            ?>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="right">{{ :lang('咨询总结') }}</td>
+                                    <td align="right">{{ :lang('接诊小结') }}</td>
                                     <td>
-                                        <div class="input-group m-b" style="margin-bottom:5px;">
-
-
-                                            <textarea name="jz_content" id="mark" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['jz_content']) }}</textarea>
-                                        </div>
-
+                                        <textarea required="" name="jz_smcontent" class="jz-xj form-control">{{ $data.jz_smcontent }}</textarea>
+                                      
                                     </td>
                                 </tr>
 
+                                <tr>
+                                    <td align="right">{{ :lang('接诊记录') }}</td>
+                                    <td>
+                                        <div class="col-sm-6">
+                                            <div class="input-group m-b" style="margin-bottom:5px;">
 
-                                </tbody>
-                                <tfooter>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
-                                        </td>
-                                    </tr>
-                                </tfooter>
-                            </table>
-                        </div>
-                    </form>
-                </div>
+                                                 <textarea name="jz_content" id="mark" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['jz_content']) }}</textarea>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-6 enmoreinsert_file">
+                                            <input type="hidden" name="thumbs" value="" size="80" class="input insert_input">
+                                            <div class="insert_img_more insert_img_more_en">
+                                                <?php
+                                                    $picurl=json_decode(htmlspecialchars_decode($data['thumbs']),true);
+                                                
+                                                if($picurl)
+                                                {
+                                                
+                                                foreach($picurl as $v)
+                                                {
+                                                echo '
+                                                <li class="itempic"><img data-url="'.$v['path'].'"
+                                                                         src="'.pic_url($v['path']).'" alt="">
+                                                    <p class="m_t_10"><a href="javascript:void(0)"
+                                                                         class="btn btn-white btn-xs js_left_pic"><i
+                                                            class="fa fa-angle-left"></i>上移</a>
+                                                        <a href="javascript:void(0)"
+                                                           class="btn btn-white btn-xs js_right_pic"><i
+                                                                class="fa fa-angle-right"></i>下移</a>
+                                                        <a href="javascript:void(0)"
+                                                           class="btn btn-danger btn-xs js_remove_pic"><i
+                                                                class="fa fa-trash"></i>删除</a></p></li>
+                                                ';
+                                                }
+                                                
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                       
+                                    </td>
+                                </tr>
+                            </tbody>
+                          <tfooter>
+                                  <tr>
+                                      <td></td>
+                                      <td class="text-center">
+                                          <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
+                                      </td>
+                                  </tr>
+                              </tfooter>
+                        </table>
+                    </div>
+                    <div class="col-sm-4">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                <button type="button" class="btn btn-xs btn-success"
+                                        onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
+                                <span class="fa fa-image"></span> {{ :lang('上传相册') }}</button>
+                                <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
+                                </td>
+                               
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+               
             </div>
             <div class="cl"></div>
         </div>
@@ -213,6 +193,7 @@
                 $("#kst_id").show().empty().append(json.content);
             });
             get_tks2('');
+             
         }
         function get_tks2($id) {
             $str = "<option value=''>{{ :lang('无') }}</option>";
@@ -229,6 +210,7 @@
                 } else {
                     $("#kstt_id").empty().append($str);
                 }
+                
             });
         }
         $.validator.setDefaults({
@@ -255,6 +237,11 @@
                     return_pic_json(".enmoreinsert_file .itempic", "thumbs", 1);
                     form.submit();;
                 }
+            });
+            $("#kstt_id").change(function(){
+               v=($(this).find("option:selected").text());
+
+               $('.jz-xj').val(v);
             });
 
           /*  $("#ks2_id").change(function () {
@@ -288,6 +275,9 @@
                 });
             }).trigger('change');*/
         });
-
+        function jxie(){
+           
+            $(".jz-xj").val($("#kstt_id").find("option:selected").text());
+        }
     </script>
 </block>

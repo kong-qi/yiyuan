@@ -136,10 +136,19 @@
                                         <td class="td-handle">
                                             <!-- //网站竞价人员 -->
                                             <div class="box" style="width: 220px;">
-                                               
-                                                <include file="Menu:yishen" />
-                                                
-                                               
+                                                <php>
+                                                    if($handle_tpl=='only')
+                                                    {
+                                                </php>
+
+                                                    <include file="Menu:yishen_only" />
+                                                <php>
+                                                    }elseif($handle_tpl=='all'){
+                                                </php>
+                                                    <include file="Menu:yishen_all" />
+                                                <php>}else{</php>
+                                                    <include file="Menu:yishen" />
+                                               <php>}</php>
                                             
                                             </div>
                                            

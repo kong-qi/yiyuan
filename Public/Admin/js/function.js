@@ -213,7 +213,7 @@ function upload_file($url, $inserid, $more, $style, $type) {
         shade: 0.8,
         closeBtn: 1,
         btn: [lang.ok, lang.cancel],
-        area: ['50%', '80%'],
+        area: ['80%', '80%'],
         content: $url, //iframe的url
 
         yes: function(index) {

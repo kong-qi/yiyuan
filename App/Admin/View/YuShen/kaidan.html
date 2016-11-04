@@ -6,12 +6,12 @@
     <div class="right-box">
 
 
-        <div class="box">
-            <div class="box-title">
+        <div class="ibox">
+            <div class="ibox-title">
                 {{ :lang($onname,'menu') }}
-                <h3 class="pull-right ">
+                <div class="ibox-tools">
                     <a href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>3)) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
-                </h3>
+                </div>
             </div>
             <div class="ibox-content" style="padding-left:10px; padding-right:10px;" id="shoujisf3">
                 <div class="roww">
@@ -110,14 +110,14 @@
                                     <td align="right">{{ :lang('开单人','filed') }}</td>
                                     <td>
 
-                                        <div class="col-xs-3">
+                                        
 
                                             <select class="form-control" required="required" id="ys_id" name="kd_id">
                                                 <option value="">{{ :lang('请选择医生','handle') }}{{ :$data.ys_id }}</option>
                                                 {{ :get_doc(array(),1,$data['ys_id']) }}
 
                                             </select>
-                                        </div>
+                                        
                                         
                                     </td>
                                 </tr>

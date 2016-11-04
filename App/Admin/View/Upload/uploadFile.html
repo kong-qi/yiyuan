@@ -19,12 +19,12 @@
 
             <div class="box-content">
                 <div class="form-warp">
-                    <div class="tab">
-                        <ul>
-                            <li class="active"><span class="fa fa-camera"></span>{{ :lang('上传文件') }}</li>
-                            <li><span class="fa fa-file-image-o"></span>{{ :lang('文件库') }}</li>
-                        </ul>
-                    </div>
+                   <!--  <div class="tab">
+                       <ul>
+                           <li class="active"><span class="fa fa-camera"></span>{{ :lang('上传文件') }}</li>
+                          <li><span class="fa fa-file-image-o"></span>{{ :lang('文件库') }}</li>
+                       </ul>
+                   </div> -->
 
                     <div class="tab-box">
                         <div class="upload-box">
@@ -109,7 +109,7 @@
             }).prop('disabled', !$.support.fileInput)
                     .parent().addClass($.support.fileInput ? undefined : 'disabled');
         });
-        get_tuku_list(1);
+        //get_tuku_list(1);
         function tuku_list_chose(){
             $(document).on("click","[data-usepic-ul='1'] li",function () {
                 $(this).toggleClass('chose');

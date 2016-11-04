@@ -26,7 +26,7 @@ class YuShenController extends AuthController {
         $this->display();
     }
     //查看确诊，针对病人
-    public function showcheck($yid){
+    public function quecheck_show($yid){
         $this->yid=$yid;
         $this->display();
 
@@ -35,6 +35,7 @@ class YuShenController extends AuthController {
         //需要更新到预约表里面，接诊表连接了预约表，ysz_id,手术医生ID，yztime//接诊时间
         //接诊表：yy_id,jztime接诊时间，zl_id：质量评级，ks_id：科室ID，kst_id科室2ID,手术科室jzks_id，手术医生ysz_id
         //预约表：ys_id:医生id，ysz_id：手术医生jzks_id，dz_id质量评级，jztime:接诊时间,qz_id接诊id
+        $this->check_group($this->rule_qz."_edit");
         if(IS_POST)
         {
              M()->startTrans();
@@ -59,15 +60,15 @@ class YuShenController extends AuthController {
                     }
                 }
                 
-               // print_r($ydata);
-               /*  print_r($data);
-                 exit();*/
+               
                 $result =    $model->save($data);
                 //如果没有更改这些信息，则无需。
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 if($result ) {
-
+                   /*  print_r($ydata);
+                     print_r($data);
+                      exit();*/
                     M()->commit();
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
@@ -84,7 +85,7 @@ class YuShenController extends AuthController {
                     //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }
-            }
+        }
             
         }else
         {
@@ -288,7 +289,7 @@ class YuShenController extends AuthController {
             y1.zx_mark,
             y1.ys_id as ys_id,
             y1.is_kd as is_kd,
-            y1.qz_id as qz_id,
+           
             y1.kd_id as kd_id,
             y1.kdtime as kdtime,
             y1.ynumber,
@@ -324,6 +325,7 @@ class YuShenController extends AuthController {
             ys.realname as ys_name,
     
             jz.jz_smcontent as jz_smcontent,
+            jz.id as qz_id,
             ssys.name as ysz_name,
             fz.realname as fzname,
 
@@ -378,6 +380,24 @@ class YuShenController extends AuthController {
         //手机品牌
         $join[] = 'LEFT JOIN __LAN_MU__ phone ON u1.phone_bank = phone.id'; 
 
+        $type_arr='defalut';
+        if(I('list_type')!='')
+        {
+            if(I('list_type')=='only')
+            {
+                if(!check_group('roor'))
+                {
+                    $map['y1.ys_id']=session('admin_id');
+                }
+                
+            }
+            $menu_list = $this->getFiledArray(I('list_type'));
+            $this->assign('handle_tpl',I('list_type'));
+            //print_r($menu_list);
+        }else
+        {
+            $menu_list = $this->getFiledArray($type_arr);
+        }
        
         $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
@@ -395,16 +415,7 @@ class YuShenController extends AuthController {
         $list = $model->alias('y1')->field($filed)->join($join)->order($orderstr)->where($map)->page($page . ',' . $pagesize)->select();
         //print_r($list);
         $this->assign('list', $list);// 赋值数据集
-        $type_arr='defalut';
-        if(I('list_type')!='')
-        {
-
-            $menu_list = $this->getFiledArray('has');
-            //print_r($menu_list);
-        }else
-        {
-            $menu_list = $this->getFiledArray($type_arr);
-        }
+       
         
         $this->menu_list = $menu_list;
         $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
@@ -414,9 +425,10 @@ class YuShenController extends AuthController {
     }
     public function getFiledArray($type){
         switch ($type) {
-            case 'has':
+            case 'only':
+            case 'all':
                    $menu_list = array(
-                        'td-1' => array('name' => lang('预约号'), 'filed'=>'ynumber','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-1' => array('name' => lang('预约号'), 'filed'=>'ynumber','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-3' => array('name' => lang('性别'), 'filed'=>'sex','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-4' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' =>''), 
@@ -424,52 +436,37 @@ class YuShenController extends AuthController {
                         'td-6' => array('name' => lang('职业'), 'filed'=>'zhiye','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                         'td-7' => array('name' => lang('婚姻'), 'filed'=>'jiehun','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
 
-                        'td-10' => array('name' => lang('具体病种'), 'filed'=>'bz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-17' => array('name' => lang('预约状态'), 'filed'=>'ystatus','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-8' => array('name' => lang('预约时间'), 'filed'=>'yctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                         
-                        'td-9' => array('name' => lang('预到时间'), 'filed'=>'ydatetime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-8' => array('name' => lang('预约时间'), 'filed'=>'yctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-18' => array('name' => lang('到院时间'), 'filed'=>'dztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-19' => array('name' => lang('分诊人'), 'filed'=>'fzname','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-20' => array('name' => lang('接诊医生'), 'filed'=>'ys_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-11' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-12' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-13' => array('name' => lang('网站来源'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-14' => array('name' => lang('来源类别'), 'filed'=>'leibie','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-15' => array('name' => lang('咨询方式'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-16' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                       
+                        'td-8' => array('name' => lang('预约状态'), 'filed'=>'ystatus','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-9' => array('name' => lang('预约时间'), 'filed'=>'yctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+
+                        'td-10' => array('name' => lang('预到时间'), 'filed'=>'ydatetime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                        
                         
+                        'td-11' => array('name' => lang('接诊时间'), 'filed'=>'jztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-12' => array('name' => lang('预约时间'), 'filed'=>'yctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-13' => array('name' => lang('到院时间'), 'filed'=>'dztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-14' => array('name' => lang('具体病种'), 'filed'=>'bz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-15' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-16' => array('name' => lang('分诊人'), 'filed'=>'fzname','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-17' => array('name' => lang('接诊医生'), 'filed'=>'ys_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-25' => array('name' => lang('手术医生'), 'filed'=>'ysz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
 
-                    );
-                break;
-            case 'zixun':
-                    $menu_list = array(
+                        'td-26' => array('name' => lang('接诊小结'), 'filed'=>'jz_smcontent','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
 
+                        'td-18' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-19' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-20' => array('name' => lang('网站来源'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-21' => array('name' => lang('来源类别'), 'filed'=>'leibie','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-22' => array('name' => lang('咨询方式'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-23' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-24' => array('name' => lang('前台接待员'), 'filed'=>'fzname','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                        
-                        'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-2' => array('name' => lang('性别'), 'filed'=>'sex','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-3' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-4' => array('name' => lang('生日'), 'filed'=>'birthday','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-5' => array('name' => lang('职业'), 'filed'=>'zhiye','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-6' => array('name' => lang('婚姻'), 'filed'=>'jiehun','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-7' => array('name' => lang('身份证'), 'filed'=>'card','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-8' => array('name' => lang('会员级别'), 'filed'=>'level','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-9' => array('name' => lang('手机品牌'), 'filed'=>'pbank','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-10' => array('name' => lang('咨询方式'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-11' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-12' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-13' => array('name' => lang('网站来源'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-14' => array('name' => lang('咨询小结'), 'filed'=>'zx_mark','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                        'td-15' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-
-                        'td-16' => array('name' => lang('咨询时间'), 'filed'=>'yctime','diy'=>'', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
                         
 
                     );
                 break;
+           
             
             default:
                 $menu_list = array(
@@ -533,6 +530,7 @@ class YuShenController extends AuthController {
                 $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/kaidan",array('id'=>$result,'yid'=>$data['yy_id']));
                 //确诊ID添加进去
                 $ydata['qz_id']=$result;
+
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 if($result && $yresult) {
@@ -659,6 +657,7 @@ class YuShenController extends AuthController {
                
                 //更新预约表
                  $ydata['is_kd']=1;//是否开单
+                 $ydata['stats']=4;
                  $ydata['kdtime']=$data['kd_time']=time();//开单时间
 
                 /*$dataList[] = array('name'=>'thinkphp','email'=>'thinkphp@gamil.com');
