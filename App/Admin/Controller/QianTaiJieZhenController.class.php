@@ -549,12 +549,14 @@ class QianTaiJieZhenController extends AuthController {
 
                 $data['status']=2;
                 M('User')->save($udata);
+
+                //
                 $result =   $model->save($data);
 
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
-
+                  
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.window.location.reload();</script>";
 
                     //return  $this->success($msg);
