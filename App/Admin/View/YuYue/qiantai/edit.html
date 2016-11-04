@@ -54,7 +54,7 @@
                                 <label class="input-group-addon">{{ :lang('纠正生日','handle') }}</label>
                                 <input type="hidden" name="dztime" value="{{ :time() }}">
                                 <input class="form-control layer-date" name="birthday" placeholder="YYYY-MM-DD"
-                                       value="{{ :($data['User']['birthday']) }}" id="shengri">
+                                       value="{{ $data.User.birthday }}" id="shengri">
                             </div>
 
                         </div>

@@ -1,4 +1,5 @@
 <a href="javascript:void(0)"  data-url="{{ :U('Admin/YuYue/showContent',array('id'=>$v['yuuid'])) }}"
-data-title="查看对话" data-w="50%" data-h="40%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
-class="btn btn-xs btn-white"><span
-        class="fa fa-pencil-square "></span> {{ :lang('对话','handle') }}</a>
+data-title="{{ :lang('查看对话') }}" data-w="50%" data-h="40%" data-layer="1" data-uuid="{{ $v.user_uuid }}"
+class="btn btn-xs btn-white">
+        <span class="fa fa fa-file-text btn-font" data-name="{{ :lang('查看对话') }}" data-btn="handle"></span><span class="js-data-name"></span>
+        </a>

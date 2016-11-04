@@ -1,38 +1,10 @@
-
 <if condition="check_group('yishenjz_add')">
-   <?php
-   	 
-      if($v['dztime']!='' and $v['jztime']==''){
-      
-		
-   ?>
-	<a href="{{ :U('Admin/YuShen/quecheck',array('uuid'=>$v['yuuid'])) }}" class="btn btn-xs btn-primary">
-       <span class="fa fa-external-link-square "></span> {{ :lang('接诊','handle') }}
-   </a>
+<php>
+   if($v['dztime']!=''){
+</php>
+<a href="{{ :U('Admin/YuShen/quecheck',array('uuid'=>$v['yuuid'])) }}" class="btn btn-xs btn-success">
 
-   <?php 
-   }
-   
-  if($v['jztime']!=''){
-   ?>
-  <a href="javascript:void(0)" class="btn btn-xs btn-info" data-url="{{ :U('Admin/YuShen/showcheck',array('yid'=>$v['yid'])) }}" data-title="{{ :lang('查看接诊','handle') }}" data-w="80%" data-h="80%" data-layer="1" data-close='1' data-uuid="{{ $v.user_uuid }}">
-       <span class="fa fa-external-link-square "></span> {{ :lang('查看接诊','handle') }}
-   </a>
-   <a href="javascript:void(0)" class="btn btn-xs btn-default" data-url="{{ :U('Admin/YuShen/beijin',array('yid'=>$v['yid'])) }}" data-title="{{ :lang('查看接诊','handle') }}" data-w="500px" data-h="50%" data-layer="1" data-close='1' data-uuid="{{ $v.user_uuid }}">
-        <span class="fa fa-external-link-square "></span> {{ :lang('修改背景','handle') }}
-    </a>
-   <?php 
-   }
-    
-    if(($v['qz_id']!='') ){
-   
-    ?>
-    
-      <a href="{{ :U('Admin/YuShen/kaidan',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="80%" data-h="80%" data-uuid="{{ $v.user_uuid }}">
-           <span class="fa fa-plus "></span> {{ :lang('开单','handle') }}
-       </a>
-    <?php
-    }
-   ?>
-
+     <span class="fa fa-external-link-square btn-font" data-name="{{ :lang('接诊') }}" data-btn="handle"></span><span class="js-data-name"></span>
+ </a>
+<php>}</php>
 </if>

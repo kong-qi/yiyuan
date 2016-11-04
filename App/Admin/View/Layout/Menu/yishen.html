@@ -1,27 +1,28 @@
 <li>
     <a href="#">
         <i class="fa fa-medkit"></i>
-        <span class="nav-label">{{ :lang('医生') }}</span>
+        <span class="nav-label">{{ :lang('接诊医生') }}</span>
         <span class="fa icon-chevron-left arrow"></span>
     </a>
     <ul class="nav nav-second-level">
         <if condition="check_group('yishenjz_add')">
             <li>
-                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>'2')) }}">{{ :lang('我要接诊') }}</a>
+                <a class="J_menuItem" href="{{ :U('Admin/YuShen/index',array('status'=>2)) }}">{{ :lang('已到院列表') }}</a>
 
             </li>
             <li>
-                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>'3')) }}">{{ :lang('已接诊病人列表') }}</a>
+                <a class="J_menuItem" href="{{ :U('Admin/QianTaiJieZhen/index',array('status'=>3,'only'=>1)) }}">{{ :lang('我的接诊列表') }}</a>
 
             </li>
             <li>
-                <a class="J_menuItem" href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'all')) }}">{{ :lang('全部预约') }}</a>
+                <a class="J_menuItem" href="{{ :U('Admin/QianTaiJieZhen/index',array('status'=>3)) }}">{{ :lang('全部接诊列表') }}</a>
 
             </li>
+           
         </if>
         
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/YuShen/kaidanList') }}">{{ :lang('开单列表') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/YuShen/kaidanList') }}">{{ :lang('已开单列表') }}</a>
         </li>
 
     </ul>

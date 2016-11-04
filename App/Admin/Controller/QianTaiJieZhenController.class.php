@@ -272,8 +272,15 @@ class QianTaiJieZhenController extends AuthController {
         if (isset($_GET['p'])) {
             $page = $_GET['p'];
         }
+        if(I('get.status')=='2')
+        {
+            $orderstr='y1.dztime desc,y1.id desc';
+        }else
+        {
+            $orderstr='y1.ctime desc,y1.id desc';
+        }
 
-        $list = $model->alias('y1')->field($filed)->join($join)->order('y1.ctime desc,y1.id desc')->where($map)->page($page . ',' . $pagesize)->select();
+        $list = $model->alias('y1')->field($filed)->join($join)->order($orderstr)->where($map)->page($page . ',' . $pagesize)->select();
         //print_r($list);
         $this->assign('list', $list);// 赋值数据集
         $type_arr='defalut';
@@ -311,7 +318,7 @@ class QianTaiJieZhenController extends AuthController {
                         
                         'td-9' => array('name' => lang('预到时间'), 'filed'=>'ydatetime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                         'td-8' => array('name' => lang('预约时间'), 'filed'=>'yctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
-                        'td-18' => array('name' => lang('到院时间'), 'filed'=>'ydatetime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-18' => array('name' => lang('到院时间'), 'filed'=>'dztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-19' => array('name' => lang('分诊人'), 'filed'=>'fzname','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-20' => array('name' => lang('接诊医生'), 'filed'=>'ys_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-11' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
@@ -536,46 +543,12 @@ class QianTaiJieZhenController extends AuthController {
             $postdata=I('post.');
             if($model->create()) {
                 $data=$model->create();
-                $user_arr=array(
-                    'name',
-                    'qq',
-                    'sex',
-                    'birthday',
-                    'age',
-                    'tel',
-                    'is_jiehun',
-                    'admin_id',
-                    'email',
-                    'othetel'
+                $udata=M('User')->create();
+                unset($udata['id']);
+                $udata['id']=$data['user_id'];
 
-                );
-                $user=array();
-                foreach ($user_arr as $uv)
-                {
-                    if($postdata[$uv]!='')
-                    {
-                        $user[$uv]=$postdata[$uv];
-                    }
-
-                }
-                //如果为空，则返回null
-
-                $user['id']=$data['user_id'];
-
-
-                foreach ($data as $k=>$v)
-                {
-                    if($v=='')
-                    {
-                        unset($data[$k]);
-                    }
-                }
-
-                if(count($user)>1)
-                {
-                    M("User")->save($user);
-                }
                 $data['status']=2;
+                M('User')->save($udata);
                 $result =   $model->save($data);
 
                 if($result) {

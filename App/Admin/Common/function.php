@@ -1041,7 +1041,8 @@ function yuyue_status($checked=''){
         '1'=>lang('已预约'),
         '2'=>lang('已到院'),
         '3'=>lang('已接诊'),
-        '4'=>lang('逾期未到')
+        '4'=>lang('已开单'),
+        '5'=>lang('逾期未到')
     );
     if($checked!='')
     {
