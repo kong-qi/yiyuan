@@ -661,13 +661,14 @@ function get_doc($where=array(),$echo=1,$checked=''){
         {
             foreach ($m as $k=>$v)
             {
-                if($checked==$v['id'])
+                if($checked==$v['id'] && $checked!='')
                 {
                     $check='selected="selected"';
                 }else
                 {
                     $check='';
                 }
+
                 $str.="<option $check value='".$v['id']."'>".$v['realname']."</option>";
             }
         }

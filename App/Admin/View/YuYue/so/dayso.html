@@ -1,0 +1,33 @@
+<form action='' method="get" id="contact-form">
+    <input type="hidden" name="is_search" value="1">
+    <php>
+        $is_search_on=""; if($is_search==0) { $is_search_on="display: none;"; }
+    </php>
+    <div class="col-sm-12" style="padding:0px; margin-bottom: 0">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :lang('筛查选项') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="padding-left:0px; padding-right:0px;{{ :$is_search_on }}">
+                <div class="roww">
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon"><font color="">{{ :lang('关键词','handle') }}</font></span>
+                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}" placeholder="{{ :lang('姓名/手机/预约号') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
+                       
+                        <!-- <a href="{{ :U('Admin/YuYue/index',$_SERVER['QUERY_STRING']) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}{{ $_SERVER['QUERY_STRING'] }}</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

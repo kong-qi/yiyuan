@@ -1,0 +1,36 @@
+<li>
+    <a href="#">
+        <i class="fa fa-female"></i>
+        <span class="nav-label">{{ :lang('前台接待') }}</span>
+        <span class="fa icon-chevron-left arrow"></span>
+    </a>
+    <ul class="nav nav-second-level">
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/QianTaiJieZhen/add') }}">{{ :lang('到院登记') }}</a>
+
+        </li>
+        
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/QianTaiJieZhen/index',array('status'=>1)) }}">{{ :lang('分配医生') }}</a>
+
+        </li>
+         <li>
+            <a class="J_menuItem" href="{{ :U('Admin/QianTaiJieZhen/index',array('status'=>2,'list_type'=>'has')) }}">{{ :lang('已分诊列表') }}</a>
+        </li>
+      
+        <if condition="check_group('yuyue_show')">
+           <li>
+               <a class="J_menuItem"
+                  href="{{ :U('Admin/YuYue/index',array('ystime'=>date('Y-m-d'),'yetime'=>date('Y-m-d'),'status'=>1,'show'=>'none','tpl'=>'dayindex')) }}">{{ :lang('今日预到','menu') }}</a>
+           </li>
+        </if>
+        <if condition="check_group('yuyue_seven_show')">
+            <li>
+                <a class="J_menuItem"
+                   href="{{ :U('Admin/YuYue/index',array('ystime'=>get_days(-6),'yetime'=>date('Y-m-d'),'status'=>1,'show'=>'none')) }}">{{ :lang('七日预到','menu') }}</a>
+            </li>
+            
+        </if>
+    </ul>
+</li>
+

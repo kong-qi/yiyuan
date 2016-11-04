@@ -1,0 +1,34 @@
+<script>
+	$(function(){
+		$(".js-open-more").click(function () {
+
+		    $p = $(this).parents(".js-tr").next();
+
+		    if ($p.is(":hidden")) {
+		        $p.show();
+		        $(this).removeClass('glyphicon-plus').addClass('glyphicon-minus');
+		    } else {
+		        $p.hide();
+		        $(this).removeClass('glyphicon-minus').addClass('glyphicon-plus');
+		    }
+		});
+		$(".js-show-url").click(function(){
+		    uid=$(this).attr('data-userid');
+		    yid=$(this).attr('data-yid');
+		    uuid=$(this).attr('data-uuid');
+		    layer.open({
+		        type: 2,
+		        title: "{{ :lang('查看','handle') }}",
+
+		        shade: 0.8,
+		        area: ['80%', '80%'],
+		        content: "{{ :U('Admin/YuYue/all') }}?id="+uuid+"&uid="+uid,
+		        cancel: function (index) {
+
+
+		        }
+		    });
+		})
+	});
+	
+</script>

@@ -218,7 +218,15 @@ class YuYueController extends AuthController
         $menu_list = $this->getFiledArray($type_arr);
         $this->menu_list = $menu_list;
         $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
-       $this->display();
+        $tpl=I('get.tpl');
+        if($tpl!='')
+        {
+            $this->display($tpl);
+        }else
+        {
+            $this->display();
+        }
+        
     }
    
     public function getFiledArray($type){
@@ -376,7 +384,12 @@ class YuYueController extends AuthController
                     //取得预约号
                     $data['ynumber'] = $yy_qz['card'] . create_ynumber();
                     //拼接预约时间
-                    $data['ytime'] = $data['ytime'] . ":00";
+                    
+                    //判断长度
+                    if(strlen($data['ytime'])<=5)
+                    {
+                        $data['ytime'] = $data['ytime'] . ":00";
+                    }
                     $data['ydatetime'] = $data['ydate'] . ' ' . $data['ytime'];
                     $data['ydatetime'] = strtotime($data['ydatetime']); 
                     $data['status'] = '1';//已经预约状态
@@ -548,6 +561,7 @@ class YuYueController extends AuthController
                 $udata['id'] = $data['user_id'];
 
 
+
                 foreach ($data as $k => $v) {
                     if ($v == '') {
                         unset($data[$k]);
@@ -562,7 +576,14 @@ class YuYueController extends AuthController
                 if (count($udata) > 1) {
                     M("User")->save($udata);
                 }
-
+                //判断长度
+                if(strlen($data['ytime'])<=5)
+                {
+                    $data['ytime'] = $data['ytime'] . ":00";
+                }
+                $data['ydatetime'] = $data['ydate'] . ' ' . $data['ytime'];
+                $data['ydatetime'] = strtotime($data['ydatetime']); 
+               
                 $result = $model->save($data);
 
                 if ($result) {

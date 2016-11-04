@@ -9,14 +9,13 @@
 <block name="right">
     <php>$status=yuyue_status()</php>
     <div class="right-box">
-        <if condition="I('get.show')">
-        <else/>
+       
         <div class="ibox">
             
-                <include file="YuYue:so:default"/>
+                <include file="YuYue:so:dayso"/>
             
         </div>
-        </if>
+       
         <div class="ibox">
                 <if condition="$menu_list">
                     <div class="ibox-title">

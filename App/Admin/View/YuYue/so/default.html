@@ -1,0 +1,242 @@
+<form action='' method="get" id="contact-form">
+    <input type="hidden" name="is_search" value="1">
+    <php>
+        $is_search_on="";
+       
+        if($is_search==0)
+        {
+            $is_search_on="display: none;";
+        }
+    </php>
+    <div class="col-sm-12" style="padding:0px; margin-bottom: 0">
+        <div class="ibox float-e-margins" >
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :lang('筛查选项') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="padding-left:0px; padding-right:0px;{{ :$is_search_on }}" >
+                <div class="roww">
+
+                    <div class="col-sm-3">
+
+                        <div class="input-group m-b">
+
+                            <span class="input-group-addon"><font color="">{{ :lang('所属一级科室','handle') }}</font></span>
+
+
+                            <select class="form-control" name="ks_id" id="ks_id" onchange="get_tks(this.value)">
+                                <option value="">{{ :lang('请选择科室','handle') }}</option>
+                                {{ :get_keshi('0','1',I("get.ks_id") ) }}
+                            </select>
+
+
+                            <select class="form-control" id="kst_id" name="kst_id" onchange="get_tks2(this.value)">
+                                <option value="">{{ :lang('请选择二级科室','handle') }}</option>
+
+                            </select>
+
+
+                            <select class="form-control" id="kstt_id" name="kstt_id">
+                                <option value="">{{ :lang('请选择具体病种','handle') }}</option>
+
+                            </select>
+
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon">{{ :lang('病人来源','handle') }}</span>
+
+                            <select class="form-control" id="ly_id" name="ly_id" onchange="get_ly(this.value)">
+
+                                <option value="">{{ :lang('请选择','handle') }}</option>
+                                <?php
+                                    if(check_group('root'))
+                                    {
+                                        echo get_lanmu_onelist('bingren',1,'first','',I('get.ly_id'));
+                                    }else
+                                    {
+                                        echo get_lanmu_onelist('bingren',1,'first',session('brid'),I('get.ly_id'));
+                                    }
+                                ?>
+
+                            </select>
+
+
+                            <select class="form-control" id="lyt_id" name="lyt_id" onchange="get_ly2(this.value)">
+                                <option value="">{{ :lang('请选择','handle') }}</option>
+
+                            </select>
+
+
+                            <select class="form-control" id="lytt_id" name="lytt_id"
+                                    data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
+                                <option value="">{{ :lang('请选择','handle') }}</option>
+
+                            </select>
+
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon">{{ :lang('区域来源','handle') }}</span>
+
+                            <input type="hidden" name="areaall_id" id="areaall_id">
+                            <select class="form-control" id="area_id" name="area_id" onchange="get_area(this.value)" >
+
+                                <option value="">{{ :lang('请选择','handle') }}</option>
+                                <?php
+
+                                    echo get_area_list(1,'first','',I('get.area_id'));
+
+                                    ?>
+
+                            </select>
+
+
+                            <select class="form-control" id="areat_id" name="areat_id" data-next="">
+                                <option value="">{{ :lang('请选择','handle') }}</option>
+
+                            </select>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="roww">
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon">{{ :lang('来源类别','handle') }}</span>
+
+                            <select class="form-control" name="leibie" id="is_fz">
+                               <option value="">{{ :lang('请选择来源类别','handle') }}</option>
+                               {{ :yuyue_option_leibie() }}
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon">{{ :lang('意向评定','handle') }}</span>
+
+                                <select class="form-control" name="yx_id" id="yx_id">
+                                    <option value="">{{ :lang('全部','handle') }}</option>
+                                    {{ :get_lanmu_onelist('yuyuezl',1,'','',I('get.yx_id')) }}
+                                </select>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon">{{ :lang('咨询方式','handle') }}</span>
+
+
+                            <select class="form-control" name="zx_id" id="zx_id">
+                                <option value="">{{ :lang('全部','handle') }}</option>
+                                {{ :get_lanmu_onelist('zixun',1,'','',I('get.zx_id')) }}
+                            </select>
+
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon">{{ :lang('预约状态','handle') }}</span>
+
+
+                            <select class="form-control" name="status" >
+                                <option value="">{{ :lang('全部','handle') }}</option>
+                                <if condition="$status">
+                                    <foreach name="status" item="lv" key="lkey">
+                                        <option value="{{ $lkey }}" {{ :$lkey==I('get.status')?"selected='selected'":'' }}>{{ $lv }}</option>
+                                    </foreach>
+                                </if>
+                            </select>
+
+
+
+                        </div>
+                    </div>
+                    {{ :onkefu2() }}
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon"><font color="">{{ :lang('病人ID号','handle') }}</font></span>
+                            <input name="user_id" type="text" value="" value="{{ :I('get.user_id') }}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon"><font color="">{{ :lang('关键词','handle') }}</font></span>
+                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}"
+                                   placeholder="{{ :lang('姓名/手机/预约号') }}" class="form-control">
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="roww">
+                    <div class="col-sm-3" style="padding:0px;">
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">{{ :lang('预约时间','handle') }}</label>
+                            <div class="col-md-6">
+                                <input name="djstime" type="text" class="form-control layer-date"
+                                       value="{{ :I('get.djstime') }}" placeholder="YYYY-MM-DD" value=""
+                                       id="shijian11">
+                            </div>
+                            <div class="col-md-6">
+                                <input name="djetime" type="text" class="form-control layer-date"
+                                       value="{{ :I('get.djetime') }}" placeholder="YYYY-MM-DD" value=""
+                                       id="shijian12">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" style="padding:0px;">
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">{{ :lang('预到时间','handle') }}</label>
+                            <div class="col-md-6">
+                                <input name="ystime" type="text" value="{{ :I('get.ystime') }}"
+                                       class="form-control layer-date" placeholder="YYYY-MM-DD" value=""
+                                       id="shijian21">
+                            </div>
+                            <div class="col-md-6">
+                                <input name="yetime" type="text" value="{{ :I('get.yetime') }}"
+                                       class="form-control layer-date" placeholder="YYYY-MM-DD" value=""
+                                       id="shijian22">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" style="padding:0px;">
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">{{ :lang('到院时间','handle') }}</label>
+                            <div class="col-md-6">
+                                <input name="dzstime" type="text" class="form-control layer-date"
+                                       value="{{ :I('get.dzstime') }}" placeholder="YYYY-MM-DD" value=""
+                                       id="shijian31">
+                            </div>
+                            <div class="col-md-6">
+                                <input name="dzetime" type="text" class="form-control layer-date"
+                                       value="{{ :I('get.dzetime') }}" placeholder="YYYY-MM-DD" value=""
+                                       id="shijian32">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label class="col-sm-12 control-label">&nbsp;</label>
+                        <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
+                          <a href="{{ :U('Admin/YuYue/index') }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
+                        <!-- <a href="{{ :U('Admin/YuYue/index',$_SERVER['QUERY_STRING']) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}{{ $_SERVER['QUERY_STRING'] }}</a> -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

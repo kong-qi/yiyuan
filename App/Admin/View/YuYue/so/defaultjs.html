@@ -1,0 +1,335 @@
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script>
+ 
+        <?php
+            if(I('get.ks_id')!='')
+            {
+                echo 'get_tks('.I('get.ks_id').');';
+            }
+            if(I('get.kst_id')!='')
+            {
+                echo 'get_tks2('.I('get.kst_id').');';
+            }
+            if(I('get.ly_id')!='')
+            {
+                echo 'get_ly('.I('get.ly_id').');';
+            }
+            if(I('get.lyt_id')!='')
+            {
+                echo 'get_ly2('.I('get.lyt_id').');';
+            }
+            if(I('get.area_id')!='')
+            {
+                echo 'get_area('.I('get.area_id').');';
+            }
+        ?>
+        function get_tks($id){
+            $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
+            $tfid='{{ :I("get.kst_id") }}';
+            log($tfid);
+            $str = "<option value=''>无</option>";
+            if($id=='')
+            {
+                $("#kstt_id").empty().hide().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                   $("#kst_id").show().empty().append(json.content);
+            });
+            get_tks2('');
+        }
+        function get_tks2($id){
+            $str = "<option value=''>无</option>";
+            $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
+            $tfid='{{ :I("get.kstt_id") }}';
+            log($tfid);
+            if($id=='')
+            {
+                $("#kstt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                if(json.content!='')
+                {
+
+                   $("#kstt_id").show().empty().append(json.content);
+                }else
+                {
+                    $("#kstt_id").hide().empty().append( $str);
+                }
+            });
+        }
+        function get_ly($id){
+            $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
+            $tfid='{{ :I("get.lyt_id") }}';
+            log($tfid);
+            $str = "<option value=''>无</option>";
+            if($id=='')
+            {
+                $("#lyt_id").empty().hide().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                   $("#lyt_id").show().empty().append(json.content);
+            });
+            get_ly2('');
+        }
+        function get_ly2($id){
+            $str = "<option value=''>无</option>";
+            $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
+            $tfid='{{ :I("get.lytt_id") }}';
+            log($tfid);
+            if($id=='')
+            {
+                $("#lytt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                if(json.content!='')
+                {
+
+                   $("#lytt_id").show().empty().append(json.content);
+                }else
+                {
+                    $("#lytt_id").hide().empty().append( $str);
+                }
+            });
+        }
+        function get_area($id){
+            $url="{{ :U('Admin/Ajax/ajaxAreaList') }}";
+            $tfid='{{ :I("get.areat_id") }}';
+            log($tfid);
+            $str = "<option value=''>{{ :lang('无') }}</option>";
+            if($id=='')
+            {
+                $("#areat_id").empty().hide().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                   $("#areat_id").show().empty().append(json.content);
+            });
+
+        }
+       
+    </script>
+   
+    <script>
+        $(function () {
+            select_all();
+            del_confirm();
+
+            $("[data-datachenge='1']").change(function (e, a) {
+                $url = $(this).attr('data-url');
+                $type = $(this).attr('data-type');
+                $next_id = $(this).attr('data-next');
+                $id = $(this).val();
+                $closeid = $(this).attr('data-close');
+                $str = "<option value=''>{{ :lang('无') }}</option>";
+                if ($id == '') {
+                    $($closeid).empty().append($str);
+
+                    return false;
+
+
+                }
+                if ($type == 'ks') {
+                    if ($next_id == 'kst_id') {
+                        a = "{{ :I('get.kst_id') }}"
+                    } else {
+                        a = "{{ :I('get.kstt_id') }}"
+                    }
+
+
+                }
+
+
+                $.ajax({
+                    'url': $url,
+                    type: 'get',
+                    data: {
+                        'id': $id,
+                        'tfid': a
+                    },
+
+                    cache: false,
+
+                    dataType: 'json',
+                    success: function (data) {
+
+                        if (data.content != '') {
+
+                            $str = '<option value="">{{ :lang("请选择") }}</option>';
+                            $str += data.content;
+
+                            $("#" + $next_id).empty().append($str);
+
+                        } else {
+                            $str = "<option value=''>{{ :lang('无') }}</option>";
+                            $("#" + $next_id).empty();
+                            $($closeid).empty().append($str);
+
+
+                        }
+
+                    }
+                });
+            }).triggerHandler('change');
+            ;
+
+
+            //paix
+            $("#sort").change(function () {
+                $v = $(this).find("option:selected").attr('data-type');
+
+                $("#sorttype").val($v);
+            })
+            $(document).on("click", "[data-handle-check='1']", function () {
+                $uuid = checked_box_id();
+                $model = $(this).attr('data-model');
+                $type = $(this).attr('data-handle');
+                $value = $(this).attr('data-handle-value');
+                $filed = $(this).attr('data-handle-filed');
+                $sort = checked_sort_id();
+                $log = "{{ $onname }}：" + checked_log_name();
+                //console.log($uuid);
+                //console.log($sort);
+                //console.log($log);
+
+                if ($uuid) {
+                    switch ($type) {
+
+                        default:
+
+                            swal({
+                                        title: "{{ :lang('你确定批量操作吗','handle') }}?",
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "{{ :lang('确定','handle') }}",
+                                        cancelButtonText: "{{ :lang('取消','handle') }}",
+                                        closeOnConfirm: false,
+                                        showLoaderOnConfirm: true,
+                                    },
+                                    function () {
+                                        setTimeout(function () {
+                                            $.ajax({
+                                                'url': '{{ :U("Admin/Ajax/handle") }}',
+                                                type: 'post',
+                                                data: {
+                                                    'uuid': $uuid,
+                                                    'model': $model,
+                                                    'value': $value,
+                                                    'type': $type,
+                                                    'filed': $filed,
+                                                    'sort': $sort,
+                                                    'log': $log,
+                                                    'token': '{{ :token() }}'
+                                                },
+                                                cache: false,
+                                                dataType: 'json',
+                                                success: function (data) {
+                                                    console.log(data);
+                                                    if (data.error == 0) {
+                                                        swal({
+                                                            title: data.msg,
+                                                            confirmButtonText: "{{ :lang('确定','handle') }}",
+                                                            type: "success",
+                                                            timer: 1000,
+                                                        });
+                                                        window.location.reload();
+                                                    } else {
+                                                        swal({
+                                                            title: data.msg,
+                                                            confirmButtonText: "{{ :lang('确定','handle') }}",
+                                                            type: "warning",
+                                                            timer: 1000,
+                                                        });
+
+                                                    }
+                                                    ;
+                                                }
+                                            })
+                                        }, 2000);
+                                    }
+                            );
+                            break;
+                    }
+
+                } else {
+                    swal("{{ :lang('没有选择','handle') }}");
+                }
+
+            });
+            
+
+        });
+        
+        var shijian11 = {
+            elem: '#shijian11',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            choose: function (datas) {
+                shijian12.min = datas; //开始日选好后，重置结束日的最小日期
+                shijian12.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var shijian12 = {
+            elem: '#shijian12',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            choose: function (datas) {
+                shijian11.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        var shijian21 = {
+            elem: '#shijian21',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            choose: function (datas) {
+                shijian22.min = datas; //开始日选好后，重置结束日的最小日期
+                shijian22.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var shijian22 = {
+            elem: '#shijian22',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            choose: function (datas) {
+                shijian21.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        var shijian31 = {
+            elem: '#shijian31',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            choose: function (datas) {
+                shijian32.min = datas; //开始日选好后，重置结束日的最小日期
+                shijian32.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var shijian32 = {
+            elem: '#shijian32',
+            format: 'YYYY-MM-DD',
+            istime: false,
+            istoday: true,
+            choose: function (datas) {
+                shijian31.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+      
+
+
+    </script>
+    <if condition="I('get.show')">
+        <else/>
+        <script>
+            laydate(shijian11);
+            laydate(shijian12);
+            laydate(shijian21);
+            laydate(shijian22);
+            laydate(shijian31);
+            laydate(shijian32);
+        </script>
+    </if>
