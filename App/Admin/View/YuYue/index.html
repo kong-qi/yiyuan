@@ -383,7 +383,18 @@
                                         <td class="td-handle">
                                             <!-- //网站竞价人员 -->
                                             <div class="box" style="width: 220px;">
-                                                <include file="Menu:yuyue" />
+                                                <php>
+                                                    if($is_website==1)
+                                                    {
+                                                </php>
+                                                    
+                                                    <include file="Menu:website" />
+                                                <php>
+                                                    }else{
+                                                </php>
+                                                    <include file="Menu:yuyue" />
+                                                <php>}</php>
+                                               
                                             
                                             </div>
                                            

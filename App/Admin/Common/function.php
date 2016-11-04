@@ -11,6 +11,23 @@ function create_admin_id(){
 function echo_html($str){
     return htmlspecialchars_decode($str);
 }
+function get_website(){
+    $map=array(
+        'is_website'=>'1',
+        'checked'=>1,
+        );
+    $arr=array();
+    $m=M('LanMu')->where($map)->select();
+    if(count($m)>0)
+    {
+        foreach ($m as $key => $value) {
+            # code...
+            $arr[]=$value['id'];
+        }
+        return $arr;
+    }
+    return '';
+}
 /**
  * @param $str
  * 是否审核

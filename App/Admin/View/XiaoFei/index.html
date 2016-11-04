@@ -8,7 +8,7 @@
 </block>
 <block name="right">
     <div class="right-box">
-        <div class="box">
+        <div class="ibox">
             <div class="col-sm-12">
                 <form action="" method="get" id="contact-form">
                     <div class="col-sm-12" style="padding:0px;">
@@ -48,18 +48,18 @@
             </div>
         </div>
 
-        <div class="box">
-            <div class="box-title">
+        <div class="ibox">
+            <div class="ibox-title">
                 {{ :lang($onname,'menu') }}
-                <h3 class="pull-right">
-                    <a href="javascript:void(0)" class="btn btn-xs btn-success" id="tianjiazh">
-                        </span> {{ :lang('添加','handle') }}
-                        
-                    </a>
-                    
-                </h3>
+                <div class="ibox-tools">
+                   <a href="javascript:void(0)" class="btn btn-xs btn-success" id="tianjiazh">
+                       </span> {{ :lang('添加','handle') }}
+                       
+                   </a>
+                </div>
+                
             </div>
-            <div class="box-content">
+            <div class="ibox-content">
 
                 <div class="list-box">
 
@@ -156,8 +156,8 @@
                 title: "{{ :lang('添加','handle') }}",
                 //shadeClose: true,
                 shade: 0.8,
-                area: ['400px', '500px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/",array('close'=>1)) }}",
+                  area: ['65%', '65%'],
+                content: '{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/",array('close'=>1)) }}',
                 cancel: function (index) {
                     //window.location.reload()
 
@@ -200,8 +200,8 @@
                 title: "{{ :lang('修改','handle') }}",
                 //shadeClose: true,
                 shade: 0.8,
-                area: ['400px', '500px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=" + title,
+                area: ['65%', '65%'],
+                content: '{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=' + title,
                 cancel: function (index) {
                     //window.location.reload()
 

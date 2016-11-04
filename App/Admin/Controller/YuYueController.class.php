@@ -19,8 +19,15 @@ class YuYueController extends AuthController
             if (check_group('yuyue_only')) {
                 $map['y1.admin_id'] = session('admin_id');
             }
-        } 
-
+           
+        }
+        //网站来源
+        $is_website=I('get.webstie');
+        if($is_website!='')
+        {
+            $map['y1.ly_id'] = array('in', get_website());
+            $this->assign('is_website',1);
+        }
         if (IS_GET) {
             $getdata = I('get.');
 
@@ -96,6 +103,7 @@ class YuYueController extends AuthController
             }
 
         }
+
 
         $model = M('YuYue');
         $filed = '
