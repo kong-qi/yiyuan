@@ -79,7 +79,7 @@ class HuiFangController extends AuthController {
         //权限选择
         $map=array();
         $this->assign('is_search',I('get.is_search'));
-        $this->check_group("huihfrenwu_list");
+        $this->check_group("huifangset_list");
         $model = M('HuiFang');
         $join[] = 'LEFT JOIN __USER__ u1 ON h1.user_id = u1.id';
         $join[] = 'LEFT JOIN __LAN_MU__ l2 ON l2.id = h1.type';//类型
@@ -208,12 +208,15 @@ class HuiFangController extends AuthController {
         $this->check_group($this->rule_qz."_add");
         $rwid=I('get.rw_id');
         $lx_id='';
+        $theme='';
         if($rwid!='')
         {
             $renwu=M('RenWu')->where(array('id'=>$rwid))->find();
             $lx_id=$renwu['type_id'];
+            $theme=$rewu['name'];
         }
         $this->assign('type_id',$lx_id);
+        $this->assign('theme',$theme);
         $this->data=get_user($uid);
         return $this->display();
 
@@ -221,7 +224,7 @@ class HuiFangController extends AuthController {
     public function edit(){
         //权限选择
 
-        $this->check_group('huifang_edit');
+        $this->check_group('huifangset_edit');
         if(IS_POST)
         {
             $model =D('HuiFang');
@@ -262,7 +265,7 @@ class HuiFangController extends AuthController {
     public function rwedit(){
         //权限选择
 
-        $this->check_group('huifang_edit');
+        $this->check_group('huifangset_edit');
         if(IS_POST)
         {
             $model =D('HuiFang');
