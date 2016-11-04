@@ -80,6 +80,9 @@ class HuiFangController extends AuthController {
         $map=array();
         $this->assign('is_search',I('get.is_search'));
         $this->check_group("huifangset_list");
+
+        $this->assign('adminer',get_adder('hui_fang'));
+
         $model = M('HuiFang');
         $join[] = 'LEFT JOIN __USER__ u1 ON h1.user_id = u1.id';
         $join[] = 'LEFT JOIN __LAN_MU__ l2 ON l2.id = h1.type';//类型
@@ -207,14 +210,17 @@ class HuiFangController extends AuthController {
         //权限选择
         $this->check_group($this->rule_qz."_add");
         $rwid=I('get.rw_id');
+       
         $lx_id='';
         $theme='';
         if($rwid!='')
         {
             $renwu=M('RenWu')->where(array('id'=>$rwid))->find();
+
             $lx_id=$renwu['type_id'];
-            $theme=$rewu['name'];
+            $theme=$renwu['name'];
         }
+        
         $this->assign('type_id',$lx_id);
         $this->assign('theme',$theme);
         $this->data=get_user($uid);

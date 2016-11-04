@@ -11,6 +11,7 @@ function create_admin_id(){
 function echo_html($str){
     return htmlspecialchars_decode($str);
 }
+//取得网站来源
 function get_website(){
     $map=array(
         'is_website'=>'1',
@@ -27,6 +28,34 @@ function get_website(){
         return $arr;
     }
     return '';
+}
+//取得创建人，传入TABLE
+function get_adder($table){
+    
+     $m=M()->query("select * from __PREFIX__admin where id in (select admin_id from __PREFIX__".$table." group by admin_id) and checked='1'");
+     return $m;
+}
+//数组转option
+function arr_to_option($data,$checkid){
+   
+        
+            if(count($data)>0)
+            {
+                foreach ($data as $k=>$v)
+                {
+                    if($checkid==$v['id'])
+                    {
+                        $check='selected="selected"';
+                    }else
+                    {
+                        $check='';
+                    }
+                    $str.="<option ". $check." value='".$v['id']."'>".$v['realname']."</option>";
+                }
+            }
+            return  $str;
+
+    
 }
 /**
  * @param $str

@@ -62,6 +62,7 @@
                                             </select>
                                         </div>
                                     </div>
+                               
                                     <div class="col-sm-3">
                                          <div class="input-group ">
                                             <span class="input-group-addon"><font color="">{{ :lang('客户流向','handle') }}</font></span>
@@ -79,6 +80,16 @@
                                                 <option value="">{{ :lang('全部') }}</option>
                                               
                                                 {{ :get_huifang_er(1,$handle_id) }}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                         <div class="input-group m-b">
+                                            <span class="input-group-addon"><font color="">{{ :lang('创建人','handle') }}</font></span>
+                                            <select   name="admin_id" class="form-control"  >
+                                                <option value="">{{ :lang('全部') }}</option>
+                                              
+                                                {{ :arr_to_option($adminer,I('get.admin_id')) }}
                                             </select>
                                         </div>
                                     </div>

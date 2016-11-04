@@ -57,9 +57,11 @@ class RenWuController extends AuthController {
     public function index(){
         //权限选择
         $map=array();
+
         $this->assign('is_search',I('get.is_search'));
         $this->assign('status',I('get.status'));
         $this->check_group("huihfrenwu_list");
+        $this->assign('adminer',get_adder('ren_wu'));
         $model = M('RenWu');
         //是否只能查看自己的
         if(!check_group('root'))
@@ -74,12 +76,12 @@ class RenWuController extends AuthController {
         }
         if(I('get.handle_id')!='')
         {
-            $map['handle_id']=$this->handle_id=I('get.handle_id');
+            $map['rewu.handle_id']=$this->handle_id=I('get.handle_id');
 
         }
         if(I('get.admin_id')!='')
         {
-            $map['admin_id']=$this->admin_id=I('get.admin_id');
+            $map['rewu.admin_id']=$this->admin_id=I('get.admin_id');
         }
 
         //预约时间为预到时间
