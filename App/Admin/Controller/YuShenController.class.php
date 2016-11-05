@@ -183,7 +183,7 @@ class YuShenController extends AuthController {
     {
        
         //print_r(session('group'));
-        $this->check_group('qiantaijz');
+        $this->check_group('yishenjz');
         $map = array();
         $this->assign('is_search',I('get.is_search'));
 
