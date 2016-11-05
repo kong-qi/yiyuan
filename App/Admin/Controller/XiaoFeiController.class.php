@@ -32,6 +32,7 @@ class XiaoFeiController extends AuthController {
          $filed = '
             a1.realname as admin_rname,
             a1.name as admin_name,
+            g1.admin_id as admin_id,
             g1.uuid as guuid,
             g1.id as gid,
             l1.name,

@@ -53,6 +53,7 @@ class GongZuoLiangController extends AuthController {
             g1.cdate as cdate,
             g1.uuid as guuid,
             g1.id as gid,
+            g1.admin_id as admin_id,
             l1.name,
             g1.duihualiang,
             g1.zixunliang,

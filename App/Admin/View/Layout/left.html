@@ -31,28 +31,28 @@
             </li>
           
 
-            <if condition="check_group('yuyue')">
-                <include file="Layout:Menu:yuyue"/>
-            </if>
-           
-            <if condition="check_group('jiugouset')">
-                <include file="Layout:Menu:jigou"/>
-            </if>
-            <if condition="check_group('days_price')">
-                <include file="Layout:Menu:website"/>
-            </if>
-            <if condition="check_group('qiantaijz')">
+            
+                
+            
+            <include file="Layout:Menu:yuyue"/>
+            
+            <include file="Layout:Menu:jigou"/>
+            <include file="Layout:Menu:website"/>
+            
+                
+            
+            
                 <include file="Layout:Menu:qiantai"/>
-            </if>
-            <if condition="check_group('yishenjz')">
+            
+            
                 <include file="Layout:Menu:yishen"/>
-            </if>
-            <if condition="check_group('shouyin')">
+            
+
                 <include file="Layout:Menu:shouyin"/>
-            </if>
-            <if condition="check_group('hfrenwu') or check_group('huifangset')">
+            
+            
                 <include file="Layout:Menu:huifang"/>
-            </if>
+            
             <if condition=" check_group('sms') OR check_group('group') ">
                 <include file="Layout:Menu:config"/>
 

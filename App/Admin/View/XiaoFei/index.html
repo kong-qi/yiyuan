@@ -99,17 +99,34 @@
                                     <td >
 
                                         <div class="box">
-                                            <if condition=" check_group($rule_qz.'_edit')">
-                                            <a href="#" id="xiugaizh" title="{{ $v.guuid }}"
-                                            class="btn btn-xs btn-white"><span
-                                                class="fa fa-pencil-square "></span> {{ :lang('编辑','handle') }}</a>
-                                            </if>
-                                            <if condition=" check_group($rule_qz.'_del')">
-                                            <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['guuid'])) }}"
-                                            class="btn btn-xs btn-white" date-del="1">
-                                            <span class="fa fa-trash "></span>
-                                            {{ :lang('删除','handle') }}</a>
-                                            </if>
+                                           
+                                        <php>if(check_group('days_price_only') && (check_group('root')!=true)){
+                                                if($v['admin_id']==session('admin_id')){
+                                            </php>
+                                                <if condition=" check_group('days_price_edit')">
+                                                <a href="javascript:void(0)" id="xiugaizh" data-id="{{ $v.guuid }}"
+                                                class="btn btn-xs btn-white">
+                                                    <span class="fa fa-pencil-square btn-font" data-name="{{ :lang('编辑') }}" data-btn="handle"></span><span class="js-data-name"></span>
+                                                    </a>
+                                                </if>
+                                                <if condition=" check_group('days_price_del')">
+                                                <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['guuid'])) }}"
+                                                class="btn btn-xs btn-white" date-del="1">
+                                                
+                                                <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span>
+                                                </a>
+                                                </if>
+                                            <php>}}else{</php>
+                                                <if condition=" check_group('days_price_edit')">
+                                                <a href="javascript:void(0)" id="xiugaizh" title="{{ $v.guuid }}"
+                                                class="btn btn-xs btn-white"><span class="fa fa-pencil-square btn-font" data-name="{{ :lang('编辑') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+                                                </if>
+                                                <if condition=" check_group('days_price_del')">
+                                                <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['guuid'])) }}"
+                                                class="btn btn-xs btn-white" date-del="1">
+                                                 <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+                                                </if>
+                                            <php>}</php>
                                         </div>
                                     </td>
                                 </tr>

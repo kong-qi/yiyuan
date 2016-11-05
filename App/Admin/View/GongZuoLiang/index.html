@@ -137,17 +137,33 @@
                                     <td >
 
                                         <div class="box">
-                                            <if condition=" check_group('admin_edit')">
-                                            <a href="#" id="xiugaizh" title="{{ $v.guuid }}"
-                                            class="btn btn-xs btn-white"><span
-                                                class="fa fa-pencil-square "></span> {{ :lang('编辑','handle') }}</a>
-                                            </if>
-                                            <if condition=" check_group('admin_del')">
-                                            <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['guuid'])) }}"
-                                            class="btn btn-xs btn-white" date-del="1">
-                                            <span class="fa fa-trash "></span>
-                                            {{ :lang('删除','handle') }}</a>
-                                            </if>
+                                            <php>if(check_group('gongzuoliang_only') && (check_group('root')!=true)){
+                                                if($v['admin_id']==session('admin_id')){
+                                            </php>
+                                                <if condition=" check_group('gongzuoliang_edit')">
+                                                <a href="javascript:void(0)" id="xiugaizh" data-id="{{ $v.guuid }}"
+                                                class="btn btn-xs btn-white">
+                                                    <span class="fa fa-pencil-square btn-font" data-name="{{ :lang('编辑') }}" data-btn="handle"></span><span class="js-data-name"></span>
+                                                    </a>
+                                                </if>
+                                                <if condition=" check_group('gongzuoliang_del')">
+                                                <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['guuid'])) }}"
+                                                class="btn btn-xs btn-white" date-del="1">
+                                                
+                                                <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span>
+                                                </a>
+                                                </if>
+                                            <php>}}else{</php>
+                                                <if condition=" check_group('gongzuoliang_edit')">
+                                                <a href="javascript:void(0)" id="xiugaizh" title="{{ $v.guuid }}"
+                                                class="btn btn-xs btn-white"><span class="fa fa-pencil-square btn-font" data-name="{{ :lang('编辑') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+                                                </if>
+                                                <if condition=" check_group('gongzuoliang_del')">
+                                                <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['guuid'])) }}"
+                                                class="btn btn-xs btn-white" date-del="1">
+                                                 <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+                                                </if>
+                                            <php>}</php>
                                         </div>
                                     </td>
                                 </tr>
@@ -210,8 +226,8 @@
                 title: "{{ :lang('添加','handle') }}",
                 shadeClose: true,
                 shade: 0.8,
-                area: ['50%', '50%'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}?uuid=",
+                area: ['70%', '70%'],
+                content: '{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}',
                 cancel: function (index) {
                     //window.location.reload()
 
@@ -246,14 +262,14 @@
         laydate(end);
 
         $('[id=xiugaizh]').on('click', function (zhid) {
-            var title = $(zhid.target).attr("title");
+            var title = $(zhid.target).attr("data-id");
             layer.open({
                 type: 2,
                 title: "{{ :lang('修改','handle') }}",
                 shadeClose: true,
                 shade: 0.8,
-                area: ['50%', '50%'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=" + title,
+                area: ['70%', '70%'],
+                content: '{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=' + title,
                 cancel: function (index) {
                     //window.location.reload()
 
