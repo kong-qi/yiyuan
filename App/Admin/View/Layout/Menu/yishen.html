@@ -5,7 +5,7 @@
         <span class="fa icon-chevron-left arrow"></span>
     </a>
     <ul class="nav nav-second-level">
-        <if condition="check_group('yishenjz_add')">
+        
             <li>
                 <a class="J_menuItem" href="{{ :U('Admin/YuShen/index',array('status'=>2)) }}">{{ :lang('已到院列表') }}</a>
 
@@ -19,11 +19,12 @@
 
             </li>
            
-        </if>
         
+        <if condition="check_group('kaidan')">
         <li>
             <a class="J_menuItem" href="{{ :U('Admin/YuShen/kaidanList') }}">{{ :lang('已开单列表') }}</a>
         </li>
+        </if>
 
     </ul>
 </li>

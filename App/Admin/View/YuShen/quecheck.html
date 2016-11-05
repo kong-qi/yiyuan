@@ -30,11 +30,11 @@
                                    <td align="right">{{ :lang('病人姓名') }}</td>
                                    <td>
                                        <input type="text" class="form-control inline wb30" readonly="" value="{{ :$data['User']['name'] }}">
-                                       <select required="" class="form-control inline wb30" name="zl_id" required>
+                                       <select required="" required="" class="form-control inline wb30" name="zl_id" required>
                                            <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
                                            {{ :get_lanmu_onelist('daozhen') }}
                                        </select>
-                                       <select class="form-control inline wb30" id="ysz_id" name="ysz_id">
+                                       <select class="form-control inline wb30" required="" id="ysz_id" name="ysz_id">
                                            <option value="">{{ :lang('请选择医生','handle') }}</option>
                                            {{ :get_shyishen() }}
                                        </select>
@@ -78,7 +78,7 @@
                                 <tr>
                                     <td align="right">{{ :lang('接诊小结') }}</td>
                                     <td>
-                                        <textarea required="" name="jz_smcontent" class="jz-xj form-control">{{ $data.Bing.name }}</textarea>
+                                        <textarea required="" name="jz_smcontent" required="" class="jz-xj form-control">{{ $data.Bing.name }}</textarea>
                                       
                                     </td>
                                 </tr>

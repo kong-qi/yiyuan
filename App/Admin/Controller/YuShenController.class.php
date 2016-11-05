@@ -189,18 +189,13 @@ class YuShenController extends AuthController {
 
         //自己查看自己的
         if (!check_group('root')) {
-            if (check_group('yuyue_only')) {
-                $map['y1.admin_id'] = session('admin_id');
+            if (check_group('yishenjz_only_list')) {
+                $map['y1.ys_id'] = session('admin_id');
             }
            
         }
         //网站来源
-        $is_website=I('get.webstie');
-        if($is_website!='')
-        {
-            $map['y1.ly_id'] = array('in', get_website());
-            $this->assign('is_website',1);
-        }
+        
         if (IS_GET) {
             $getdata = I('get.');
 
@@ -390,6 +385,9 @@ class YuShenController extends AuthController {
                     $map['y1.ys_id']=session('admin_id');
                 }
                 
+            }elseif(I('list_type')=='all')
+            {
+                unset($map['y1.ys_id']);
             }
             $menu_list = $this->getFiledArray(I('list_type'));
             $this->assign('handle_tpl',I('list_type'));
@@ -410,7 +408,7 @@ class YuShenController extends AuthController {
             $orderstr='y1.dztime desc,y1.id desc';
         }else
         {
-            $orderstr='y1.ctime desc,y1.id desc';
+            $orderstr='y1.jztime desc,y1.id desc';
         }
         $list = $model->alias('y1')->field($filed)->join($join)->order($orderstr)->where($map)->page($page . ',' . $pagesize)->select();
         //print_r($list);

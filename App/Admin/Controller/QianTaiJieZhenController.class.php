@@ -533,7 +533,7 @@ class QianTaiJieZhenController extends AuthController {
     }
     public function ysedit(){
         //权限选择
-        $this->check_group('qiantaijz_edit');
+        $this->check_group($this->rule_qz.'_edit');
         //网站更新信息
         $this->onname='分配医生';
 
@@ -594,7 +594,7 @@ class QianTaiJieZhenController extends AuthController {
    
     public  function del(){
         //权限选择
-        $this->check_group('qiantaijz_del');
+        $this->check_group($this->rule_qz.'_del');
         $id=I('get.id');
         $map=array(
                 'uuid'=>$id

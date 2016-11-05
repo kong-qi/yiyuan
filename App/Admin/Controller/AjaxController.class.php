@@ -664,7 +664,7 @@ class AjaxController extends AuthController
         $page=I('request.page');
         $pagesize=20;
         $map=array(
-            'jz.yy_id'=>$yid
+            'jz.id'=>$yid
             );
         $m=M('JieZhen');
         //病区域
@@ -767,7 +767,7 @@ class AjaxController extends AuthController
                   }
 
                  $content.="</tr><tr style='display:none'>
-                    <td colspan='6'>
+                    <td colspan='7'>
                     <div class='roww'>
                         ".$pic_str."
                        
