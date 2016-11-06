@@ -29,8 +29,38 @@ function get_website(){
     }
     return '';
 }
-//取得回访记录数
-//
+//消费类别序号计算
+function create_price_type_code(){
+    $m=M('LanMu')->field('max(pice_type_code) as total')->where(array('type'=>'xiaofei'))->find();
+    return $m['total'];
+}
+function get_price_type($field=''){
+    $fenlei=M('LanMu')->where(array('type'=>'xiaofei','checked'=>'1'))->select();
+    $fl_arr=array();
+    foreach ($fenlei as $key => $value) {
+                  $fl_arr[$value['id']]=$value['pice_type_code'];    
+            }
+    if($field!='')
+    {
+        return $fl_arr[$field];
+    }
+    return $fl_arr;
+}
+//价格序号
+function create_price_code($fid=''){
+    
+    $max=M('Price')->where(array('checked'=>1))->max('base_code');
+    $num=$max+1;
+    $cnum=str_pad($num, 3, '0', STR_PAD_LEFT);
+    $cnum=get_price_type('fid').$cnum;
+    $data=array(
+        'base_code'=>$num,
+        'price_code'=>$cnum,
+
+
+        );
+    return $data;   
+}
 //取得创建人，传入TABLE
 function get_adder($table){
     

@@ -7,7 +7,7 @@ class XiaoFeiZiDianController extends AuthController {
 
     public function index($type){
         //权限选择
-
+        
         $this->check_group($type);
         $model=M('LanMu');
         $map=array();
@@ -43,6 +43,7 @@ class XiaoFeiZiDianController extends AuthController {
             $model=D('LanMu');
 
             $name=I('post.name');
+            $fid=I('post.fid');
             if($name=='')
             {
                 $msg=lang('名字不能为空','handle');
@@ -57,11 +58,12 @@ class XiaoFeiZiDianController extends AuthController {
                     'ctime'=>time(),
                     'uuid'=>create_uuid(),
                     'name'=>$v,
+                    'pice_type_code'=>create_price_type_code()+1+$k,
                     'type'=>'xiaofei',
                     'admin_id'=>session('admin_id')
                 );
             }
-
+           
             $result = $model->addAll($dataList);
 
             if($result) {

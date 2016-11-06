@@ -6,14 +6,14 @@ class AjaxController extends AuthController
     public function handle()
     {
 
-        $uuid = I('post.uuid');
-        $sort=I('post.sort');
-        $token = I('post.token');
-        $ajaxtype = I('post.type');
-        $value=I('post.value')==''?'':I('post.value');
-        $filed=I('post.filed')==''?'':I('post.filed');
-        $model = I('post.model');
-        $log=I('post.log')==''?'':I('post.log');
+        $uuid = I('param.uuid');
+        $sort=I('param.sort');
+        $token = I('param.token');
+        $ajaxtype = I('param.type');
+        $value=I('param.value')==''?'':I('param.value');
+        $filed=I('param.filed')==''?'':I('param.filed');
+        $model = I('param.model');
+        $log=I('param.log')==''?'':I('param.log');
         $err_arr=array(
                 'error' => 1,
                 'msg' => '非法操作'
@@ -31,7 +31,7 @@ class AjaxController extends AuthController
                         $uuid
                     )
                 );
-                if(I('post.model')=='File')
+                if(I('param.model')=='File')
                 {
                     $fild=$model->where($map)->select();
                     foreach ($fild as $v)
@@ -157,6 +157,49 @@ class AjaxController extends AuthController
                     ));
                 }
                 break;
+            case 'create_price_code':
+                $data=array();
+                 $list=M('LanMu')->where(array('checked'=>1,'type'=>'xiaofei'))->order('id asc')->select();
+
+                 foreach ($list as $key => $v) {
+                      $num=$key+1;
+                    ;
+                      $data=array('pice_type_code'=>$num);
+                      M('LanMu')->where(array('uuid'=>$v['uuid']))->save($data);
+
+                  }
+
+                echo json_encode(array(
+                        'error' => 0,
+                        'msg' => 'ok'
+                    ));
+
+            break;
+            case 'create_code':
+                $data=array();
+               
+                if(count($uuid>0))
+                {   
+                   
+                    $fenlei=M('LanMu')->where(array('type'=>'xiaofei','checked'=>'1'))->select();
+                    $fl_arr=array();
+                    foreach ($fenlei as $key => $value) {
+                                  $fl_arr[$value['id']]=$value['pice_type_code'];    
+                            }
+                   $list=M('Price')->where(array('checked'=>1))->order('id asc')->select();            
+                   foreach ($list as $key => $v) {
+                        $num=$key+1;
+                        $num=str_pad($num, 3, '0', STR_PAD_LEFT);
+                        $data=array('price_code'=>$fl_arr[$v['fid']]['pice_type_code'].$num,'base_code'=>$key+1);
+                        M('Price')->where(array('uuid'=>$v['uuid']))->save($data);
+                    }
+                }
+                echo json_encode(array(
+                        'error' => 0,
+                        'msg' => 'ok'
+                    ));
+
+            break;
         }
 
 
@@ -502,8 +545,8 @@ class AjaxController extends AuthController
         
     }
    public function getHuifang(){
-       $uid=I('request.uid');
-       $page=I('request.page');
+       $uid=I('param.uid');
+       $page=I('param.page');
        $pagesize=20;
        $map=array();
        $map['h1.user_id']=$uid;
@@ -579,8 +622,8 @@ class AjaxController extends AuthController
        return $this->ajaxReturn($data);
    }
    public function getHuifangRenWu(){
-        $uid=I('request.uid');
-        $page=I('request.page');
+        $uid=I('param.uid');
+        $page=I('param.page');
         $pagesize=20;
         $map=array('user_id'=>$uid);
 
@@ -662,7 +705,7 @@ class AjaxController extends AuthController
     //查看确诊
    public function getCheckShow($yid){
        
-        $page=I('request.page');
+        $page=I('param.page');
         $pagesize=20;
         $map=array(
             'jz.id'=>$yid
@@ -790,12 +833,12 @@ class AjaxController extends AuthController
    }
     public function getPriceList(){
 
-        $uid=I('request.uid');
-        $page=I('request.page');
-        $fid=I('request.ks_id');
-        $tfid=I('request.kst_id');
+        $uid=I('param.uid');
+        $page=I('param.page');
+        $fid=I('param.ks_id');
+        $tfid=I('param.kst_id');
 
-        $key=I('request.key');
+        $key=trim(I('param.key'));
 
         $map=array();
 
@@ -809,6 +852,7 @@ class AjaxController extends AuthController
         {
             $map2['pr.name']=array('like','%'.$key.'%');
             $map2['pr.code']=array('like','%'.$key.'%');
+            $map2['price_code']=array('like','%'.$key.'%');
             
             $map2['_logic'] = 'OR';
             $map['_complex']=$map2;
@@ -907,7 +951,7 @@ class AjaxController extends AuthController
        
     }
     public function getUserList(){
-        $key=trim(I('request.key'));
+        $key=trim(I('param.key'));
         $map=array();
 
         $map['_string'] = "name like '".$key."%' or tel like '%".$key."%' or id = '".$key."'";

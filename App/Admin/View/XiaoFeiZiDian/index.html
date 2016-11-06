@@ -14,8 +14,13 @@
             <div class="box-title">
                 {{ :lang($onname,'menu') }}
                 <h3 class="pull-right">
-                    <a href=#" id="tianjiazh" class="btn btn-xs btn-success"> <span
+                    <a href="#" id="tianjiazh" class="btn btn-xs btn-success"> 
+                    <span
                             class="fa fa-pencil-square-o"></span> {{ :lang('添加','handle') }}</a>
+                    <a href="javascript:void(0)" class="btn btn-xs btn-primary"  
+                       data-model="LanMu" 
+                       data-handle="create_price_code" data-handle-check="1" data-handle-value="1"><span
+                            class="fa fa-check"></span> {{ :lang('编码生成','handle') }}</a>
                 </h3>
             </div>
             <div class="box-content">
@@ -31,6 +36,7 @@
                                 <input name="chkall" type="checkbox" id="chkall"value="0"></th>
                             <th width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
                             <th class="hidden-xs">{{ :lang('编号','filed') }}</th>
+                            <th class="hidden-xs">{{ :lang('编码','filed') }}</th>
                             <th>{{ :lang('名称','filed') }}</th>
                             <th >{{ :lang('状态','filed') }}</th>
                             <th >{{ :lang('操作','handle') }}</th>
@@ -44,7 +50,10 @@
                                     <td class="hidden-xs">
                                         <input data-sort="1" type="text" size="5" value="{{ $v.sort }}" name="sort" class="input">
                                     </td>
-                                    <td class="hidden-xs">{{ $v.id }}</td>
+                                    <td>
+                                        {{ $v.id }}
+                                    </td>
+                                    <td class="hidden-xs">{{ $v.pice_type_code }}</td>
                                     <td data-log="1">{{ $v.name }}</td>
 
                                     <td >
@@ -121,6 +130,7 @@
                        data-model="LanMu"
                        data-handle="checked" data-handle-check="1" data-handle-value="0"><span
                             class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
+                    
                 </div>
                 <div class="box">
 
@@ -185,15 +195,20 @@
             $(document).on("click", "[data-handle-check='1']", function () {
                 $uuid = checked_box_id();
                 $model = $(this).attr('data-model');
-                $type = $(this).attr('data-handle');
-                $value = $(this).attr('data-handle-value');
-                $filed = $(this).attr('data-handle-filed');
+                $type = $(this).attr( '[data-handle-check="1"]');
+                $value = $(this).attr(' [data-handle-check='1'-value]');
+                $filed = $(this).attr(' [data-handle-check='1'-filed]');
                 $sort = checked_sort_id();
                 $log="{{ $onname }}："+checked_log_name();
                 //console.log($uuid);
                 //console.log($sort);
                 //console.log($log);
+                log($type);
+                if($type=='create_price_code')
+                {
+                  $uuid=['d'];
 
+                }
                 if ($uuid) {
                     switch ($type) {
 
@@ -213,7 +228,7 @@
                                         setTimeout(function () {
                                             $.ajax({
                                                 'url': '{{ :U("Admin/Ajax/handle") }}',
-                                                type: 'post',
+                                                type: 'get',
                                                 data: {
                                                     'uuid': $uuid,
                                                     'model': $model,

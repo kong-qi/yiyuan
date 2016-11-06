@@ -163,6 +163,21 @@ function checked_sort_id() {
     return check_id_array;
 
 }
+function checked_fid_id() {
+    var check_id_array = new Array();
+    var checkid = $(".checkbox-select:checked");
+    if (checkid.size() > 0) {
+        checkid.each(function(index, el) {
+            p = $(this).parents("tr");
+            sort_v = p.find('[data-fid="1"]').val();
+            check_id_array.push(sort_v);
+        });
+    } else {
+        return false;
+    }
+    return check_id_array;
+
+}
 
 function checked_log_name() {
     var check_id_array = new Array();

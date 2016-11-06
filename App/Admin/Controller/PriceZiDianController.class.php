@@ -117,7 +117,11 @@ class PriceZiDianController extends AuthController {
             {
               
                 $data=$model->create();
-                $result =    $model->add();
+                //取得最大序号
+               
+                $data= create_price_code($data['fid'])+$data;
+              
+                $result =    $model->add( $data);
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     $msg=lang('添加成功','handle');
@@ -204,6 +208,7 @@ class PriceZiDianController extends AuthController {
                  'e'=>"$strs[4]",
                  'f'=>"$strs[5]",
                  'g'=>"$strs[6]",
+                 'h'=>"$strs[7]"
                 
 
                
@@ -221,6 +226,8 @@ class PriceZiDianController extends AuthController {
                     'danwei'=>$v['e'],
                     'is_update'=>$v['f'],
                     'code'=>$v['g'],
+                    'base_code'=>$v['h'],
+                    'price_code'=>get_price_type($v['c']).str_pad($v['h'], 3, '0', STR_PAD_LEFT),
                     'admin_id' => session('admin_id')
                 );
             }
