@@ -195,9 +195,9 @@
             $(document).on("click", "[data-handle-check='1']", function () {
                 $uuid = checked_box_id();
                 $model = $(this).attr('data-model');
-                $type = $(this).attr( '[data-handle-check="1"]');
-                $value = $(this).attr(' [data-handle-check='1'-value]');
-                $filed = $(this).attr(' [data-handle-check='1'-filed]');
+                $type = $(this).attr('data-handle');
+                $value = $(this).attr(' [data-handle-check="1"]');
+                $filed = $(this).attr(' [data-handle-check="1"]');
                 $sort = checked_sort_id();
                 $log="{{ $onname }}："+checked_log_name();
                 //console.log($uuid);
