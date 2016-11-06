@@ -29,6 +29,8 @@ function get_website(){
     }
     return '';
 }
+//取得回访记录数
+//
 //取得创建人，传入TABLE
 function get_adder($table){
     
@@ -886,25 +888,25 @@ function onkefu2($type='is_zixun',$merg=0,$aid=''){
     return $str;
 }
 //年龄设置
-function echo_age($checked=''){
+function echo_age($id=''){
+    
     $str='';
-    $checked='';
+   
+    $ckstr='';
     for($i=10;$i<=80;$i++)
     {
-        if($checked!='')
-        {
-            if( $checked==$i)
-            {
-                $checked="selected='selsected'";
-            }else
-            {
-                $checked='';
-            }
-        }
-      
+      if($id==$i)
+      {
+        $ckstr='selected="selected"';
+        
+      }else
+      {
+        $ckstr='';
+      }
+        
 
 
-        $str.='<option '.$checked.' value="'.$i.'">'.$i.'</option>';
+        $str.='<option '.$ckstr.' value="'.$i.'">'.$i.'</option>';
 
 
     }
@@ -1267,6 +1269,10 @@ function get_yushen_ks($id=0,$echo=1,$checkid=''){
     return $rule;
 }
 function to_time($time,$f='d-m-Y H:i:s'){
+    if($time=='')
+    {
+        return '';
+    }
     return date($f,$time);
 }
 function to_date_time($time,$f='Y-m-d H:i:s'){

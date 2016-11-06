@@ -1,4 +1,39 @@
-<if condition="check_group('hfrenwu') or check_group('huifangset')">
+<php>
+    if(check_group('kefu'))
+    {
+</php>
+    <li>
+        <a href="#">
+            <i class="fa fa-graduation-cap"></i>
+            <span class="nav-label">{{ :lang('客服部') }}</span>
+            <span class="fa icon-chevron-left arrow"></span>
+        </a>
+        <ul class="nav nav-second-level">
+            <li>
+                  <li>
+                    <a class="J_menuItem" href="{{ :U('Admin/YuYue/kfindex',array('list_type'=>'kefu')) }}">{{ :lang('所有预约') }}</a>
+                </li>
+            </li>
+            <if condition="check_group('huihfrenwu_list')">
+                <li>
+                    <a class="J_menuItem" href="{{ :U('Admin/RenWu/index',array('status'=>'0')) }}">{{ :lang('待回访任务列表') }}</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="{{ :U('Admin/RenWu/index',array('status'=>'1')) }}">{{ :lang('已回访任务列表') }}</a>
+                </li>
+            </if>
+
+            <if condition="check_group('huifangset_list')">
+                <li>
+                    <a class="J_menuItem" href="{{ :U('Admin/HuiFang/index') }}">{{ :lang('已回访记录列表') }}</a>
+                </li>
+            </if>
+           
+        </ul>
+    </li>
+<php>}else{
+</php>
+<if condition="check_group('hfrenwu') or check_group('huifangset') ">
 <li>
     <a href="#">
         <i class="fa fa-graduation-cap"></i>
@@ -24,3 +59,4 @@
     </ul>
 </li>
 </if>
+<php>}</php>

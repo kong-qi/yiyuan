@@ -12,11 +12,9 @@
         <if condition="I('get.show')">
         <else/>
         <div class="ibox">
-                <php>if(I('so')=='dayso'){</php>
-                  <include file="YuYue:so:dayso"/>
-                <php>}else{</php>
-                    <include file="YuYue:so:default"/>
-                <php>}</php>
+            
+                <include file="YuYue:so:default"/>
+            
         </div>
         </if>
         <div class="ibox">
@@ -122,7 +120,14 @@
                                                     <elseif condition="$mv['filed'] eq user_name"/>
                                                         
                                                              <a href="javascript:void(0)" class=" js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.yuuid }}" > {{ $v[$mv['filed']] }}</a>
-                                                       
+                                                    <elseif condition="$mv['filed'] eq tel"/>
+                                                        <a href="javascript:void(0)" data-show-phone="1" data-url="{{ :U('Admin/Ajax/showPhone') }}" data-vid="#showphone" id="showphone" data-uid="{{ $v.user_id }}">{{ :hide_tel($v['tel'],2,5) }}</a>
+                                                    <elseif condition="$mv['filed'] eq hf_total"/>
+                                                     
+                                                          <a href="javascript:void(0)"
+                                                             class="text-blue"
+                                                             data-url="{{ :U('Admin/HuiFang/gethflist',array('uid'=>$v['user_id'])) }}" data-title="{{ :lang('回访记录') }}" 
+                                                             data-close="1" data-w="80%" data-h="80%" data-layer="1" data-uuid="{{ $v.user_uuid }}"  >{{ :($v['hf_total']) }}</a>
                                                     <else/>
                                                         {{ $v[$mv['filed']] }}
                                                 </if>
@@ -138,9 +143,17 @@
                                         <td class="td-handle">
                                             <!-- //网站竞价人员 -->
                                             <div class="box" style="">
-                                               
-                                                <include file="Menu:qiantai" />
-                                                
+                                                <php>
+                                                    if($is_website==1)
+                                                    {
+                                                </php>
+                                                    
+                                                    <include file="Menu:website" />
+                                                <php>
+                                                    }else{
+                                                </php>
+                                                    <include file="Menu:yuyue" />
+                                                <php>}</php>
                                                
                                             
                                             </div>

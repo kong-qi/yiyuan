@@ -4,9 +4,14 @@
 <include file="Menu:huifang_show" />
 <include file="Menu:sms_send" />
 <if condition=" check_group('yuyue_add')">
-    <a href="{{ :U('Admin/YuYue/zxadd?id='.$v['yuuid']) }}"
+    <a href="{{ :U('Admin/YuYue/zxyyadd?id='.$v['yuuid']) }}"
     class="btn btn-xs btn-white" >
     <span class="fa fa-coffee btn-font" data-name="{{ :lang('预约') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+</if>
+<if condition=" check_group('yuyue_add')">
+    <a href="{{ :U('Admin/YuYue/zxadd?id='.$v['user_id']) }}"
+    class="btn btn-xs btn-white" >
+    <span class="fa fa-commenting btn-font" data-name="{{ :lang('添加') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
 </if>
 <if condition=" check_group('zixun_edit')">
     <a href="{{ :U('Admin/YuYue/zxedit?id='.$v['yuuid']) }}"

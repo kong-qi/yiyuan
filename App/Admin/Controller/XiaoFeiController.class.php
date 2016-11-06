@@ -214,48 +214,43 @@ class XiaoFeiController extends AuthController {
         //权限选择
         $this->check_group('yuyue_edit');
         //网站更新信息
-        $this->onname='分配医生';
+        $this->onname='预约修改来源';
 
-        $base=I('get.base');
+        $base=I('get.webbase');
+        if($base=='1')
+        {
+            $base=U('Admin/YuYue/index',array('webstie'=>'true','show'=>'none'));
+        }elseif($base==2)
+        {
+            $base=U('Admin/YuYue/index',array('djstime'=>date('Y-m-d'),'djetime'=>date('Y-m-d'),'show'=>'none','websiteall'=>'true'));
+        }
         //网站更新信息
-        $backurl=$this->burl=U('Admin/YuYue/index?shenfeng=website&'.base64_decode($base));
+        $backurl=$base;
 
-
+     
         if(IS_POST)
         {
             $model =D('YuYue');
             $postdata=I('post.');
             if($model->create()) {
                 $data=$model->create();
-               
+                /*$udata=D('User')->create();
 
-                $user_arr=array(
-                    'name',
-                    'qq',
-                    'sex',
-                    'birthday',
-                    'age',
-                    'tel',
-                    'is_jiehun',
-                    'admin_id',
-                    'email',
-                    'othetel'
-
-                );
-                $user=array();
-                foreach ($user_arr as $uv)
+                foreach ($udata as $key=>$uv)
                 {
-                    if($postdata[$uv]!='')
+                    if($uv=='')
                     {
-                        $user[$uv]=$postdata[$uv];
+                         unset($udata[$key]);
                     }
 
                 }
                 //如果为空，则返回null
-
-                $user['id']=$data['user_id'];
-
-
+                unset($udata['id']);
+                $udate['id']=$data['user_id'];
+                if(count($udate)>1)
+                {
+                    M("User")->save($user);
+                }*/
                 foreach ($data as $k=>$v)
                 {
                     if($v=='')
@@ -263,11 +258,7 @@ class XiaoFeiController extends AuthController {
                         unset($data[$k]);
                     }
                 }
-
-                if(count($user)>1)
-                {
-                    M("User")->save($user);
-                }
+              
 
                 $result =   $model->save($data);
 

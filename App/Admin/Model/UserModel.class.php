@@ -16,5 +16,43 @@ class UserModel extends RelationModel {
         
 
     );
+    protected $pk='id';
+    public function updateTotal($id,$col,$num=1){
+
+    }
+    public function updateCount($id,$col,$num = 1){
+        $id = (int)$id;
+        $total=0;
+       	switch ($col) {
+       		case 'hf_total':
+       			$total=M('HuiFang')->where(array('user_id'=>$id))->count();
+       			break;
+       		case 'rw_total':
+       			$total=M('RenWu')->where(array('user_id'=>$id))->count();
+       			break;
+       		case 'zx_total':
+       			$total=M('ZiXun')->where(array('user_id'=>$id))->count();
+       			break;
+       		case 'yy_total':
+       			$total=M('YuYue')->where(array('user_id'=>$id))->count();
+       			break;
+       		case 'jz_total':
+       			$total=M('JieZhen')->where(array('user_id'=>$id))->count();
+       			break;
+       		case 'kd_total':
+       			$total=M('KaiDan')->where(array('user_id'=>$id))->count();
+       			break;
+       		case 'xf_total':
+       			$total=M('KaiDan')->where(array('user_id'=>$id))->count();
+       			break;
+       		
+       		default:
+       			# code...
+       			break;
+       	}
+        $first=$this->execute(" update ".$this->getTableName()." set {$col} ={$total} where ".$this->pk." = '{$id}' ");
+        
+    }
+    
    
 }

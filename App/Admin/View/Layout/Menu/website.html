@@ -16,20 +16,21 @@
         <if condition="check_group('yuyue_show')">
            <li>
                <a class="J_menuItem"
-                      href="{{ :U('Admin/YuYue/index',array('webstie'=>'true')) }}">{{ :lang('补充来源和对话','menu') }}</a>
+                      href="{{ :U('Admin/YuYue/index',array('webstie'=>'true','show'=>'none')) }}">{{ :lang('补充来源和对话','menu') }}</a>
            </li>
            <li>
-                <a class="J_menuItem"
-                      href="{{ :U('Admin/YuYue/index') }}">{{ :lang('进入预约','menu') }}</a>
+              <a class="J_menuItem"
+                 href="{{ :U('Admin/YuYue/index',array('djstime'=>date('Y-m-d'),'djetime'=>date('Y-m-d'),'show'=>'none','websiteall'=>'true')) }}">{{ :lang('进入预约','menu') }}</a>
+               
            </li>
         </if>
-        <if condition="check_group('yuyue_seven_show')">
+        <!-- <if condition="check_group('yuyue_seven_show')">
             <li>
                 <a class="J_menuItem"
                    href="{{ :U('Admin/YuYue/index',array('djstime'=>get_days(-6),'djetime'=>date('Y-m-d'),'status'=>1,'show'=>'none')) }}">{{ :lang('最近七天预约','menu') }}</a>
             </li>
             
-        </if>
+        </if> -->
        
        
 

@@ -27,6 +27,12 @@ class YuYueController extends AuthController
         {
             $map['y1.ly_id'] = array('in', get_website());
             $this->assign('is_website',1);
+            $this->assign('webbase',1);
+        }
+        if(I('get.websiteall')!='')
+        {
+             $this->assign('is_website',1);
+              $this->assign('webbase',2);
         }
         if (IS_GET) {
             $getdata = I('get.');
@@ -159,6 +165,7 @@ class YuYueController extends AuthController
             hunyin.name as jiehun,
             level.name as  level,
             phone.name  as pbank
+            
         ';
         //管理会员用户
         $join[] = '__USER__ u1 ON y1.user_id = u1.id';
@@ -202,7 +209,7 @@ class YuYueController extends AuthController
         $join[] = 'LEFT JOIN __LAN_MU__ level ON u1.level = level.id'; 
         //手机品牌
         $join[] = 'LEFT JOIN __LAN_MU__ phone ON u1.phone_bank = phone.id'; 
-
+      
        
         $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
@@ -215,6 +222,10 @@ class YuYueController extends AuthController
         //print_r($list);
         $this->assign('list', $list);// 赋值数据集
         $type_arr='defalut';
+        if(I('get.list_type')!='')
+        {
+            $type_arr=I('get.list_type');
+        }
         $menu_list = $this->getFiledArray($type_arr);
         $this->menu_list = $menu_list;
         $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
@@ -281,6 +292,22 @@ class YuYueController extends AuthController
 
                     );
                 break;
+            case 'kefu':
+                 $menu_list = array(
+                'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-2' => array('name' => lang('性别'), 'filed'=>'sex','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-3' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-4' => array('name' => lang('联系电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-5' => array('name' => lang('预约状态'), 'filed'=>'ystatus','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-6' => array('name' => lang('预约时间'), 'filed'=>'yctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-7' => array('name' => lang('预到时间'), 'filed'=>'ydatetime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-8' => array('name' => lang('到院时间'), 'filed'=>'dztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-10' => array('name' => lang('具体病种'), 'filed'=>'bz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-11' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-11' => array('name' => lang('回访次数'), 'filed'=>'hf_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                );
+
+            break;
             
             default:
                 $menu_list = array(
@@ -405,6 +432,7 @@ class YuYueController extends AuthController
                         if($result && $uresult)
                         {
                             M()->commit();
+                            D('User')->updateCount($data['user_id'],'yy_total');
                             add_log($this->onname . '：' . $data['name'] . '添加成功');
                             $msg = lang('添加成功', 'handle');
                             return $this->success($msg . "预约号为：" . $data['ynumber'], $backurl);
@@ -424,6 +452,7 @@ class YuYueController extends AuthController
                         $result = $model->add($data);
                         if ($result && $uresult) {
                             M()->commit();
+                            D('User')->updateCount($data['user_id'],'yy_total');
                             add_log($this->onname . '：' . $data['name'] . '添加成功');
                             $msg = lang('添加成功', 'handle');
                             return $this->success($msg . "预约号为：" . $data['ynumber'], $backurl);
@@ -447,6 +476,7 @@ class YuYueController extends AuthController
                         if($zresult && $uresult)
                         {
                             M()->commit();
+                            D('User')->updateCount($data['user_id'],'zx_total');
                             add_log($this->onname . '：' . $data['name'] . '添加成功');
                             $msg = lang('添加咨询成功', 'handle');
                             return $this->success($msg , $backurl);
@@ -467,6 +497,7 @@ class YuYueController extends AuthController
                         $zresult = $zixun->add($zdata);
                         if ($zresult && $uresult) {
                             M()->commit();
+                            D('User')->updateCount($data['user_id'],'zx_total');
                             add_log($this->onname . '：' . $data['name'] . '添加成功');
                             $msg = lang('添加咨询成功', 'handle');
                             return $this->success($msg , $backurl);
@@ -670,6 +701,7 @@ class YuYueController extends AuthController
         $result=$model->where($map)->delete();
         if($result)
         {
+            D('User')->updateCount($data['user_id'],'yy_total');
             add_log($this->onname.'：'.$data['name'].'删除成功');
             return  $this->success(lang('删除成功','handle'));;
         }
@@ -904,15 +936,15 @@ class YuYueController extends AuthController
 
         }
     }
-    public function zxadd()
+    public function zxyyadd()
     {
-         $this->onname="咨询转预约";
+        $this->onname="咨询转预约";
         //权限选择
         $base = I('get.base');
         //网站更新信息
         $this->burl = U('Admin/YuYue/zxindex');
 
-        $this->check_group('zixun_edit');
+        $this->check_group('yuyue_add');
         if (IS_POST) {
             $model = D('YuYue');
             $user=D('User');
@@ -933,7 +965,7 @@ class YuYueController extends AuthController
 
                 $data['uuid']=create_uuid();
                 $data['ctime']=time();
-                 
+                unset($data['id']); 
                 $udata['id'] = $data['user_id'];
                
                 foreach ($data as $k => $v) {
@@ -946,7 +978,10 @@ class YuYueController extends AuthController
                         unset($udata[$k]);
                     }
                 }
+                //print_r($data);
+                 //print_r($udata);
 
+                //exit();
                 if (count($udata) > 1) {
                     M("User")->save($udata);
                 }
@@ -955,6 +990,7 @@ class YuYueController extends AuthController
 
                 if ($result) {
                     M()->commit();
+                    D('User')->updateCount($data['user_id'],'yy_total');
                     add_log($this->onname . '：' . $data['name'] . '成功');
                     $msg = lang('预约成功', 'handle');
 
@@ -982,8 +1018,79 @@ class YuYueController extends AuthController
             } else {
                 return $this->error(lang('数据错误'));
             }
-           
-            return $this->display("YuYue:zixun:add");
+          
+           return $this->display("YuYue:zixun:yyadd");
+            
+
+        }
+    }
+    public function zxadd(){
+        $this->onname="咨询添加";
+        //权限选择
+        $base = I('get.base');
+        //网站更新信息
+        $this->burl = U('Admin/YuYue/zxindex');
+        if (IS_POST) {
+            $model = D('ZiXun');
+            $user=D('User');
+            $postdata = I('post.');
+            if ($model->create()) {
+              
+                $data = $model->create();
+                
+               
+
+                $data['uuid']=create_uuid();
+                $data['ctime']=time();
+                unset($data['id']); 
+                $udata['id'] = $data['user_id'];
+               
+                foreach ($data as $k => $v) {
+                    if ($v == '') {
+                        unset($data[$k]);
+                    }
+                }
+                 foreach ($udata as $k => $v) {
+                    if ($v == '') {
+                        unset($udata[$k]);
+                    }
+                }
+              
+
+                $result = $model->add($data);
+
+                if ($result) {
+                    M()->commit();
+                    D('User')->updateCount($data['user_id'],'zx_total');
+                    add_log($this->onname . '：' . $data['name'] . '成功');
+                    $msg = lang('咨询添加成功', 'handle');
+
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.lo</script>";
+                    return $this->success($msg, $backurl);
+                } else {
+                    M()->rollback();
+                    $msg = lang('预约失败', 'handle');
+                    return $this->success(lang($msg, 'handle'));
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                }
+            } else {
+                return $this->error($model->getError());
+            }
+        } else {
+            $id = I('get.id');
+            $map = array(
+                'id' => $id
+            );
+
+            $model = D('User')->where($map)->find();
+
+            if ($model) {
+                $this->data = $model;// 模板变量赋值
+            } else {
+                return $this->error(lang('数据错误'));
+            }
+          
+           return $this->display("YuYue:zixun:add");
             
 
         }
@@ -1001,6 +1108,7 @@ class YuYueController extends AuthController
         $result=$model->where($map)->delete();
         if($result)
         {
+            D('User')->updateCount($data['user_id'],'zx_total');
             add_log($this->onname.'：'.$data['name'].'删除成功');
             return  $this->success(lang('删除成功','handle'));;
         }
@@ -1036,5 +1144,233 @@ class YuYueController extends AuthController
         } else {
             return $this->display();
         }
+    }
+    public function kfindex()
+    {
+       
+        //print_r(session('group'));
+        $this->check_group($this->rule_qz."_show");
+        $map = array();
+        $this->assign('is_search',I('get.is_search'));
+
+        //自己查看自己的
+        if (!check_group('root')) {
+            if (check_group('yuyue_only')) {
+                $map['y1.admin_id'] = session('admin_id');
+            }
+           
+        }
+        //网站来源
+        $is_website=I('get.webstie');
+        if($is_website!='')
+        {
+            $map['y1.ly_id'] = array('in', get_website());
+            $this->assign('is_website',1);
+            $this->assign('webbase',1);
+        }
+        if(I('get.websiteall')!='')
+        {
+             $this->assign('is_website',1);
+              $this->assign('webbase',2);
+        }
+        if (IS_GET) {
+            $getdata = I('get.');
+
+            $y_arr = array(
+                'ks_id',
+                'kst_id',
+                'kstt_id',
+                'ly_id',
+                'lyt_id',
+                'lytt_id',
+                'area_id',
+                'areat_id',
+                'is_fz',
+                'yx_id',
+                'zx_id',
+                'user_id',
+                'leibie',
+                'admin_id',
+                'status'
+
+            );
+            //print_r($getdata);
+            foreach ($getdata as $key => $v) {
+                if ($v != '') {
+
+                    if (in_array($key, $y_arr)) {
+
+                        $map["y1." . $key] = $v;
+                    }
+                }
+
+            }
+            //创建时间为预约时间
+            if ($getdata['djstime'] != '' && $getdata['djetime'] != '') {
+                $getdata['djstime'] .= " 00:00:00";
+
+                $getdata['djetime'] .= " 23:59:59";
+
+                $timestr = strtotime($getdata['djstime']) . "," . strtotime($getdata['djetime']);
+
+                $map['y1.ctime'] = array('between', $timestr);
+
+            }
+            //预约时间为预到时间
+            if ($getdata['ystime'] != '' && $getdata['yetime'] != '') {
+                $getdata['ystime'] .= " 00:00:00";
+                $getdata['yetime'] .= " 23:59:59";
+
+                $timestr2 = strtotime($getdata['ystime']) . "," . strtotime($getdata['yetime']);
+
+                $map['y1.ydatetime'] = array('between', $timestr2);
+
+            }
+            
+            if ($getdata['dzstime'] != '' && $getdata['dzetime'] != '') {
+                $getdata['dzstime'] .= " 00:00:00";
+                $getdata['dzetime'] .= " 23:59:59";
+
+                $timestr2 = strtotime($getdata['dzstime']) . "," . strtotime($getdata['dzetime']);
+
+                $map['y1.dztime'] = array('between', $timestr2);
+
+            }
+
+
+            if (I('get.user_id') != '') {
+                $map['y1.user_id'] = I('get.user_id');
+
+            }
+            if (I('get.keyword') != '') {
+                $key = I('get.keyword');
+                $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or y1.ynumber like '%" . $key . "%'";
+            }
+
+        }
+
+
+        $model = M('YuYue');
+        $filed = '
+            ly1.name as ly_name,
+            ly2.name as lyt_name,
+            ly3.name as lytt_name,
+            y1.uuid as yuuid,
+            y1.status as ystatus,
+            y1.zx_content as zx_content,
+            y1.zx_mark,
+            y1.ys_id as ys_id,
+            y1.is_kd as is_kd,
+            y1.qz_id as qz_id,
+            y1.kd_id as kd_id,
+            y1.kdtime as kdtime,
+            y1.ynumber,
+            y1.id as yid,
+            y1.admin_id,
+            y1.ydatetime as ydatetime,
+            y1.ctime as yctime,
+            y1.mark as mark,
+            y1.jztime as jztime,
+            y1.dztime as dztime,
+            y1.leibie as leibie,
+
+            u1.name as user_name,
+            u1.age as age,
+            u1.sex,
+            u1.uuid as user_uuid,
+            u1.id as user_id,
+            u1.tel as tel,
+            u1.sfcard as card,
+            u1.birthday as birthday,
+
+            
+            a1.name as admin_name,
+            k1.name as ks_name,
+            k2.name as kst_name,
+            k3.name as kstt_name,
+            k4.name as bz_name,
+            zx.name as zx_name,
+            yx.name as yx_name,
+            wz.name as web_name,
+            ae1.name as ae_name,
+            ae2.name as ae2_name,
+            ys.realname as ys_name,
+    
+            jz.jz_smcontent as jz_smcontent,
+            ssys.name as ysz_name,
+
+            xueli.name as xueli,
+            zhiye.name as zhiye,
+            hunyin.name as jiehun,
+            level.name as  level,
+            phone.name  as pbank,
+            u1.hf_total as hf_total
+            
+        ';
+        //管理会员用户
+        $join[] = '__USER__ u1 ON y1.user_id = u1.id';
+        //关联ADMIN
+        $join[] = 'LEFT JOIN __ADMIN__ a1 ON y1.admin_id = a1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ ys ON y1.ys_id = ys.id';
+        //关科室1
+        $join[] = 'LEFT JOIN __KE_SHI__ k1 ON y1.ks_id = k1.id';
+        //关科室2
+        $join[] = 'LEFT JOIN __KE_SHI__ k2 ON y1.kst_id = k2.id';
+        //关科室3
+        $join[] = 'LEFT JOIN __KE_SHI__ k3 ON y1.kstt_id = k3.id';
+        //最终兵种
+        $join[] = 'LEFT JOIN __KE_SHI__ k4 ON y1.ksall_id = k4.id';
+        //关咨询方式
+        $join[] = 'LEFT JOIN __LAN_MU__ zx ON y1.zx_id = zx.id';
+        //网站
+        $join[] = 'LEFT JOIN __LAN_MU__ wz ON y1.web_id = wz.id';
+        //意向
+        $join[] = 'LEFT JOIN __LAN_MU__ yx ON y1.zx_id = yx.id';
+        //病人来源
+        $join[] = 'LEFT JOIN __LAN_MU__ ly1 ON y1.ly_id = ly1.id';
+        $join[] = 'LEFT JOIN __LAN_MU__ ly2 ON y1.lyt_id = ly2.id';
+        $join[] = 'LEFT JOIN __LAN_MU__ ly3 ON y1.lytt_id = ly3.id';
+        //区域
+        $join[] = 'LEFT JOIN __AREA__ ae1 ON y1.area_id = ae1.id';
+        //意向
+        $join[] = 'LEFT JOIN __AREA__ ae2 ON y1.areat_id = ae2.id';
+        //接诊
+        $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON y1.id = jz.yy_id';
+        //手术医生
+        $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = y1.ysz_id';
+
+        //关联学历
+        $join[] = 'LEFT JOIN __LAN_MU__ xueli ON u1.xueli = xueli.id';
+        //职业
+        $join[] = 'LEFT JOIN __LAN_MU__ zhiye ON u1.zhiye = zhiye.id'; 
+        //婚姻
+        $join[] = 'LEFT JOIN __LAN_MU__ hunyin ON u1.is_jiehun = hunyin.id'; 
+        //会员级别
+        $join[] = 'LEFT JOIN __LAN_MU__ level ON u1.level = level.id'; 
+        //手机品牌
+        $join[] = 'LEFT JOIN __LAN_MU__ phone ON u1.phone_bank = phone.id'; 
+       
+       
+        $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
+        $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+        $page = 1;
+        if (isset($_GET['p'])) {
+            $page = $_GET['p'];
+        }
+
+        $list = $model->alias('y1')->field($filed)->join($join)->order('y1.ctime desc,y1.id desc')->where($map)->page($page . ',' . $pagesize)->select();
+        //print_r($list);
+        $this->assign('list', $list);// 赋值数据集
+        $type_arr='defalut';
+        if(I('get.list_type')!='')
+        {
+            $type_arr=I('get.list_type');
+        }
+        $menu_list = $this->getFiledArray($type_arr);
+        $this->menu_list = $menu_list;
+        $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
+        $this->display("YuYue:kefu:index");
+       
+        
     }
 }

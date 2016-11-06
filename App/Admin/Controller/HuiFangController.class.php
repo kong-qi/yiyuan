@@ -18,6 +18,10 @@ class HuiFangController extends AuthController {
         $this->data=get_user($uid);
         return $this->display();
     }
+    public function gethflist($uid){
+        $this->data=get_user($uid);
+        return $this->display();
+    }
     public function getlistadd(){
         $this->check_group("huifangset_add");
         $isclose=I('post.close_frame');
@@ -44,10 +48,13 @@ class HuiFangController extends AuthController {
                 
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
+                    D('User')->updateCount($data['user_id'],'hf_total');
+
                     if($isclose)
                     {
                         $msg=lang('添加成功','handle');
                         $backurl=U('Admin/YuYue/index',array('is_huifang'=>1));
+
                         echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
 
                     }else
@@ -324,6 +331,7 @@ class HuiFangController extends AuthController {
         $result=$model->where($map)->delete();
         if($result)
         {
+             D('User')->updateCount($data['user_id'],'hf_total');
             add_log($this->onname.'：'.$data['name'].'删除成功');
             return  $this->success(lang('删除成功','handle'));;
         }

@@ -72,6 +72,7 @@ class QianTaiJieZhenController extends AuthController {
         $this->check_group('qiantaijz');
         $map = array();
         $this->assign('is_search',I('get.is_search'));
+        $this->assign('limit_day',I('get.limit_day'));
 
         //自己查看自己的
         if (!check_group('root')) {
@@ -87,7 +88,7 @@ class QianTaiJieZhenController extends AuthController {
             $map['y1.ly_id'] = array('in', get_website());
             $this->assign('is_website',1);
         }
-        if (IS_GET) {
+      
             $getdata = I('get.');
 
             $y_arr = array(
@@ -132,6 +133,7 @@ class QianTaiJieZhenController extends AuthController {
             }
             //预约时间为预到时间
             if ($getdata['ystime'] != '' && $getdata['yetime'] != '') {
+
                 $getdata['ystime'] .= " 00:00:00";
                 $getdata['yetime'] .= " 23:59:59";
 
@@ -161,7 +163,15 @@ class QianTaiJieZhenController extends AuthController {
                 $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or y1.ynumber like '%" . $key . "%'";
             }
 
-        }
+            if(I('is_search')!='')
+            {
+                if(I('get.limit_day')=='no_days')
+                {
+                    unset($map['y1.ydatetime']);
+                }
+            }
+
+        
 
 
         $model = M('YuYue');
@@ -284,15 +294,16 @@ class QianTaiJieZhenController extends AuthController {
         //print_r($list);
         $this->assign('list', $list);// 赋值数据集
         $type_arr='defalut';
-        if(I('list_type')!='')
+        if(I('get.list_type')!='')
         {
 
-            $menu_list = $this->getFiledArray('has');
+            $menu_list = $this->getFiledArray(I('get.list_type'));
             //print_r($menu_list);
         }else
         {
             $menu_list = $this->getFiledArray($type_arr);
         }
+      
         
         $this->menu_list = $menu_list;
         $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
@@ -327,6 +338,37 @@ class QianTaiJieZhenController extends AuthController {
                         'td-14' => array('name' => lang('来源类别'), 'filed'=>'leibie','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                         'td-15' => array('name' => lang('咨询方式'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                         'td-16' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                       
+                       
+                        
+
+                    );
+                break;
+            case 'hasday':
+                   $menu_list = array(
+                        'td-1' => array('name' => lang('预约号'), 'filed'=>'ynumber','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-3' => array('name' => lang('性别'), 'filed'=>'sex','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-4' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' =>''), 
+                        'td-5' => array('name' => lang('生日'), 'filed'=>'birthday','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-6' => array('name' => lang('职业'), 'filed'=>'zhiye','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-7' => array('name' => lang('婚姻'), 'filed'=>'jiehun','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+
+                        'td-8' => array('name' => lang('具体病种'), 'filed'=>'bz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-9' => array('name' => lang('预约状态'), 'filed'=>'ystatus','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-10' => array('name' => lang('预约时间'), 'filed'=>'yctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        
+                        'td-11' => array('name' => lang('预到时间'), 'filed'=>'ydatetime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-12' => array('name' => lang('预约时间'), 'filed'=>'yctime','diy'=>'text-info', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-13' => array('name' => lang('到院时间'), 'filed'=>'dztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-14' => array('name' => lang('分诊人'), 'filed'=>'fzname','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-15' => array('name' => lang('接诊医生'), 'filed'=>'ys_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                        'td-16' => array('name' => lang('地区'), 'filed'=>'ae2_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-17' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-18' => array('name' => lang('网站来源'), 'filed'=>'web_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-19' => array('name' => lang('来源类别'), 'filed'=>'leibie','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-20' => array('name' => lang('咨询方式'), 'filed'=>'zx_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                        'td-21' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                        
                        
                         
@@ -548,6 +590,7 @@ class QianTaiJieZhenController extends AuthController {
                 $udata['id']=$data['user_id'];
 
                 $data['status']=2;
+
                 M('User')->save($udata);
               
                 $result =   $model->save($data);

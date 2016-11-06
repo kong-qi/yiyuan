@@ -219,7 +219,7 @@
                             </div>
                             <div class="ibox-content">
                                 <div class="form-group">
-                                    <select class="form-control wb50 inline" name="leibie">
+                                    <select class="form-control wb50 inline" required="" name="leibie">
                                         <option value="">{{ :lang('请选择来院类别','handle') }}</option>
                                         {{ :yuyue_option_leibie($data['leibie']) }}
                                     </select>
@@ -232,7 +232,7 @@
                                     <label class="col-sm-12">{{ :lang('预约日期','handle') }}</label>
                                     <div class="col-sm-12">
                                         <div class="col-sm-7">
-                                            <input  name="ydate" type="text" value="{{ $data.ydate }}" id="ydate" class="form-control" placeholder="YYYY-MM-DD" onclick="laydate({istime: true, format: 'YYYY-MM-DD', min:laydate.now(),istime: false})" value="">
+                                            <input  name="ydate" required="" type="text" value="{{ $data.ydate }}" id="ydate" class="form-control" placeholder="YYYY-MM-DD" onclick="laydate({istime: true, format: 'YYYY-MM-DD', min:laydate.now(),istime: false})" value="">
                                             <p class="m-t">
                                                 <label for="" data-setdate="1" data-set="0" class="label label-success" style="margin-bottom: 5px; display: inline-block;">{{ :lang('今天','handle') }}</label>
                                                 <label for="" data-setdate="1" data-set="1" class="label label-success" style="margin-bottom: 5px; display: inline-block;">{{ :lang('明天','handle') }}</label>
@@ -242,7 +242,7 @@
                                             </p>
                                         </div>
                                         <div class="col-sm-5">
-                                            <input name="ytime" id="ytime" value="{{ $data.ytime }}" type="text" class="form-control clockpicker" placeholder="hh:mm" >
+                                            <input name="ytime" required="" id="ytime"  type="text" class="form-control clockpicker" placeholder="hh:mm" value="{{ :date('H:i',time()) }}" >
                                             <p class="m-t">
                                                 <label for="" data-settime="1" data-set="00:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('时间不定','handle') }}</label>
                                                 <label for="" data-settime="1" data-set="09:00" class="label label-info" style="margin-bottom: 5px; display: inline-block;">{{ :lang('9点','handle') }}</label>
@@ -255,11 +255,11 @@
                                             </p>
                                         </div>
                                         <div class="form-group">
-                                            <select class="form-control inline wb30" name="ks_id" id="ks_id" onchange="get_tks(this.value)">
+                                            <select class="form-control inline wb30" required="" name="ks_id" id="ks_id" onchange="get_tks(this.value)">
                                                <option value="">{{ :lang('请选择科室','handle') }}</option>
                                                 {{ :get_keshi('0','1',$data['ks_id'] ) }}
                                             </select>
-                                            <select class="form-control inline wb30" id="kst_id" name="kst_id" onchange="get_tks2(this.value)">
+                                            <select class="form-control inline wb30"  id="kst_id" name="kst_id" onchange="get_tks2(this.value)">
                                                 <option value="">{{ :lang('请选择二级科室','handle') }}</option>
 
                                             </select>

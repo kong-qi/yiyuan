@@ -22,13 +22,13 @@
         <if condition="check_group('yuyue_show')">
            <li>
                <a class="J_menuItem"
-                  href="{{ :U('Admin/YuYue/index',array('ystime'=>date('Y-m-d'),'yetime'=>date('Y-m-d'),'status'=>1,'show'=>'none','tpl'=>'dayindex')) }}">{{ :lang('今日预到','menu') }}</a>
+                  href="{{ :U('Admin/QianTaiJieZhen/index',array('ystime'=>date('Y-m-d'),'yetime'=>date('Y-m-d'),'so'=>'dayso','list_type'=>'hasday','is_search'=>1,'limit_day'=>1)) }}">{{ :lang('今日预到','menu') }}</a>
            </li>
         </if>
         <if condition="check_group('yuyue_seven_show')">
             <li>
                 <a class="J_menuItem"
-                   href="{{ :U('Admin/YuYue/index',array('ystime'=>get_days(-6),'yetime'=>date('Y-m-d'),'status'=>1,'show'=>'none')) }}">{{ :lang('七日预到','menu') }}</a>
+                   href="{{ :U('Admin/QianTaiJieZhen/index',array('ystime'=>date('Y-m-d'),'yetime'=>get_days(7),'so'=>'dayso','list_type'=>'hasday','is_search'=>1,'limit_day'=>1)) }}">{{ :lang('七日预到','menu') }}</a>
             </li>
             
         </if>

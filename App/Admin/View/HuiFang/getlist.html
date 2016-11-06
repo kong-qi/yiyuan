@@ -18,8 +18,8 @@
                         <ul class="nav nav-tabs">
                             
                             <if condition="check_group('huihfrenwu_list')">
-                                <li class=" active"><a data-toggle="tab" href="tabs_panels.html#tab-5" aria-expanded="false"><span class="hidden-xs">{{ :lang('待回访任务') }}</span><span class="visible-xs">{{ :lang('待回任务') }}</span></a> </li>
-                                <li class=" "><a data-toggle="tab" href="tabs_panels.html#tab-10" aria-expanded="false"><span class="hidden-xs">{{ :lang('已回访任务') }}</span><span class="visible-xs">{{ :lang('已回任务') }}</span></a> </li>
+                                <li class=" active"><a data-toggle="tab" href="tabs_panels.html#tab-5" aria-expanded="false"><span class="hidden-xs">{{ :lang('回访任务') }}</span><span class="visible-xs">{{ :lang('待回任务') }}</span></a> </li>
+                                
                                <!--  <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-6" aria-expanded="false"><span class="hidden-xs">{{ :lang('添加任务') }}</span><span class="visible-xs">{{ :lang('添加') }}</span></a> </li> -->
                             </if>
                             <if condition="check_group('huifangset_list')">
@@ -312,7 +312,7 @@
             function renwu_ajax(curr){
                 $.getJSON("{{ :U('Admin/Ajax/getHuifangRenWu') }}", {
                     page: curr || 1,
-                    'status':0,
+                   
                     "uid":"{{ $data.id }}",
                 }, function(res){
                     console.log(res);
@@ -352,7 +352,7 @@
                 });
             };
             renwu_ajax();
-            renwu2_ajax();
+           
         </script>
     </if>
     <script>

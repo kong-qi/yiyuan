@@ -8,6 +8,7 @@ class RenWuController extends AuthController {
 
     public function getlistrenwuadd(){
         $isclose=1;
+
         if(IS_POST)
         {
             $this->check_group($this->rule_qz."_add");
@@ -24,6 +25,7 @@ class RenWuController extends AuthController {
                 $data['rtime']=strtotime($data['rtime']);
                 $result =$model->add( $data);
                 if($result) {
+                    D('User')->updateCount($data['user_id'],'rw_total');
                     add_log($this->onname.'：'.$data['name'].'添加成功');
                     if($isclose)
                     {
@@ -198,6 +200,21 @@ class RenWuController extends AuthController {
 
                 );
            break;
+           case 'all':
+                $menu_list = array(
+
+                    
+                    'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-1' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-2' => array('name' => lang('联系电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-17' => array('name' => lang('预约状态'), 'filed'=>'ystatus','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+                                            
+                    
+                   
+
+                );
+           break;
             
             default:
                 $menu_list = array(
@@ -301,6 +318,7 @@ class RenWuController extends AuthController {
         $result=$model->where($map)->delete();
         if($result)
         {
+            D('User')->updateCount($data['user_id'],'rw_total');
             add_log($this->onname.'：'.$data['name'].'删除成功');
             return  $this->success(lang('删除成功','handle'));;
         }
