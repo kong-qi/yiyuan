@@ -20,7 +20,7 @@
                 <form action="" method="post" id="validate">
                         <input type="hidden" name="id" value="{{ $data.id }}">
                         <input type="hidden" name="yy_id" value="{{ $data.yy_id }}">
-                    <div class="col-sm-8">
+                    
                         <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table "
                                style="background: #fff">
                             <tbody>
@@ -28,16 +28,25 @@
                                <tr>
                                    <td align="right">{{ :lang('病人姓名') }}</td>
                                    <td>
-                                       <input type="text" class="form-control inline wb30" readonly="" value="{{ :$data['User']['name'] }}">
-                                       <select required="" class="form-control inline wb30" name="zl_id" required>
-                                           <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
-                                            {{ :get_lanmu_onelist('daozhen','1','','',$data['zl_id']) }}
-                                       </select>
-                                       <select class="form-control inline wb30" id="ysz_id" name="ysz_id">
-                                           <option value="">{{ :lang('请选择医生','handle') }}</option>
-                                           {{ :get_shyishen($data['ysz_id']) }}
-                                       </select>
+                                        <div class="col-xs-8">
+                                            <input type="text" class="form-control inline wb30" readonly="" value="{{ :$data['User']['name'] }}">
+                                            <select required="" class="form-control inline wb30" name="zl_id" required>
+                                                <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
+                                                 {{ :get_lanmu_onelist('daozhen','1','','',$data['zl_id']) }}
+                                            </select>
+                                            <select required="" class="form-control inline wb30" id="ysz_id" name="ysz_id">
+                                                <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                                {{ :get_shyishen($data['ysz_id']) }}
+                                            </select>
 
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <button type="button" class="btn btn-xs btn-success"
+                                                    onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
+                                            <span class="fa fa-image"></span> {{ :lang('上传相册') }}</button>
+                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
+                                        </div>
+                                       
                                    </td>
                                </tr>
                                 <tr>
@@ -107,15 +116,15 @@
                                                 echo '
                                                 <li class="itempic"><img data-url="'.$v['path'].'"
                                                                          src="'.pic_url($v['path']).'" alt="">
-                                                    <p class="m_t_10"><a href="javascript:void(0)"
+                                                    <p class="m_t_10"><a title="'.lang("上移").'" href="javascript:void(0)"
                                                                          class="btn btn-white btn-xs js_left_pic"><i
-                                                            class="fa fa-angle-left"></i>上移</a>
-                                                        <a href="javascript:void(0)"
+                                                            class="fa fa-angle-left"></i></a>
+                                                        <a title="'.lang("下移").'" href="javascript:void(0)"
                                                            class="btn btn-white btn-xs js_right_pic"><i
-                                                                class="fa fa-angle-right"></i>下移</a>
-                                                        <a href="javascript:void(0)"
+                                                                class="fa fa-angle-right"></i></a>
+                                                        <a title="'.lang("删除").'" href="javascript:void(0)"
                                                            class="btn btn-danger btn-xs js_remove_pic"><i
-                                                                class="fa fa-trash"></i>删除</a></p></li>
+                                                                class="fa fa-trash"></i></a></p></li>
                                                 ';
                                                 }
                                                 
@@ -136,20 +145,8 @@
                                   </tr>
                               </tfooter>
                         </table>
-                    </div>
-                    <div class="col-sm-4">
-                        <table class="table">
-                            <tr>
-                                <td>
-                                <button type="button" class="btn btn-xs btn-success"
-                                        onclick="upload_file('{{ :U("Admin/Upload/uploadFile",array("type"=>"images")) }}','.enmoreinsert_file','2')">
-                                <span class="fa fa-image"></span> {{ :lang('上传相册') }}</button>
-                                <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
-                                </td>
-                               
-                            </tr>
-                        </table>
-                    </div>
+                    
+                   
                 </form>
                
             </div>
@@ -180,7 +177,7 @@
     </if>
 
     <script>
-        bd_ueditor('mark',120);
+        ue=bd_ueditor('mark',120);
         function get_tks($id) {
             $url = "{{ :U('Admin/Ajax/ajaxKeShiList') }}";
             $tfid = '{{ $data["kst_id"] }}';
@@ -235,6 +232,12 @@
                     //最终区域
 
                     return_pic_json(".enmoreinsert_file .itempic", "thumbs", 1);
+                    var txt = ue.getContentTxt();
+                    if(txt=='')
+                    {
+                        layer.msg('{{ :lang("记录不能为空") }}');
+                        return false;
+                    }
                     form.submit();;
                 }
             });

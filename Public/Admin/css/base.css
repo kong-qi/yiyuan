@@ -633,19 +633,21 @@ select {
   box-sizing: border-box;
 }
 .tuku_pic_list ul li {
-  box-sizing: border-box;
   position: relative;
   float: left;
-  border: 5px solid #fff;
-  max-height: 180px;
+  border: 1px solid #ccc;
+  padding: 5px;
+  box-sizing: border-box;
+  display: inline-block;
+  max-height: 140px;
   cursor: pointer;
-  max-width: 25%;
+  margin-right: 10px;
+  margin-bottom: 10px;
   overflow-y: hidden;
 }
 .tuku_pic_list ul li img {
-  max-width: 100%;
   vertical-align: bottom;
-  max-height: 180px;
+  max-height: 100px;
 }
 .tuku_pic_list ul li p {
   position: absolute;
@@ -690,12 +692,25 @@ select {
 .insert_img_more li {
   list-style-type: none;
   height: 120px;
-  float: left;
+  display: inline-block;
   margin-right: 10px;
   margin-bottom: 10px;
+  position: relative;
+  border: 1px solid #dddddd;
+  padding: 5px;
+  box-sizing: border-box;
+}
+.insert_img_more li p {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: -35px;
+  width: 200px;
+  z-index: 9px;
+  font-size: 12px;
 }
 .insert_img_more li img {
-  max-height: 100%;
+  max-height: 100px;
   width: auto;
 }
 .insert_img_more:after {
@@ -940,3 +955,6 @@ ul.popmenu > li > a:focus {
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 } */
+.m_t_10 {
+  margin-top: 5px;
+}

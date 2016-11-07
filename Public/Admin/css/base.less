@@ -759,20 +759,24 @@ select {
                 box-sizing: border-box;
     			position: relative;
     			float: left;
-                border:5px solid #fff;
+                border:1px solid #ccc;
+				padding: 5px;
+				box-sizing: border-box;
+				display: inline-block;
     			
-    			max-height: 180px;
+    			max-height: 140px;
     			overflow-y: hidden;
     			
                 cursor: pointer;
-                max-width: 25%;
+                margin-right: 10px;
+                margin-bottom: 10px;
                 overflow-y: hidden;
 
     			img
     			{
-    				max-width: 100%;
+    				
                     vertical-align: bottom;
-    				max-height: 180px;
+    				max-height: 100px;
     			}
                 p
                 {
@@ -832,12 +836,28 @@ select {
 		{
 			list-style-type: none;
 			 height: 120px;
-			float: left;
+			 display: inline-block;
+			
 			margin-right: 10px;
 			margin-bottom: 10px;
+			position: relative;
+			border:1px solid #dddddd;
+			padding: 5px;
+			box-sizing: border-box;
+			p
+			{
+				display: none;
+				position: absolute;
+				left: 0;
+				top: -35px;
+				width: 200px;
+				z-index: 9px;
+				font-size: 12px;
+
+			}
 			img
 			{
-				max-height: 100%;
+				max-height: 100px;
 				width: auto;;
 			}
 
@@ -1148,3 +1168,7 @@ ul.popmenu > li > a:focus {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 } */
 
+.m_t_10
+{
+	margin-top: 5px;
+}

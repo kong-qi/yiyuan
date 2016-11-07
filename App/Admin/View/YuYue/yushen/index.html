@@ -145,7 +145,13 @@
                                                 <php>
                                                     }elseif($handle_tpl=='all'){
                                                 </php>
-                                                    <include file="Menu:yishen_all" />
+                                                    <php>if(check_group('root')){</php>
+                                                       
+                                                        <include file="Menu:yishen_only" />
+                                                    <php>}else{</php>
+                                                        <include file="Menu:yishen_all" />
+                                                    <php>}</php>
+
                                                 <php>}else{</php>
                                                     <include file="Menu:yishen" />
                                                <php>}</php>

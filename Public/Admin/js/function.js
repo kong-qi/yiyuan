@@ -75,7 +75,17 @@ $(function() {
 
     });
 
-    
+   //相册
+   $(document).on('mouseover mouseout', '.itempic', function(event) {
+       if(event.type=='mouseover')
+       {
+            $(this).find('p').show();
+       }else
+       {
+            $(this).find('p').hide();
+       }
+
+   });
    
 })
 
@@ -220,7 +230,7 @@ function upload_file($url, $inserid, $more, $style, $type) {
         $more_input += '<p class="m_t_10"> <input class="input js_name" value="" id="name" placeholder="名称" type="text"> </p>';
         $more_input += '<p class="m_t_10"> <input class="input js_url" value=""  id="name" placeholder="网址" type="text"> </p>';
     }
-    console.log($style);
+    //console.log($style);
     var ly = layer.open({
         type: 2,
         title: lang.upfile,
@@ -245,12 +255,13 @@ function upload_file($url, $inserid, $more, $style, $type) {
                             imgpic = $(this).find('img').attr('src');
                             imgsrc = $(this).find('img').attr('data-src');
                             $htmlstr += '<li class="itempic"> <img  data-url="' + imgsrc + '" src="' + imgpic + '" alt="" width="220"> ' + $more_input +
-                                '<p class="m_t_10"> <a href="javascript:void(0)" class="btn btn-white btn-xs js_left_pic"><i class="fa fa-angle-left"></i>'+lang.upmove+'</a> ' +
-                                '<a href="javascript:void(0)" class="btn btn-white btn-xs js_right_pic"><i class="fa fa-angle-right"></i>'+lang.downmove+'</a> ' +
-                                '<a href="javascript:void(0)" class="btn btn-danger btn-xs js_remove_pic"><i class="fa fa-trash"></i>'+lang.del+'</a> </p> </li>';
+                                '<p class="m_t_10"> <a href="javascript:void(0)" class="btn btn-white btn-xs js_left_pic" title="'+lang.upmove+'"><i class="fa fa-angle-left"></i></a> ' +
+                                '<a href="javascript:void(0)" class="btn btn-white btn-xs js_right_pic" title="'+lang.downmove+'"><i class="fa fa-angle-right"></i></a> ' +
+                                '<a href="javascript:void(0)" class="btn btn-danger btn-xs js_remove_pic" title="'+lang.del+'"><i class="fa fa-trash"></i></a> </p> </li>';
                         });
                         $($inserid).find(".insert_img_more").append($htmlstr);
                         //console.log($htmlstr);
+                        
                         layer.close(index);
                     }
 
@@ -276,6 +287,7 @@ function upload_file($url, $inserid, $more, $style, $type) {
                         alert(lang.nochange);
                     }
                 }
+
             }
 
 
@@ -844,3 +856,4 @@ $(document).on("change","[data-set-option='1']",function(){
     log(v);
      $("[name='"+name+"']").val(v);
 }).trigger('change');
+

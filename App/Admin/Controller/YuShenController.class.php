@@ -561,23 +561,6 @@ class YuShenController extends AuthController {
 
     }
     public function kaidan($id,$yid){
-       
-     /*  $a=[
-       1,1,2,3,2
-       ];
-       $b=[
-       10,20,40,50,60
-       ];
-       $a1=array();
-       foreach ($a as $key => $value) {
-           $a1[$value][]=$b[$key];
-       }
-       $lbarray=array();
-       foreach ($a1 as $key => $value) {
-           $lbarray[$key]=array_sum($a1[$key]);
-       }
-       print_r($a1);
-       print_r($lbarray);*/
 
         $this->onname='开单';
         $this->assign('onname',$this->onname);
@@ -600,11 +583,11 @@ class YuShenController extends AuthController {
         if(IS_POST){
             M()->startTrans();
             $model =D('KaiDan');
-             $post=I('post.');
+            $post=I('post.');
             if($data=$model->create()) {
                 $data['admin_id']=session('admin_id');
-                $data['jz_id']=$post['qz_id'];
-                $data['yy_id']=$post['yuyue_id'];
+                $data['jz_id']=$post['qz_id'];//接诊表ID
+                $data['yy_id']=$post['yuyue_id'];//预约ID
                
 
                 //统计类别下的数量
@@ -628,46 +611,14 @@ class YuShenController extends AuthController {
 
                 $result =    $model->add($data);
                 $dataList=array();
-                //批量写入开单详细里面
-                $stime=time();
-                /*foreach ($post['price_name'] as $key => $value) {
-                     $dataList[]=array(
-                            'yy_id'=>$post['yuyue_id'],
-                            'user_id'=>$post['user_id'],
-                            'jz_id'=>$post['qz_id'],
-                            'kdys_id'=>$post['kd_kstid'],
-                            'ks_id'=>$post['kd_id'],
-                            'name'=>$post['price_name'][$key],
-                            'ticket_name'=>$post['ticket_name'][$key],
-                            'price'=>$post['price_price'][$key],
-                            'price_id'=>$post['price_id'][$key],
-                            'num'=>$post['price_num'][$key],
-                            'xf_name'=>$post['price_xfname'][$key],
-                            'total'=>$post['price_heji'][$key],
-                            'fid'=>$post['price_fid'][$key],
-                            'admin_id'=>session('admin_id'),
-                            'ctime'=>$stime,
-                            'kd_id'=>$result
-                            
-
-                        );
-                }*/
-               
                 //更新预约表
-                 $ydata['is_kd']=1;//是否开单
-                 $ydata['stats']=4;
-                 $ydata['kdtime']=$data['kd_time']=time();//开单时间
-
-                /*$dataList[] = array('name'=>'thinkphp','email'=>'thinkphp@gamil.com');
-                $dataList[] = array('name'=>'onethink','email'=>'onethink@gamil.com');
-                $User->addAll($dataList);*/
-              
-               // $presult=M('ShowPrice')->addAll($dataList);
-               
-            
-               
-                
+                $ydata['is_kd']=1;//是否开单（没用）
+                $ydata['stats']=4;//状态
+                $ydata['kdtime']=$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yuyue_id'];
+                print_r($ydata);
+                print_r($data);
+                exit();
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 $backurl=U("Admin/YuYue/index",array('status'=>3,'shenfeng'=>'yishen'));
