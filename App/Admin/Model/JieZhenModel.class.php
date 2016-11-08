@@ -25,5 +25,13 @@ class JieZhenModel extends RelationModel {
 
 
             ),
+        'Yyue'=>array(
+            'mapping_type'      => self::BELONGS_TO,
+            'class_name'        => 'YuYue',
+            'foreign_key'=>'yy_id',
+
+
+            ),
         );
+  
 }

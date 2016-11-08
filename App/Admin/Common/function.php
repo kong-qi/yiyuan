@@ -715,6 +715,7 @@ function get_doc($where=array(),$echo=1,$checked=''){
     }
     return $m;
 }
+
 function get_huifang_er($echo=1,$checked='',$where=array()){
 
     $map=array();
@@ -1137,9 +1138,13 @@ function yuyue_option_leibie($checked='none'){
 }
 function btn_yycolor($checked=''){
      $arr=array(
-        '1'=>'badge badge-grey',
-        '2'=>'badge badge-info',
-        '3'=>'badge  badge-green',
+        '0'=>'badge',
+        '1'=>'badge badge-green',
+        '2'=>'badge badge-primary',
+        '3'=>'badge  badge-info',
+        '4'=>'badge badge-danger',
+        '5'=>'badge badge-success',
+        '6'=>'badge badge-warning'
 
     );
     if($checked!='')
@@ -1148,11 +1153,16 @@ function btn_yycolor($checked=''){
     }
     return $arr;
 }
+
 function sf_status($checked=''){
     $arr=array(
         '0'=>lang('未收费'),
         '1'=>lang('已收费'),
-        '2'=>lang('已收定金'),
+        '2'=>lang('已收订金'),
+        '3'=>lang('已部分收费'),
+        '4'=>lang('已退费'),
+        '5'=>lang('已退订金'),
+        '6'=>Lang('部分退费')
 
     );
     if($checked!='')
@@ -1160,6 +1170,36 @@ function sf_status($checked=''){
         return $arr[$checked];
     }
     return $arr;
+}
+function pay_wasy($checked='',$type_echo=1){
+    $array=array(
+        '1'=>'付全款',
+        '2'=>'付定金',
+        '3'=>'付部分款'
+        );
+    $str='';
+    
+    if($type_echo==1)
+    {
+        foreach ($array as $key => $value) {  
+            $on='';  
+            if($checked!=''){
+                if($key==$checked)
+                {
+                    $on='selected="selected"';
+                }
+            }
+            $str.="<option ".$on." value='".$key."'>".$value."</option>";
+        }
+
+    }else
+    {
+        if($checked!='')
+        {
+            return $array[$checked];
+        }
+    }
+    return $str;
 }
 function js_status($checked=''){
     $arr=array(

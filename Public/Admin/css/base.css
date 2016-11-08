@@ -377,10 +377,6 @@ select {
   color: red;
   margin-left: 10px;
 }
-.table td.has-success .no-error {
-  border: 1px solid #DBDBDB;
-  background-color: #FFF;
-}
 .inline-block {
   display: inline-block;
 }
@@ -737,20 +733,28 @@ select {
 .change_price .price_item_active {
   border: 1px solid #428bca;
 }
-.sf_box .sf_part {
+.sf_box {
+  width: 920px;
+  margin: 0 auto;
+  margin-top: 25px;
+}
+.sf_part {
   background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
   padding: 10px;
   box-sizing: border-box;
 }
-.sf_box .sf_part dl.sf_dl dd {
+.sf_part dl.sf_dl dd {
   float: left;
   width: 180px;
 }
-.sf_box .sf_part .sf_show {
+.sf_part .sf_show {
   border-bottom: 1px dotted #ccc;
   padding-bottom: 10px;
 }
-.sf_box .sf_part .sf_show dd {
+.sf_part .sf_show dd {
   float: left;
   width: 180px;
   overflow: hidden;
@@ -760,20 +764,23 @@ select {
   -moz-text-overflow: ellipsis;
   white-space: nowrap;
 }
-.sf_box .sf_part .sf_show dd .title {
+.sf_part .sf_show dd .title {
   color: #4C9ED9;
 }
-.sf_box .sf_part .sf_show dd span {
+.sf_part .sf_show dd span {
   margin-left: 10px;
 }
-.sf_box .sf_part .sf_show .w120 {
+.sf_part .sf_show .w120 {
   width: 120px;
 }
-.sf_box .sf_part .sf_show .w80 {
+.sf_part .sf_show .w80 {
   width: 80px;
 }
-.sf_box .sf_part .sf_show .w150 {
+.sf_part .sf_show .w150 {
   width: 150px;
+}
+.sf_part .sf_show .w350 {
+  width: 350px;
 }
 .btn-green {
   color: #fff;
@@ -957,4 +964,7 @@ ul.popmenu > li > a:focus {
 } */
 .m_t_10 {
   margin-top: 5px;
+}
+.js-tab-price {
+  margin-bottom: 5px;
 }

@@ -10,14 +10,7 @@
     <div class="right-box">
 
 
-        <div class="box">
-            <div class="box-title">
-                {{ :lang($onname,'menu') }}
-                
-            </div>
-            
-
-
+        <div class="ibox">
 
                 <if condition="$menu_list">
                     <div class="ibox-title">
@@ -53,9 +46,9 @@
                     </div>
 
                 </if>
-                <div class="list-box">
+                <div class="ibox-content">
 
-                    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table table-hover">
+                    <table class="table table-hover table-bordered table-responsive ">
 
                         <tbody>
 
@@ -64,13 +57,14 @@
                             <th id="tdd2">{{ :lang('开单时间','filed') }}</th>
                             <th id="tdd3">{{ :lang('姓名','filed') }}</th>
 
-                            <th id="tdd4">{{ :lang('收费详情','filed') }}</th>
+                            <th id="tdd4">{{ :lang('收费项目','filed') }}</th>
                      
 
                             <th id="tdd9">{{ :lang('合计总价','filed') }}</th>
                             <th id="tdd10">{{ :lang('手术医生','filed') }}</th>
                             <th id="tdd11">{{ :lang('开单人','filed') }}</th>
                             <th id="tdd12">{{ :lang('收费状态','filed') }}</th>
+                            <th id="tdd12">{{ :lang('付款类型','filed') }}</th>
                             <th id="tdd13">{{ :lang('操作','filed') }}</th>
 
                           
@@ -85,35 +79,19 @@
                                   
                                       <td data-log="1" id="tdd2" >{{ :to_time($v['kd_time'],'m-d-Y h:i:s') }}</td>
                                     <td id="tdd3" >
-                                        <a href="#">{{ $v.user_name }}</a>
+                                       <span class="text-blue">{{ $v.user_name }}</span>
                                         
                                     </td>
                                     <td id="tdd4">
-                                        <table class="table table-hover table-noboer">
-                                            <thead>
-                                                <tr>
-                                                    <td><span class="m-l">{{ :lang('名称') }}</span></td>
-                                                    <td>{{ :lang('单价') }}</td>
-                                                    <td>{{ :lang('单位') }}</td>
-                                                    <td>{{ :lang('数量') }}</td>
-                                                    <td>{{ :lang('合计金额') }}</td>
-                                                    
-                                                </tr>
-                                               
-                                                    <if condition="$show">
-                                                        <foreach name="show" item="sv" key="sk">
-                                                         <tr>
-                                                            <td><a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a> </td>
-                                                            <td data-price="vnlist">{{ :urldecode($sv['price']) }}</td>
-                                                            <td>{{ :urldecode($sv['danwei']) }}</td>
-                                                            <td>{{ :urldecode($sv['num']) }}</td>
-                                                            <td data-price="vnlist">{{ :urldecode($sv['total']) }}</td>
-                                                        </tr>
-                                                        </foreach>
-                                                    </if>
-                                               
-                                            </thead>
-                                        </table>
+                                        <ul class="list-group">
+                                        <if condition="$show">
+                                            <foreach name="show" item="sv" key="sk">
+                                                  
+                                                      <li class="list-group-item">  <a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a> </li>
+                                            
+                                            </foreach>
+                                        </if>
+                                        </ul>
                                     </td>
                                        
                                     </td>
@@ -129,6 +107,9 @@
                                         <span class="{{ :btn_color($v['sf_status']) }}" >{{ :sf_status($v['sf_status']) }}</span>
                                         
                                     </td>
+                                    <td id="tdd14">
+                                        <span class="{{ :btn_yycolor($v['pay_ways']) }}" >{{ :pay_wasy($v['pay_ways'],0) }}</span>
+                                    </td>
                                     <td id="tdd13" >
                                         <php>
                                             if($v['sf_status']==0)
@@ -136,13 +117,12 @@
                                         </php>
                                             <if condition="check_group('kaidan_edit')">
 
-                                                <a href="javascript:void(0)" data-layer="1" data-w="90%" data-h="500px" data-url="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('编辑') }}</a>
+                                                <a data-w="90%" data-h="500px" href="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-edit btn-font" data-name="{{ :lang('修改') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
 
                                             </if>
                                             <if condition="check_group('kaidan_edit')">
                                                 <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
-                                                    <span class="fa fa-trash "></span>
-                                                    {{ :lang('删除') }}</a>
+                                                    <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></a>
                                             </if>
                                         <php>}elseif($v['sf_status']==1){</php>
                                             <a href="{{ :U('Admin/YuShen/kaidanPrint',array('id'=>$v['jz_id'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('打印') }}</a>

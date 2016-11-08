@@ -5,6 +5,91 @@ class CaiWuController extends AuthController
     protected $onname = '收费';
     protected $rule_qz = 'shouyin';
 
+    public function waitPriceList(){
+        
+            $this->assign('is_search',I('get.is_search'));
+            $this->onname="待收费列表3";
+            $this->assign('onname',$this->onname);
+            $this->check_group('shouyin_check');
+            $map=array();
+            $model=M('KaiDan');
+            $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
+            $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kdys_id = ys.id';
+                     
+            $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
+            $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
+
+
+            $page=1;
+            if(isset($_GET['p']))
+            {
+                $page=$_GET['p'];
+            }
+             $filed = '
+                kd.sf_status as sf_status,
+                kd.id as id,
+                kdys_id as kdys_id,
+                kd.jz_id as jz_id,
+                kd.uuid as uuid,
+                kd.kd_time as kd_time,
+                kd.sf_status,
+                kd.js_status,
+                kd.price_show,
+                kd.price_total,
+                kd.pay_ways,
+                jzys.name as sy_name,
+                u1.name as user_name,
+                ys.realname as kd_name
+               
+             ';
+            //是否只能看到自己开的单
+            if(check_group('root'))
+            {
+
+            }else
+            {
+                if(check_group("kaidan_only")  )
+                {
+
+                    $map['kd.kd_id']=session('admin_id');
+                }
+            }
+            $stime=trim(strtotime(I('get.stime')));
+            $etime=trim(strtotime(I('get.etime')));
+            if($stime!=='' and $etime !='')
+            {
+                $timestr =  $stime. "," .$etime;
+                $map['kd.kd_time'] = array('between', $timestr);
+            }
+            $map['sf_status']=0;
+            $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
+            $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+            $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
+            $this->assign('list',$list);// 赋值数据集
+            $menu_list = $this->getFiledArray($type_arr);
+            $this->menu_list = $menu_list;
+            $this->display();
+        
+    }
+    public function getFiledArray($type){
+        switch ($type) {
+            default:
+                $menu_list = array(
+
+                    'td-1' => array('name' => lang('开单时间'), 'filed'=>'kd_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-4' => array('name' => lang('合计'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('开单人'), 'filed'=>'kd_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-6' => array('name' => lang('付费类型'), 'filed'=>'pay_ways','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-7' => array('name' => lang('付款金额'), 'filed'=>'pay_price','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+
+                );
+                break;
+        }
+        return $menu_list;
+    }
     public function index($status = 0,$js_status='0')
     {
         $this->check_group('shouyin');
@@ -227,27 +312,28 @@ class CaiWuController extends AuthController
             $map = array();
             $model = M('KaiDan');
             $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
-            $join[] = 'LEFT JOIN __KE_SHI__ ys ON kd.kd_id = ys.id';
-
-
+            $join[] = 'LEFT JOIN __ADMIN__ kdys ON kdys_id = kdys.id';
             $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
             $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
 
-
             $filed = '
                 kd.id as id,
-                kd.sf_status as sf_status,
                 kd.yy_id as yy_id,
                 kd.uuid as uuid,
+                             
                 kd.kd_time as kd_time,
+                kd.sf_status as sf_status,
                 kd.sf_status,
                 kd.js_status,
-                kd.price_show,
-                kd.price_total,
+            
+                kd.pay_ways as  pay_ways,
+                kd.pay_price as pay_price,
+                kd.price_show as price_show,
+                kd.price_total as price_total,
                 jzys.name as sy_name,
                 u1.name as user_name,
                 u1.id as user_id,
-                ys.name as kd_name
+                kdys.name as kd_name
                
              ';
 

@@ -4,21 +4,69 @@
 </block>
 <block name="right">
     <div class="right-box">
+        <form action="" method="post" id="validate">
 
-
-        <div class="box">
-            <div class="box-title">
-                {{ :lang($onname,'menu') }}
-                <h3 class="pull-right ">
-                    <a href="{{ :U('Admin/YuYue/index',array('shenfeng'=>'yishen','status'=>3)) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
-                </h3>
-            </div>
+        <div class="ibox">
+            
             <div class="ibox-content" style="padding-left:10px; padding-right:10px;" id="shoujisf3">
+                <div class="">
+                    <div class="col-xs-12">
+                        <div class="msg_error"></div>
+                        <table class="table" style="border: none;">
+                            <tr>
+                                <td>
+
+                                    <div class="input-group">
+                                      <div class="input-group-addon">{{ :lang('姓名') }}</div>
+                                        
+                                      <div class="form-control "><span class="text-blue">{{ $data.User.name }}</span></div>
+                                    </div>
+                                  
+                                </td>
+                                <if condition="check_group('kaidan_yishen') || check_group('root')">
+                                    <td>
+                                        <div class="input-group ">
+                                          <div class="input-group-addon">{{ :lang('开单人') }}</div>
+                                          <select class="form-control"  id="kdys_id" name="kdys_id">
+                                              <option value="">{{ :lang('请选择开单人','handle') }}</option>
+                                              {{ :get_doc(array(),1,$data['kdys_id']) }}
+                                          </select>
+                                        </div>
+                                    </td>
+                                    <else/>
+                                    <input type="hidden" name="kdys_id" value="{{ :session('admin_id') }}">
+                                </if>
+                               
+                                <td>
+                                    
+                                    <div class="input-group ">
+                                        <div class="input-group-addon">{{ :lang('付费类型') }}</div>
+                                        <select name="pay_ways" id="pay_ways" class="form-control">
+                                          <option value="">{{ :lang('请选择付费类型','handle') }}{{ }}</option>
+                                            {{ :pay_wasy($data['pay_ways']) }}
+                                           
+                                        </select>
+                                            
+                                    </div>
+                                </td>
+                               
+                                <td>
+                                  <div class="pull-right">
+                                    <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-danger">
+                                    <a href="{{ :U('Admin/YuShen/index',array('status'=>'3','list_type'=>'only')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                                  </div>
+                                  <div class="clear"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                 
+                </div>
                 <div class="roww">
                     <div class="col-sm-3">
                         <div class="input-group m-b">
                             <span class="input-group-addon"><font color="">{{ :lang('所属类别') }}</font></span>
-                            <select class="form-control" required="required" id="ks_id" data-all="ksall_id" name="ks_id" data-datachenge='1' data-close="#kst_id" data-type="ks" data-next="kst_id" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
+                            <select class="form-control" id="ks_id" data-all="ksall_id"  data-datachenge='1' data-close="#kst_id" data-type="ks" data-next="kst_id" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
                                 <option value="">{{ :lang('请选择类别','handle') }}</option>
                                  {{ :get_lanmu_onelist('xiaofei',1,'','',I('get.fid')) }}
                             </select>
@@ -29,11 +77,11 @@
                 <div class="col-sm-3">
                     <div class="input-group m-b">
                         <span class="input-group-addon"><font color="">{{ :lang('关键词') }}</font></span>
-                        <input name="keyword" type="text" value="" placeholder="{{ :lang('费用名称/检索码') }}" class="form-control js-key">
+                        <input type="text" value="" placeholder="{{ :lang('费用名称/检索码/编码') }}" class="form-control js-key">
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-primary  go-search" type="button">{{ :lang('确定筛选') }}</button>
+                    <button class="btn btn-primary  go-search" type="button">{{ :lang('检索消费项目') }}</button>
                 </div>
                
                 <!-- <div class="alert alert-warning" role="alert">{{ :lang('请点击选择消费项目') }}</div> -->
@@ -45,7 +93,7 @@
             <div class="box-content">
                 <div class="form-warp">
 
-                    <form action="" method="post" id="validate">
+                    
                         <input type="hidden" name="id" value="{{ $data.id }}">
                         <input type="hidden" name="price_show" id="price_show">
                                              
@@ -128,50 +176,23 @@
                                         </div>
                                     </td>
                                 </tr>
-                               
-                            
-                                <if condition="check_group('kaidan_yishen')">
-                                    
-                               
-                                <tr>
-                                    <td align="right">{{ :lang('开单人','filed') }}</td>
-                                    <td>
-                                        
-
-                                        <div class="col-xs-3">
-                                           <select class="form-control" required="required" id="ys_id" name="kd_id">
-                                               <option value="">{{ :lang('请选择医生','handle') }}</option>
-                                               {{ :get_doc(array(),1,$data['kd_id']) }}
-
-                                           </select>
-                                        </div>
-                                        
-                                    </td>
-                                </tr>
-                                <else/>
-                                    <input type="hidden"  name="kd_id" value="{{ :session('ys_id') }}">
-                                
-                                </if>
-
-
-
                                 </tbody>
                                 <tfooter>
                                     <tr>
-                                        <td></td>
-                                        <td>
-                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
+                                        <td colspan="2" class="text-center">
+                                      
+                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-success">
                                         </td>
                                     </tr>
                                 </tfooter>
                             </table>
                         </div>
-                    </form>
+                    
                 </div>
             </div>
             <div class="cl"></div>
         </div>
-
+        </form>
 
     </div>
 </block>
@@ -233,9 +254,24 @@
                     return_price_json(".show_price_all", "price_show", 1);
                     $show_str=$(".show_price_all").length;
 
-                    if($show_str<=0)
+                    if($("#kdys_id").val()=='')
                     {
+                      layer.msg('{{ :lang("请选择开单人") }}');
+                      return false;
+                    }
+                    if($("#pay_ways").val()=='')
+                    {
+                      layer.msg('{{ :lang("请选择付费类型") }}');
+                      return false;
+                    }
+
+                    if ($show_str <= 0) {
                         layer.msg('{{ :lang("请选择消费项目") }}');
+                        return false;
+                    }
+                    if (!submonery()) {
+
+                        layer.msg('{{ :lang("请检查金额") }}');
                         return false;
                     }
                     unshowmonery();

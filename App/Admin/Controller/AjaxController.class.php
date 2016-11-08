@@ -889,7 +889,7 @@ class AjaxController extends AuthController
                     $price_edit='none';
                 }
                  $str.='
-                    <div class="col-xs-6 col-sm-3 price_item " data-edit="'.$price_edit.'" data-xfname="'.$v['xf_name'].'" data-id="'.$v['id'].'" data-fid="'.$v['fid'].'" data-name="'.$v['name'].'"  
+                    <div class="col-xs-6 col-sm-3 price_item " style="pandding:0;margin:0;margin-bottom:5px" data-edit="'.$price_edit.'" data-xfname="'.$v['xf_name'].'" data-id="'.$v['id'].'" data-fid="'.$v['fid'].'" data-name="'.$v['name'].'"  
                     data-price="'.$v['price'].'" data-danwei="'.$v['danwei'].'" data-num="1" data-ticket="'.$v['ticket_name'].'" >
                         <div class="panel panel-default" style="margin-bottom:0">
                            

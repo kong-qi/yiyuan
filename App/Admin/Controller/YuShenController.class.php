@@ -562,11 +562,12 @@ class YuShenController extends AuthController {
     }
     public function kaidan($id,$yid){
 
+        $this->check_group('kaidan_add');
         $this->onname='开单';
         $this->assign('onname',$this->onname);
 
         $m=D('JieZhen')->relation(true)->where(array('checked'=>1))->find($id);
-        
+       
         $data=array(
 
             );
@@ -587,7 +588,7 @@ class YuShenController extends AuthController {
             if($data=$model->create()) {
                 $data['admin_id']=session('admin_id');
                 $data['jz_id']=$post['qz_id'];//接诊表ID
-                $data['yy_id']=$post['yuyue_id'];//预约ID
+                $data['yy_id']=$post['yy_id'];//预约ID
                
 
                 //统计类别下的数量
@@ -609,21 +610,20 @@ class YuShenController extends AuthController {
                 $dataList=array();
                 $data['price_type']=json_encode($price_type);
 
-                $result =    $model->add($data);
+              
                 $dataList=array();
                 //更新预约表
-                $ydata['is_kd']=1;//是否开单（没用）
+             
                 $ydata['stats']=4;//状态
-                $ydata['kdtime']=$data['kd_time']=time();//开单时间
-                $ydata['id']=$post['yuyue_id'];
-                print_r($ydata);
-                print_r($data);
-                exit();
+                $ydata['kdtime']=$post['ykd_time'];
+                //$data['kd_time']=time();//开单时间
+                $ydata['id']=$post['yy_id'];
+               
                 $yresult=M('YuYue')->data($ydata)->save();
 
-                $backurl=U("Admin/YuYue/index",array('status'=>3,'shenfeng'=>'yishen'));
+                $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
 
-               
+                $result =    $model->add($data);
                 if($result) {
 
                     M()->commit();
@@ -679,7 +679,7 @@ class YuShenController extends AuthController {
         $map=array();
         $model=M('KaiDan');
         $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
-        $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kd_id = ys.id';
+        $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kdys_id = ys.id';
          
         
          $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
@@ -693,9 +693,8 @@ class YuShenController extends AuthController {
         }
          $filed = '
             kd.sf_status as sf_status,
-            kd.is_yf as is_yf,
             kd.id as id,
-            kd_id as kd_id,
+            kdys_id as kdys_id,
             kd.jz_id as jz_id,
             kd.uuid as uuid,
             kd.kd_time as kd_time,
@@ -703,6 +702,7 @@ class YuShenController extends AuthController {
             kd.js_status,
             kd.price_show,
             kd.price_total,
+            kd.pay_ways,
             jzys.name as sy_name,
             u1.name as user_name,
             ys.realname as kd_name
@@ -733,14 +733,13 @@ class YuShenController extends AuthController {
             2=>'开单时间',
             3=>'姓名',
             4=>'消费项目',
-            5=>'单价',
-            6=>'单位',
-            7=>'数量',
-            8=>'合计金额',
+         
+           
             9=>'总计',
             10=>'手术医生',
             11=>'开单人',
             12=>'收费状态',
+            14=>'付款类型',
             13=>'操作'
            
            
@@ -763,20 +762,21 @@ class YuShenController extends AuthController {
             
             if($model->create()) {
                 $data=$model->create();
-
+               /* print_r($data);
+                exit();*/
                 $result =   $model->save($data);
 
                 if($result) {
 
                     add_log($this->onname.'：'.$data['name'].'更新成功');
                     $msg=lang('更新成功','handle');
-                    $backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
-                    //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
+                    $backurl=U('Admin/YuShen/kaidanList');
+                    
+                    return  $this->success($msg,$backurl);
                 }else{
 
                     $msg=lang('数据一样无更新','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.layer.close(index);;parent.layer.close(index)</script>";
+                    return  $this->success($msg,$backurl);
                 }
             }else{
                 return $this->error($model->getError());
@@ -787,7 +787,7 @@ class YuShenController extends AuthController {
             'uuid'=>$id
             );
 
-            $model   =   M('KaiDan')->where($map)->find();
+            $model   =  D('KaiDan')->relation(true)->where($map)->find();
 
           
             if($model) {
