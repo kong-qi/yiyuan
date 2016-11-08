@@ -8,7 +8,7 @@ class CaiWuController extends AuthController
     public function waitPriceList(){
         
             $this->assign('is_search',I('get.is_search'));
-            $this->onname="待收费列表3";
+            $this->onname="待收费列表";
             $this->assign('onname',$this->onname);
             $this->check_group('shouyin_check');
             $map=array();
@@ -36,6 +36,7 @@ class CaiWuController extends AuthController
                 kd.js_status,
                 kd.price_show,
                 kd.price_total,
+                kd.pay_price as pay_price,
                 kd.pay_ways,
                 jzys.name as sy_name,
                 u1.name as user_name,
@@ -62,6 +63,11 @@ class CaiWuController extends AuthController
                 $map['kd.kd_time'] = array('between', $timestr);
             }
             $map['sf_status']=0;
+            if(I('get.sf_status')!='')
+            {
+                $map['sf_status']=I('get.sf_status');
+            }
+            
             $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
             $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
             $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
@@ -71,6 +77,7 @@ class CaiWuController extends AuthController
             $this->display();
         
     }
+
     public function getFiledArray($type){
         switch ($type) {
             default:
@@ -254,57 +261,57 @@ class CaiWuController extends AuthController
         //权限选择
         //$this->check_group($this->rule_qz."_check");
         if (IS_POST) {
-            $post = I('post.');
-            $data['id'] = $post['id'];
-            $data['sf_time'] = time();
-            $data['sf_admin_id'] = session('admin_id');
-            if ($post['youhui_id'] != '') {
-                $data['youhui_id'] = $post['youhui_id'];
+            $m=D('KaiDan');
+            if(!check_token(I('post.token')))
+            {
+                $msg=lang('非法操作');
+                $backurl = U("Admin/CaiWu/waitPriceList");
+                return  $this->error($msg,$backurl );
             }
-            if ($post['sf_status'] == '2') {
-                $data['yf_money'] = $post['yf_money'];
-                $data['sf_status'] = 2;
-
-                $data['is_yf'] = 1;
-
-            } else {
-                if ($post['shishou_price'] != '') {
-                    $data['shishou_price'] = $post['shishou_price'];
+            $data=$m->create();
+            $data['pay_price']=$data['cash_price']+$data['shuaka_price']+$data['other_price'];
+            //付了金额
+            foreach ($data as $key => $value) {
+                if($value=='')
+                {
+                    unset($data[$key]);
                 }
-                if ($post['shuaka_price'] != '') {
-                    $data['shuaka_price'] = $post['shuaka_price'];
-                }
-                if ($post['other_price'] != '') {
-                    $data['other_price'] = $post['other_price'];
-                }
-                if ($post['youhui_total'] != '') {
-                    $data['youhui_total'] = $post['youhui_total'];
-                }
-                if ($post['youhui_price'] != '') {
-                    $data['youhui_price'] = $post['youhui_price'];
-                }
-                $data['sf_status'] = 1;
+            }
+            
+            //付款类型
+            if($data['pay_ways']==1)
+            {
+                $data['sf_status']=1;
+            }elseif ($data['pay_ways']==2) {
+                $data['sf_status']=2;
+                $data['yf_money']=$data['pay_price'];
+            }
+            elseif ($data['pay_ways']==3) {
+                $data['sf_status']=3;
+                $data['yf_money']=$data['pay_price'];
             }
 
+           
             $result = M('KaiDan')->save($data);
             if ($result) {
                 //更新优惠券
-                if ($post['youhui_id'] != '') {
+                if ($data['youhui_id'] != '') {
                     $yhq_data = array(
                         'utime' => time(),
                         'kd_id' => $data['id']
                     );
-                    M('Card')->where(array('id' => $post['youhui_id']))->save($yhq_data);
+                    M('Card')->where(array('id' => $data['youhui_id']))->save($yhq_data);
                 }
                 add_log($this->onname . '：' . $data['name'] . '提交成功');
-                $msg = lang('提交成功', 'handle');
-                $backurl = U(MODULE_NAME . "/" . CONTROLLER_NAME . "/index");
-                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "'); parent.location.reload();;parent.layer.close(index);</script>";
-                //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
+                $msg = lang('收费成功', 'handle');
+                $backurl = U("Admin/CaiWu/waitPriceList");
+                //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "'); parent.location.reload();;parent.layer.close(index);</script>";
+                return  $this->success(lang( $msg,'handle'),$backurl);
             } else {
 
                 $msg = lang('数据一样无更新', 'handle');
-                echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);;parent.layer.close(index)</script>";
+                return  $this->error(lang( $msg,'handle'));
+                //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);;parent.layer.close(index)</script>";
             }
 
         } else {

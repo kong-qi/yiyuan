@@ -103,7 +103,7 @@ class CardController extends AuthController {
 
             if($model->create()) {
                 $data=$model->create();
-                $data['utime']=time();
+                $data['ftime']=time();
                 
                 $result =   $model->save($data);
                 if($result) {

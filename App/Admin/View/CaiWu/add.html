@@ -7,6 +7,7 @@
         <input type="hidden" name="id" value="{{ $data.id }}">
         <input type="hidden" name="youhui_price" class="ys_price">
         <input type="hidden" name="youhui_id" class="yh_id">
+        <input type="hidden" name="token" value="{{ :token() }}">
         <div class="well" style="">
             <h3 class="text-center">收费<small>({{ $data.user_name }})</small></h3>
             <div class="sf_box">
@@ -16,7 +17,7 @@
                             <div class="input-group-addon">{{ :lang('付费类型') }}</div>
                             <select name="pay_ways" id="pay_ways" class="form-control">
                                 <option value="">{{ :lang('请选择付费类型','handle') }}</option>
-                                {{ :pay_wasy() }}
+                                {{ :pay_wasy($data['pay_ways']) }}
                             </select>
                         </div>
                     </div>
@@ -59,20 +60,20 @@
                         <div class="js-tab-price">
                             <div class="input-group ">
                                 <div class="input-group-addon">{{ :lang('应收金额') }}</div>
-                                <input type="hidden" class="js-add-pay-price" value="{{ $data.price_total }}">
-                                <div class="form-control"><span data-price="vnlist" class="text-danger">{{ :$data['price_total'] }}</span> </div>
+                                <input  class="form-control js-add-pay-price" data-price="vn" value="{{ $data.price_total }}">
+                              
                             </div>
                         </div>
                         <div class="js-tab-price none">
                             <div class="input-group ">
                                 <div class="input-group-addon">{{ :lang('付定金') }}</div>
-                                <input class="input form-control  js-add-pay-price js-dingjing" type="text" name="yf_money">
+                                <input class="input form-control  js-add-pay-price js-dingjing" type="text" >
                             </div>
                         </div>
                         <div class="js-tab-price none">
                             <div class="input-group ">
                                 <div class="input-group-addon">{{ :lang('付部分款') }}</div>
-                                <input class="input  form-control js-add-pay-price js-bufengkuan" type="text" name="yf_money">
+                                <input class="input  form-control js-add-pay-price js-bufengkuan" type="text" >
                             </div>
                         </div>
                         <div class="clear"></div>
@@ -81,7 +82,7 @@
                         <div class="input-group ">
                             <div class="input-group-addon">{{ :lang('优惠码') }}</div>
                             <input class="input js-input-youhui form-control" type="text" name="youhui_code" value="" placeholder="{{ :lang('输入优惠码') }}">
-                            <div class="input-group-addon">{{ :lang('优惠价钱') }}：<span class="js-yhj text-blue">0</span></div>
+                            <div class="input-group-addon">{{ :lang('优惠减免') }}：<span class="js-yhj text-blue">0</span></div>
                         </div>
                     </div>
                     <div class="col-xs-12">
@@ -95,7 +96,7 @@
                             <div class="input-group-addon">{{ :lang('付款方式') }}</div>
                             <div class="form-control">
                                 <label class="radio-inline">
-                                    <input type="radio" class="pay_method" name="pay_mehtod" id="" value="1">{{ :lang('现金方式') }}
+                                    <input type="radio" checked="" class="pay_method" name="pay_mehtod" id="" value="1">{{ :lang('现金方式') }}
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" class="pay_method" name="pay_mehtod" id="" value="2">{{ :lang('刷卡方式') }}
@@ -110,19 +111,19 @@
                         <div class="col-xs-4">
                             <div class="input-group ">
                                 <div class="input-group-addon">{{ :lang('现金') }}</div>
-                                <input class="input form-control  js-add-pay-price js-dingjing" type="text" name="cash_price">
+                                <input class="input form-control   js-money" type="text" name="cash_price">
                             </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="input-group ">
                                 <div class="input-group-addon">{{ :lang('刷卡') }}</div>
-                                <input class="input form-control  js-add-pay-price js-dingjing" type="text" name="shuaka_price">
+                                <input class="input form-control   js-money" type="text" name="shuaka_price">
                             </div>
                         </div>
                         <div class="col-xs-4">
                             <div class="input-group ">
                                 <div class="input-group-addon">{{ :lang('其他') }}</div>
-                                <input class="input form-control  js-add-pay-price js-dingjing" type="text" name="other_price">
+                                <input class="input form-control   js-money" type="text" name="other_price">
                             </div>
                         </div>
                     </div>
@@ -169,15 +170,15 @@
     });
     //付款方式
     $(".pay_method").change(function(event) {
-        //取得金额
-        pay_money=$(".js-add-pay-price:visible").val();
-        log(pay_money);
+       
+        tab_price()
     });
-    //付费方式
+    //付费类型
     $("#pay_ways").change(function(event) {
         $v = $(this).val();
         if ($v == 1 || $v == '') {
             $(".js-tab-price").eq(0).show().siblings('.js-tab-price').hide();
+            
         }
         if ($v == 2) {
             $(".js-tab-price").eq(1).show().siblings('.js-tab-price').hide();
@@ -185,7 +186,55 @@
         if ($v == 3) {
             $(".js-tab-price").eq(2).show().siblings('.js-tab-price').hide();
         }
-    });
+       tab_price();
+    }).trigger("change");
+    function push_price(){
+        var $ways_v=$(".pay_method:checked").val();
+        pay_price=$(".js-yhh").text();
+        pay_price=accounting.unformat(pay_price);
+        result_price=accounting.formatMoney(pay_price, { symbol: "",  format: "%s %v" ,precision:0});
+        $(".js-money").val('').eq($ways_v-1).val(result_price);
+       
+
+    }
+    function tab_price(){
+        pay_ways=$("#pay_ways").val();
+        pay_ways=pay_ways==0?1:pay_ways;
+        pay_price=$(".js-add-pay-price").eq(pay_ways-1).val();
+        //检索是否有优惠券
+        yhui_price=$(".ys_price").val();
+        log(yhui_price);
+        pay_price=accounting.unformat(pay_price);
+        result_price=pay_price-yhui_price;
+        if(result_price<=0){
+            result_price=0
+        }
+        //log(result_price);
+        result_price=accounting.formatMoney(result_price, { symbol: "",  format: "%s %v" ,precision:0});
+        $(".js-yhh").text(result_price);
+        push_price();
+    }
+    price_blue();
+    function price_blue(){
+       
+        $(".js-add-pay-price").on("keypress  keyup blur",function(){
+            index=$(this).index();
+            var $ways_v=$(".pay_method:checked").val();
+            pay_price=accounting.unformat($(this).val());
+            //检索是否有优惠券
+            yhui_price=$(".ys_price").val();
+            log(yhui_price);
+            pay_price=accounting.unformat(pay_price);
+            result_price=pay_price-yhui_price;
+          
+            if(result_price<=0){
+                result_price=0
+            }
+            result_price=accounting.formatMoney(result_price, { symbol: "",  format: "%s %v" ,precision:0});
+            $(".js-money").val('').eq($ways_v-1).val( result_price);
+            $(".js-yhh").text(result_price);
+        });
+    }
     $().ready(function() {
         // validate the comment form when it is submitted
         var e = "<i class='fa fa-times-circle'></i> ";
@@ -213,7 +262,7 @@
                             }
                         break;
                         case "3":
-                            if($(".js-dingjing").val()=='')
+                            if($(".js-bufengkuan").val()=='')
                             {
                                 layer.msg("{{ :lang('部分款不能为空') }}");
                                 return false;
@@ -222,51 +271,16 @@
                     }
                 }
 
-                if ($('input[name="sf_status"]:checked').val() == 1) {
-                    $t1 = $(".js-xj");
-                    $t2 = $(".js-sk");
-                    $t3 = $(".js-qt");;
-                    if ((!$t1.val()) && (!$t2.val()) && (!$t3.val())) {
-                        layer.msg('{{ :lang("必须填一个收费类型金额") }}');
-                        return false;
-                    } else {
-                        $t1 = !$t1.val() ? 0 : $t1.val();
-                        $t2 = !$t2.val() ? 0 : $t2.val();
-                        $t3 = !$t3.val() ? 0 : $t3.val();
-                        t_total = parseFloat($t1) + parseFloat($t2) + parseFloat($t3);
-                        p_total = $("input[name='youhui_total']").val();
-                        if (t_total > p_total) {
-                            layer.msg('{{ :lang("付款金额大于应付金额，请检查") }}');
-                            return false;
-                        }
-                    }
+                
 
-                } else {
-                    if ($(".yf-money").val() == '') {
-                        layer.msg('{{ :lang("请输入预付款金额") }}');
-                        return false;
-                    }
-                }
-
-                return false;
+               
 
                 form.submit();;
             }
         });
-        $('input[name="sf_status"]').click(function(e, a) {
-
-            $p = $(this).val();
-            if ($p == 1) {
-                $(".js-qk").show();
-                $(".js_yf").hide();
-            } else {
-                $(".js-qk").hide();
-                $(".js_yf").show();
-            }
-        }).triggerHandler("click");
 
         //优惠券
-        $(".js-input-youhui").on("keyup", function() {
+        $(".js-input-youhui").on("keyup blur", function() {
             $url = "{{ :U('Admin/Ajax/getYouHui') }}";
             $v = $(this).val();
             $uid = "{{ $data.user_id }}";
@@ -274,17 +288,20 @@
                 'code': $v,
                 'uid': $uid
             }, function(data) {
-
+                //log(data);
                 if (data.price) {
                     $(".js-yhj").text(data.price);
                     $(".ys_price").val(data.price);
                     $(".yh_id").val(data.id)
                     youhui_total();
                     return '';
+                }else
+                {
+                    $(".js-yhj").text('');
+                    $(".ys_price").val('');
+                    $(".yh_id").val('')
                 }
-                $(".js-yhj").text(0);
-                $(".ys_price").val(0);
-                $(".yh_id").val('');
+                
                 youhui_total();
                 return '';
             })
@@ -296,18 +313,30 @@
     });
 
     function youhui_total() {
-        $total = "{{ $data.price_total }}";
+        
+        //js-add-pay-price
+        var $pay_ways=$('#pay_ways').val();
+        index=$pay_ways==0?0:$pay_ways-1; 
+        var pay_price=$(".js-add-pay-price").eq(index).val();
 
-        $yh = $(".ys_price").val();
-        $yhhou = $total - $yh;
-        log($yhhou);
-        $("input[name='youhui_total']").val($yhhou);
+        pay_price=accounting.unformat(pay_price);
+
+      
+        ys_price=$('.ys_price').val();
+        log(ys_price);
+        $yhhou=pay_price-ys_price;
+        if($yhhou<=0)
+        {
+            $yhhou=0;
+        }
         $yhhou = accounting.formatMoney($yhhou, {
             symbol: "",
             format: "%s %v",
             precision: 0
         });
         $(".js-yhh").text($yhhou);
+        var $ways_v=$(".pay_method:checked").val();
+        $(".js-money").val('').eq($ways_v-1).val( $yhhou);
     }
     </script>
 </block>
