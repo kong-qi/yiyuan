@@ -15,6 +15,7 @@ class AuthController extends Controller
     protected function _initialize()
     {
       
+        $this->logname=I('param.logname');
         $this->isLogin();
         //全局开启，无需单个模块开启
 

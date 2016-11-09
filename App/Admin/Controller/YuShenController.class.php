@@ -70,10 +70,10 @@ class YuShenController extends AuthController {
                      print_r($data);
                       exit();*/
                     M()->commit();
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    add_log($this->onname.'：'.$this->logname.'更新成功');
                     $msg=lang('更新成功','handle');
 
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    
 
                     return $this->success($msg);
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
@@ -534,10 +534,10 @@ class YuShenController extends AuthController {
                 if($result && $yresult) {
 
                     M()->commit();
-                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    add_log($this->onname.'：'.$this->logname.'添加成功');
                     $msg=lang('添加成功','handle');
 
-                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    
 
                     return $this->success($msg,$backurl );
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
@@ -627,11 +627,10 @@ class YuShenController extends AuthController {
                 if($result) {
 
                     M()->commit();
-                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    add_log($this->onname.'：'.$this->logname.'添加成功');
                     $msg=lang('添加成功','handle');
 
-                    add_log($this->onname.'：'.$data['name'].'添加成功');
-
+                   
                     return $this->success($msg,$backurl );
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
@@ -768,7 +767,7 @@ class YuShenController extends AuthController {
 
                 if($result) {
 
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    add_log($this->onname.'：'.$this->logname.'更新成功');
                     $msg=lang('更新成功','handle');
                     $backurl=U('Admin/YuShen/kaidanList');
                     

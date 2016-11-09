@@ -5,8 +5,7 @@
     </if>
     <if condition="check_group('kaidan_edit')">
 
-        <a href="javascript:void(0)" data-layer="1" data-w="90%" data-h="500px"
-           data-url="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}"
+        <a href="{{ :U('Admin/CaiWu/kaidan_edit',array('id'=>$v['uuid'])) }}"
            class="btn btn-white"><span class="fa fa-pencil-square btn-font" data-name="{{ :lang('修改') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
 
     </if>

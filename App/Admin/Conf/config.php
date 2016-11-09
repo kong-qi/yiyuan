@@ -23,6 +23,6 @@ return array(
         'expire'              =>  24*3600                      //SESSION保存15天
 
     ),
-    
+    'DEFAULT_FILTER' => 'trim,htmlspecialchars'
 
 );

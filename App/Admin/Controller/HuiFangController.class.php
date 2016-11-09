@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 class HuiFangController extends AuthController {
-    protected $onname='回访管理';
+    protected $onname='回访记录';
     protected $rule_qz='huifangset';
     protected $subjg=array(
         'hf_way'=>'回访方式',
@@ -47,7 +47,7 @@ class HuiFangController extends AuthController {
                 }
                 
                 if($result) {
-                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    add_log($this->onname.'：'.$this->logname.'添加成功');
                     D('User')->updateCount($data['user_id'],'hf_total');
 
                     if($isclose)
@@ -246,7 +246,7 @@ class HuiFangController extends AuthController {
                 $data=$model->create();
                 $result =   $model->save($data);
                 if($result) {
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    add_log($this->onname.'：'.$this->logname.'更新成功');
                     $msg=lang('更新成功','handle');
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
@@ -290,7 +290,7 @@ class HuiFangController extends AuthController {
 
                
                 if($result) {
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    add_log($this->onname.'：'.$this->logname.'更新成功');
                     $msg=lang('更新成功','handle');
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location.reload();</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);

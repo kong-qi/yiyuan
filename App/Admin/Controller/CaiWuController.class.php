@@ -6,7 +6,8 @@ class CaiWuController extends AuthController
     protected $rule_qz = 'shouyin';
 
     public function waitPriceList(){
-        
+            $this->assign('adminer',get_sfadder('kai_dan'));
+            $this->assign('createer',get_kdadder('kai_dan'));
             $this->assign('is_search',I('get.is_search'));
             $this->onname="待收费列表";
             $this->assign('onname',$this->onname);
@@ -38,6 +39,10 @@ class CaiWuController extends AuthController
                 kd.price_total,
                 kd.pay_price as pay_price,
                 kd.pay_ways,
+                kd.sf_time as sf_time,
+                kd.true_price as true_price,
+                (kd.price_total-kd.true_price) as sx_price,
+
                 jzys.name as sy_name,
                 u1.name as user_name,
                 ys.realname as kd_name
@@ -55,23 +60,70 @@ class CaiWuController extends AuthController
                     $map['kd.kd_id']=session('admin_id');
                 }
             }
-            $stime=trim(strtotime(I('get.stime')));
-            $etime=trim(strtotime(I('get.etime')));
-            if($stime!=='' and $etime !='')
-            {
-                $timestr =  $stime. "," .$etime;
-                $map['kd.kd_time'] = array('between', $timestr);
-            }
+            
             $map['sf_status']=0;
             if(I('get.sf_status')!='')
             {
                 $map['sf_status']=I('get.sf_status');
+            }
+            if($map['sf_status']=='2')
+            {
+                $map['_string']="sf_status='2' or sf_status='5'";
+                unset($map['sf_status']);
+            }
+            if($map['sf_status']=='1')
+            {
+                $map['_string']="sf_status='1' or sf_status='4'";
+                unset($map['sf_status']);
+                $stime=trim(strtotime(I('get.stime')));
+                $etime=trim(strtotime(I('get.etime')));
+                if($stime!=='' and $etime !='')
+                {
+                    $timestr =  $stime. "," .$etime;
+                    $map['kd.sf_time'] = array('between', $timestr);
+                }
+            }
+            if($map['sf_status']=='3')
+            {
+                $map['_string']="sf_status='6' or sf_status='3'";
+                unset($map['sf_status']);
+            }
+            if(I('get.kdys_id')!='')
+            {
+                $map['kd.kdys_id']=I('get.kdys_id');
+            }
+            if(I('get.sf_admin_id')!='')
+            {
+                $map['kd.sf_admin_id']=I('get.sf_admin_id');
+            }
+            if (I('get.keyword') != '') {
+                $key = I('get.keyword');
+                $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' ";
             }
             
             $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
             $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
             $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
             $this->assign('list',$list);// 赋值数据集
+            $handle_tpl='df';
+            //判断模版
+            if(I('get.sf_status')==1)
+            {
+                $type_arr='has';
+                $handle_tpl='status_1';
+            }elseif(I('get.sf_status')==2)
+            {
+                 $handle_tpl="status_2";
+                $type_arr='dingjing';
+            }
+            elseif(I('get.sf_status')==3)
+            {
+                 $handle_tpl="status_3";
+                $type_arr='yukuan';
+            }
+            
+            $this->assign('handle_tpl',$handle_tpl);
+            $this->assign('page',page($count, $map, $pagesize));
             $menu_list = $this->getFiledArray($type_arr);
             $this->menu_list = $menu_list;
             $this->display();
@@ -80,6 +132,64 @@ class CaiWuController extends AuthController
 
     public function getFiledArray($type){
         switch ($type) {
+            case "has":
+                $menu_list = array(
+
+                    'td-1' => array('name' => lang('收费时间'), 'filed'=>'sf_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-4' => array('name' => lang('合计'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('开单人'), 'filed'=>'kd_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-6' => array('name' => lang('收费状态'), 'filed'=>'sf_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-7' => array('name' => lang('结算状态'), 'filed'=>'js_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+
+                );
+            break;
+             case "ok":
+                $menu_list = array(
+
+                    'td-1' => array('name' => lang('收费时间'), 'filed'=>'sf_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-4' => array('name' => lang('合计'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('收费人'), 'filed'=>'sfy_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-7' => array('name' => lang('结算状态'), 'filed'=>'js_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+
+                );
+            break;
+            case "dingjing":
+                $menu_list = array(
+
+                    'td-0' => array('name' => lang('开单时间'), 'filed'=>'kd_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-1' => array('name' => lang('收订金时间'), 'filed'=>'sf_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-4' => array('name' => lang('合计'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('已收订金金额'), 'filed'=>'true_price','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('余款金额'), 'filed'=>'sx_price','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-6' => array('name' => lang('收费状态'), 'filed'=>'sf_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-7' => array('name' => lang('结算状态'), 'filed'=>'js_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+
+                );
+            break;
+            case "yukuan":
+                $menu_list = array(
+
+                    'td-0' => array('name' => lang('开单时间'), 'filed'=>'kd_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-1' => array('name' => lang('收订金时间'), 'filed'=>'sf_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-4' => array('name' => lang('合计'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('已收费金额'), 'filed'=>'true_price','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-5' => array('name' => lang('余款金额'), 'filed'=>'sx_price','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-6' => array('name' => lang('收费状态'), 'filed'=>'sf_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-7' => array('name' => lang('结算状态'), 'filed'=>'js_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+
+                );
+            break;
             default:
                 $menu_list = array(
 
@@ -97,123 +207,95 @@ class CaiWuController extends AuthController
         }
         return $menu_list;
     }
-    public function index($status = 0,$js_status='0')
-    {
-        $this->check_group('shouyin');
-
-        $map = array( );
-        $map['kd.sf_status']=$status;
-        $map['kd.js_status']=$js_status;
-        $model = M('KaiDan');
-        $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
-        $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kd_id = ys.id';
-        $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
-        $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
-        $join[] = 'LEFT JOIN __ADMIN__ sf ON kd.sf_admin_id = sf.id';
-
-
-
-        $page = 1;
-        if (isset($_GET['p'])) {
-            $page = $_GET['p'];
-        }
-        $filed = '
-            kd.id as id,
-            kd.uuid as uuid,
-            kd.is_yf as is_yf,
-            kd.sf_status as sf_status,
-            kd.js_status as js_status,
-            kd.kd_time as kd_time,
-            kd.price_show,
-            kd.price_total,
-            kd.sf_time as sf_time,
-            kd.js_time as js_time,
-            kd.yf_money as yf_money,
-            kd.bq_money as bq_money,
-            kd.youhui_code youhui_code,
-            kd.youhui_price as youhui_price,
-            kd.shishou_price as shishou_price,
-            kd.youhui_total as youhui_total,
-            kd.shuaka_price as shuaka_price,
-            kd.other_price as other_price,
-            kd.price_type as price_type,
-            jzys.name as sy_name,
-            u1.name as user_name,
-            ys.realname as kd_name,
-            ys.id as ysid,
-            jzys.name as shoushu_name,
-            sf.realname as sf_name
-           
-         ';
-        $stime=trim(strtotime(I('get.stime')));
-        $etime=trim(strtotime(I('get.etime')));
-        if($stime!=='' and $etime !='')
-        {
-            $timestr =  $stime. "," .$etime;
-            $map['kd.kd_time'] = array('between', $timestr);
-        }
-        $key=trim(I('get.keyword'));
-        if($key!='')
-        {
-            $map['u1.name']=$key;
-        }
-
-        $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
-
-        $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '20';
-        $list = $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.id desc')->page($page . ',' . $pagesize)->select();
-        $menu_list = array();
-        $menu_list['td_kd_time'] = array('name' => lang('开单时间'), 'w' => '', 'h' => '', 'is_hide' => '');
-        //已经收费显示时间
-        if($status!=0){
-            $menu_list['td_sf_time'] = array('name' => lang('收费时间'), 'w' => '', 'h' => '', 'is_hide' => '');
-        }
-        $menu_list['td_user'] = array('name' => lang('姓名'), 'w' => '', 'h' => '', 'is_hide' => '');
-        $menu_list['td_show_price'] = array('name' => lang('消费项目'), 'w' => '', 'h' => '', 'is_hide' => '');
-        $menu_list['td_show_total'] = array('name' => lang('合计'), 'w' => '', 'h' => '', 'is_hide' => '');
-
-        $menu_list['td_kd_name'] = array('name' => lang('开单人'), 'w' => '', 'h' => '', 'is_hide' => '');
-        $menu_list['td_sf_status'] = array('name' => lang('收费状态'), 'w' => '', 'h' => '', 'is_hide' => '');
-        $menu_list['td_js_status'] = array('name' => lang('结算状态'), 'w' => '', 'h' => '', 'is_hide' => '');
-
-        if($status!=0) {
-            $menu_list['td_sf_name'] = array('name' => lang('收费人'), 'w' => '', 'h' => '', 'is_hide' => '');
-        }
-        $menu_list['td_handle'] = array('name' => lang('操作'), 'w' => '', 'h' => '', 'is_hide' => '');
-
-        //print_r($menu_list);
-        $this->menu_list = $menu_list;
+    public function index(){
+            $this->assign('adminer',get_sfadder('kai_dan'));
+            $this->assign('is_search',I('get.is_search'));
+            $this->onname="已结算列表";
+            $this->assign('onname',$this->onname);
+            $this->check_group('shouyin_check');
+            $map=array();
+            $model=M('KaiDan');
+            $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
+            $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kdys_id = ys.id';
+            $join[] = 'LEFT JOIN __ADMIN__ sfy ON kd.sf_admin_id = sfy.id';
+                     
+            $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
+            $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
 
 
-        $this->assign('list', $list);// 赋值数据集
+            $page=1;
+            if(isset($_GET['p']))
+            {
+                $page=$_GET['p'];
+            }
+             $filed = '
+                kd.sf_status as sf_status,
+                kd.id as id,
+                kdys_id as kdys_id,
+                kd.jz_id as jz_id,
+                kd.uuid as uuid,
+                kd.kd_time as kd_time,
+                kd.sf_status,
+                kd.js_status,
+                kd.price_show,
+                kd.price_total,
+                kd.pay_price as pay_price,
+                kd.pay_ways,
+                kd.sf_time as sf_time,
+                kd.true_price as true_price,
+                (kd.price_total-kd.true_price) as sx_price,
 
-        $this->status=$status;
-        //根据类型设置模板
-        switch ($status)
-        {
-            case "1":
-                $this->assign('onname','结算列表');
-                $this->assign('is_js',1);
-                if($js_status==1)
+                jzys.name as sy_name,
+                u1.name as user_name,
+                ys.realname as kd_name,
+                sfy.realname as sfy_name
+               
+             ';
+            //是否只能看到自己开的单
+            if(check_group('root'))
+            {
+
+            }else
+            {
+                if(check_group("kaidan_only")  )
                 {
-                    $this->assign('is_js',0);
+
+                    $map['kd.kd_id']=session('admin_id');
                 }
-
-                break;
-            case "2":
-                $this->assign('onname','已结算列表');
-                break;
-            default:
-                $this->assign('onname','收费列表');
-
-                break;
-        }
-        $this->display();
-
-
+            }
+            if(I('get.sf_admin_id')!='')
+            {
+                $map['kd.sf_admin_id']=I('get.sf_admin_id');
+            }
+            $stime=trim(strtotime(I('get.stime')));
+            $etime=trim(strtotime(I('get.etime')));
+            if($stime!=='' and $etime !='')
+            {
+                $timestr =  $stime. "," .$etime;
+                $map['kd.sf_time'] = array('between', $timestr);
+            }
+            $map['sf_status']=1;
+            $map['js_status']=1;
+            if (I('get.keyword') != '') {
+                $key = I('get.keyword');
+                $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' ";
+            }
+            
+            $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
+            $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+            $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
+            $this->assign('list',$list);// 赋值数据集
+            $handle_tpl=$type_arr='ok';
+            //判断模版
+            $this->assign('handle_tpl',$handle_tpl);
+            $this->assign('page',page($count, $map, $pagesize));
+            $menu_list = $this->getFiledArray($type_arr);
+            $this->menu_list = $menu_list;
+            $this->display();
+        
     }
     public function  edit(){
-        $this->check_group('dingjing');
+        $this->check_group('shouyin');
         if(IS_POST)
         {
             $model =D('KaiDan');
@@ -225,8 +307,8 @@ class CaiWuController extends AuthController
 
                 if($result) {
 
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
-                    $msg=lang('更新成功','handle');
+                    add_log($this->onname.'：'.$this->logname.'补交成功');
+                    $msg=lang('补交成功','handle');
                     $backurl=U("Admin/CaiWu/index",array('status'=>2));
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
@@ -269,7 +351,7 @@ class CaiWuController extends AuthController
                 return  $this->error($msg,$backurl );
             }
             $data=$m->create();
-            $data['pay_price']=$data['cash_price']+$data['shuaka_price']+$data['other_price'];
+            $data['true_price']=$data['cash_price']+$data['shuaka_price']+$data['other_price'];
             //付了金额
             foreach ($data as $key => $value) {
                 if($value=='')
@@ -284,26 +366,28 @@ class CaiWuController extends AuthController
                 $data['sf_status']=1;
             }elseif ($data['pay_ways']==2) {
                 $data['sf_status']=2;
-                $data['yf_money']=$data['pay_price'];
+                $data['yf_money']=$data['true_price'];
             }
             elseif ($data['pay_ways']==3) {
                 $data['sf_status']=3;
-                $data['yf_money']=$data['pay_price'];
+                $data['yf_money']=$data['true_price'];
             }
 
-           
+           /* print_r($data);
+            exit();*/
             $result = M('KaiDan')->save($data);
             if ($result) {
                 //更新优惠券
                 if ($data['youhui_id'] != '') {
                     $yhq_data = array(
                         'utime' => time(),
+                        'status'=>1,
                         'kd_id' => $data['id']
                     );
                     M('Card')->where(array('id' => $data['youhui_id']))->save($yhq_data);
                 }
-                add_log($this->onname . '：' . $data['name'] . '提交成功');
-                $msg = lang('收费成功', 'handle');
+                add_log($this->onname . '：' . $this->logname. '收费提交成功');
+                $msg = lang('收费成功');
                 $backurl = U("Admin/CaiWu/waitPriceList");
                 //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "'); parent.location.reload();;parent.layer.close(index);</script>";
                 return  $this->success(lang( $msg,'handle'),$backurl);
@@ -354,26 +438,56 @@ class CaiWuController extends AuthController
 
 
     }
+    public function kaidan_edit($id){
 
+        $this->check_group('kaidan_edit');
+        $this->onname='开单更新';
+        $this->assign('onname',$this->onname);
+        if(IS_POST)
+        {
+            $model =D('KaiDan');
+            
+            if($model->create()) {
+                $data=$model->create();
+               /* print_r($data);
+                exit();*/
+                $result =   $model->save($data);
 
-    public function del()
-    {
-        //权限选择
-        $this->check_group($this->rule_qz . "_del");
-        $id = I('get.id');
-        $map = array(
-            'uuid' => $id
-        );
-        $model = D("XiaoFei");
-        $data = $model->where($map)->find();
-        $result = $model->where($map)->delete();
-        if ($result) {
-            add_log($this->onname . '：' . $data['name'] . '删除成功');
-            return $this->success(lang('删除成功', 'handle'));;
+                if($result) {
+
+                    add_log($this->onname.'：'.$this->logname.'开单更新成功');
+                    $msg=lang('更新成功','handle');
+                    $backurl=U('Admin/CaiWu/waitPriceList');
+                    
+                    return  $this->success($msg,$backurl);
+                }else{
+
+                    $msg=lang('数据一样无更新','handle');
+                    return  $this->success($msg,$backurl);
+                }
+            }else{
+                return $this->error($model->getError());
+            }
+        }else{
+           
+            $map=array(
+            'uuid'=>$id
+            );
+
+            $model   =  D('KaiDan')->relation(true)->where($map)->find();
+
+          
+            if($model) {
+                $this->data =  $model;// 模板变量赋值
+            }else{
+                return $this->error(lang('数据错误','handle'));
+            }
+            
+            $this->display();
         }
-        add_log($this->onname . '：' . $data['name'] . '删除失败');
-        return $this->error(lang('删除失败', 'handle'));;
     }
+
+
 
     public function setJsStatus($id)
     {
@@ -381,66 +495,67 @@ class CaiWuController extends AuthController
         $this->check_group("shouyin_jiesuan");
         $model = M("KaiDan");
         $type = I('get.type');
+        $name='结算';
         if ($type == 'true') {
             $status = 1;
         } else {
             $status = 0;
+             $name='撤销结算';
         }
-        $data['id'] = $id;
-        $data['js_status'] = 1;
+        
+        $data['js_status'] =$status;
 
-        if ($model->save($data)) {
-
-            return $this->success(lang('结算成功', 'handle'));
-            $msg = lang('结算成功', 'handle');
+        if ($model->where(array('uuid'=>$id))->save($data)) {
+            add_log($this->onname.'：'.$this->logname.$name."成功");
+            return $this->success(lang($name.'成功', 'handle'));
+            $msg = lang($name.'成功', 'handle');
             $backurl = U(MODULE_NAME . "/" . CONTROLLER_NAME . "/index");
             echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);window.location='" . $backurl . "';</script>";
         } else {
-            $msg = lang('结算失败', 'handle');
-            return $this->success(lang('结算失败', 'handle'));
+            $msg = lang($name.'失败', 'handle');
+            return $this->success(lang($name.'失败', 'handle'));
             $backurl = U(MODULE_NAME . "/" . CONTROLLER_NAME . "/index ");
             echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);window.location='" . $backurl . "';</script>";
         }
     }
-
-    public function kaidanList()
-    {
-        $this->check_group('kaidan');
-        $map = array();
-        $model = M('KaiDan');
-        $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
-        $join[] = 'LEFT JOIN __ADMIN__ a1 ON kd.admin_id = a1.id';
-
-        $page = 1;
-        if (isset($_GET['p'])) {
-            $page = $_GET['p'];
+    public function tui($id){
+        //结算权限选择
+        $this->check_group("shouyin_jiesuan");
+        $model = M("KaiDan");
+        $type = I('get.type');
+        if($type=='dingjing')
+        {
+             $name='退定金';
+             $status=5;
         }
-        $filed = '
-            kd.id as id,kd.uuid as uuid,kd.kd_time as kd_time,kd.kd_name as kd_name,kd.is_liaoxiao as is_liaoxiao,kd.price_show,kd.price_total,
-            u1.name as user_name
-           
-         ';
+        if($type=='bufeng')
+        {
+             $name='部分退费';
+             $status=6;
+        }
+        if($type=='all')
+        {
+             $name='已退费';
+             $status=4;
+        }
+       
+        
+       
+        $data['sf_status'] =$status;
 
-        $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
-
-        $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '20';
-        $list = $model->alias('kd')->field($filed)->join($join)->order('kd.id desc')->page($page . ',' . $pagesize)->select();
-        $menu_list = array(
-
-            2 => '开单时间',
-            3 => '姓名',
-            4 => '消费项目',
-            5 => '合计总价',
-            6 => '是否疗程次数消费',
-            7 => '咨询医生',
-
-
-        );
-        $this->menu_list = $menu_list;
-
-        $this->assign('list', $list);// 赋值数据集
-
-
-        $this->display();
+        if ($model->where(array('uuid'=>$id))->save($data)) {
+            add_log($this->onname.'：'.$this->logname.$name."成功");
+            return $this->success(lang($name.'成功', 'handle'));
+            $msg = lang($name.'成功', 'handle');
+            $backurl = U(MODULE_NAME . "/" . CONTROLLER_NAME . "/index");
+            echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);window.location='" . $backurl . "';</script>";
+        } else {
+            $msg = lang($name.'失败', 'handle');
+            return $this->success(lang($name.'失败', 'handle'));
+            $backurl = U(MODULE_NAME . "/" . CONTROLLER_NAME . "/index ");
+            echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);window.location='" . $backurl . "';</script>";
+        }
     }
+   
+
 }

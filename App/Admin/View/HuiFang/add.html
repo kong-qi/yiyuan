@@ -9,6 +9,7 @@
         <div class="animated fadeInUp">
             <div class="col-sm-12 ">
                 <form action="{{ :U('Admin/HuiFang/getlistadd') }}" method="post" id="validate" class="form-horizontal" enctype="multipart/form-data">
+                    <input type="hidden" name="logname" value="{{ $data.name }}">
                     <div class="ibox float-e-margins m-t">
                         <div class="ibox-content">
                             <div class="form-group">

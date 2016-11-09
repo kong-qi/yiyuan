@@ -4,7 +4,7 @@
 </block>
 <block name="add_js">
     <script src="__JS__/sweetalert.min.js"></script>
-
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
 </block>
 <block name="right">
     <div class="right-box">
@@ -12,8 +12,16 @@
         <else/>
         <div class="ibox">
             
-            <include file="CaiWu:so:wait"/>
-            
+
+            <php>if($handle_tpl=='df'){</php>
+                <include file="CaiWu:so:wait"/>
+            <php>}elseif($handle_tpl=='status_1'){</php>
+                 <include file="CaiWu:so:status_1" />
+             <php>}elseif($handle_tpl=='status_2'){</php>
+                 <include file="CaiWu:so:status_2" />
+            <php>}elseif($handle_tpl=='status_3'){</php>
+                 <include file="CaiWu:so:status_3" />
+            <php>}</php>
         </div>
         </if>
         <div class="ibox">
@@ -90,7 +98,7 @@
                                     <tr class="js-tr">
 
                                         <td align="center" class="hidden-xs">
-                                            <input type="checkbox" class="checkbox-select" name="checkbox[]" value="{{ $v.yuuid }}">
+                                            <input type="checkbox" class="checkbox-select" name="checkbox[]" value="{{ $v.uuid }}">
                                         </td>
 
                                       
@@ -104,11 +112,10 @@
                                             ?>
                                            
                                             <td class="{{ $mk }} {{ $mv['diy'] }}" {{ $ishow }}>
-                                                <if condition="$mv['is_time']">
-                                                        {{ :to_time($v[$mv['filed']]) }}
+                                                <if condition="$mv['is_time']">{{ :to_time($v[$mv['filed']]) }}
                                                     <elseif condition="$mv['filed'] eq sf_status"/>
                                                         <span class="{{ :btn_yycolor($v['sf_status']) }}">
-                                                        {{ :lang(yuyue_status($v['sf_status'])) }}
+                                                        {{ :lang(sf_status($v['sf_status'])) }}
                                                         </span>
                                                     <elseif condition="$mv['filed'] eq price_show"/>
                                                       <?php $show=(json_decode(htmlspecialchars_decode($v['price_show']),true));?>
@@ -127,6 +134,15 @@
                                                         <span class="{{ :btn_yycolor($v['pay_ways']) }}">
                                                         {{ :lang(pay_wasy($v['pay_ways'],0)) }}
                                                         </span>
+                                                    <elseif condition="$mv['filed'] eq price_total"/>
+                                                        <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
+                                                    <elseif condition="$mv['filed'] eq pay_price"/>
+                                                        <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
+                                                  
+                                                    <elseif condition="$mv['filed'] eq js_status"/>
+                                                         <span class="{{ :btn_yycolor($v['js_status']) }}">
+                                                         {{ :lang(js_status($v['js_status'],0)) }}
+                                                         </span>
                                                     <elseif condition="$mv['filed'] eq user_name"/>
                                                         
                                                              <a href="javascript:void(0)" class=" js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.yuuid }}" > {{ $v[$mv['filed']] }}</a>
@@ -146,8 +162,16 @@
                                         <td class="td-handle">
                                             <!-- //网站竞价人员 -->
                                             <div class="box" style="">
+                                                <php>if($handle_tpl=='df'){</php>
                                                 <include file="Menu:shouyin" />
-                                               
+                                                <php>}elseif($handle_tpl=='status_1'){</php>
+                                                     <include file="Menu:shouyin_status_1" />
+                                                 <php>}elseif($handle_tpl=='status_2'){</php>
+
+                                                    <include file="Menu:shouyin_status_2" />
+                                                <php>}elseif($handle_tpl=='status_3'){</php>
+                                                     <include file="Menu:shouyin_status_3" />
+                                                <php>}</php>
                                             
                                             </div>
                                            
@@ -166,7 +190,21 @@
 
 
                         </table>
+                        <if condition="$handle_tpl eq status_1">
+                        <div class="">
+                        
+                          
+    
+                                <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="js_status"
+                                   data-model="KaiDan"
+                                   data-handle="jiesuan" data-handle-check="1" data-handle-value="1"><span
+                                        class="fa fa-ban"></span> {{ :lang('结算','handle') }}</a>
+
+                            
+                        </div>
+                        </if>
                     </div>
+
                      <div class="pagee m-t">
                         <div class="pull-right">
                             {{ $page }}
@@ -181,29 +219,101 @@
     </div>
 </block>
 <block name="add_foot_js">
-<script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+
 <include file="YuYue:so:common"/>
 <script>
-    var shijian11 = {
-        elem: '#start',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        istime: true,
-        istoday: true,
-        choose: function (datas) {
-            shijian12.min = datas; //开始日选好后，重置结束日的最小日期
-            shijian12.start = datas //将结束日的初始值设定为开始日
-        }
-    };
-    var shijian12 = {
-        elem: '#end',
-        format: 'YYYY-MM-DD hh:mm:ss',
-        istime: true,
-        istoday: true,
-        choose: function (datas) {
-            shijian11.max = datas; //结束日选好后，重置开始日的最大日期
-        }
-    };
-    laydate(shijian11);
-    laydate(shijian12);
+
+    $(function () {
+
+        select_all();
+        del_confirm();
+
+
+
+        //paix
+        $("#sort").change(function () {
+            $v = $(this).find("option:selected").attr('data-type');
+
+            $("#sorttype").val($v);
+        })
+        $(document).on("click", "[data-handle-check='1']", function () {
+            $uuid = checked_box_id();
+            $model = $(this).attr('data-model');
+            $type = $(this).attr('data-handle');
+            $value = $(this).attr('data-handle-value');
+            $filed = $(this).attr('data-handle-filed');
+            $sort = checked_sort_id();
+            $log = "{{ $onname }}：" + checked_log_name();
+            //console.log($uuid);
+            //console.log($sort);
+            //console.log($log);
+
+            if ($uuid) {
+                switch ($type) {
+
+                    default:
+
+                        swal({
+                                    title: "{{ :lang('你确定批量操作吗','handle') }}?",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#DD6B55",
+                                    confirmButtonText: "{{ :lang('确定','handle') }}",
+                                    cancelButtonText: "{{ :lang('取消','handle') }}",
+                                    closeOnConfirm: false,
+                                    showLoaderOnConfirm: true,
+                                },
+                                function () {
+                                    setTimeout(function () {
+                                        $.ajax({
+                                            'url': '{{ :U("Admin/Ajax/handle") }}',
+                                            type: 'post',
+                                            data: {
+                                                'uuid': $uuid,
+                                                'model': $model,
+                                                'value': $value,
+                                                'type': $type,
+                                                'filed': $filed,
+                                                'sort': $sort,
+                                                'log': $log,
+                                                'token': '{{ :token() }}'
+                                            },
+                                            cache: false,
+                                            dataType: 'json',
+                                            success: function (data) {
+                                                console.log(data);
+                                                if (data.error == 0) {
+                                                    swal({
+                                                        title: data.msg,
+                                                        confirmButtonText: "{{ :lang('确定','handle') }}",
+                                                        type: "success",
+                                                        timer: 1000,
+                                                    });
+                                                    window.location.reload();
+                                                } else {
+                                                    swal({
+                                                        title: data.msg,
+                                                        confirmButtonText: "{{ :lang('确定','handle') }}",
+                                                        type: "warning",
+                                                        timer: 1000,
+                                                    });
+
+                                                }
+                                                ;
+                                            }
+                                        })
+                                    }, 2000);
+                                }
+                        );
+                        break;
+                }
+
+            } else {
+                swal("{{ :lang('没有选择','handle') }}");
+            }
+
+        });
+
+    });
 </script>
 </block>

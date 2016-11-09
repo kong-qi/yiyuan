@@ -41,16 +41,16 @@ class AjaxController extends AuthController
                 }
                 $result = $model->where($map)->delete();
                 if ($result) {
-                    add_log($log.'删除成功');
+                    add_log($log.lang('删除成功'));
                     echo json_encode(array(
                         'error' => 0,
-                        'msg' => '删除成功'
+                        'msg' => lang('删除成功')
                     ));
                 } else {
-                    add_log($log.'删除失败');
+                    add_log($log.lang('删除失败'));
                     echo json_encode(array(
                         'error' => 1,
-                        'msg' => '删除失败'
+                        'msg' => lang('删除失败')
                     ));
                 }
 
@@ -63,33 +63,25 @@ class AjaxController extends AuthController
                     )
                 );
 
-                if($filed=='pay_send')
-                {
-                    $data=array(
-                        $filed=>$value,
-                        'wuliu_name'=>'',
-                        'wuliu_num'=>''
-                    );
-                }else
-                {
-                    $data=array(
-                        $filed=>$value
-                    );
-                }
+                
+                $data=array(
+                    $filed=>$value
+                );
+                
                 $result=$model->where($map)->save($data);
                 if($result)
                 {
-                    add_log($log.'设置状态成功');
+                    add_log($log.lang('设置状态成功'));
                     echo json_encode(array(
                         'error' => 0,
-                        'msg' => '成功'
+                        'msg' =>lang('成功')
                     ));
                 }else
                 {
-                    add_log($log.'设置状态失败');
+                    add_log($log.lang('设置状态失败'));
                     echo json_encode(array(
                         'error' => 1,
-                        'msg' => '失败'
+                        'msg' => lang('失败')
                     ));
                 }
                 break;
@@ -111,17 +103,17 @@ class AjaxController extends AuthController
                 }
                 if($status)
                 {
-                    add_log($log.'排序成功');
+                    add_log($log.lang('排序成功'));
                     echo json_encode(array(
                         'error' => 0,
-                        'msg' => '成功'
+                        'msg' => lang('成功')
                     ));
                 }else
                 {
                     add_log($log.'排序失败');
                     echo json_encode(array(
                         'error' => 1,
-                        'msg' => '失败'
+                        'msg' => lang('失败')
                     ));
                 }
 
@@ -143,17 +135,17 @@ class AjaxController extends AuthController
                 $result=$model->where($map)->save($data);
                 if($result)
                 {
-                    add_log($log.'设置状态成功');
+                    add_log($log.lang('设置状态成功'));
                     echo json_encode(array(
                         'error' => 0,
-                        'msg' => '成功'
+                        'msg' => lang('成功')
                     ));
                 }else
                 {
-                    add_log($log.'设置状态失败');
+                    add_log($log.lang('设置状态失败'));
                     echo json_encode(array(
                         'error' => 1,
-                        'msg' => '失败'
+                        'msg' => lang('失败')
                     ));
                 }
                 break;
@@ -975,11 +967,12 @@ class AjaxController extends AuthController
         
     }
     public function getYouHui(){
-        $code=I('get.code');
+        $code=trim(I('get.code'));
         $uid=I('get.uid');
         $map=array(
                 'code'=>$code,
                 'checked'=>1,
+                'status'=>array('eq',0),
                 'ltime'=>array('gt',time()),
                 'user_id'=>$uid
             );

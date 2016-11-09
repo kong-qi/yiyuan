@@ -434,7 +434,7 @@ class QianTaiJieZhenController extends AuthController {
     }
     public function add()
     {
-
+        $this->onname=lang('接诊登记');
         //权限选择
         $this->check_group($this->rule_qz."_add");
         $backurl=U('Admin/QianTaiJieZhen/add');
@@ -577,7 +577,7 @@ class QianTaiJieZhenController extends AuthController {
         //权限选择
         $this->check_group($this->rule_qz.'_edit');
         //网站更新信息
-        $this->onname='分配医生';
+        $this->onname=lang('分配医生');
 
         if(IS_POST)
         {
@@ -596,7 +596,7 @@ class QianTaiJieZhenController extends AuthController {
                 $result =   $model->save($data);
                
                 if($result) {
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    add_log($this->onname.'：'.$data['name'].'成功');
                     $msg=lang('更新成功','handle');
                   
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.window.location.reload();</script>";

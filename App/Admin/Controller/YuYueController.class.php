@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 class YuYueController extends AuthController
 {
-    protected $onname = '添加预约';
+    protected $onname =('添加预约');
     protected $rule_qz = 'yuyue';
 
 

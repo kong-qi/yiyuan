@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 class JiGouController extends AuthController {
 
-    protected $onname='市场渠道';
+    protected $onname=('合作机构');
     protected $rule_qz='jiugouset';
     
     public function index(){

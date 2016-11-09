@@ -73,6 +73,18 @@ function get_adder($table){
      $m=M()->query("select * from __PREFIX__admin where id in (select admin_id from __PREFIX__".$table." group by admin_id) and checked='1'");
      return $m;
 }
+//
+function get_kdadder($table){
+    
+     $m=M()->query("select * from __PREFIX__admin where id in (select kdys_id from __PREFIX__".$table." group by kdys_id) and checked='1'");
+     return $m;
+}
+//收费员
+function get_sfadder($table){
+    
+     $m=M()->query("select * from __PREFIX__admin where id in (select sf_admin_id from __PREFIX__".$table." group by sf_admin_id) and checked='1'");
+     return $m;
+}
 //数组转option
 function arr_to_option($data,$checkid){
    

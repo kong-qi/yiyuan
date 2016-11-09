@@ -73,6 +73,7 @@ class CardController extends AuthController {
 				   	'code'=>$code,
 				   	'price'=>$price,
 				   	'checked'=>1,
+                    'status'=>0,
 				    'admin_id'=>session('admin_id')
 				);
 			}

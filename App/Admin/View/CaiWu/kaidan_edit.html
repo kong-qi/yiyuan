@@ -1,144 +1,189 @@
-<extend name="Layout:index" />
+<extend name="Layout:index"/>
 <block name="add_js">
     <script src="__JS__/jquery.validate.js"></script>
 </block>
 <block name="right">
     <div class="right-box">
-        <form action="{{ :U('Admin/YuShen/postKaiDan') }}" method="post" id="validate">
-            <input type="hidden" name="logname" value="{{ $data.User.name }}">
-            <div class="ibox">
-                <div class="ibox-content" style="padding-left:10px; padding-right:10px; border: none; border-width: 0;border-style:none;" id="shoujisf3">
-                    <div class="">
-                        <div class="col-xs-12">
-                            <div class="msg_error"></div>
-                            <div class="col-xs-8">
-                                <div class="input-group wb30 pull-left ">
-                                    <div class="input-group-addon">{{ :lang('姓名') }}</div>
-                                    <div class="form-control "><span class="text-blue">{{ $data.User.name }}</span></div>
-                                </div>
-                                <if condition="check_group('kaidan_yishen') || check_group('root')">
-                                    <div class="input-group  wb30 pull-left ">
-                                        <div class="input-group-addon">{{ :lang('开单人') }}</div>
-                                        <select class="form-control" id="kdys_id" name="kdys_id">
-                                            <option value="">{{ :lang('请选择开单人','handle') }}</option>
-                                            {{ :get_doc(array(),1,$data['ys_id']) }}
-                                        </select>
-                                    </div>
-                                    <else/>
-                                    <input type="hidden" name="kdys_id" value="{{ :session('admin_id') }}">
-                                </if>
-                                <div class="input-group wb30 pull-left">
-                                    <div class="input-group-addon">{{ :lang('付费类型') }}</div>
-                                    <select name="pay_ways" id="pay_ways" class="form-control">
-                                        <option value="">{{ :lang('请选择付费类型','handle') }}</option>
-                                        {{ :pay_wasy() }}
+        <form action="" method="post" id="validate">
+
+        <div class="ibox">
+            
+            <div class="ibox-content" style="padding-left:10px; padding-right:10px;" id="shoujisf3">
+                
+                <div class="">
+                    <div class="col-xs-12">
+                        <div class="msg_error"></div>
+                        <div class="col-xs-8">
+                            <div class="input-group wb30 pull-left ">
+                                <div class="input-group-addon">{{ :lang('姓名') }}</div>
+                                <div class="form-control "><span class="text-blue">{{ $data.User.name }}</span></div>
+                            </div>
+                            <if condition="check_group('kaidan_yishen') || check_group('root')">
+                                <div class="input-group  wb30 pull-left ">
+                                    <div class="input-group-addon">{{ :lang('开单人') }}</div>
+                                    <select class="form-control" id="kdys_id" name="kdys_id">
+                                        <option value="">{{ :lang('请选择开单人','handle') }}</option>
+                                        {{ :get_doc(array(),1,$data['kdys_id']) }}
                                     </select>
                                 </div>
-                            </div>
-                          
-                            <div class="col-xs-4">
-                                <div class="input-group wb50 pull-left ">
-                                    <div class="input-group-addon">{{ :lang('应付') }}</div>
-                                    <input class="form-control yf_money" data-price="vn" readonly="readonly" required="" name="pay_price"></input>
-                                </div>
-
-                                <div class="pull-right">
-                                    <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-danger">
-                                    <a href="{{ :U('Admin/YuShen/index',array('status'=>'3','list_type'=>'only')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="roww">
-                        <div class="col-sm-3">
-                            <div class="input-group m-b">
-                                <span class="input-group-addon"><font color="">{{ :lang('所属类别') }}</font></span>
-                                <select class="form-control" id="ks_id" data-all="ksall_id" data-datachenge='1' data-close="#kst_id" data-type="ks" data-next="kst_id" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
-                                    <option value="">{{ :lang('请选择类别','handle') }}</option>
-                                    {{ :get_lanmu_onelist('xiaofei',1,'','',I('get.fid')) }}
+                                <else/>
+                                <input type="hidden" name="kdys_id" value="{{ :session('admin_id') }}">
+                            </if>
+                            <div class="input-group wb30 pull-left">
+                                <div class="input-group-addon">{{ :lang('付费类型') }}</div>
+                                <select name="pay_ways" id="pay_ways" class="form-control">
+                                    <option value="">{{ :lang('请选择付费类型','handle') }}</option>
+                                     {{ :pay_wasy($data['pay_ways']) }}
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="input-group m-b">
-                            <span class="input-group-addon"><font color="">{{ :lang('关键词') }}</font></span>
-                            <input type="text" value="" placeholder="{{ :lang('费用名称/检索码/编码') }}" class="form-control js-key">
+                      
+                        <div class="col-xs-4">
+                            <div class="input-group wb50 pull-left ">
+                                <div class="input-group-addon">{{ :lang('应付') }}</div>
+                                <input class="form-control yf_money" data-price="vn" readonly="readonly" value="{{ $data.pay_price }}" required="" name="pay_price"></input>
+                            </div>
+
+                            <div class="pull-right">
+                                <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-danger">
+                                <a href="{{ :U('Admin/CaiWu/waitPriceList') }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                            </div>
+                            <div class="clear"></div>
                         </div>
                     </div>
+                </div>
+                <div class="roww">
                     <div class="col-sm-3">
-                        <button class="btn btn-primary  go-search" type="button">{{ :lang('检索消费项目') }}</button>
+                        <div class="input-group m-b">
+                            <span class="input-group-addon"><font color="">{{ :lang('所属类别') }}</font></span>
+                            <select class="form-control" id="ks_id" data-all="ksall_id"  data-datachenge='1' data-close="#kst_id" data-type="ks" data-next="kst_id" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
+                                <option value="">{{ :lang('请选择类别','handle') }}</option>
+                                 {{ :get_lanmu_onelist('xiaofei',1,'','',I('get.fid')) }}
+                            </select>
+                        </div>
                     </div>
-                    <!-- <div class="alert alert-warning" role="alert">{{ :lang('请点击选择消费项目') }}</div> -->
-                    <div class="roww change_price" id="zhuti" style="">
-                    </div>
-                    <div class="pager" id="pager" style="padding: 0">
+                    
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group m-b">
+                        <span class="input-group-addon"><font color="">{{ :lang('关键词') }}</font></span>
+                        <input type="text" value="" placeholder="{{ :lang('费用名称/检索码/编码') }}" class="form-control js-key">
                     </div>
                 </div>
-                <div class="ibox-content" style="padding-left:10px; padding-right:10px; border: none; border-width: 0;border-style:none;">
-                    <div class="form-warp">
-                        <input type="hidden" name="qz_id" value="{{ $data.id }}">
-                        <input type="hidden" name="ys_id" value="{{ $data.ys_id }}">
-                        <input type="hidden" name="ysz_id" value="{{ $data.ysz_id }}">
-                        <input type="hidden" name="yy_id" value="{{ $data.yy_id }}">
-                        <input type="hidden" name="user_id" value="{{ $data.user_id }}">
+                <div class="col-sm-3">
+                    <button class="btn btn-primary  go-search" type="button">{{ :lang('检索消费项目') }}</button>
+                </div>
+               
+                <!-- <div class="alert alert-warning" role="alert">{{ :lang('请点击选择消费项目') }}</div> -->
+                <div class="roww change_price" id="zhuti" style="">
+                </div>
+                <div class="pager" id="pager">
+                </div>
+            </div>
+            <div class="box-content">
+                <div class="form-warp">
+
+                    
+                        <input type="hidden" name="id" value="{{ $data.id }}">
                         <input type="hidden" name="price_show" id="price_show">
-                        <input type="hidden" name="sf_status" value="0">
-                        <input type="hidden" name="kd_time" value="{{ :time() }}">
-                        <input type="hidden" name="ykd_time" value="{{ :$data['Yyue']['kdtime']==''?time():$data['Yyue']['kdtime'] }}">
+                                             
                         <div class="tab-box ">
-                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table  " style="background: #fff">
+                            <?php 
+                                $show=(json_decode(htmlspecialchars_decode($data['price_show']),true));
+                                
+                            ?>
+                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table  "
+                                   style="background: #fff">
                                 <tbody>
-                                    <tr>
-                                        <th width="131" class="text-center">{{ :lang('名称') }}</th>
-                                        <th>{{ :lang('收费项目','filed') }}</th>
-                                    </tr>
-                                    <tr>
-                                        <td align="right">{{ $data['User']['name'] }}</td>
-                                        <td>
-                                            <div class="insert_price_more m-l">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <td><span class="m-l"> {{ :lang('收费项目') }}</span></td>
-                                                            <td>{{ :lang('单价') }}</td>
-                                                            <td>{{ :lang('单位') }}</td>
-                                                            <td>{{ :lang('数量') }}</td>
-                                                            <td>{{ :lang('小计金额') }}</td>
-                                                            <td>{{ :lang('操作') }}</td>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="add_price">
-                                                    </tbody>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <td colspan="4" class="text-right"><span class="label label-primary">{{ :lang('总价','filed') }}</span></td>
-                                                            <td>
-                                                                <input type="text" required name="price_total" value="0" size="80" class="form-control" readonly="" data-price="vnlist" style="width: 120px;" id="price_total">
-                                                            </td>
-                                                            <td></td>
-                                                        </tr>
-                                                    </tfoot>
-                                                </table>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tr>
+                                    <th width="131" class="text-center">{{ :lang('名称','filed') }}</th>
+                                    <th>{{ :lang('收费项目','filed') }}</th>
+                                </tr>
+                                <tr>
+                                    <td align="right">{{ $data['User']['name'] }}</td>
+                                    <td>
+                                        
+                                        <div class="insert_price_more m-l">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <td ><span class="m-l"> {{ :lang('收费项目') }}</span></td>
+                                                        <td>{{ :lang('单价') }}</td>
+                                                        <td>{{ :lang('单位') }}</td>
+                                                        <td>{{ :lang('数量') }}</td>
+                                                        <td>{{ :lang('小计金额') }}</td>
+                                                        <td>{{ :lang('操作') }}</td>
+                                                        
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="add_price">
+
+                                                    <if condition="$show">
+                                                        <foreach name="show" item="sv" key="sk">
+                                                            <tr class="show_price_all ajax-price-id-{{ :urldecode($sv['id']) }}">
+                                                                <td>
+                                                                    <input type="hidden" name="ticket_name[]" value="{{ :urldecode($sv['title2']) }}">
+                                                                    <input type="hidden" name="price_name[]" value="{{ :urldecode($sv['title']) }}">
+                                                                    <input type="hidden" name="price_xfname[]" value="{{ :urldecode($sv['xfname']) }}">
+                                                                    <input type="hidden" name="price_fid[]" value="{{ :urldecode($sv['fid']) }}">
+                                                                    <input type="hidden" class="input_price" name="price_id[]" value="{{ :urldecode($sv['price']) }}">
+                                                                    <input type="hidden" name="price_danwei[]" value="{{ :urldecode($sv['danwei']) }}">
+                                                                    <input type="hidden" class="input_heji" name="price_heji[]" value="{{ :urldecode($sv['total']) }}"> 
+                                                                    <a href="javascript:;" class="m-l pr_name" 
+                                                                    data-xfname="{{ :urldecode($sv['xfname']) }}" 
+                                                                    data-fid="{{ :urldecode($sv['fid']) }}" 
+                                                                    data-id="{{ :urldecode($sv['id']) }}" 
+                                                                    data-ticket="{{ :urldecode($sv['title2']) }}">{{ :urldecode($sv['title']) }}</a></td>
+                                                                <td>
+                                                                    <input readonly="readonly" name="price_price[]" data-price="vn" type="text" value="{{ :urldecode($sv['price']) }}" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td>
+                                                                <td> <span class="badge pr_danwei">{{ :urldecode($sv['danwei']) }}</span></td>
+                                                                <td>
+                                                                    <input type="text" min="0" value="{{ :urldecode($sv['num']) }}" name="price_num[]" class="form-control pr_num" style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td>
+                                                                <td><span class="pr_heji" data-price="vnlist">{{ :urldecode($sv['total']) }}</span></td>
+                                                                <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> 上移</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> 下移</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> 删除</a> </td>
+                                                            </tr>
+                                                        </foreach>
+                                                    </if>
+                                                    
+
+                                               
+                                                
+                                                
+                                                
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="4" class="text-right"><span class="label label-primary">{{ :lang('总价','filed') }}</span></td>
+                                                        <td>
+                                                            <input type="text" required name="price_total" data-price="vn" value="{{ $data.price_total }}"
+                                                                   size="80" class="form-control" readonly="" style="width: 120px;" id="price_total">
+                                                        </td>
+                                                        <td></td>
+                                                        
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
                                 </tbody>
                                 <tfooter>
                                     <tr>
                                         <td colspan="2" class="text-center">
+                                      
                                             <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-success">
                                         </td>
                                     </tr>
                                 </tfooter>
                             </table>
                         </div>
-                    </div>
+                    
                 </div>
-                <div class="cl"></div>
             </div>
+            <div class="cl"></div>
+        </div>
         </form>
+
     </div>
 </block>
 <block name="add_foot_js">
@@ -246,9 +291,6 @@
             }
         });
         $("#pay_ways").change(function(){
-            if($(this).val()!=1){
-                $(".yf_money").val('');
-            }
             set_yf_money();
         });
         $(".go-search").click(function() {

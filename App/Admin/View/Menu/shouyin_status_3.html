@@ -1,0 +1,15 @@
+<php>if($v['sf_status']==3){</php>
+    <if condition="check_group('shouyin_jiesuan')">
+      <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1'
+         data-h="550px" data-url="{{ :U('Admin/CaiWu/edit',array('uuid'=>$v['uuid'],'logname'=>$v['user_name'].lang('部分收费补交'))) }}"
+         data-title="{{ :lang('补交金额') }}" class="btn btn-danger "><span class="fa fa-plus btn-font" data-name="{{ :lang('补交金额') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+        <a href="{{ :U('Admin/CaiWu/setJsStatus',array('id'=>$v['uuid'],'type'=>'true','logname'=>$v['user_name'].lang('部分收费'))) }}" date-js='1' class="btn btn-info "><span class="fa fa-check-circle btn-font" data-name="{{ :lang('结算') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+    </if>
+    <if condition="check_group('shouyin_rollback')">
+
+        <a href="{{ :U('Admin/CaiWu/kaidan_edit',array('id'=>$v['uuid'],'type'=>'bufeng','logname'=>$v['user_name'].lang('退部分'))) }}"
+           class="btn btn-white"><span class="fa fa-share btn-font" data-name="{{ :lang('退部分') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+
+    </if>
+    
+<php>}</php>

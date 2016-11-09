@@ -400,7 +400,7 @@ function I($name,$default='',$filter=null,$datas=null) {
         $data       =    isset($default)?$default:null;
     }
     is_array($data) && array_walk_recursive($data,'think_filter');
-    return $data;
+    return ($data);
 }
 
 function array_map_recursive($filter, $data) {

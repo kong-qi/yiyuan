@@ -26,7 +26,7 @@ class RenWuController extends AuthController {
                 $result =$model->add( $data);
                 if($result) {
                     D('User')->updateCount($data['user_id'],'rw_total');
-                    add_log($this->onname.'：'.$data['name'].'添加成功');
+                    add_log($this->onname.'：'.$this->logname.'添加成功');
                     if($isclose)
                     {
                         $msg=lang('添加成功','handle');
@@ -265,7 +265,7 @@ class RenWuController extends AuthController {
                 $result =   $model->save($data);
 
                 if($result) {
-                    add_log($this->onname.'：'.$data['name'].'更新成功');
+                    add_log($this->onname.'：'.$this->logname.'更新成功');
                     $msg=lang('更新成功','handle');
                     
                      echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.location.reload();;parent.layer.close(index);</script>";
@@ -319,10 +319,10 @@ class RenWuController extends AuthController {
         if($result)
         {
             D('User')->updateCount($data['user_id'],'rw_total');
-            add_log($this->onname.'：'.$data['name'].'删除成功');
+            add_log($this->onname.'：'.$this->logname.'删除成功');
             return  $this->success(lang('删除成功','handle'));;
         }
-        add_log($this->onname.'：'.$data['name'].'删除失败');
+        add_log($this->onname.'：'.$this->logname.'删除失败');
         return $this->error(lang('删除失败','handle'));;
     }
     public function handle($id){
