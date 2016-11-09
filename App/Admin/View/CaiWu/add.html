@@ -8,6 +8,8 @@
         <input type="hidden" name="youhui_price" class="ys_price" data-price="vn">
         <input type="hidden" name="youhui_id" class="yh_id">
         <input type="hidden" name="token" value="{{ :token() }}">
+        <input type="hidden" name="sf_admin_id" value="{{ :session('admin_id') }}" >
+        <input type="hidden" name="sf_time" value="{{ :time() }}">
         <div class="well" style="">
             <h3 class="text-center">收费<small>({{ $data.user_name }})</small></h3>
             <div class="sf_box">
