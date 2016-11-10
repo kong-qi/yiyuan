@@ -872,7 +872,7 @@ function onkefu($type='is_zixun',$merg=0,$aid='',$ready=''){
                 {
                     $checked="";
                 }
-                $option.="<option value='".$v['id']."' ".$checked." >".$v['name']."(".$v['realname'].")</option>";
+                $option.="<option value='".$v['id']."' ".$checked." >".$v['realname']."</option>";
             }
         }
         $real='';

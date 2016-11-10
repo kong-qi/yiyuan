@@ -7,6 +7,7 @@
         <div class="animated fadeInUp">
             <form action="{{ :U('Admin/QianTaiJieZhen/ysedit') }}" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
                 <input type="hidden" name="fz_id" value="{{ :session('admin_id') }}">
+                <input type="hidden" name="lyall_id" id="lyall_id" value="{{ $data.lyall_id }}">
                 <div class="ibox-content">
                     <div class="form-group" style="margin-bottom: 0;padding-bottom: 0">
                         <div class="col-xs-6" style="padding-bottom: 0">
@@ -47,13 +48,15 @@
                         <div class="col-xs-4">
 
                             <select name="age" id="age" class="form-control js-age inline wb30">
-                                <option value="">{{ :lang('年龄') }}</option> {{ :echo_age(10) }}
+                                <option value="">{{ :lang('年龄') }}</option> {{ :echo_age($data['User']['age']) }}
                             </select>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 0;padding-bottom: 0">
                         <div class="col-xs-4">
-                            <select class="form-control" id="ly_id" name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id" data-type="ly" data-next="lyt_id" data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
+                            
+                            <select class="form-control"  required="required" id="ly_id"   name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id"  data-type="ly"  data-next="lyt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+
                                 <option value="">{{ :lang('请选择病人来源','handle') }}</option>
                                <?php
                                        if(check_group('root'))
@@ -67,12 +70,12 @@
                             </select>
                         </div>
                         <div class="col-xs-4">
-                            <select class="form-control" id="lyt_id" name="lyt_id" data-datachenge='1' data-close="#lytt_id" data-type="ly" data-next="lytt_id" data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
+                            <select class="form-control" id="lyt_id" name="lyt_id" onchange="get_ly2(this.value)">
                                 <option value="">{{ :lang('请选择','handle') }}</option>
                             </select>
                         </div>
                         <div class="col-xs-4">
-                            <select class="form-control" id="lytt_id">
+                            <select class="form-control" id="lytt_id" name="lytt_id" >
                                 <option value="">{{ :lang('请选择','handle') }}</option>
                             </select>
                         </div>
@@ -121,7 +124,32 @@
             submitHandler: function(form) {
                 //设置表单参数
                 //最终来源
+                //最终来源
+                $lyaid=$("#lyall_id");
+                $ly1=$("#ly_id").val();
+                $ly2=$("#lyt_id").val();
+                $ly3=$("#lytt_id").val();
 
+                if($ly3!='')
+                {
+                    $lyaid.val($ly3);
+                }else
+                {
+                    if($ly2!='')
+                    {
+                        $lyaid.val($ly2);
+                    }else
+                    {
+                        if($ly1!='')
+                        {
+                            $lyaid.val($ly1);
+                        }
+                    }
+                }
+                if($ly2=='')
+                {
+                    $ly3.val('');
+                }
                 form.submit();;
             }
         });
@@ -170,7 +198,11 @@
         $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
             $("#lyt_id").show().empty().append(json.content);
         });
-        get_ly2('{{ $data["lyt_id"] }}');
+        if($tfid!='')
+        {
+             get_ly2('{{ $data["lyt_id"] }}');
+        }
+       
     }
     function get_ly2($id){
         $str = "<option value=''>{{ :lang('无') }}</option>";
@@ -192,5 +224,52 @@
             }
         });
     }
+    $("[data-datachenge='1']").change(function () {
+        $url=$(this).attr('data-url');
+        $ks=$(this).attr('data-type');
+        $next_id=$(this).attr('data-next');
+        $id=$(this).val();
+        $closeid=$(this).attr('data-close');
+        $str="<option value=''>{{ :lang('无') }}</option>";
+        if($id=='')
+        {
+            $($closeid).empty().append($str);
+
+            return false;
+
+
+        }
+        $.ajax({
+                'url': $url,
+                type: 'get',
+                data: {
+                    'id': $id,
+                },
+                cache: false,
+
+                dataType: 'json',
+                success: function (data) {
+
+                    if(data.content!='')
+                    {
+
+                        $str='<option value="">{{ :lang("请选择") }}</option>';
+                        $str+=data.content;
+
+                        $("#"+$next_id).empty().append($str);
+
+                    }else
+                    {
+                        $str="<option value=''>{{ :lang('无') }}</option>";
+                        $("#"+$next_id).empty();
+                        $($closeid).empty().append($str);
+
+                       
+
+                    }
+
+                }
+            });
+    }).trigger("click");
     </script>
 </block>

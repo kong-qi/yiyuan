@@ -590,9 +590,10 @@ class QianTaiJieZhenController extends AuthController {
                 $udata['id']=$data['user_id'];
 
                 $data['status']=2;
-
-                M('User')->save($udata);
               
+                M('User')->save($udata);
+                //print_r( $postdata);
+                //exit();
                 $result =   $model->save($data);
                
                 if($result) {

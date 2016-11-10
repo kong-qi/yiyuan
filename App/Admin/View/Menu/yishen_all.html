@@ -1,0 +1,27 @@
+<php>if(check_group('root')!=1 and check_group("yishenjz_only")==1 and $v['ys_id']==session('admin_id') ){</php>
+<php>if($v['ystatus']==3){</php>
+<php>if(check_group('yishenjz_edit')){</php>
+
+
+	<php>
+	   if($v['jztime']!=''){
+	</php>
+	<a href="{{ :U('Admin/YuShen/quecheck_edit',array('id'=>$v['qz_id'])) }}" class="btn btn-xs btn-warning">
+
+	     <span class="fa fa-external-link-square btn-font" data-name="{{ :lang('修改接诊') }}" data-btn="handle"></span><span class="js-data-name"></span>
+	 </a>
+	<php>}}</php>
+	
+	 <a href="javascript:void(0)" data-title="{{ :lang('查看接诊') }}" data-w="80%" data-h="90%" data-layer="1" data-url="{{ :U('Admin/YuShen/quecheck_show',array('yid'=>$v['qz_id'])) }}" class="btn btn-xs btn-success">
+	
+	     <span class="fa fa-eye btn-font"  data-name="{{ :lang('查看接诊') }}" data-btn="handle"></span><span class="js-data-name"></span>
+	 </a>
+	 <php>if(check_group('kaidan_add')){</php>
+		<a href="{{ :U('Admin/YuShen/kaidan',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="80%" data-h="80%" data-uuid="{{ $v.user_uuid }}">
+		      <span class="fa fa-plus btn-font" data-name="{{ :lang('开单') }}" data-btn="handle"></span><span class="js-data-name"></span>
+		 </a>
+	 <php>}</php>
+
+
+<php>}}</php>                            
+ <include file="Menu:duihua_show" />

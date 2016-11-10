@@ -55,7 +55,8 @@
                                         <option value="">{{ :lang('请选择咨询方式') }}</option>
                                           {{ :get_lanmu_onelist('zixun',1,'','',$data['zx_id']) }}
                                     </select>
-                                     <if condition="check_group('root')">
+
+                                    <if condition="check_group('root')">
                                         {{ :onkefu('is_zixun',0,$data['admin_id']) }}
                                          <else/>
                                          {{ :onkefu('is_zixun',0,$data['admin_id']) }}
@@ -583,7 +584,7 @@
 
         }
         
-         $("[data-datachenge='1']").change(function () {
+        $("[data-datachenge='1']").change(function () {
             $url=$(this).attr('data-url');
             $ks=$(this).attr('data-type');
             $next_id=$(this).attr('data-next');
