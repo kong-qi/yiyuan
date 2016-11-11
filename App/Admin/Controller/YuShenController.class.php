@@ -272,7 +272,6 @@ class YuShenController extends AuthController {
 
         }
 
-
         $model = M('YuYue');
         $filed = '
             ly1.name as ly_name,

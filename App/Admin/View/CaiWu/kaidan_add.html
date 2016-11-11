@@ -49,7 +49,7 @@
 
                                 <div class="pull-right no_print">
                                     <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-danger">
-                                    <a href="{{ :U('Admin/YuShen/index',array('status'=>'3','list_type'=>'only')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
+                                    <a href="{{ :U('Admin/CaiWu/kaidanList',array('status'=>'3','list_type'=>'only')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -267,7 +267,21 @@
             $tprice = $("#price_total").val();
             $(".yf_money").attr('readonly',true);
             $(".yf_money").val(($tprice));
-            $(".js-yhh").text(($tprice));
+            ys_price=$('.ys_price').val();
+           
+            $v=accounting.unformat($tprice);
+            $yhhou=$v-ys_price;
+            if($yhhou<=0)
+            {
+                $yhhou=0;
+            }
+            $yhhou = accounting.formatMoney($yhhou, {
+                symbol: "",
+                format: "%s %v",
+                precision: 0
+            });
+            $(".js-yhh").text($yhhou);
+            $(".js-yhh").text(($yhhou));
 
         }
 
@@ -352,8 +366,27 @@
         $("#pay_ways").change(function(){
             if($(this).val()!=1){
                 $(".yf_money").val('');
+                $(".js-yhh").text('');
             }
             set_yf_money();
+        });
+        //改变定金余款价格
+        $(document).on('keyup blur', '.yf_money', function(event) {
+            event.preventDefault();
+            /* Act on the event */
+            $v=$(this).val();
+            //检测是否使用了优惠券
+            $yhv=$(".ys_price").val();
+            if($yhv)
+            {
+                $rv=$v-$yhv;
+                if($rv<=0)
+                {
+                    $rv=0
+                }   
+            }
+            
+            $(".js-yhh").text($rv);
         });
         $(".go-search").click(function() {
 
