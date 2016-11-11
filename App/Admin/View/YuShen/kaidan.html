@@ -256,6 +256,7 @@
         $('.js-key').bind('keypress', function(event) {
             if (event.keyCode == "13") {
                 go_ajax(0);
+                event.preventDefault();
             }
         });
 
