@@ -1185,9 +1185,9 @@ function sf_status($checked=''){
 }
 function pay_wasy($checked='',$type_echo=1){
     $array=array(
-        '1'=>'付全款',
-        '2'=>'付定金',
-        '3'=>'付部分款'
+        '1'=>lang('付全款'),
+        '2'=>lang('付定金'),
+        '3'=>lang('付部分款')
         );
     $str='';
     
@@ -1228,9 +1228,13 @@ function js_status($checked=''){
 }
 function btn_color($checked=''){
      $arr=array(
-        '0'=>'badge',
-        '1'=>'badge badge-info',
-        '2'=>'badge badge-danger',
+       '0'=>'badge',
+        '1'=>'badge badge-green',
+        '2'=>'badge badge-primary',
+        '3'=>'badge  badge-info',
+        '4'=>'badge badge-danger',
+        '5'=>'badge badge-success',
+        '6'=>'badge badge-warning'
 
     );
     if($checked!='')
