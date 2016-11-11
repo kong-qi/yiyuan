@@ -337,7 +337,7 @@ class CaiWuController extends AuthController
             $this->display();
         }
     }
-
+    //收费
     public function add()
     {
         //权限选择
@@ -556,6 +556,198 @@ class CaiWuController extends AuthController
             echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);window.location='" . $backurl . "';</script>";
         }
     }
-   
+    public function kaidanList(){
+
+        
+        $this->onname="开单列表";
+        $this->assign('onname',$this->onname);
+        $this->check_group('kaidan');
+        $map=array();
+        $model=M('KaiDan');
+        $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
+        $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kdys_id = ys.id';
+         
+        
+         $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
+          $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
+
+
+        $page=1;
+        if(isset($_GET['p']))
+        {
+            $page=$_GET['p'];
+        }
+         $filed = '
+            kd.sf_status as sf_status,
+            kd.id as id,
+            kdys_id as kdys_id,
+            kd.jz_id as jz_id,
+            kd.uuid as uuid,
+            kd.kd_time as kd_time,
+            kd.sf_status,
+            kd.js_status,
+            kd.price_show,
+            kd.price_total,
+            kd.pay_ways,
+            jzys.name as sy_name,
+            u1.name as user_name,
+            ys.realname as kd_name
+           
+         ';
+        //是否只能看到自己开的单
+        if(check_group('root'))
+        {
+
+        }else
+        {
+            if(check_group("kaidan_only")  )
+            {
+
+                $map['kd.kd_id']=session('admin_id');
+            }
+        }
+
+
+
+
+        $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
+
+        $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+        $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
+         $menu_list= array(
+          
+            2=>'开单时间',
+            3=>'姓名',
+            4=>'消费项目',
+         
+           
+            9=>'总计',
+            10=>'手术医生',
+            11=>'开单人',
+            12=>'收费状态',
+            14=>'付款类型',
+            13=>'操作'
+           
+           
+            );
+        $this->menu_list=$menu_list;
+
+        $this->assign('list',$list);// 赋值数据集
+        
+
+        $this->display();
+    }
+    //开单收费
+    public function addKaiDanPrice(){
+
+        $this->check_group('kaidan_add');
+        $this->onname='开单收费';
+        $this->assign('onname',$this->onname);
+
+        $m=D('JieZhen')->relation(true)->where(array('checked'=>1))->find($id);
+       
+        $data=array(
+
+            );
+        $this->assign($data);
+        $this->data=$m;
+        $this->display("CaiWu:kaidan_add");
+    }
+    //收费POST
+    public function addKaiDanPricePost(){
+        if(IS_POST){
+            M()->startTrans();
+            $model =D('KaiDan');
+            $post=I('post.');
+            if($data=$model->create()) {
+                $data['admin_id']=session('admin_id');
+                $data['jz_id']=$post['qz_id'];//接诊表ID
+                $data['yy_id']=$post['yy_id'];//预约ID
+               
+
+                //统计类别下的数量
+                $fid_arr=$post['price_fid'];
+                $hj_arr=$post['price_heji'];
+                $news_total=array();
+                foreach ($fid_arr as $key => $value) {
+                    $news_total[$value][]=$hj_arr[$key];
+                }
+                $price_type=array();
+                foreach ($news_total as $key => $value) {
+                    $price_type[]=array(
+                        'fid'=>$key,
+                        'total'=>array_sum($news_total[$key])
+                        );
+                    
+                }
+                //消费各个类别合计计算
+                $dataList=array();
+                $data['price_type']=json_encode($price_type);
+
+              
+                $dataList=array();
+                //更新预约表
+             
+                $ydata['stats']=4;//状态
+                $ydata['kdtime']=$post['ykd_time'];
+                //$data['kd_time']=time();//开单时间
+                $ydata['id']=$post['yy_id'];
+
+                //付款类型
+                if($data['pay_ways']==1)
+                {
+                    $data['sf_status']=1;
+                }elseif ($data['pay_ways']==2) {
+                    $data['sf_status']=2;
+                    $data['yf_money']=$data['true_price'];
+                }
+                elseif ($data['pay_ways']==3) {
+                    $data['sf_status']=3;
+                    $data['yf_money']=$data['true_price'];
+                }
+                $data['true_price']=$data['cash_price']+$data['shuaka_price']+$data['other_price'];
+                //付了金额
+                foreach ($data as $key => $value) {
+                    if($value=='')
+                    {
+                        unset($data[$key]);
+                    }
+                }
+                
+              
+                $yresult=M('YuYue')->data($ydata)->save();
+
+                $backurl=U("Admin/CaiWu/addKaiDanPrice");
+
+                $result =    $model->add($data);
+                if($result) {
+                    //更新优惠券
+                    if ($data['youhui_id'] != '') {
+                        $yhq_data = array(
+                            'utime' => time(),
+                            'status'=>1,
+                            'kd_id' => $result
+                        );
+                        M('Card')->where(array('id' => $data['youhui_id']))->save($yhq_data);
+                    }
+                    M()->commit();
+                    add_log($this->onname.'：'.$this->logname.'添加成功');
+                    $msg=lang('添加成功','handle');
+
+                   
+                    return $this->success($msg,$backurl );
+                    // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }else{
+                    M()->rollback();
+                    add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
+                    $msg=lang('添加失败','handle');
+                    return $this->success($msg,$backurl );
+                    //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }
+
+            }
+        }
+    }
 
 }

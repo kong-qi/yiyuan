@@ -4,8 +4,13 @@
 </block>
 <block name="right">
     <div class="right-box">
-        <form action="{{ :U('Admin/YuShen/postKaiDan') }}" method="post" id="validate">
+        <form action="{{ :U('Admin/CaiWu/addKaiDanPricePost') }}" method="post" id="validate">
             <input type="hidden" name="logname" value="{{ $data.User.name }}">
+            <input type="hidden" name="youhui_price" class="ys_price" data-price="vn">
+            <input type="hidden" name="youhui_id" class="yh_id">
+            <input type="hidden" name="token" value="{{ :token() }}">
+            <input type="hidden" name="sf_admin_id" value="{{ :session('admin_id') }}" >
+            <input type="hidden" name="sf_time" value="{{ :time() }}">
             <div class="ibox">
                 <div class="ibox-content" style="padding-left:10px; padding-right:10px; border: none; border-width: 0;border-style:none;" id="shoujisf3">
                     <div class="">
@@ -42,7 +47,7 @@
                                     <input class="form-control yf_money" data-price="vn" readonly="readonly" required="" name="pay_price"></input>
                                 </div>
 
-                                <div class="pull-right">
+                                <div class="pull-right no_print">
                                     <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-danger">
                                     <a href="{{ :U('Admin/YuShen/index',array('status'=>'3','list_type'=>'only')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
                                 </div>
@@ -50,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="roww">
+                    <div class="roww no_print">
                         <div class="col-sm-3">
                             <div class="input-group m-b">
                                 <span class="input-group-addon"><font color="">{{ :lang('所属类别') }}</font></span>
@@ -61,19 +66,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 no_print">
                         <div class="input-group m-b">
                             <span class="input-group-addon"><font color="">{{ :lang('关键词') }}</font></span>
                             <input type="text" value="" placeholder="{{ :lang('费用名称/检索码/编码') }}" class="form-control js-key">
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 no_print">
                         <button class="btn btn-primary  go-search" type="button">{{ :lang('检索消费项目') }}</button>
                     </div>
                     <!-- <div class="alert alert-warning" role="alert">{{ :lang('请点击选择消费项目') }}</div> -->
-                    <div class="roww change_price" id="zhuti" style="">
+                    <div class="roww change_price no_print" id="zhuti" style="">
                     </div>
-                    <div class="pager" id="pager" style="padding: 0">
+                    <div class="pager no_print" id="pager" style="padding: 0">
                     </div>
                 </div>
                 <div class="ibox-content" style="padding-left:10px; padding-right:10px; border: none; border-width: 0;border-style:none;">
@@ -90,9 +95,9 @@
                         <div class="tab-box ">
                             <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table  " style="background: #fff">
                                 <tbody>
-                                    
+                                   
                                     <tr>
-                                       
+                                        
                                         <td>
                                             <div class="insert_price_more m-l">
                                                 <table class="table">
@@ -103,7 +108,7 @@
                                                             <td>{{ :lang('单位') }}</td>
                                                             <td>{{ :lang('数量') }}</td>
                                                             <td>{{ :lang('小计金额') }}</td>
-                                                            <td>{{ :lang('操作') }}</td>
+                                                            <td class="no_print">{{ :lang('操作') }}</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody id="add_price">
@@ -122,15 +127,83 @@
                                         </td>
                                     </tr>
                                 </tbody>
-                                <tfooter>
-                                    <tr>
-                                        <td colspan="2" class="text-center">
-                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-success">
-                                        </td>
-                                    </tr>
-                                </tfooter>
+                                
                             </table>
                         </div>
+                    </div>
+                    <div class="sf_part ">
+                        <div class="col-xs-12">
+                           
+                            <div class="js-tab-price none">
+                                <div class="input-group ">
+                                    <div class="input-group-addon">{{ :lang('付定金') }}</div>
+                                    <input class="input form-control  js-add-pay-price js-dingjing" type="text" >
+                                </div>
+                            </div>
+                            <div class="js-tab-price none">
+                                <div class="input-group ">
+                                    <div class="input-group-addon">{{ :lang('付部分款') }}</div>
+                                    <input class="input  form-control js-add-pay-price js-bufengkuan" type="text" >
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="input-group ">
+                                <div class="input-group-addon">{{ :lang('优惠码') }}</div>
+                                <input class="input js-input-youhui form-control" type="text" name="youhui_code" value="" placeholder="{{ :lang('输入优惠码') }}">
+                                <div class="input-group-addon">{{ :lang('优惠减免') }}：<span class="js-yhj text-blue">0</span></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="input-group ">
+                                <div class="input-group-addon">{{ :lang('优惠后') }}</div>
+                                <div class="form-control"><span class="js-yhh" data-price="vnlist">{{ $data['pay_price'] }}</span></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="input-group ">
+                                <div class="input-group-addon">{{ :lang('付款方式') }}</div>
+                                <div class="form-control">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox"  class="pay_method" name="pay_mehtod" id="" value="1">{{ :lang('现金方式') }}
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" class="pay_method" name="pay_mehtod" id="" value="2">{{ :lang('刷卡方式') }}
+                                    </label>
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" class="pay_method" name="pay_mehtod" id="" value="3"> {{ :lang('其他方式') }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="col-xs-4">
+                                <div class="input-group ">
+                                    <div class="input-group-addon">{{ :lang('现金') }}</div>
+                                    <input data-price="vn"  class="input form-control   js-money" type="text" name="cash_price">
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="input-group ">
+                                    <div class="input-group-addon">{{ :lang('刷卡') }}</div>
+                                    <input data-price="vn"  class="input form-control   js-money" type="text" name="shuaka_price">
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="input-group ">
+                                    <div class="input-group-addon">{{ :lang('其他') }}</div>
+                                    <input data-price="vn"  class="input form-control   js-money" type="text" name="other_price">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="sf_part">
+                        <p class="text-center no_print">
+                            <button type="submit" class="btn btn-success">{{ :lang('提交') }}</button>
+                            <a href="#" class="btn btn-white" onclick="javascript:window.print();return false;">{{ :lang('打印') }}</a>
+                        </p>
                     </div>
                 </div>
                 <div class="cl"></div>
@@ -194,6 +267,7 @@
             $tprice = $("#price_total").val();
             $(".yf_money").attr('readonly',true);
             $(".yf_money").val(($tprice));
+            $(".js-yhh").text(($tprice));
 
         }
 
@@ -226,12 +300,45 @@
                     layer.msg('{{ :lang("请选择消费项目") }}');
                     return false;
                 }
-                if (!submonery()) {
+               
+                //选择选择付款方式
+                if($(".pay_method:checked").size()<=0)
+                {
+                    layer.msg('请选择付款方式');
+                    return false;
+                }
+                if($(".pay_method").eq(0).is(":checked"))
+                {
+                    $mv=$(".js-money").eq(0).val();
+                    if($mv=='' || $mv==0)
+                    {
+                        layer.msg('{{ :lang("请输入现金金额") }}');
+                        return false;
+                    }
+                }
+                if($(".pay_method").eq(1).is(":checked"))
+                {
+                    $mv=$(".js-money").eq(1).val();
+                    if($mv=='' || $mv==0)
+                    {
+                        layer.msg('{{ :lang("请输入刷卡金额") }}');
+                        return false;
+                    }
+                }   
+                if($(".pay_method").eq(2).is(":checked"))
+                {
+                    $mv=$(".js-money").eq(2).val();
+                    if($mv=='' || $mv==0)
+                    {
+                        layer.msg('{{ :lang("请输入其他金额") }}');
+                        return false;
+                    }
+                }    
+                 if (!submonery()) {
 
                     layer.msg('{{ :lang("请检查金额") }}');
                     return false;
-                }
-
+                }  
                 //return false;
                 unshowmonery();
                 submonery();
@@ -291,7 +398,7 @@
                 $edit_price_status = ' readonly="readonly" ';
             }
 
-            $str = '<tr class="show_price_all ajax-price-id-' + $id + '"> <td><input type="hidden"  name="ticket_name[]" value="' + $ticket_name + '"> <input type="hidden"  name="price_name[]" value="' + $name + '"> <input type="hidden" name="price_xfname[]" value="' + $xf_name + '"> <input type="hidden" name="price_fid[]" value="' + $xf_id + '"> <input type="hidden" class="input_price"  name="price_id[]" value="' + $id + '"> <input type="hidden" name="price_danwei[]" value="' + $danwei + '"> <input type="hidden" class="input_heji" name="price_heji[]" value="' + $price + '">  <a href="javascript:;" class="m-l pr_name" data-xfname="' + $xf_name + '" data-fid="' + $xf_id + '" data-id="' + $id + '" data-ticket="' + $ticket_name + '">' + $name + '</a></td> <td><input ' + $edit_price_status + ' name="price_price[]" data-price="vn"  type="text" value="' + $price + '" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td> <td> <span class="badge pr_danwei">' + $danwei + '</span></td> <td><input type="text" min="0" value="' + $num + '" name="price_num[]" class="form-control pr_num" style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td> <td><span class="pr_heji" data-price="vnlist">' + $price + '</span></td> <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ :lang('上移 ') }}</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ :lang('下移 ') }}</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> {{ :lang('删除 ') }}</a> </td> </tr>'; 
+            $str = '<tr class="show_price_all ajax-price-id-' + $id + '"> <td><input type="hidden"  name="ticket_name[]" value="' + $ticket_name + '"> <input type="hidden"  name="price_name[]" value="' + $name + '"> <input type="hidden" name="price_xfname[]" value="' + $xf_name + '"> <input type="hidden" name="price_fid[]" value="' + $xf_id + '"> <input type="hidden" class="input_price"  name="price_id[]" value="' + $id + '"> <input type="hidden" name="price_danwei[]" value="' + $danwei + '"> <input type="hidden" class="input_heji" name="price_heji[]" value="' + $price + '">  <a href="javascript:;" class="m-l pr_name" data-xfname="' + $xf_name + '" data-fid="' + $xf_id + '" data-id="' + $id + '" data-ticket="' + $ticket_name + '">' + $name + '</a></td> <td><input ' + $edit_price_status + ' name="price_price[]" data-price="vn"  type="text" value="' + $price + '" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td> <td> <span class="badge pr_danwei">' + $danwei + '</span></td> <td><input type="text" min="0" value="' + $num + '" name="price_num[]" class="form-control pr_num " style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l no_print"><i class=" fa fa-plus-square-o no_print" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num no_print m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td> <td><span class="pr_heji" data-price="vnlist">' + $price + '</span></td> <td class="no_print"> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ :lang('上移 ') }}</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ :lang('下移 ') }}</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> {{ :lang('删除 ') }}</a> </td> </tr>'; 
             //log($str); 
             $("#add_price").append($str);
             //非input显示
@@ -468,37 +575,59 @@
             }
 
         });
-        $("#ks2_id").change(function() {
-            $url = "{{ :U('Admin/Ajax/getYuShen') }}";
-            $next_id = "ysz_id";
-            $id = $(this).val();
-            $.ajax({
-                'url': $url,
-                type: 'get',
-                data: {
-                    'id': $id,
-                    ysid: "{{ $data.ys_id }}"
-                },
-                cache: false,
-                dataType: 'json',
-                success: function(data) {
-                    if (data.content != '') {
-                        $str = '<option value="">{{ :lang("请选择") }}</option>';
-                        $str += data.content;
-                        $("#" + $next_id).empty().append($str);
-
-                    } else {
-                        $str = "<option value=''>{{ :lang('无') }}</option>";
-                        $("#" + $next_id).empty();
-                        $($closeid).empty().append($str);
-
-
-                    }
-
+       
+        //优惠券
+        $(".js-input-youhui").on("keyup blur", function() {
+            $url = "{{ :U('Admin/Ajax/getYouHui') }}";
+            $v = $(this).val();
+            $uid = "{{ $data.user_id }}";
+            $.get($url, {
+                'code': $v,
+                'uid': $uid
+            }, function(data) {
+                //log(data);
+                if (data.price) {
+                    $(".js-yhj").text(data.price);
+                    $(".ys_price").val(data.price);
+                    $(".yh_id").val(data.id)
+                    youhui_total();
+                    return '';
+                }else
+                {
+                    $(".js-yhj").text('');
+                    $(".ys_price").val('');
+                    $(".yh_id").val('')
                 }
-            });
-        }).trigger('change');
+                
+                youhui_total();
+                return '';
+            })
+        })
+        function youhui_total() {
+            
+            //js-add-pay-price
+           
+            var pay_price=$(".yf_money").val();
 
+            pay_price=accounting.unformat(pay_price);
+
+          
+            ys_price=$('.ys_price').val();
+           
+            $yhhou=pay_price-ys_price;
+            if($yhhou<=0)
+            {
+                $yhhou=0;
+            }
+            $yhhou = accounting.formatMoney($yhhou, {
+                symbol: "",
+                format: "%s %v",
+                precision: 0
+            });
+            $(".js-yhh").text($yhhou);
+            
+            tab_price()
+        }
 
 
 
@@ -541,6 +670,43 @@
         set_yf_money()
 
 
+    }
+    //付款方式
+    $(".pay_method").change(function(event) {
+       
+        tab_price()
+    });
+    tab_price();
+    
+    function tab_price(){
+        result_price=$(".yf_money").val();
+        ys_price=$('.ys_price').val();
+        result_price=result_price-ys_price;
+        if(result_price<=0)
+        {
+            $result_price=0;
+        }
+        //log(result_price);
+        result_price=accounting.formatMoney(result_price, { symbol: "",  format: "%s %v" ,precision:0});
+        
+       
+        //获得选择的付款方式
+        ck_length=$(".pay_method:checked").size();
+       
+        if(ck_length<=1)
+        {
+            var $ways_v=$(".pay_method:checked").val();
+            pay_price=$(".js-yhh").text();
+            pay_price=accounting.unformat(pay_price);
+            result_price=accounting.formatMoney(pay_price, { symbol: "",  format: "%s %v" ,precision:0});
+            $(".js-money").val('').eq($ways_v-1).val(result_price);
+        }else
+        {
+            $(".js-money").val('');
+
+            
+        }
+       
     }
     </script>
 </block>

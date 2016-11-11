@@ -19,7 +19,7 @@ class AuthController extends Controller
         $this->isLogin();
         //全局开启，无需单个模块开启
 
-        $this->assign('onname', $this->onname);
+        $this->assign('onname', lang($this->onname));
         $this->assign('rule_qz', $this->rule_qz);
 
         //通知模块设计，可重写。
