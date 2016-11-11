@@ -531,7 +531,7 @@ class YuShenController extends AuthController {
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 if($result && $yresult) {
-
+                    D('User')->updateCount($data['user_id'],'jz_total');
                     M()->commit();
                     add_log($this->onname.'：'.$this->logname.'添加成功');
                     $msg=lang('添加成功','handle');
@@ -624,7 +624,7 @@ class YuShenController extends AuthController {
 
                 $result =    $model->add($data);
                 if($result) {
-
+                    D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
                     add_log($this->onname.'：'.$this->logname.'添加成功');
                     $msg=lang('添加成功','handle');
