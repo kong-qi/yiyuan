@@ -746,7 +746,8 @@ class YuShenController extends AuthController {
         $this->menu_list=$menu_list;
 
         $this->assign('list',$list);// 赋值数据集
-        
+        $this->assign('page',page( $count ,$map,$pagesize));// 赋值分页输出
+
 
         $this->display();
     }

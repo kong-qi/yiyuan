@@ -34,7 +34,7 @@
                                                 <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
                                                  {{ :get_lanmu_onelist('daozhen','1','','',$data['zl_id']) }}
                                             </select>
-                                            <select required="" class="form-control inline wb30" id="ysz_id" name="ysz_id">
+                                            <select  class="form-control inline wb30" id="ysz_id" name="ysz_id">
                                                 <option value="">{{ :lang('请选择医生','handle') }}</option>
                                                 {{ :get_shyishen($data['ysz_id']) }}
                                             </select>
@@ -232,12 +232,12 @@
                     //最终区域
 
                     return_pic_json(".enmoreinsert_file .itempic", "thumbs", 1);
-                    var txt = ue.getContentTxt();
+                   /* var txt = ue.getContentTxt();
                     if(txt=='')
                     {
                         layer.msg('{{ :lang("记录不能为空") }}');
                         return false;
-                    }
+                    }*/
                     form.submit();;
                 }
             });
