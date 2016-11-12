@@ -192,7 +192,7 @@ class HuiFangController extends AuthController {
                     'td-1' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-2' => array('name' => lang('电话'), 'filed'=>'tel','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-3' => array('name' => lang('回访类型'), 'filed'=>'type','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-4' => array('name' => lang('回访状态'), 'filed'=>'status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-4' => array('name' => lang('回访状态'), 'filed'=>'status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                     'td-5' => array('name' => lang('回访方式'), 'filed'=>'ways','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-6' => array('name' => lang('回访主题'), 'filed'=>'name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-7' => array('name' => lang('回访结果'), 'filed'=>'result_cont','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),

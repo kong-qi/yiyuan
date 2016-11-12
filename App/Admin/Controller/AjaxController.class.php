@@ -677,13 +677,15 @@ class AjaxController extends AuthController
             {
                
                 $content.="<tr>
-                <td class='text-blue'>".$v['name']."</td>
+                
                 <td>".$v['type_text']."</td>
+                <td class='text-blue'>".$v['name']."</td>
                 <td><span class='".btn_yycolor($v['status']+1)."'>".$status[$v['status']]."</span></td>
                 <td class='text-blue'>".to_time($v['rtime'])."</td>
+                 <td>".$v['handle_name']."</td>
                 <td class='text-info'>".to_time($v['ctime'])."</td>
                 <td>".$v['create_name']."</td>
-                <td>".$v['handle_name']."</td>
+               
                ";
                 $content.="</tr>";
             }

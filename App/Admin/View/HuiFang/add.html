@@ -12,8 +12,8 @@
                     <input type="hidden" name="logname" value="{{ $data.name }}">
                     <div class="ibox float-e-margins m-t">
                         <div class="ibox-content">
-                            <div class="form-group">
-                                <div class="input-group">
+                            <div class="form-group inline wb30">
+                                <div class="input-group ">
                                     <label class="input-group-addon">{{ :lang('病人名字') }}</label>
                                     <input type="hidden" name="renwu_id" value="{{ :I('get.rw_id') }}">
                                     <input type="hidden" name="close_frame" value="1">
@@ -23,13 +23,23 @@
                                     <input class="form-control" value="{{ $data.name }}" name="uname" readonly>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group inline wb30">
                                 <div class="input-group">
                                     <label class="input-group-addon">{{ :lang('联系电话') }}</label>
                                    
                                     <input data-show-phone="1" data-url="{{ :U('Admin/Ajax/showPhone') }}" data-vid="#showphone" id="showphone" data-type="input" data-uid="{{ $data.id }}" class="form-control" value="{{ :hide_tel($data['tel'],2,5) }}"  readonly>
                                 </div>
                             </div>
+                            <div class="form-group inline wb30">
+                               <div class="input-group">
+                                    <label class="input-group-addon">{{ :lang('回访方式') }}</label>
+                                
+                                    <select  id="hf_way" name="ways" class="form-control">
+                                        {{ :get_huifang_onelist('hf_way') }}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
                             <div class="form-group">
                                <div class="input-group">
                                     <label class="input-group-addon">{{ :lang('回访主题') }}</label>
@@ -44,7 +54,7 @@
                                     <input type="text" required class="form-control" value="{{ :lang($theme) }}" name="name" >
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group inline wb30">
                                <div class="input-group">
                                     <label class="input-group-addon">{{ :lang('回访类型') }}</label>
                                 
@@ -53,16 +63,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                               <div class="input-group">
-                                    <label class="input-group-addon">{{ :lang('回访方式') }}</label>
-                                
-                                    <select  id="hf_way" name="ways" class="form-control">
-                                        {{ :get_huifang_onelist('hf_way') }}
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
+                           
+                            <div class="form-group inline wb30">
                                <div class="input-group">
                                     <label class="input-group-addon">{{ :lang('客户流向') }}</label>
                                 
@@ -80,7 +82,7 @@
                                     </select>
                                 </div>
                             </div> -->
-                            <div class="form-group">
+                            <div class="form-group inline wb30">
                                <div class="input-group">
                                 <label class="input-group-addon">{{ :lang('回访结果') }}</label>
                                 
@@ -104,7 +106,7 @@
                                 
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12 text-center">
 
                                     <button class="btn btn-primary" type="submit">{{ :lang('添加') }}</button>
                                 </div>

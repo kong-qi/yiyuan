@@ -106,6 +106,7 @@ class CaiWuController extends AuthController
             $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
             $this->assign('list',$list);// 赋值数据集
             $handle_tpl='df';
+            $sbtn=U('Admin/CaiWu/waitPriceList',array('sf_status'=>1,'is_search'=>1));
             //判断模版
             if(I('get.sf_status')==1)
             {
@@ -115,13 +116,15 @@ class CaiWuController extends AuthController
             {
                  $handle_tpl="status_2";
                 $type_arr='dingjing';
+                $sbtn=U('Admin/CaiWu/waitPriceList',array('sf_status'=>2,'is_search'=>1));
             }
             elseif(I('get.sf_status')==3)
             {
                  $handle_tpl="status_3";
                 $type_arr='yukuan';
+                $sbtn=U('Admin/CaiWu/waitPriceList',array('sf_status'=>3,'is_search'=>1));
             }
-            
+            $this->assign('sbtn',$sbtn);
             $this->assign('handle_tpl',$handle_tpl);
             $this->assign('page',page($count, $map, $pagesize));
             $menu_list = $this->getFiledArray($type_arr);
@@ -261,8 +264,8 @@ class CaiWuController extends AuthController
                      
             $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
             $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
-
-
+            $sbtn=U('Admin/CaiWu/index',array('is_search'=>1));
+            $this->assign('sbtn',$sbtn);
             $page=1;
             if(isset($_GET['p']))
             {
@@ -604,8 +607,19 @@ class CaiWuController extends AuthController
         $this->check_group('shouyin_check');
         $map = array();
         $this->assign('is_search',I('get.is_search'));
-
-       
+        $stpl="YuYue:so:caiwu";
+        $sbtn=U('Admin/CaiWu/kaidanList',array('is_search'=>1));
+        $onstatus=I('get.stpl');
+        if($onstatus=='2')
+        {
+             //$sbtn=U('Admin/CaiWu/kaidanList',array('is_search'=>1));
+        }
+        if($onstatus=='3')
+        {
+             //$sbtn=U('Admin/CaiWu/kaidanList',array('is_search'=>1));
+        }
+        $this->assign('stpl',$stpl);
+        $this->assign('sbtn',$sbtn);
         //网站来源
         
         if (IS_GET) {
@@ -720,7 +734,7 @@ class CaiWuController extends AuthController
             u1.birthday as birthday,
 
             
-            a1.name as admin_name,
+            a1.realname as admin_name,
             k1.name as ks_name,
             k2.name as kst_name,
             k3.name as kstt_name,

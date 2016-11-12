@@ -231,9 +231,8 @@
                     <div class="col-sm-3">
                         <label class="col-sm-12 control-label">&nbsp;</label>
                         <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
-                          <a href="{{ :U('Admin/YuYue/index',array('is_search'=>1)) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
+                          <a href="{{ :U('Admin/QianTaiJieZhen/index',array('is_search'=>1,'status'=>'2','list_type'=>'has')) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
                         <!-- <a href="{{ :U('Admin/YuYue/index',$_SERVER['QUERY_STRING']) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}{{ $_SERVER['QUERY_STRING'] }}</a> -->
-
                     </div>
                 </div>
             </div>

@@ -186,6 +186,19 @@ class YuShenController extends AuthController {
         $this->check_group('yishenjz');
         $map = array();
         $this->assign('is_search',I('get.is_search'));
+        $stpl="YuYue:so:yushenOn";
+        $sbtn=U('Admin/YuShen/index',array('status'=>2,'is_search'=>1));
+        $onstatus=I('get.stpl');
+        if($onstatus=='2')
+        {
+            $sbtn=U('Admin/YuShen/index',array('status'=>3,'is_search'=>1,'list_type'=>I('get.list_type')));
+        }
+        if($onstatus=='3')
+        {
+            $sbtn=U('Admin/YuShen/index',array('status'=>3,'is_search'=>1,'list_type'=>I('get.list_type')));
+        }
+        $this->assign('stpl',$stpl);
+        $this->assign('sbtn',$sbtn);
 
         //自己查看自己的
         if (!check_group('root')) {
@@ -306,7 +319,7 @@ class YuShenController extends AuthController {
             u1.birthday as birthday,
 
             
-            a1.name as admin_name,
+            a1.realname as admin_name,
             k1.name as ks_name,
             k2.name as kst_name,
             k3.name as kstt_name,

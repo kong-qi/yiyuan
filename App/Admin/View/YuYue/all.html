@@ -16,9 +16,7 @@
                             </if>
                             <li class=""><a data-toggle="tab" href="tabs_panels.html#tab-2" aria-expanded="false"><span class="hidden-xs">{{ :lang('详细对话') }}</span><span class="visible-xs">{{ :lang('对话') }}</span></a> </li>
                             
-                            <if condition="check_group('yishenjz_add')"><li class=""><a data-toggle="tab" href="tabs_panels.html#tab-6" aria-expanded="false"><span class="hidden-xs">{{ :lang('确诊列表') }}</span><span class="visible-xs">{{ :lang('列表') }}</span></a> </li>
-                            </if>
-
+                           
                         </ul>
                     </div>
                 </div>
@@ -196,10 +194,12 @@
                         </div>
                         <div id="tab-2" class="tab-pane">
                             <div class="form-group">
-                                <label class="col-sm-12">{{ :lang('详细聊天') }}</label>
+                                
                                 <div class="col-sm-12">
-
-                                    <textarea class=""  name="zx_content" id="content"> {{ :htmlspecialchars_decode($data['zx_content']) }}</textarea>
+                                    <div style="background: #fff;padding: 10px;">
+                                         {{ :htmlspecialchars_decode($data['zx_content']) }}
+                                    </div>
+                                 
 
                                 </div>
                             </div>
@@ -212,14 +212,15 @@
                                         <thead>
                                         <tr>
 
-                                            <th>{{ :lang('回访主题') }}</th>
                                             <th>{{ :lang('回访类型') }}</th>
-                                            <th>{{ :lang('回访方式') }}</th>
                                             <th>{{ :lang('回访状态') }}</th>
+                                            <th>{{ :lang('回访方式') }}</th>
+                                            <th>{{ :lang('回访主题') }}</th>
                                             <th>{{ :lang('客户流向') }}</th>
-                                            <th>{{ :lang('下次回访') }}</th>
-                                            <th>{{ :lang('下次小结') }}</th>
-                                            <th>{{ :lang('操作') }}</th>
+                                            <th>{{ :lang('回访结果') }}</th>
+                                            <th>{{ :lang('回访时间') }}</th>
+                                            <th>{{ :lang('回访人') }}</th>
+                                            
                                         </tr>
                                         </thead>
                                         <tbody id="zhuti">
@@ -241,13 +242,15 @@
                                         <thead>
                                         <tr>
 
-                                            <th>{{ :lang('任务主题') }}</th>
-
-
-                                            <th>{{ :lang('任务状态') }}</th>
-
-                                            <th>{{ :lang('回访时间') }}</th>
-                                            <th>{{ :lang('操作') }}</th>
+                                             <th>{{ :lang('回访类型') }}</th>
+                                            <th>{{ :lang('回访主题') }}</th>
+                                            
+                                            <th>{{ :lang('回访状态') }}</th>
+                                            <th>{{ :lang('回访日期') }}</th>
+                                             <th>{{ :lang('回访人') }}</th>
+                                            <th>{{ :lang('创建时间') }}</th>
+                                            <th>{{ :lang('创建人') }}</th>
+                                           
                                         </tr>
                                         </thead>
                                         <tbody id="zhuti2">

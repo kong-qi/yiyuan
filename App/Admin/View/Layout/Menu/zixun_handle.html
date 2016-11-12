@@ -35,6 +35,10 @@
     </li>
     <li>
         <a class="J_menuItem"
+           href="{{ :U('Admin/YuYue/index',array('ystime'=>get_days(-1),'yetime'=>get_days(-1),'status'=>1,'show'=>'none')) }}">{{ :lang('昨日预到','menu') }}</a>
+    </li>
+    <li>
+        <a class="J_menuItem"
            href="{{ :U('Admin/YuYue/index',array('dzstime'=>get_days(-1),'dzetime'=>get_days(-1),'show'=>'none')) }}{{ :U('Admin/YuYue/index') }}">{{ :lang('昨日已到','menu') }}</a>
     </li>
     <li>

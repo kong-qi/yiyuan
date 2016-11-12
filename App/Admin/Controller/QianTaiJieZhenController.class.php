@@ -208,7 +208,7 @@ class QianTaiJieZhenController extends AuthController {
             u1.birthday as birthday,
 
             
-            a1.name as admin_name,
+            a1.realname as admin_name,
             k1.name as ks_name,
             k2.name as kst_name,
             k3.name as kstt_name,

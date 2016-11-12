@@ -47,7 +47,7 @@
                     </div>
                     </div>
                     <div class="roww"></div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="col-md-5">
                             <input name="stime" type="text" class="form-control layer-date" value="{{ :I('get.stime') }}" id="start" placeholder="{{ :lang('收费时间') }}" >
                         </div>
@@ -57,12 +57,14 @@
                         </div>
                         <div class="col-xs-2">
                              <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
+                             <a href="{{ $sbtn }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
                         </div>
+
 
                         
                        
                         <!-- <a href="{{ :U('Admin/YuYue/index',$_SERVER['QUERY_STRING']) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}{{ $_SERVER['QUERY_STRING'] }}</a> -->
-                    </div>
+                    
                   
                 </div>
             </div>

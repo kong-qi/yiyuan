@@ -145,7 +145,7 @@ class YuYueController extends AuthController
             u1.birthday as birthday,
 
             
-            a1.name as admin_name,
+            a1.realname as admin_name,
             k1.name as ks_name,
             k2.name as kst_name,
             k3.name as kstt_name,
@@ -305,6 +305,9 @@ class YuYueController extends AuthController
                 'td-10' => array('name' => lang('具体病种'), 'filed'=>'bz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                 'td-11' => array('name' => lang('来源'), 'filed'=>'ly_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                 'td-11' => array('name' => lang('回访次数'), 'filed'=>'hf_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                'td-12' => array('name' => lang('咨询员'), 'filed'=>'admin_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                'td-13' => array('name' => lang('接诊医生'), 'filed'=>'ys_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                'td-14' => array('name' => lang('手术医生'), 'filed'=>'ysz_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => '1')
                 );
 
             break;
@@ -791,7 +794,7 @@ class YuYueController extends AuthController
 
            
 
-            a1.name as admin_name,
+            a1.realname as admin_name,
 
             k1.name as ks_name,
             k2.name as kst_name,
@@ -1284,7 +1287,7 @@ class YuYueController extends AuthController
             u1.birthday as birthday,
 
             
-            a1.name as admin_name,
+            a1.realname as admin_name,
             k1.name as ks_name,
             k2.name as kst_name,
             k3.name as kstt_name,
