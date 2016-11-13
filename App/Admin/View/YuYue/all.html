@@ -55,7 +55,7 @@
                                                 <label class="col-sm-12">{{ :lang('备注') }}</label>
                                                 <div class="col-sm-12">
                                                     <textarea readonly class="ibox-content" style="width:100%; background:#EEEEEE; border:1px #E5E6E7 solid">
-                                                        {{ $data.mark }}
+                                                        {{ :echo_html($data['mark']) }}
                                                     </textarea>
                                                 </div>
                                             </div>
@@ -90,7 +90,7 @@
                                                     <select name="jiuzhenyishengID" class="form-control" readonly="">
                                                         <!-- 管理登录时可换/默认同账号 -->
                                                         <option value="">{{ :lang('无') }}</option>
-                                                        {{ :get_yushen($data['ys_id']) }}
+                                                        {{ :get_doc(array(),1,$data['ys_id']) }}
                                                     </select>
 
                                                 </div>

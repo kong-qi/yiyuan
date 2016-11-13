@@ -27,6 +27,8 @@ class CaiWuController extends AuthController
                 $page=$_GET['p'];
             }
              $filed = '
+                kd.yy_id as yid,
+
                 kd.sf_status as sf_status,
                 kd.id as id,
                 kdys_id as kdys_id,
@@ -45,6 +47,8 @@ class CaiWuController extends AuthController
 
                 jzys.name as sy_name,
                 u1.name as user_name,
+                u1.id as user_id,
+                
                 ys.realname as kd_name
                
              ';
@@ -137,7 +141,7 @@ class CaiWuController extends AuthController
         switch ($type) {
             case "has":
                 $menu_list = array(
-
+                    
                     'td-1' => array('name' => lang('收费时间'), 'filed'=>'sf_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-3' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
@@ -145,6 +149,7 @@ class CaiWuController extends AuthController
                     'td-5' => array('name' => lang('开单人'), 'filed'=>'kd_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-6' => array('name' => lang('收费状态'), 'filed'=>'sf_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-7' => array('name' => lang('结算状态'), 'filed'=>'js_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                  
                     
 
                 );

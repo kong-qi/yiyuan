@@ -668,7 +668,7 @@ class YuYueController extends AuthController
         $id = I('get.id');
 
         $map = array(
-            'uuid' => $id
+            'id' => $id
         );
         //自己查看自己的
         if (!check_group('root')) {
@@ -682,7 +682,7 @@ class YuYueController extends AuthController
 
 
         $model = D('YuYue')->relation(true)->where($map)->find();
-
+        
         if ($model) {
             $this->data = $model;// 模板变量赋值
         } else {
