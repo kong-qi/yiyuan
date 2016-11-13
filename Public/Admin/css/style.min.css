@@ -2789,8 +2789,8 @@ nav.page-tabs .page-tabs-content {
 	left: auto;
 }
 #content-main {
-    height: calc(100% - 101px);
-    height: -webkit-calc(100% - 101px);
+    height: calc(100% - 20px);
+    height: -webkit-calc(100% - 20px);
    	
     padding: 10px;
    
