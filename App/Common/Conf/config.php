@@ -19,7 +19,7 @@ return array(
     ),
 
     'URL_CASE_INSENSITIVE' =>true,
-    'SHOW_PAGE_TRACE' =>1,
+    'SHOW_PAGE_TRACE' =>0,
     'LOAD_EXT_CONFIG' => 'db',
     'MODULE_ALLOW_LIST' => array('Admin'),//去掉Home
     'TMPL_L_DELIM'          =>  '{{ ',            // 模板引擎普通标签开始标记
