@@ -5,6 +5,18 @@
  * Date: 2016/4/23
  * Time: 11:27
  */
+function home_tjname($name){
+    $str='';
+    if(check_group('root'))
+    {
+        $str=('总的');
+    }else
+    {
+        $str=('我的');
+    }
+    $str.=$name;
+    return lang($str);
+}
 function create_admin_id(){
     return session('admin_id');
 }
@@ -1431,4 +1443,56 @@ function str_to_arr($str,$type=","){
         return  $newstr;
     }
     return false;
+}
+
+//更新没有到的为逾期
+function update_yuyue_over_time(){
+    $time=time();
+    M()->execute("update  __PREFIX__yu_yue  set status='5' where status=1 and ydatetime <".$time);
+}
+//上月周期
+function prev_week($where=''){
+    //获得本月的天数
+    $now_day=date("d", time());
+    $prev_month=date("t", mktime(23, 59, 59, date("m"), 0, date("Y")));
+    $now_month=date("t", mktime(23, 59, 59, date("m"), date("t")));
+    $month=date("n", time());
+   
+    $days=get_days(-$prev_month);
+    
+    if($now_day>$prev_month)
+    {
+        
+        $days=date("Y-m-d", mktime(23, 59, 59, date("m"), 0, date("Y")));
+    }elseif($now_day==$now_month and $now_day<$prev_month)
+    {
+
+        $days=date("Y-m-d", mktime(23, 59, 59, date("m"), 0, date("Y")));
+    }elseif($now_day==$now_month and $now_day>$prev_month){
+         $days=date("Y-m-d", mktime(23, 59, 59, date("m"), 0, date("Y")));
+    }elseif($month==2)
+    {
+        if($now_day==$now_month)
+        {
+            $days=date("Y-m-d", mktime(23, 59, 59, date("m"), 0, date("Y")));
+        }
+    }
+   
+    $fistday = date("Y-m-d", mktime(0, 0, 0, date("m") - 1, 1, date("Y")));
+    if($where!='')
+    {
+        return  array('between',array(strtotime($fistday),strtotime($days)));
+    }
+    return $array = array(
+        'firstday' => $fistday,
+        'lastday' => $days
+    );
+   
+    //return array($firstday,$lastday);
+}
+function getlastMonthDays($date){
+  $timestamp=strtotime($date);
+  $firstday=date('Y-m-01',strtotime(date('Y',$timestamp).'-'.(date('m',$timestamp)-1).'-01'));
+  $lastday=date('Y-m-d',strtotime("$firstday +1 month -1 day"));
+  return array($firstday,$lastday);
 }

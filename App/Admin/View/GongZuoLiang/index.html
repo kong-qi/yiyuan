@@ -227,7 +227,7 @@
                 title: "{{ :lang('添加','handle') }}",
                 shadeClose: true,
                 shade: 0.8,
-                area: ['70%', '70%'],
+                area: ['90%', '90%'],
                 content: '{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}',
                 cancel: function (index) {
                     //window.location.reload()
@@ -251,7 +251,7 @@
         var end = {
             elem: '#end',
             format: 'YYYY-MM-DD',
-            min: laydate.now(),
+           
             max: '2099-06-16 23:59:59',
             istime: true,
             istoday: false,
@@ -269,7 +269,7 @@
                 title: "{{ :lang('修改','handle') }}",
                 shadeClose: true,
                 shade: 0.8,
-                area: ['70%', '70%'],
+                area: ['90%', '90%'],
                 content: '{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=' + title,
                 cancel: function (index) {
                     //window.location.reload()

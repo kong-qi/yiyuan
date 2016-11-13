@@ -1,0 +1,106 @@
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :home_tjname('接诊情况') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="height: 245px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{ :lang('日期') }}</th>
+                            
+                         
+                            <th>{{ :lang('接诊量') }}</th>
+                            <th>{{ :lang('开单量') }}</th>
+                            <th>{{ :lang('开单率') }}</th>
+                            <th>{{ :lang('开单总额') }}</th>
+                            
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ :lang('今日') }}</td>
+                           
+                            <td>
+                                <php> echo $jz=D('Home')-> getTotal('JieZhen',array(),0,'jztime')</php>
+                            </td>
+
+                            <td>
+                                <php> echo $kd=D('Home')-> getTotal('KaiDan',array(),0,'kd_time')</php>
+                            </td>
+                            <td>
+                                <php>echo round( $kd/$jz * 100 , 2) . "％";</php>
+                            </td>
+                            <td>
+                                <php>echo D('Home')->getTotalPrice('KaiDan',array(),0,'kd_time')</php>
+                            </td>
+                          
+                          
+                        </tr>
+                        <tr>
+                            <td>{{ :lang('昨日') }}</td>
+                            
+                            <td>
+                                <php> echo $jz2=D('Home')-> getTotal('JieZhen',array(),-1,'jztime')</php>
+                            </td>
+
+                            <td>
+                                <php> echo $kd2=D('Home')-> getTotal('KaiDan',array(),-1,'kd_time')</php>
+                            </td>
+                            <td>
+                                <php>echo round( $kd2/$jz2 * 100 , 2) . "％";</php>
+                            </td>
+                            <td>
+                                <php>echo D('Home')->getTotalPrice('KaiDan',array(),-1,'kd_time')</php>
+                            </td>
+                            
+                           
+                        </tr>
+                       
+                        <tr>
+                            <td>{{ :lang('本周') }}</td>
+                            
+                            <td>
+                                <php> echo $jz3=D('Home')->getTotal_month('JieZhen',array(),'bz','jztime')</php>
+                            </td>
+
+                            <td>
+                                <php> echo $kd3=D('Home')->getTotal_month('KaiDan',array(),'bz','kd_time')</php>
+                            </td>
+                            <td>
+                                <php>echo round( $kd3/$jz3 * 100 , 2) . "％";</php>
+                            </td>
+                            <td>
+                                <php>echo D('Home')->getPrice_between('bz')</php>
+                            </td>
+                          
+                        </tr>
+                        <tr>
+                            <td>{{ :lang('本月') }}</td>
+                            
+                            <td>
+                                <php> echo $jz4=D('Home')->getTotal_month('JieZhen',array(),'by','jztime')</php>
+                            </td>
+
+                            <td>
+                                <php> echo $kd4=D('Home')->getTotal_month('KaiDan',array(),'by','kd_time')</php>
+                            </td>
+                            <td>
+                                <php>echo round( $kd4/$jz4 * 100 , 2) . "％";</php>
+                            </td>
+                            <td>
+                                 <php>echo D('Home')->getPrice_between('by')</php>
+                            </td>
+                          
+                        </tr>
+                        
+                        
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>

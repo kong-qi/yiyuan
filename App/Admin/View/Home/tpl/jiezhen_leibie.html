@@ -1,0 +1,97 @@
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :home_tjname('来院类别数据') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="height: 213px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{ :lang('全部') }}</th>
+                            
+                            <th>{{ :lang('初诊') }}</th>
+                            <th>{{ :lang('复诊') }}</th>
+                            <th>{{ :lang('复查') }}</th>
+                            <th>{{ :lang('再消费') }}</th>
+                            <th>{{ :lang('其他') }}</th>
+                            
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ :lang('今日') }}</td>
+                           
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('leibie'=>'1'),0,'dztime')</php>
+                            </td>
+
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('leibie'=>2),0,'dztime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('leibie'=>3),0,'dztime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('leibie'=>4),0,'dztime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('leibie'=>5),0,'dztime')</php>
+                            </td>
+                          
+                          
+                        </tr>
+                   
+                        <tr>
+                            <td>{{ :lang('本周') }}</td>
+                            
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>1),'bz','dztime')</php>
+                            </td>
+
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>2),'bz','dztime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>3),'bz','dztime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>4),'bz','dztime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>5),'bz','dztime')</php>
+                            </td>
+                          
+                        </tr>
+                        <tr>
+                            <td>{{ :lang('本月') }}</td>
+                            
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>1),'by','dztime')</php>
+                            </td>
+                             <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>2),'by','dztime')</php>
+                            </td>
+                             <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>3),'by','dztime')</php>
+                            </td>
+                             <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>4),'by','dztime')</php>
+                            </td>
+                             <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('leibie'=>5),'by','dztime')</php>
+                            </td>
+
+                            
+                          
+                        </tr>
+                        
+                        
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>

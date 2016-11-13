@@ -1,0 +1,23 @@
+
+    
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :home_tjname('市场渠道开发情况') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+                </div>
+            </div>
+            <div class="ibox-content" >
+                <div class="text-center m-b">
+                    {{ :lang('今日') }} <span class="text-blue">
+                    <php>echo D("Home")->getTotal("LanMu",array('type'=>'bingren',array('is_jigou'=>1)))</php></span> ( <php>echo D("Home")->getTotal("LanMu",array('type'=>'bingren','is_jigou'=>1),0,'ctime',1)</php>)  
+                    本周  <span class="text-blue"><php> echo D("Home")->getMarket_between()</php></span>（<php> echo D("Home")->getMarket_between('bz',array(),1)</php>）  
+                    我的机构总数  
+                    <span class="text-blue"><php> echo D("Home")->getMarket_between('all')</php> (<php> echo D("Home")->getMarket_between('all',array(),1)</php>)
+                </div>
+
+               
+            </div>
+        </div>
+ 
+    

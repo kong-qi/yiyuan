@@ -6,4 +6,5 @@ class IndexController extends  AuthController {
 
        $this->display();
     }
+   
 }

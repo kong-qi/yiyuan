@@ -1,0 +1,86 @@
+
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :home_tjname('待收费') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="height: 245px;">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{ :lang('全部') }}</th>
+                            <th>{{ :lang('回访任务') }}</th>
+                            <th>{{ :lang('已完成的回访任务') }}</th>
+                            <th>{{ :lang('待回访') }}</th>
+                            <th>{{ :lang('新增回访记录') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{ :lang('今日') }}
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('RenWu',array(),0,'rtime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('RenWu',array(),0,'rtime')</php>
+                            </td>
+                            <td>
+                                <a href="{{ :U('Admin/RenWu/index/',array('status'=>0)) }}">
+                                <php> echo D('Home')-> getTotal('RenWu',array('status'=>0),0,'rtime')</php>
+                                </a>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('HuiFang')</php>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ :lang('明日') }}
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('RenWu',array(),1,'rtime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('RenWu',array(),1,'rtime')</php>
+                            </td>
+                            <td>
+                                <a href="{{ :U('Admin/RenWu/index/',array('status'=>0)) }}">
+                                <php> echo D('Home')-> getTotal('RenWu',array('status'=>0),1,'rtime')</php>
+                                </a>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('HuiFang',array(),1)</php>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ :lang('昨日') }}
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('RenWu',array(),-1,'rtime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('RenWu',array(),-1,'rtime')</php>
+                            </td>
+                            <td>
+                                <a href="{{ :U('Admin/RenWu/index/',array('status'=>0)) }}">
+                                <php> echo D('Home')-> getTotal('RenWu',array('status'=>0),-1,'rtime')</php>
+                                </a>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('HuiFang',array(),-1)</php>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>
+  
+    

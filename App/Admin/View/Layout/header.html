@@ -16,7 +16,20 @@
     </button>
     <nav class="page-tabs J_menuTabs">
         <div class="page-tabs-content">
-            <a href="javascript:;" class="active J_menuTab" data-id="{{ :U('Admin/Home/index') }}">{{ :lang('首页') }}</a>
+            <php>$home_url=U('Admin/Home/homeTongJi');</php>
+            <if condition="check_group('root') neq true">
+                <if condition="check_group('login_website_caiwu')">
+                       
+                     <php>$home_url=U('Admin/CaiWu/waitPriceList');</php>
+
+                </if>
+                <if condition="check_group('login_website_kefu')">
+                     <php>$home_url=U('Admin/RenWu/index/',array('status'=>0));</php>
+                     
+
+                </if>
+            </if>
+            <a href="javascript:;" class="active J_menuTab" data-id="{{ $home_url }}">{{ :lang('首页') }}</a>
         </div>
     </nav>
     <button class="roll-nav roll-right J_tabRight"><i class="fa icon-forward"></i>

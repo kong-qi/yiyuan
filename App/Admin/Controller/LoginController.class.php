@@ -44,6 +44,8 @@ class LoginController extends Controller
 
                     }else
                     {
+                        //更新一定预到没有到的为逾期
+                        
 
                         session('name',$ckpwd['name']);
                         session('admin_id',$ckpwd['id']);

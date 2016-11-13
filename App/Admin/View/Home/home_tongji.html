@@ -1,0 +1,100 @@
+<extend name="Layout:index" />
+<block name="add_css">
+    <link rel="stylesheet" href="__CSS__/sweetalert.css">
+</block>
+<block name="add_js">
+    <script src="__JS__/sweetalert.min.js"></script>
+    
+</block>
+<block name="right">
+    <div class="right-box">
+      <php>if(!check_group('root')){</php>
+
+           <div class="col-xs-12" style="margin-bottom: 0">
+               <if condition="check_group('login_website_zixun')">
+                    <div class="col-xs-5">
+                         <include file="Home:tpl:huifang" />
+                    </div>
+                    <div class="col-xs-7">
+                         <include file="Home:tpl:zxyy" />
+                    </div>
+                   
+                   
+                    <include file="Home:tpl:echarts" />
+
+               </if>
+               <if condition="check_group('login_website_shichang')">
+                    <div class="col-xs-12">
+                         <include file="Home:tpl:shichang" />
+                    </div>
+                    <div class="col-xs-5">
+                         <include file="Home:tpl:huifang" />
+                    </div>
+                    <div class="col-xs-7">
+                         <include file="Home:tpl:sczxyy" />
+                    </div>
+                   
+                   
+                    <include file="Home:tpl:echarts" />
+               </if>
+               <if condition="check_group('login_adv_shichang')">
+                    <div class="col-xs-12">
+                         <include file="Home:tpl:advecharts" />
+                    </div>
+               </if>
+                <if condition="check_group('login_website_jiezhen')">
+                    <div class="col-xs-6">
+                         <include file="Home:tpl:jiezhen" />
+                    </div>
+                    <div class="col-xs-6">
+                        <include file="Home:tpl:jiezhen_leibie" />
+                    </div>
+
+               </if>
+                <if condition="check_group('login_website_doc')">
+                    <div class="col-xs-6">
+                         <include file="Home:tpl:huifang" />
+                    </div>
+                    <div class="col-xs-6">
+                        <include file="Home:tpl:quezhen" />
+                    </div>
+
+               </if>
+              
+                    
+               
+           </div>
+        <php>}else{</php>
+        <div class="col-xs-12" style="margin-bottom: 0">
+       
+            <if condition="check_group('login_website_zixun')">
+                 <include file="Home:tpl:huifang" />
+                 <include file="Home:tpl:zxyy" />
+                 <include file="Home:tpl:echarts" />
+
+            
+                 <include file="Home:tpl:shichang" />
+                 <include file="Home:tpl:advecharts" />
+                 <div class="col-xs-6">
+                     <include file="Home:tpl:jiezhen" />
+                 </div>
+                 <div class="col-xs-6">
+                     <include file="Home:tpl:jiezhen_leibie" />
+                 </div>
+                 <div class="col-xs-12">
+                     <include file="Home:tpl:quezhen" />
+                 </div>
+            </if>
+        </div>
+        <php>}</php>
+        <div class="clear"></div>
+
+
+    </div>
+
+</block>
+<block name="add_foot_js">
+  
+
+
+</block>

@@ -10,7 +10,7 @@
                <div class="ibox-content">
                         <div class="input-group m-b" style="margin-bottom:5px;">
                             <span class="input-group-addon">{{ :lang('咨询方式','filed') }}</span>
-                            <select name="gj_id" class="form-control" required>
+                            <select id="gj_id" name="gj_id" class="form-control" required>
                                 <option value="">{{ :lang('请选择','filed') }}</option>
                                 {{ $rule }}
                             </select>
@@ -106,10 +106,17 @@
             };
             laydate(shengri);
         });
-        function get_yuyue_number(date){
+        //计算咨询和预约数
+        $("#gj_id").change(function(){
+            $v=$(this).val();
+            get_yuyue_number($("#shengri").val());
+        })
+        
+        function get_yuyue_number(date,gj_id){
             url="{{ :U('Admin/Ajax/getYuYueNumber') }}";
             date=date ||  get_date(0);
-            $.get(url,{'date':date},function(data){
+            gj_id=gj_id || $("#gj_id").val();
+            $.get(url,{'date':date,'gj_id':gj_id},function(data){
               
                 
                     $("input[name='bduihua']").val(data.zxtotal);
@@ -118,7 +125,6 @@
             });
             
         }
-
 
     </script>
 </block>

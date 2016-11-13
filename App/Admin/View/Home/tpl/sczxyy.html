@@ -1,0 +1,149 @@
+
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :home_tjname('咨询、预约和到院情况') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link"> <i class="fa fa-wrench"></i> </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>{{ :lang('全部') }}</th>
+                           
+                            <th>{{ :lang('仅咨询') }}</th>
+                            <th>{{ :lang('预约') }}</th>
+                            <th>{{ :lang('预到') }}</th>
+                            <th>{{ :lang('到院') }}</th>
+                            <th>{{ :lang('逾期未到') }}</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ :lang('今日') }}</td>
+                            <td><span class="text-blue">{{ :D('Home')->getTotalGzl_has() }}</span> ({{ :D('Home')->getTotalGzl_has(0,array(),1) }})</td>
+                           
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),0,'ctime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),0,'ydatetime')</php>
+                            </td>
+
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),0,'dztime')</php>
+                            </td>
+                          
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('status'=>5),0,'ydatetime')</php>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ :lang('明日') }}</td>
+                            <td>
+                                <span class="text-blue">{{ :D('Home')->getTotalGzl_has(1) }}</span> ({{ :D('Home')->getTotalGzl_has(1,array(),1) }})
+                            </td>
+                           
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),1,'ctime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),1,'ydatetime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),1,'dztime')</php>
+                            </td>
+                            
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('status'=>5),1,'ydatetime')</php>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ :lang('昨日') }}</td>
+                            <td>
+                                <span class="text-blue">{{ :D('Home')->getTotalGzl_has(-1) }}</span> ({{ :D('Home')->getTotalGzl_has(-1,array(),1) }})
+                            </td>
+                           
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),-1,'ctime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),-1,'ydatetime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array(),-1,'dztime')</php>
+                            </td>
+                            
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('status'=>5),-1,'ydatetime')</php>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ :lang('本月') }}</td>
+                            <td>
+                                <span class="text-blue">{{ :D('Home')->getTotalGzl_month() }}</span> ({{ :D('Home')->getTotalGzl_month('by',array(),1) }})
+                            </td>
+                           
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'by','ctime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'by','ydatetime')</php>
+                            </td>
+
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'by','dztime')</php>
+                            </td>
+                           
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('status'=>5),'by','ydatetime')</php>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ :lang('同期') }}</td>
+                            <td>
+                                 <span class="text-blue">{{ :D('Home')->getTotalGzl_month('zq') }}</span> ({{ :D('Home')->getTotalGzl_month('zq',array(),1) }})
+                            </td>
+                            
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'zq','ctime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'zq','ydatetime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'zq','dztime')</php>
+                            </td>
+                           
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('status'=>5),'zq','ydatetime')</php>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ :lang('上月') }}</td>
+                            <td>
+                                <span class="text-blue">{{ :D('Home')->getTotalGzl_month('sy') }}</span> ({{ :D('Home')->getTotalGzl_month('sy',array(),1) }})
+                            </td>
+                            
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'sy','ctime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'sy','ydatetime')</php>
+                            </td>
+                            <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array(),'sy','dztime')</php>
+                            </td>
+                           
+                            <td>
+                                <php> echo D('Home')-> getTotal('YuYue',array('status'=>5),'sy','ydatetime')</php>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+               
+            </div>
+        </div>
