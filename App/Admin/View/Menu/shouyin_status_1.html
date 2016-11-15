@@ -11,3 +11,10 @@
     </if>
     
 <php>}</php>
+<if condition="check_group('kaidan_edit')">
+    <php>if($v['sf_status']>3){</php>
+    
+    <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
+        <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></a>
+    <php>}</php>
+</if>

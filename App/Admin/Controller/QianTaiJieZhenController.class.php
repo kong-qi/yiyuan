@@ -639,19 +639,29 @@ class QianTaiJieZhenController extends AuthController {
     public  function del(){
         //权限选择
         $this->check_group($this->rule_qz.'_del');
-        $id=I('get.id');
+        $id=I('get.qzid');
         $map=array(
-                'uuid'=>$id
+                'id'=>$id
             );
-        $model   =  D(CONTROLLER_NAME);
+        $model   =  D('JieZhen');
         $data=$model->where($map)->find();
+        
+        //删除确诊，
+        $ydata['status']=3;
+        $ydate['jztime']='';
+        $ydata['qz_id']='';
+        $ydata['id']=$data['yy_id'];
+        M()->startTrans();
+        $ym=M('YuYue')->save($ydata);
         $result=$model->where($map)->delete();
         if($result)
         {
+            M()->commit();
             add_log($this->onname.'：'.$data['name'].'删除成功');
             $msg=lang('删除成功');
             return  $this->success($msg);
         }
+         M()->rollback();
         add_log($this->onname.'：'.$data['name'].'删除失败');
         $msg=lang('删除成功');
         return $this->error($msg);

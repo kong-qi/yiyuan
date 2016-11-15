@@ -1,4 +1,4 @@
-<if condition="$v['ystatus'] eq 3">
+<if condition="$v['ystatus'] eq 3 || $v['ystatus'] eq 4">
 	<if condition="check_group('yishenjz_edit')">
 	<php>
 	   if($v['jztime']!=''){
@@ -22,3 +22,9 @@
 </if>
                             
  <include file="Menu:duihua_show" />
+ <if condition=" check_group('yishenjz_del')">
+     <a href="{{ :U('Admin/QianTaiJieZhen/del/',array('qzid'=>$v['qz_id'])) }}"
+     class="btn btn-xs btn-white" date-del="1">
+     <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span>
+    </a>
+ </if>

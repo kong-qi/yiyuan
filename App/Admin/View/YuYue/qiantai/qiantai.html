@@ -39,7 +39,7 @@
                                 </div>
                                
                                 <div class="form-group">
-                                    <select class="form-control inline wb50"  name="zx_id" id="userinfo0">
+                                    <select class="form-control inline wb50" required=""  name="zx_id" id="userinfo0">
                                         <option value="">{{ :lang('请选择咨询方式') }}</option>
                                         {{ :get_lanmu_onelist('zixun') }}
                                     </select>
@@ -124,7 +124,7 @@
                             </div>
                             <div class="ibox-content">
                                 <div class="form-group">
-                                    <select class="form-control wb30 inline"  id="ly_id" name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id" data-type="ly" data-next="lyt_id" data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
+                                    <select class="form-control wb30 inline" required=""  id="ly_id" name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id" data-type="ly" data-next="lyt_id" data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
                                         <option value="">{{ :lang('请选择病人来源','handle') }}</option>
                                         <?php
                                                 if(check_group('root'))

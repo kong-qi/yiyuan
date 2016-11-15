@@ -422,6 +422,11 @@ class YuShenController extends AuthController {
         {
             $orderstr='y1.jztime desc,y1.id desc';
         }
+        if(I('get.status')==3)
+        {
+            unset($map['y1.status']);
+            $map['_string']="y1.status in('3','4')";
+        }
         $list = $model->alias('y1')->field($filed)->join($join)->order($orderstr)->where($map)->page($page . ',' . $pagesize)->select();
         //print_r($list);
         $this->assign('list', $list);// 赋值数据集
@@ -626,7 +631,7 @@ class YuShenController extends AuthController {
                 $dataList=array();
                 //更新预约表
              
-                $ydata['stats']=4;//状态
+                $ydata['status']=4;//状态
                 $ydata['kdtime']=$post['ykd_time'];
                 //$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yy_id'];
@@ -834,6 +839,7 @@ class YuShenController extends AuthController {
         $this->display();
     }
     public function kaidanDel(){
+
         //权限选择
         $this->check_group('kaidan_del');
         $id=I('get.id');
@@ -842,12 +848,22 @@ class YuShenController extends AuthController {
         );
         $model   =   D('KaiDan');
         $data=$model->where($map)->find();
+        //删除确诊，
+        $ydata['status']=3;
+        $ydate['kdtime']='';
+        $ydate['kd_id']='';
+        $ydata['id']=$data['yy_id'];
+        M()->startTrans();
+        $ym=M('YuYue')->save($ydata);
+
         $result=$model->where($map)->delete();
         if($result)
         {
+             M()->commit();
             add_log($this->onname.'：'.$data['name'].'删除成功');
             return  $this->success(lang('删除成功','handle'));;
         }
+         M()->rollback();
         add_log($this->onname.'：'.$data['name'].'删除失败');
         return $this->error(lang('删除失败','handle'));;
     }

@@ -375,8 +375,11 @@
             event.preventDefault();
             /* Act on the event */
             $v=$(this).val();
+
+            $v=accounting.unformat($v);
             //检测是否使用了优惠券
             $yhv=$(".ys_price").val();
+
             if($yhv)
             {
                 $rv=$v-$yhv;

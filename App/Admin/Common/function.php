@@ -1447,7 +1447,7 @@ function str_to_arr($str,$type=","){
 
 //更新没有到的为逾期
 function update_yuyue_over_time(){
-    $time=time();
+    $time=strtotime(get_days(-1));
     M()->execute("update  __PREFIX__yu_yue  set status='5' where status=1 and ydatetime <".$time);
 }
 //上月周期

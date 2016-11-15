@@ -120,14 +120,17 @@
                                                 <a data-w="90%" data-h="500px" href="{{ :U('Admin/YuShen/kaidan_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-edit btn-font" data-name="{{ :lang('修改') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
 
                                             </if>
-                                            <if condition="check_group('kaidan_edit')">
-                                                <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
-                                                    <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></a>
-                                            </if>
+
                                         <php>}elseif($v['sf_status']==1){</php>
                                             <a href="{{ :U('Admin/YuShen/kaidanPrint',array('id'=>$v['jz_id'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-pencil-square "></span> {{ :lang('打印') }}</a>
                                         <php>}</php>
-
+                                        <if condition="check_group('kaidan_edit')">
+                                            <php>if($v['sf_status']>3){</php>
+                                            
+                                            <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
+                                                <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></a>
+                                            <php>}</php>
+                                        </if>
                                     </td>
                                     
                                 </tr>

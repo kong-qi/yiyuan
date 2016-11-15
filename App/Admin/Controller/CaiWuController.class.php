@@ -887,7 +887,7 @@ class CaiWuController extends AuthController
                 $dataList=array();
                 //更新预约表
              
-                $ydata['stats']=4;//状态
+                $ydata['status']=4;//状态
                 $ydata['kdtime']=$post['ykd_time'];
                 //$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yy_id'];
@@ -920,6 +920,7 @@ class CaiWuController extends AuthController
                 $backurl=U("Admin/CaiWu/kaidanList");
 
                 $result =    $model->add($data);
+                return '';
                 if($result) {
                     //更新优惠券
                     if ($data['youhui_id'] != '') {
