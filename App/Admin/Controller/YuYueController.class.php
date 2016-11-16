@@ -353,7 +353,12 @@ class YuYueController extends AuthController
         $backurl=U('Admin/YuYue/add');
 
         if (IS_POST) {
-
+            if(!check_token(I('post.token')))
+            {
+                $msg=lang('操作错误');
+                $backurl = U("Admin/YuYue/add");
+                return  $this->error($msg,$backurl );
+            }
             $model = D("YuYue");
             $user=D('User');
             $zixun=D('ZiXun');
@@ -951,6 +956,12 @@ class YuYueController extends AuthController
         if (IS_POST) {
             $model = D('YuYue');
             $user=D('User');
+            if(!check_token(I('post.token')))
+            {
+                $msg=lang('操作错误');
+                $backurl = U("Admin/YuYue/zxyyadd");
+                return  $this->error($msg,$backurl );
+            }
             $postdata = I('post.');
             if ($model->create()) {
                 M()->startTrans();
