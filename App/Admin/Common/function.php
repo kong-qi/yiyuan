@@ -916,20 +916,7 @@ function onkefu2($type='is_zixun',$merg=0,$aid=''){
         //查询组
         $Model = new \Think\Model();
         $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1') and checked='1'");
-        if(count($admin_arr)>0)
-        {
-            foreach ($admin_arr as $key=>$v)
-            {
-                if($admin_id==$v['id'] or $v['id']==$aid)
-                {
-                    $checked="selected='selsected'";
-                }else
-                {
-                    $checked="";
-                }
-                $option.="<option value='".$v['id']."'  ".$checked." >".$v['name']."(".$v['realname'].")</option>";
-            }
-        }
+        
 
         $str='<div class="col-sm-3">
              <div class="input-group m-b">
@@ -948,6 +935,31 @@ function onkefu2($type='is_zixun',$merg=0,$aid=''){
     }
     return $str;
 }
+//在线客服获取
+function get_kefu($type='is_zixun',$checkedid=''){
+    $str='';
+    $admin_id=$checkedid;
+    $option='';
+    //查询组
+    $Model = new \Think\Model();
+    $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1') and checked='1'");
+    if(count($admin_arr)>0)
+    {
+        foreach ($admin_arr as $key=>$v)
+        {
+            if($admin_id==$v['id'])
+            {
+                $checked="selected='selsected'";
+            }else
+            {
+                $checked="";
+            }
+            $option.="<option value='".$v['id']."'  ".$checked." >".$v['realname']."</option>";
+        }
+    }
+    return $option;
+}
+
 //年龄设置
 function echo_age($id=''){
     

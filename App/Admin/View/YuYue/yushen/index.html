@@ -13,7 +13,7 @@
         <else/>
         <div class="ibox">
                 
-                <include file="$stpl"/>
+            <include file="$stpl"/>
             
         </div>
         </if>
@@ -69,7 +69,7 @@
 
                             <tr>
                                 <th width="40" class="hidden-xs text-center"><input name="chkall" type="checkbox" id="chkall" value="0"></th>
-
+                                    <th>{{ :lang('操作') }}</th>
                                     <foreach name="menu_list" item="v" key="k">
                                         <if condition="$v['name'] neq ''">
                                             <if condition="$v['is_hide'] neq 1">
@@ -81,7 +81,7 @@
                                         </if>
                                        
                                     </foreach>
-                                    <th>{{ :lang('操作') }}</th>
+                                   
 
                             </tr>
                             <if condition="$list">
@@ -92,6 +92,32 @@
 
                                         <td align="center" class="hidden-xs">
                                             <input type="checkbox" class="checkbox-select" name="checkbox[]" value="{{ $v.yuuid }}">
+                                        </td>
+                                        <td class="td-handle">
+                                            <!-- //网站竞价人员 -->
+                                            <div class="box" style="">
+                                                <php>
+                                                    if($handle_tpl=='only')
+                                                    {
+                                                </php>
+
+                                                    <include file="Menu:yishen_only" />
+                                                <php>
+                                                    }elseif($handle_tpl=='all'){
+                                                </php>
+                                                    <php>if(check_group('root')){</php>
+                                                       
+                                                        <include file="Menu:yishen_only" />
+                                                    <php>}else{</php>
+                                                        <include file="Menu:yishen_all" />
+                                                    <php>}</php>
+
+                                                <php>}else{</php>
+                                                    <include file="Menu:yishen" />
+                                               <php>}</php>
+                                            
+                                            </div>
+                                           
                                         </td>
 
                                       
@@ -133,32 +159,7 @@
 
 
                                       
-                                        <td class="td-handle">
-                                            <!-- //网站竞价人员 -->
-                                            <div class="box" style="">
-                                                <php>
-                                                    if($handle_tpl=='only')
-                                                    {
-                                                </php>
-
-                                                    <include file="Menu:yishen_only" />
-                                                <php>
-                                                    }elseif($handle_tpl=='all'){
-                                                </php>
-                                                    <php>if(check_group('root')){</php>
-                                                       
-                                                        <include file="Menu:yishen_only" />
-                                                    <php>}else{</php>
-                                                        <include file="Menu:yishen_all" />
-                                                    <php>}</php>
-
-                                                <php>}else{</php>
-                                                    <include file="Menu:yishen" />
-                                               <php>}</php>
-                                            
-                                            </div>
-                                           
-                                        </td>
+                                       
                                     </tr>
                                     <tr class="js-tr" style="display: none">
                                         <td colspan="12">
