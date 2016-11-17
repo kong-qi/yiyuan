@@ -155,7 +155,6 @@ class AjaxController extends AuthController
 
                  foreach ($list as $key => $v) {
                       $num=$key+1;
-                    ;
                       $data=array('pice_type_code'=>$num);
                       M('LanMu')->where(array('uuid'=>$v['uuid']))->save($data);
 
@@ -181,9 +180,12 @@ class AjaxController extends AuthController
                    $list=M('Price')->where(array('checked'=>1))->order('id asc')->select();            
                    foreach ($list as $key => $v) {
                         $num=$key+1;
-                        $num=str_pad($num, 3, '0', STR_PAD_LEFT);
-                        $data=array('price_code'=>$fl_arr[$v['fid']]['pice_type_code'].$num,'base_code'=>$key+1);
-                        M('Price')->where(array('uuid'=>$v['uuid']))->save($data);
+                        $num=str_pad($num, 5, '0', STR_PAD_LEFT);
+
+                        $fid=str_pad($fl_arr[$v['fid']]['pice_type_code'], 2, '0', STR_PAD_LEFT);
+                        //$data=array('price_code'=>$fid.$num,'base_code'=>$key+1);
+                        //M('Price')->where(array('uuid'=>$v['uuid']))->save($data);
+                        M()->execute("update __PRICE__ set price_code='".($fid.$num)."' ,base_code='".($key+1)."' where id='".$v['id']."'");
                     }
                 }
                 echo json_encode(array(

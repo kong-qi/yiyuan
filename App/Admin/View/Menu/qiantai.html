@@ -1,11 +1,22 @@
 <if condition="check_group('qiantaijz_add')">
-     <if condition="$v['ys_id'] eq ''">
+     
+     <php>
+     	if(($v['ys_id']=='') and ($v['ystatus']==1)){
+     </php>
          <a href="javascript:void(0)" data-title="{{ :lang('分配医生') }}" data-w="95%" data-h="95%"  data-layer="1" data-uuid="{{ $v.user_uuid }}" data-url="{{ :U('Admin/QianTaiJieZhen/ysedit?uuid='.$v['yuuid']) }}" class="btn btn-xs btn-white"><span
               class="fa  fa-user-plus" data-name="{{ :lang('分配医生') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
-         <else/>
+         <php>}elseif($v['ys_id']!='' && $v['ystatus']==2){</php>
          <a href="javascript:void(0)" data-layer="1" data-url="{{ :U('Admin/QianTaiJieZhen/ysedit?uuid='.$v['yuuid']) }}" data-title="{{ :lang('修改医生') }}" data-w="95%" data-h="95%" data-layer="0" data-uuid="{{ $v.user_uuid }}" class="btn btn-xs btn-info">
               <span class="fa  fa-user btn-font" data-name="{{ :lang('修改医生') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
-     </if>
+    <php>}</php>
+	<php>if($v['ystatus']==1 || $v['ystatus']==2){</php>
+	<if condition=" check_group('zixun_del')">
+	    <a href="{{ :U('Admin/YuYue/del',array('id'=>$v['yuuid'])) }}"
+	    class="btn btn-xs btn-white" date-del="1">
+	    <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span>
+	   </a>
+	</if>
+	<php>}</php>
 
 </if>
 

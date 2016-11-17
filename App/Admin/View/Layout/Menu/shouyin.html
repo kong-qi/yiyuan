@@ -14,16 +14,16 @@
         
         </li>
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>1)) }}">{{ :lang('已收费列表') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>'all','is_search'=>1,'stime'=>get_days(0),'etime'=>get_days(0))) }}">{{ :lang('已收费列表') }}</a>
         </li>
+       <!--  <li>
+           <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>2)) }}">{{ :lang('订金列表') }}</a>
+       </li>
+       <li>
+           <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>3)) }}">{{ :lang('付部分费用列表') }}</a>
+       </li> -->
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>2)) }}">{{ :lang('订金列表') }}</a>
-        </li>
-        <li>
-            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>3)) }}">{{ :lang('付部分费用列表') }}</a>
-        </li>
-        <li>
-            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/index') }}">{{ :lang('已结算列表') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/index',array('is_search'=>1)) }}">{{ :lang('已结算列表') }}</a>
         </li>
         <!-- <li>
             <a class="J_menuItem" href="javascript:void(0)">{{ :lang('收费员每日结账表') }}</a>

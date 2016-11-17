@@ -174,10 +174,10 @@
 
                         <div class="form-group inline wb30" style="margin-bottom: 2px">
                             <div class="input-group">
-                                <span class="input-group-addon"><font color="">{{ :lang('客服人员') }}</font></span>
-                                <select class="form-control" name="admin" >
+                                <span class="input-group-addon"><font color="">{{ :lang('咨询员') }}</font></span>
+                                <select class="form-control" name="admin_id" >
                                     <option value="">{{ :lang('全部') }}</option>
-                                    {{ :get_kefu() }}
+                                    {{ :get_kefu('is_zixun',I('get.admin_id')) }}
                                 </select>
                             </div>
                         </div>

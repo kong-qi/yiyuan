@@ -76,6 +76,7 @@
 
                             <tr>
                                 <th width="40" class="hidden-xs text-center"><input name="chkall" type="checkbox" id="chkall" value="0"></th>
+                                 <th>{{ :lang('操作') }}</th>
 
                                     <foreach name="menu_list" item="v" key="k">
                                         <if condition="$v['name'] neq ''">
@@ -88,7 +89,7 @@
                                         </if>
                                        
                                     </foreach>
-                                    <th>{{ :lang('操作') }}</th>
+                                   
 
                             </tr>
                             <if condition="$list">
@@ -100,7 +101,23 @@
                                         <td align="center" class="hidden-xs">
                                             <input type="checkbox" class="checkbox-select" name="checkbox[]" value="{{ $v.uuid }}">
                                         </td>
+                                        <td class="td-handle">
+                                            <!-- //网站竞价人员 -->
+                                            <div class="box" style="">
+                                                <php>if($handle_tpl=='df'){</php>
+                                                <include file="Menu:shouyin" />
+                                                <php>}elseif($handle_tpl=='status_1'){</php>
+                                                     <include file="Menu:shouyin_status_1" />
+                                                 <php>}elseif($handle_tpl=='status_2'){</php>
 
+                                                    <include file="Menu:shouyin_status_2" />
+                                                <php>}elseif($handle_tpl=='status_3'){</php>
+                                                     <include file="Menu:shouyin_status_3" />
+                                                <php>}</php>
+                                            
+                                            </div>
+                                           
+                                        </td>
                                       
                                         <foreach name="menu_list" item="mv" key="mk">
                                             <?php
@@ -125,7 +142,7 @@
                                                       <if condition="$show">
                                                           <foreach name="show" item="sv" key="sk">
                                                                 
-                                                                    <li class="list-group-item">  <a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a> </li>
+                                                                    <li class="list-group-item" title="{{ :$sv['total'] }}">  <a href="javascript:void(0)">{{ :urldecode($sv['title']) }}</a> </li>
                                                           
                                                           </foreach>
                                                       </if>
@@ -138,7 +155,10 @@
                                                         <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
                                                     <elseif condition="$mv['filed'] eq pay_price"/>
                                                         <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
-                                                  
+                                                    <elseif condition="$mv['filed'] eq sx_price"/>
+                                                        <php>if($v['pay_ways']!='1'){</php>
+                                                        <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
+                                                        <php>}</php>
                                                     <elseif condition="$mv['filed'] eq js_status"/>
                                                          <span class="{{ :btn_yycolor($v['js_status']) }}">
                                                          {{ :lang(js_status($v['js_status'],0)) }}
@@ -159,23 +179,7 @@
 
 
                                       
-                                        <td class="td-handle">
-                                            <!-- //网站竞价人员 -->
-                                            <div class="box" style="">
-                                                <php>if($handle_tpl=='df'){</php>
-                                                <include file="Menu:shouyin" />
-                                                <php>}elseif($handle_tpl=='status_1'){</php>
-                                                     <include file="Menu:shouyin_status_1" />
-                                                 <php>}elseif($handle_tpl=='status_2'){</php>
-
-                                                    <include file="Menu:shouyin_status_2" />
-                                                <php>}elseif($handle_tpl=='status_3'){</php>
-                                                     <include file="Menu:shouyin_status_3" />
-                                                <php>}</php>
-                                            
-                                            </div>
-                                           
-                                        </td>
+                                        
                                     </tr>
                                     
 

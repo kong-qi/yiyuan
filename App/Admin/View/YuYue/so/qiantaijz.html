@@ -163,7 +163,37 @@
 
                         </div>
                     </div>
-                    {{ :onkefu2() }}
+                    
+
+                    <div class="col-sm-3" >
+                        <div class="input-group">
+                            <span class="input-group-addon"><font color="">{{ :lang('咨询员') }}</font></span>
+                            <select class="form-control" name="admin_id" >
+                                    <option value="">{{ :lang('全部') }}</option>
+                                    {{ :get_kefu('is_zixun',I('get.admin_id')) }}
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" >
+                        <div class="input-group">
+                            <span class="input-group-addon"><font color="">{{ :lang('前台员') }}</font></span>
+                            <select class="form-control" name="fz_id" >
+                                <option value="">{{ :lang('全部') }}</option>
+                                {{ :arr_to_option(get_er("yu_yue",''),I('get.fz_id')) }}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <div class="input-group m-b" style="">
+                            <label class="input-group-addon">{{ :lang('接诊医生','handle') }}</label>
+                            <select class="form-control"  id="ys_id" name="ys_id">
+                                <option value="">{{ :lang('请选择医生','handle') }}{{ $data['ys_id'] }}</option>
+                                {{ :get_doc(array(),1,$_GET['ys_id']) }}
+                            </select>
+                        </div>
+                    </div>
+                   
                     <div class="col-sm-3">
                         <div class="input-group m-b">
                             <span class="input-group-addon"><font color="">{{ :lang('病人ID号','handle') }}</font></span>
@@ -231,7 +261,7 @@
                     <div class="col-sm-3">
                         <label class="col-sm-12 control-label">&nbsp;</label>
                         <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
-                          <a href="{{ :U('Admin/QianTaiJieZhen/index',array('is_search'=>1,'status'=>'2','list_type'=>'has')) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
+                          <a href="{{ :U('Admin/QianTaiJieZhen/index',array('dzstime'=>date('Y-m-d'),'dzetime'=>date('Y-m-d'),'list_type'=>'hasday2','is_search'=>1,'limit_day'=>1)) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
                         <!-- <a href="{{ :U('Admin/YuYue/index',$_SERVER['QUERY_STRING']) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}{{ $_SERVER['QUERY_STRING'] }}</a> -->
                     </div>
                 </div>

@@ -61,16 +61,17 @@ function get_price_type($field=''){
 //价格序号
 function create_price_code($fid=''){
     
-    $max=M('Price')->where(array('checked'=>1))->max('base_code');
+    $max=M('Price')->max('base_code');
     $num=$max+1;
-    $cnum=str_pad($num, 3, '0', STR_PAD_LEFT);
+
+    $cnum=str_pad($num, 5, '0', STR_PAD_LEFT);
     $fenlei=M('LanMu')->where(array('type'=>'xiaofei','checked'=>'1'))->select();
     $fl_arr=array();
     foreach ($fenlei as $key => $value) {
                   $fl_arr[$value['id']]=$value['pice_type_code'];    
             }
     
-    $cnum= $fl_arr[$fid].$cnum;
+    $cnum=str_pad( $fl_arr[$fid], 2, '0', STR_PAD_LEFT).$cnum;
     $data=array(
         'base_code'=>$num,
         'price_code'=>$cnum,
@@ -97,6 +98,14 @@ function get_sfadder($table){
      $m=M()->query("select * from __PREFIX__admin where id in (select sf_admin_id from __PREFIX__".$table." group by sf_admin_id) and checked='1'");
      return $m;
 }
+//前台人员
+//收费员
+function get_er($table){
+    
+      $m=M()->query("select * from __PREFIX__admin where id in (select fz_id from __PREFIX__".$table." group by fz_id) and checked='1'");
+     return $m;
+}
+
 //数组转option
 function arr_to_option($data,$checkid){
    

@@ -38,7 +38,7 @@
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">{{ :lang('关键词') }}</font></span>
-                                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}" placeholder="费用名称/票据名称" class="form-control">
+                                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}" placeholder="费用名称/票据名称/编码/助记码" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
@@ -419,7 +419,7 @@
                                         setTimeout(function () {
                                             $.ajax({
                                                 'url': '{{ :U("Admin/Ajax/handle") }}',
-                                                type: 'get',
+                                                type: 'post',
                                                 data: {
                                                     'uuid': $uuid,
                                                     'fid':$fid,

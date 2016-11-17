@@ -32,12 +32,16 @@ class PriceZiDianController extends AuthController {
             }
             if($keyword)
             {
-                $map['name']=array(
+                /*$map['name']=array(
                      'like','%'.$keyword.'%'
                 );
                 $map['ticket_name']=array(
                     'like','%'.$keyword.'%'
                 );
+                $map['ticket_name']=array(
+                    'like','%'.$keyword.'%'
+                );*/
+                $map['name|ticket_name|price_code|code'] = array('like','%'.$keyword.'%');
             }
         }
 
@@ -120,8 +124,7 @@ class PriceZiDianController extends AuthController {
                 //取得最大序号
                
                 $data= create_price_code($data['fid'])+$data;
-               /* print_r($data);
-                exit();*/
+               
                 $result =    $model->add( $data);
                 if($result) {
                     add_log($this->onname.'：'.$data['name'].'添加成功');
@@ -228,7 +231,7 @@ class PriceZiDianController extends AuthController {
                     'is_update'=>$v['f'],
                     'code'=>$v['g'],
                     'base_code'=>$v['h'],
-                    'price_code'=>get_price_type($v['c']).str_pad($v['h'], 3, '0', STR_PAD_LEFT),
+                    'price_code'=>str_pad(get_price_type($v['c']), 2, '0', STR_PAD_LEFT).str_pad($v['h'], 5, '0', STR_PAD_LEFT),
                     'admin_id' => session('admin_id')
                 );
             }
