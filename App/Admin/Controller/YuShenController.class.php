@@ -784,10 +784,10 @@ class YuShenController extends AuthController {
 
         }else
         {
-            if(check_group("kaidan_only")  )
+            if(check_group("yishenjz_only_list"))
             {
 
-                $map['kd.kd_id']=session('admin_id');
+                $map['kd.kdys_id']=session('admin_id');
             }
         }
 

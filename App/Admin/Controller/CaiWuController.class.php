@@ -6,6 +6,7 @@ class CaiWuController extends AuthController
     protected $rule_qz = 'shouyin';
 
     public function waitPriceList(){
+
             $this->assign('adminer',get_sfadder('kai_dan'));
             $this->assign('createer',get_kdadder('kai_dan'));
             $this->assign('is_search',I('get.is_search'));
@@ -39,7 +40,7 @@ class CaiWuController extends AuthController
             //区域
             $join[] = 'LEFT JOIN __AREA__ ae1 ON yy.area_id = ae1.id';
 
-
+            $order_sort='kd.kd_time desc';
             $page=1;
             if(isset($_GET['p']))
             {
@@ -92,32 +93,35 @@ class CaiWuController extends AuthController
             }
             
             $map['kd.sf_status']=0;
+            $where_str=array();
             if(I('get.sf_status')!='')
             {
                 $map['kd.sf_status']=I('get.sf_status');
             }
             if($map['kd.sf_status']=='2')
-            {
-                $map['_string']="kd.sf_status='2' or kd.sf_status='5'";
+            {    $map['kd.sf_status']=array('in',array(2,5));
                 unset($map['kd.sf_status']);
             }
             if(I('get.sf_status')=='all')
             {
-
+                $order_sort='kd.sf_time desc';
                 $map['kd.sf_status']=array('in',array(1,2,3));
                
-                $stime=trim(strtotime(I('get.stime')));
-                $etime=trim(strtotime(I('get.etime')));
+                $stime=I('get.stime');
+                $etime=I('get.etime');
+           
                 if($stime!=='' and $etime !='')
                 {
-                    $timestr =  $stime. "," .$etime;
-                    $map['kd.sf_time'] = array('between', $timestr);
+                 
+                    //$map['kd.sf_time'] = array('between', $timestr);
+                    
+                    $where_str[]="FROM_UNIXTIME(kd.sf_time,'%Y-%m-%d') >= str_to_date('".$stime."','%Y-%m-%d') and FROM_UNIXTIME(kd.sf_time,'%Y-%m-%d') <= str_to_date('".$etime."','%Y-%m-%d')";
                 }
             }
 
             if($map['kd.sf_status']=='3')
             {
-                $map['_string']="kd.sf_status='6' or kd.sf_status='3'";
+                $map['kd.sf_status']=array('in',array('3',6));
                 unset($map['kd.sf_status']);
             }
             //echo print_r($map);
@@ -131,7 +135,7 @@ class CaiWuController extends AuthController
             }
             if (I('get.keyword') != '') {
                 $key = I('get.keyword');
-                $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' ";
+                $where_str[]= "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' ";
             }
             if(I('get.pay_ways')!='')
             {
@@ -165,11 +169,16 @@ class CaiWuController extends AuthController
                 $map['yy.dztime'] = array('between', $timestr2);
 
             }
-
+            //合并字符搜索
+            if(count($where_str)>0)
+            {
+                $map['_string']=implode($where_str, " and ");
+            }
+          
             
             $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
             $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
-            $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
+            $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order($order_sort)->page( $page.','.$pagesize)->select();
             $this->assign('list',$list);// 赋值数据集
             $handle_tpl='df';
             $sbtn=U('Admin/CaiWu/waitPriceList',array('sf_status'=>'all','is_search'=>1));
@@ -1029,7 +1038,7 @@ class CaiWuController extends AuthController
                 $backurl=U("Admin/CaiWu/kaidanList");
 
                 $result =    $model->add($data);
-                return '';
+               
                 if($result) {
                     //更新优惠券
                     if ($data['youhui_id'] != '') {
