@@ -1,7 +1,7 @@
 <if condition="check_group('qiantaijz_add')">
      
      <php>
-     	if(($v['ys_id']=='') and ($v['ystatus']==1)){
+     	if((($v['ys_id']=='') and ($v['ystatus']==1)) or $v['ystatus']=='5'){
      </php>
          <a href="javascript:void(0)" data-title="{{ :lang('分配医生') }}" data-w="95%" data-h="95%"  data-layer="1" data-uuid="{{ $v.user_uuid }}" data-url="{{ :U('Admin/QianTaiJieZhen/ysedit?uuid='.$v['yuuid']) }}" class="btn btn-xs btn-white"><span
               class="fa  fa-user-plus" data-name="{{ :lang('分配医生') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
@@ -17,6 +17,6 @@
 	   </a>
 	</if>
 	<php>}</php>
-
+  
 </if>
 
