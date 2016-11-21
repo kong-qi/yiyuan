@@ -1,14 +1,12 @@
-<extend name="Layout:index"/>
+<extend name="Layout:index" />
 <block name="add_css">
     <link rel="stylesheet" href="__CSS__/sweetalert.css">
 </block>
 <block name="add_js">
     <script src="__JS__/sweetalert.min.js"></script>
-
 </block>
 <block name="right">
     <div class="right-box">
-
         <div class="box">
             <div class="col-sm-12">
                 <form action="" method="get" id="contact-form">
@@ -28,13 +26,11 @@
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">{{ :lang('所属类别') }}</font></span>
                                             <select class="form-control" name="fid" id="fid">
-
                                                 <option value="none">{{ :lang('全部') }}</option>
-                                               {{ :get_lanmu_onelist('xiaofei',1,'','',I('get.fid')) }}
+                                                {{ :get_lanmu_onelist('xiaofei',1,'','',I('get.fid')) }}
                                             </select>
                                         </div>
                                     </div>
-                                   
                                     <div class="col-sm-3">
                                         <div class="input-group m-b">
                                             <span class="input-group-addon"><font color="">{{ :lang('关键词') }}</font></span>
@@ -46,15 +42,13 @@
                                             <span class="input-group-addon"><font color="red">{{ :lang('排序方式') }}</font></span>
                                             <input type="hidden" name="sorttype" id="sorttype">
                                             <select name="sort" id="sort" class="form-control">
-                                                <option value="none" data-type="price" {{ :I('get.sort')=='none'?'selected="selected"':'' }}>{{ :lang('默认') }}</option>
-                                                <option value="asc" data-type="price" {{ :I('get.sort')=='asc'?'selected="selected"':'' }}>{{ :lang('价格从底到高') }}</option>
-                                                <option value="desc" data-type="price"　{{ :I('get.sort')=='desc'?'selected="selected"':'' }}>{{ :lang('价格从高到底') }}</option>
+                                                <option value="none" data-type="price" {{ :I( 'get.sort')=='none' ? 'selected="selected"': '' }}>{{ :lang('默认') }}</option>
+                                                <option value="asc" data-type="price" {{ :I( 'get.sort')=='asc' ? 'selected="selected"': '' }}>{{ :lang('价格从底到高') }}</option>
+                                                <option value="desc" data-type="price" 　{{ :I( 'get.sort')=='desc' ? 'selected="selected"': '' }}>{{ :lang('价格从高到底') }}</option>
                                             </select>
                                         </div>
                                     </div>
-
                                     <div class="col-sm-3">
-
                                         <button class="btn btn-primary" type="submit">{{ :lang('确定筛选') }}</button>
                                     </div>
                                 </div>
@@ -79,30 +73,16 @@
                 </h3>
             </div>
             <div class="box-content">
-
-
-                        <div class="m-b">
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
-                               data-model="Price"
-                               data-handle="del" data-handle-check="1" data-handle-value=""><span
+                <div class="m-b">
+                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="" data-model="Price" data-handle="del" data-handle-check="1" data-handle-value=""><span
                                     class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="Price"
-                               data-handle="sort" data-handle-check="1" data-handle-value="0"><span
+                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked" data-model="Price" data-handle="sort" data-handle-check="1" data-handle-value="0"><span
                                     class="fa fa-arrows-v"></span> {{ :lang('排序','handle') }}</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="Price"
-                               data-handle="checked" data-handle-check="1" data-handle-value="1"><span
+                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked" data-model="Price" data-handle="checked" data-handle-check="1" data-handle-value="1"><span
                                     class="fa fa-check"></span> {{ :lang('启用','handle') }}</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="Price"
-                               data-handle="checked" data-handle-check="1" data-handle-value="0"><span
+                    <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked" data-model="Price" data-handle="checked" data-handle-check="1" data-handle-value="0"><span
                                     class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
-
-                        </div>
-
-
-
+                </div>
                 <if condition="$menu_list">
                     <div class="ibox-title">
                         <h5><a class="collapse-link">{{ :lang('字段选择') }}</a>
@@ -133,348 +113,303 @@
                                 </div>
                             </div>
                         </h5>
-
                     </div>
-
                 </if>
                 <div class="list-box">
-
                     <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table table-hover">
-
                         <tbody>
-
-                        <tr>
-                            <th width="40" class="hidden-xs text-center">
-                                <input name="chkall" type="checkbox" id="chkall"value="0"></th>
-                            <th id="tdd0" width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
-                            <th id="tdd1" class="hidden-xs">{{ :lang('编码','filed') }}</th>
-                            <th id="tdd2">{{ :lang('费用名称','filed') }}</th>
-                            <th id="tdd3">{{ :lang('类别名称','filed') }}</th>
-                            <th id="tdd5">{{ :lang('票据名称','filed') }}</th>
-                            <th id="tdd6">{{ :lang('单价','filed') }}</th>
-                            <th id="tdd7">{{ :lang('单位','filed') }}</th>
-                            <th id="tdd8">{{ :lang('金额修改','filed') }}</th>
-                            <th id="tdd9">{{ :lang('助记符','filed') }}</th>
-                            <th id="tdd10">{{ :lang('状态','filed') }}</th>
-                            <th id="tdd11">{{ :lang('操作','handle') }}</th>
-                        </tr>
-                        <if condition="$list">
-
-                            <volist name="list" id="v">
-
-                                <tr>
-
-                                    <td  align="center" class="hidden-xs"><input type="checkbox" class="checkbox-select" name="checkbox[]"
-                                                                                value="{{ $v.uuid }}"></td>
-                                    <td id="tdd0" class="hidden-xs">
-                                        <input data-sort="1" type="text" size="5" value="{{ $v.sort }}" name="sort" class="input">
-                                        <input type="hidden" name="fid" value="{{ $v.fid }}" data-fid="1">
-                                    </td>
-                                    <td id="tdd1" class="hidden-xs">{{ $v.price_code }}</td>
-                                    <td data-log="1" id="tdd2">{{ $v.name }}</td>
-                                    <td id="tdd3">
-
-                                        <lable class="badge badge-info">{{ :$lbarr[$v['fid']] }}</lable>
-                                    </td>
-                                  
-
-                                    <td id="tdd5">{{ $v.ticket_name }}</td>
-                                    <td id="tdd6" data-price="vnlist">{{ $v.price }}</td>
-                                    <td id="tdd7">{{ $v.danwei }}</td>
-                                    <td id="tdd8">
-                                        <if condition="check_group($rule_qz)">
-                                            <if condition="$v['is_update']">
-                                                <a href="{{ :U(MODULE_NAME.'/'.CONTROLLER_NAME.'/handle/',array('id'=>$v['id'],'type'=>'false', 'filed'=>'is_update'))
+                            <tr>
+                                <th width="40" class="hidden-xs text-center">
+                                    <input name="chkall" type="checkbox" id="chkall" value="0">
+                                </th>
+                                <th id="tdd0" width="80" class="hidden-xs">{{ :lang('排序','filed') }}</th>
+                                <th id="tdd1" class="hidden-xs">{{ :lang('编码','filed') }}</th>
+                                <th id="tdd2">{{ :lang('费用名称','filed') }}</th>
+                                <th id="tdd3">{{ :lang('类别名称','filed') }}</th>
+                                <th id="tdd5">{{ :lang('票据名称','filed') }}</th>
+                                <th id="tdd6">{{ :lang('单价','filed') }}</th>
+                                <th id="tdd7">{{ :lang('单位','filed') }}</th>
+                                <th id="tdd8">{{ :lang('金额修改','filed') }}</th>
+                                <th id="tdd9">{{ :lang('助记符','filed') }}</th>
+                                <th id="tdd10">{{ :lang('状态','filed') }}</th>
+                                <th id="tdd11">{{ :lang('操作','handle') }}</th>
+                            </tr>
+                            <if condition="$list">
+                                <volist name="list" id="v">
+                                    <tr>
+                                        <td align="center" class="hidden-xs">
+                                            <input type="checkbox" class="checkbox-select" name="checkbox[]" value="{{ $v.uuid }}">
+                                        </td>
+                                        <td id="tdd0" class="hidden-xs">
+                                            <input data-sort="1" type="text" size="5" value="{{ $v.sort }}" name="sort" class="input">
+                                            <input type="hidden" name="fid" value="{{ $v.fid }}" data-fid="1">
+                                        </td>
+                                        <td id="tdd1" class="hidden-xs">{{ $v.price_code }}</td>
+                                        <td data-log="1" id="tdd2">{{ $v.name }}</td>
+                                        <td id="tdd3">
+                                            <lable class="badge badge-info">{{ :$lbarr[$v['fid']] }}</lable>
+                                        </td>
+                                        <td id="tdd5">{{ $v.ticket_name }}</td>
+                                        <td id="tdd6" data-price="vnlist">{{ $v.price }}</td>
+                                        <td id="tdd7">{{ $v.danwei }}</td>
+                                        <td id="tdd8">
+                                            <if condition="check_group($rule_qz)">
+                                                <if condition="$v['is_update']">
+                                                    <a href="{{ :U('Admin/PriceZiDian/handle/',array('id'=>$v['id'],'type'=>'false', 'filed'=>'is_update'))
                                             }}" class="btn btn-white btn-sm">
                                                     {{ :lang('可修改','handle') }}
                                                 </a>
-                                                <else/>
-                                                <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/handle/",array('id'=>$v['id'],'type'=>'true','filed'=>'is_update'))
+                                                    <else/>
+                                                    <a href="{{ :U('Admin/PriceZiDian/handle',array('id'=>$v['id'],'type'=>'true','filed'=>'is_update'))
                                                 }}" class="btn btn-white btn-sm">
-                                                <font color=red>{{ :lang('不可改','handle') }}</font>
-                                                </a>
-                                            </if>
-                                            <else/>
-                                            <if condition="$v['checked']">
-                                                <a href="#" class="btn btn-white btn-sm">
+                                                        <font color=red>{{ :lang('不可改','handle') }}</font>
+                                                    </a>
+                                                </if>
+                                                <else/>
+                                                <if condition="$v['checked']">
+                                                    <a href="#" class="btn btn-white btn-sm">
                                                     {{ :lang('已用','handle') }}
                                                 </a>
-                                                <else/>
-                                                <a href="#" class="btn btn-white btn-sm">
-                                                    <font color=red>{{ :lang('停用','handle') }}</font>
-                                                </a>
+                                                    <else/>
+                                                    <a href="#" class="btn btn-white btn-sm">
+                                                        <font color=red>{{ :lang('停用','handle') }}</font>
+                                                    </a>
+                                                </if>
                                             </if>
-                                        </if>
-                                    </td>
-                                    <td id="tdd9">{{ $v.code }}</td>
-                                    <td id="tdd10">
-                                        <if condition="check_group($rule_qz)">
-                                            <if condition="$v['checked']">
-                                                <a href="{{ :U(MODULE_NAME.'/'.CONTROLLER_NAME.'/handle/',array('id'=>$v['id'],'type'=>'false'))
+                                        </td>
+                                        <td id="tdd9">{{ $v.code }}</td>
+                                        <td id="tdd10">
+                                            <if condition="check_group($rule_qz)">
+                                                <if condition="$v['checked']">
+                                                    <a href="{{ :U(MODULE_NAME.'/'.CONTROLLER_NAME.'/handle/',array('id'=>$v['id'],'type'=>'false'))
                                             }}" class="btn btn-white btn-sm">
                                                     {{ :lang('已用','handle') }}
                                                 </a>
-                                                <else/>
-                                                <a href="{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/handle/",array('id'=>$v['id'],'type'=>'true'))
+                                                    <else/>
+                                                    <a href="{{ :U('Admin/PriceZiDian/handle',array('id'=>$v['id'],'type'=>'true'))
                                                 }}" class="btn btn-white btn-sm">
-                                                <font color=red>{{ :lang('停用','handle') }}</font>
-                                                </a>
-                                            </if>
-                                            <else/>
-                                            <if condition="$v['checked']">
-                                                <a href="#" class="btn btn-white btn-sm">
+                                                        <font color=red>{{ :lang('停用','handle') }}</font>
+                                                    </a>
+                                                </if>
+                                                <else/>
+                                                <if condition="$v['checked']">
+                                                    <a href="#" class="btn btn-white btn-sm">
                                                     {{ :lang('已用','handle') }}
                                                 </a>
-                                                <else/>
-                                                <a href="#" class="btn btn-white btn-sm">
-                                                    <font color=red>{{ :lang('停用','handle') }}</font>
-                                                </a>
+                                                    <else/>
+                                                    <a href="#" class="btn btn-white btn-sm">
+                                                        <font color=red>{{ :lang('停用','handle') }}</font>
+                                                    </a>
+                                                </if>
                                             </if>
-                                        </if>
-                                    </td>
-
-
-
-                                    <td id="tdd11">
-
-                                        <div class="box">
-                                            <if condition=" check_group($rule_qz)">
-                                                <a href="#" id="xiugaizh" data-uuid="{{ $v.uuid }}"
-                                                   class="btn btn-xs btn-white"><span
+                                        </td>
+                                        <td id="tdd11">
+                                            <div class="box">
+                                                <if condition=" check_group($rule_qz)">
+                                                    <a href="#" id="xiugaizh" data-url="{{ :U('Admin/PriceZiDian/edit',array('uuid'=>$v['uuid'])) }}" class="btn btn-xs btn-white"><span
                                                         class="fa fa-pencil-square "></span> {{ :lang('编辑','handle') }}</a>
-                                            </if>
-                                            <if condition=" check_group($rule_qz)">
-                                                <a href="{{ :U("__CONTROLLER__/del/",array('id'=>$v['uuid'])) }}"
-                                                class="btn btn-xs btn-white" date-del="1">
-                                                <span class="fa fa-trash "></span>
-                                                {{ :lang('删除','handle') }}</a>
-                                            </if>
-                                        </div>
-                                    </td>
+                                                </if>
+                                                <if condition=" check_group($rule_qz)">
+                                                    <a href="{{ :U(" __CONTROLLER__/del/ ",array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
+                                                        <span class="fa fa-trash "></span> {{ :lang('删除','handle') }}</a>
+                                                </if>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </volist>
+                                <else/>
+                                <tr>
+                                    <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
                                 </tr>
-
-                            </volist>
-
-                            <else/>
-                            <tr>
-                                <td colspan="8" class="text-center">{{ :C('NOTTHING') }}</td>
-                            </tr>
-                        </if>
+                            </if>
                         </tbody>
-
-
                     </table>
-
                 </div>
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="m-b">
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed=""
-                               data-model="Price"
-                               data-handle="del" data-handle-check="1" data-handle-value=""><span
+                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="" data-model="Price" data-handle="del" data-handle-check="1" data-handle-value=""><span
                                     class="fa fa-trash"></span> {{ :lang('删除','handle') }}</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="Price"
-                               data-handle="sort" data-handle-check="1" data-handle-value="0"><span
+                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked" data-model="Price" data-handle="sort" data-handle-check="1" data-handle-value="0"><span
                                     class="fa fa-arrows-v"></span> {{ :lang('排序','handle') }}</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="Price"
-                               data-handle="checked" data-handle-check="1" data-handle-value="1"><span
+                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked" data-model="Price" data-handle="checked" data-handle-check="1" data-handle-value="1"><span
                                     class="fa fa-check"></span> {{ :lang('启用','handle') }}</a>
-                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked"
-                               data-model="Price"
-                               data-handle="checked" data-handle-check="1" data-handle-value="0"><span
+                            <a href="javascript:void(0)" class="btn btn-xs btn-primary" data-handle-filed="checked" data-model="Price" data-handle="checked" data-handle-check="1" data-handle-value="0"><span
                                     class="fa fa-ban"></span> {{ :lang('停用','handle') }}</a>
-                            
-
                         </div>
                     </div>
                     <div class="col-xs-6">
-
                         <div class="pagee">{{ $page }}</div>
                     </div>
                 </div>
-
             </div>
             <div class="cl"></div>
         </div>
-
-
     </div>
-
-
-
-
-
-
 </block>
 <block name="add_foot_js">
     <script>
+    $('#tianjiazh').on('click', function() {
+        $url="{{ :U('Admin/PriceZiDian/add') }}";
+        layer.open({
+            type: 2,
+            title: "{{ :lang('添加','handle') }}",
+            shadeClose: true,
+            shade: 0.8,
+            area: ['80%', '80%'],
+            content: $url,
+            cancel: function(index) {
+                window.location.reload()
 
-
-        $('#tianjiazh').on('click', function() {
-            layer.open({
-                type: 2,
-                title: "{{ :lang('添加','handle') }}",
-                shadeClose: true,
-                shade: 0.8,
-                area: ['500px', '500px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/add/") }}",
-                cancel: function(index){
-                    window.location.reload()
-
-                }
-            });
+            }
         });
-        $('#tianjiazh2').on('click', function() {
-            layer.open({
-                type: 2,
-                title: "{{ :lang('添加','handle') }}",
-                shadeClose: true,
-                shade: 0.8,
-                area: ['80%', '400px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/excel/") }}",
-                cancel: function(index){
-                    //window.location.reload()
+    });
+    $('#tianjiazh2').on('click', function() {
+        $url="{{ :U('Admin/PriceZiDian/excel') }}";
+        layer.open({
+            type: 2,
+            title: "{{ :lang('添加','handle') }}",
+            shadeClose: true,
+            shade: 0.8,
+            area: ['80%', '80%'],
+            content: $url,
+            cancel: function(index) {
+                //window.location.reload()
 
-                }
-            });
+            }
         });
+    });
 
-        $('[id=xiugaizh]').on('click', function (zhid) {
-            var title = $(zhid.target).attr("data-uuid");
-            layer.open({
-                type: 2,
-                title: "{{ :lang('修改','handle') }}",
-                shadeClose: true,
-                shade: 0.8,
-                area: ['500px', '500px'],
-                content: "{{ :U(MODULE_NAME."/".CONTROLLER_NAME."/edit/") }}?uuid=" + title,
-                cancel: function (index) {
-                    //window.location.reload()
+    $('[id=xiugaizh]').on('click', function(zhid) {
+        $url = $(this).attr('data-url');
+        layer.open({
+            type: 2,
+            title: "{{ :lang('修改','handle') }}",
+            shadeClose: true,
+            shade: 0.8,
+            area: ['80%', '80%'],
+            content: $url,
+            cancel: function(index) {
+                //window.location.reload()
 
-                }
-            });
+            }
         });
+    });
     </script>
     <script>
-        $(function () {
-            select_all();
-            del_confirm();
-            $("#fid").change(function (e,a) {
-                $id=$(this).val();
+    $(function() {
+        select_all();
+        del_confirm();
+        $("#fid").change(function(e, a) {
+            $id = $(this).val();
 
-                if($id!='none')
-                {
+            if ($id != 'none') {
 
-                    $.getJSON("{{ :U('Admin/PriceZiDian/ajaxList/') }}?id="+ $id+"&tfid="+a,function (data) {
-                        console.log(data);
-                        $("#tfid").empty().append(data);
-                    })
-                }else
-                {
-                    $("#tfid").empty();
-                }
+                $.getJSON("{{ :U('Admin/PriceZiDian/ajaxList/') }}?id=" + $id + "&tfid=" + a, function(data) {
+                    console.log(data);
+                    $("#tfid").empty().append(data);
+                })
+            } else {
+                $("#tfid").empty();
+            }
 
-            }).triggerHandler('change',"{{ :I('get.tfid') }}");;;
-            //paix
-            $("#sort").change(function () {
-                $v=$(this).find("option:selected").attr('data-type');
+        }).triggerHandler('change', "{{ :I('get.tfid') }}");;;
+        //paix
+        $("#sort").change(function() {
+            $v = $(this).find("option:selected").attr('data-type');
 
-                $("#sorttype").val($v);
-            })
-            $(document).on("click", "[data-handle-check='1']", function () {
-                $uuid = checked_box_id();
-                $model = $(this).attr('data-model');
-                $type = $(this).attr('data-handle');
-                $value = $(this).attr('data-handle-value');
-                $filed = $(this).attr('data-handle-filed');
-                $sort = checked_sort_id();
-                $fid=checked_fid_id();
-                $log="{{ $onname }}："+checked_log_name();
-                //console.log($uuid);
-                //console.log($sort);
-                //console.log($log);
-                log($type);
-               if($type=='create_code')
-               {
-                $uuid=['d'];
-               }
-                if ($uuid) {
-                    switch ($type) {
+            $("#sorttype").val($v);
+        })
+        $(document).on("click", "[data-handle-check='1']", function() {
+            $uuid = checked_box_id();
+            $model = $(this).attr('data-model');
+            $type = $(this).attr('data-handle');
+            $value = $(this).attr('data-handle-value');
+            $filed = $(this).attr('data-handle-filed');
+            $sort = checked_sort_id();
+            $fid = checked_fid_id();
+            $log = "{{ $onname }}：" + checked_log_name();
+            //console.log($uuid);
+            //console.log($sort);
+            //console.log($log);
+            log($type);
+            if ($type == 'create_code') {
+                $uuid = ['d'];
+            }
+            if ($uuid) {
+                switch ($type) {
 
-                        default:
+                    default:
 
-                            swal({
-                                        title: "{{ :lang('你确定批量操作吗','handle') }}?",
-                                        type: "warning",
-                                        showCancelButton: true,
-                                        confirmButtonColor: "#DD6B55",
-                                        confirmButtonText: "{{ :lang('确定','handle') }}",
-                                        cancelButtonText: "{{ :lang('取消','handle') }}",
-                                        closeOnConfirm: false,
-                                        showLoaderOnConfirm: true,
+                        swal({
+                            title: "{{ :lang('你确定批量操作吗','handle') }}?",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#DD6B55",
+                            confirmButtonText: "{{ :lang('确定','handle') }}",
+                            cancelButtonText: "{{ :lang('取消','handle') }}",
+                            closeOnConfirm: false,
+                            showLoaderOnConfirm: true,
+                        },
+                        function() {
+                            setTimeout(function() {
+                                $.ajax({
+                                    'url': '{{ :U("Admin/Ajax/handle") }}',
+                                    type: 'post',
+                                    data: {
+                                        'uuid': $uuid,
+                                        'fid': $fid,
+                                        'model': $model,
+                                        'value': $value,
+                                        'type': $type,
+                                        'filed': $filed,
+                                        'sort': $sort,
+                                        'log': $log,
+                                        'token': '{{ :token() }}'
                                     },
-                                    function () {
-                                        setTimeout(function () {
-                                            $.ajax({
-                                                'url': '{{ :U("Admin/Ajax/handle") }}',
-                                                type: 'post',
-                                                data: {
-                                                    'uuid': $uuid,
-                                                    'fid':$fid,
-                                                    'model': $model,
-                                                    'value': $value,
-                                                    'type': $type,
-                                                    'filed': $filed,
-                                                    'sort':$sort,
-                                                    'log':$log,
-                                                    'token': '{{ :token() }}'
-                                                },
-                                                cache: false,
-                                                dataType: 'json',
-                                                success: function (data) {
-                                                    console.log(data);
-                                                    if (data.error == 0) {
-                                                        swal({
-                                                            title: data.msg,
-                                                            confirmButtonText: "{{ :lang('确定','handle') }}",
-                                                            type: "success",
-                                                            timer: 1000,
-                                                        });
-                                                        window.location.reload();
-                                                    } else {
-                                                        swal({
-                                                            title: data.msg,
-                                                            confirmButtonText:"{{ :lang('确定','handle') }}",
-                                                            type: "warning",
-                                                            timer: 1000,
-                                                        });
+                                    cache: false,
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        console.log(data);
+                                        if (data.error == 0) {
+                                            swal({
+                                                title: data.msg,
+                                                confirmButtonText: "{{ :lang('确定','handle') }}",
+                                                type: "success",
+                                                timer: 1000,
+                                            });
+                                            window.location.reload();
+                                        } else {
+                                            swal({
+                                                title: data.msg,
+                                                confirmButtonText: "{{ :lang('确定','handle') }}",
+                                                type: "warning",
+                                                timer: 1000,
+                                            });
 
-                                                    }
-                                                    ;
-                                                }
-                                            })
-                                        }, 2000);
+                                        };
                                     }
-                            );
-                            break;
-                    }
-
-                } else {
-                    swal("{{ :lang('没有选择','handle') }}");
+                                })
+                            }, 2000);
+                        }
+                    );
+                    break;
                 }
 
-            });
+            } else {
+                swal("{{ :lang('没有选择','handle') }}");
+            }
 
         });
-        function anxia(tddid) { //隐藏表格
-            if ($("." + tddid).is(":checked")) {
-                $("[id=" + tddid + "]").css('display', '');;
-            } else {
-                $("[id=" + tddid + "]").css('display', 'none');;
-            }
-        };
 
+    });
+
+    function anxia(tddid) { //隐藏表格
+        if ($("." + tddid).is(":checked")) {
+            $("[id=" + tddid + "]").css('display', '');;
+        } else {
+            $("[id=" + tddid + "]").css('display', 'none');;
+        }
+    };
     </script>
 </block>

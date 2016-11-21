@@ -925,7 +925,17 @@ function onkefu2($type='is_zixun',$merg=0,$aid=''){
         //查询组
         $Model = new \Think\Model();
         $admin_arr=$Model->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where is_zixun='1') and checked='1'");
-        
+        foreach ($admin_arr as $key=>$v)
+        {
+            if($v['id']==$aid)
+            {
+                $checked="selected='selsected'";
+            }else
+            {
+                $checked="";
+            }
+            $option.="<option value='".$v['id']."' ".$checked." >".$v['realname']."</option>";
+        }
 
         $str='<div class="col-sm-3">
              <div class="input-group m-b">

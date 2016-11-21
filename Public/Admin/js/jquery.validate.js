@@ -1538,23 +1538,22 @@
 }(function (a) {
     var icon = "<i class='fa fa-times-circle'></i>  ";
     a.extend(a.validator.messages, {
-        required: icon + lang.bt,
-        remote: icon + "请修正此栏位",
-        email: icon + "请输入有效的电子邮件",
-        url: icon + "请输入有效的网址",
-        date: icon + "请输入有效的日期",
-        dateISO: icon + "请输入有效的日期 (YYYY-MM-DD)",
-        number: icon + "请输入正确的数字",
-        digits: icon + lang.bt_number,
-        creditcard: icon + "请输入有效的信用卡号码",
-        equalTo: icon + "你的输入不相同",
-        extension: icon + "请输入有效的后缀",
-        maxlength: a.validator.format(icon + "最多 {0} 个字"),
-        minlength: a.validator.format(icon + "最少 {0} 个字"),
-        rangelength: a.validator.format(icon + "请输入长度为 {0} 至 {1} 之间的字串"),
-        range: a.validator.format(icon + "请输入 {0} 至 {1} 之间的数值"),
-        max: a.validator.format(icon + "请输入不大于 {0} 的数值"),
-        min: a.validator.format(icon + "请输入不小于 {0} 的数值")
+            required: "This field is required.",
+            remote: "Please fix this field.",
+            email: "Please enter a valid email address.",
+            url: "Please enter a valid URL.",
+            date: "Please enter a valid date.",
+            dateISO: "Please enter a valid date ( ISO ).",
+            number: "Please enter a valid number.",
+            digits: "Please enter only digits.",
+            creditcard: "Please enter a valid credit card number.",
+            equalTo: "Please enter the same value again.",
+            maxlength: $.validator.format( "Please enter no more than {0} characters." ),
+            minlength: $.validator.format( "Please enter at least {0} characters." ),
+            rangelength: $.validator.format( "Please enter a value between {0} and {1} characters long." ),
+            range: $.validator.format( "Please enter a value between {0} and {1}." ),
+            max: $.validator.format( "Please enter a value less than or equal to {0}." ),
+            min: $.validator.format( "Please enter a value greater than or equal to {0}." )
     })
 });
 jQuery.validator.addMethod("ename", function(value, element) {

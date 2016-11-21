@@ -430,7 +430,7 @@ class YuShenController extends AuthController {
         if(I('get.status')==3)
         {
             unset($map['y1.status']);
-            $map['_string']="y1.status in('3','4')";
+            $map['y1.status']=array('in',array(3,4));
         }
         $list = $model->alias('y1')->field($filed)->join($join)->order($orderstr)->where($map)->page($page . ',' . $pagesize)->select();
         //print_r($list);

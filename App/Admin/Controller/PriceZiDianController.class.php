@@ -121,6 +121,7 @@ class PriceZiDianController extends AuthController {
             {
               
                 $data=$model->create();
+
                 //取得最大序号
                
                 $data= create_price_code($data['fid'])+$data;

@@ -871,6 +871,7 @@ class AjaxController extends AuthController
         $pagesize=12;
         $total=M('Price')->alias('pr')->join($join)->where($map)->count();// 查询满足要求的总记录数
         $pages=ceil($total/$pagesize);
+        $map['pr.checked']=1;
         $m=M('Price')->alias('pr')->field($field)->join($join)->where($map)->order('pr.id desc')->page($page,$pagesize)->select();
         //print_r($m);
         $str='';
