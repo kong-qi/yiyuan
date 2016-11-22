@@ -27,30 +27,17 @@
                                     <else/>
                                     <input type="hidden" name="kdys_id" value="{{ :session('admin_id') }}">
                                 </if>
-                                <div class="input-group wb30 pull-left">
-                                    <div class="input-group-addon">{{ :lang('付费类型') }}</div>
-                                    <select name="pay_ways" id="pay_ways" class="form-control">
-                                        <option value="">{{ :lang('请选择付费类型','handle') }}</option>
-                                        {{ :pay_wasy() }}
-                                    </select>
-                                </div>
+                                
                             </div>
                           
                             <div class="col-xs-4">
-                                <div class="input-group wb50 pull-left ">
-                                    <div class="input-group-addon">{{ :lang('应付') }}</div>
-                                    <input class="form-control yf_money" data-price="vn" readonly="readonly" required="" name="pay_price"></input>
-                                </div>
+                               
 
-                                <div class="pull-right">
-                                    <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-danger">
-                                    <a href="{{ :U('Admin/YuShen/index',array('status'=>'3','list_type'=>'only')) }}" class="btn btn-xs btn-success"><span class="fa fa-mail-reply"></span> {{ :lang('返回','handle') }}</a>
-                                </div>
-                                <div class="clear"></div>
+                                
                             </div>
                         </div>
                     </div>
-                    <div class="roww">
+                    <!-- <div class="roww">
                         <div class="col-sm-3">
                             <div class="input-group m-b">
                                 <span class="input-group-addon"><font color="">{{ :lang('所属类别') }}</font></span>
@@ -60,7 +47,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-sm-3">
                         <div class="input-group m-b">
                             <span class="input-group-addon"><font color="">{{ :lang('关键词') }}</font></span>
@@ -110,9 +97,9 @@
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
-                                                            <td colspan="4" class="text-right"><span class="label label-primary">{{ :lang('总价','filed') }}</span></td>
+                                                            <td colspan="4" class="text-right"></td>
                                                             <td>
-                                                                <input type="text" required name="price_total" value="0" size="80" class="form-control" readonly="" data-price="vnlist" style="width: 120px;" id="price_total">
+                                                                
                                                             </td>
                                                             <td></td>
                                                         </tr>
@@ -123,6 +110,54 @@
                                     </tr>
                                 </tbody>
                                 <tfooter>
+                                    <tr>
+                                        <td cplspan="2">
+                                            <div class="col-xs-3">
+                                                <div class="col-xs-6">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">
+                                                            <span class="label  label-primary">{{ :lang('总价','filed') }}</span>
+                                                        </div>
+
+                                                        <input type="text" required name="price_total" value="0" size="80" class="form-control" readonly="" data-price="vnlist"  id="price_total">
+                                                    </div>
+                                                  
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">
+                                                            {{ :lang('折扣','filed') }}
+                                                        </div>
+                                                        <input type="text" min=0 class="form-control" name="zhekou" placeholder="{{ :lang('输入数字，无需输入百分比') }}">
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">
+                                                        {{ :lang('成交价','filed') }}
+                                                    </div>
+                                                    <input type="text" class="form-control" name="zhekou" placeholder="{{ :lang('输入数字，无需输入百分比') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon">{{ :lang('付费类型') }}</div>
+                                                    <select name="pay_ways" id="pay_ways" class="form-control">
+                                                        <option value="">{{ :lang('请选择付费类型','handle') }}</option>
+                                                        {{ :pay_wasy() }}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <div class="input-group  ">
+                                                    <div class="input-group-addon">{{ :lang('应付') }}</div>
+                                                    <input class="form-control yf_money" data-price="vn" readonly="readonly" required="" name="pay_price"></input>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     <tr>
                                         <td colspan="2" class="text-center">
                                             <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-success">
@@ -152,7 +187,14 @@
             key: $key
         }, function(res) {
             // console.log(res);
-            $("#zhuti").empty().append(res.content);
+            if(res.content=='')
+            {
+                 $("#zhuti").empty().append('<div class="alert alert-warning" role="alert">{{ :lang("no data") }}</div>');
+             }else
+             {
+                 $("#zhuti").empty().append(res.content);
+             }
+           
             //显示分页
             laypage({
                 cont: 'pager', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>

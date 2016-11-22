@@ -660,15 +660,19 @@ class QianTaiJieZhenController extends AuthController {
             );
         $model   =  D('JieZhen');
         $data=$model->where($map)->find();
+        //print_r($data);
         
-        //删除确诊，
-        $ydata['status']=3;
+        //删除确诊，退回到院
+        $ydata['status']=2;
         $ydate['jztime']='';
+       // $ydata['jz_id']='';
         $ydata['qz_id']='';
         $ydata['id']=$data['yy_id'];
         M()->startTrans();
+       
         $ym=M('YuYue')->save($ydata);
         $result=$model->where($map)->delete();
+       
         if($result)
         {
             M()->commit();
