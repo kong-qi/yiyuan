@@ -18,6 +18,7 @@
             </div>
             <div class="ibox-content">
                 <form action="" method="post" id="validate">
+                        <input type="hidden" name="user_id" value="{{ $data.user_id }}">
                         <input type="hidden" name="id" value="{{ $data.id }}">
                         <input type="hidden" name="yy_id" value="{{ $data.yy_id }}">
                         <input type="hidden" name="logname" value="{{ $data['User']['name']  }}">

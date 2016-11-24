@@ -47,7 +47,7 @@ class HuiFangController extends AuthController {
                 }
                 
                 if($result) {
-                    add_log($this->onname.'：'.$this->logname.'添加成功');
+                    add_log($this->onname.'：添加成功',$data['user_id']);
                     D('User')->updateCount($data['user_id'],'hf_total');
 
                     if($isclose)
@@ -64,7 +64,7 @@ class HuiFangController extends AuthController {
                     }
 
                 }else{
-                    add_log($this->onname.'：'.$data['name'].'添加失败');
+                    add_log($this->onname.'：'.$data['name'].'添加失败',$data['user_id']);
                     if($isclose)
                     {
                         $msg=lang('添加失败','handle');
@@ -246,9 +246,9 @@ class HuiFangController extends AuthController {
                 $data=$model->create();
                 $result =   $model->save($data);
                 if($result) {
-                    add_log($this->onname.'：'.$this->logname.'更新成功');
+                    add_log($this->onname.'：更新成功',$data['user_id']);
                     $msg=lang('更新成功','handle');
-                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
+                    echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location.reload();</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
                 }else{
                     $msg=lang('数据一样无更新','handle');
@@ -290,7 +290,7 @@ class HuiFangController extends AuthController {
 
                
                 if($result) {
-                    add_log($this->onname.'：'.$this->logname.'更新成功');
+                    add_log($this->onname.'：更新成功',$data['user_id']);
                     $msg=lang('更新成功','handle');
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location.reload();</script>";
                     //return  $this->success(lang('更新成功','handle'),'/Admin/edit',$id);
@@ -332,10 +332,10 @@ class HuiFangController extends AuthController {
         if($result)
         {
              D('User')->updateCount($data['user_id'],'hf_total');
-            add_log($this->onname.'：'.$data['name'].'删除成功');
+            add_log($this->onname.'：删除成功',$data['user_id']);
             return  $this->success(lang('删除成功','handle'));;
         }
-        add_log($this->onname.'：'.$data['name'].'删除失败');
+        add_log($this->onname.'：删除失败',$data['user_id']);
         return $this->error(lang('删除失败','handle'));;
     }
     public function handle($id){
@@ -355,11 +355,11 @@ class HuiFangController extends AuthController {
 
 
         if($model->save($data)){
-            add_log($this->onname.'：设置状态成功');
+            add_log($this->onname.'：设置状态成功',$data['user_id']);
             return  $this->success(lang('更新成功','handle'));
         }else
         {
-            add_log($this->onname.'：设置状态失败');
+            add_log($this->onname.'：设置状态失败',$data['user_id']);
             return $this->error(lang('更新失败','handle'));
         }
     }

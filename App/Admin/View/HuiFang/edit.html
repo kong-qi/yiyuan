@@ -9,6 +9,7 @@
         <div class="animated fadeInUp">
             <div class="col-sm-12 ">
                 <form action="" method="post" id="validate" class="form-horizontal" enctype="multipart/form-data">
+                    <input type="hidden" name="user_id" value="{{ $data.user_id }}">
                     <input type="hidden" name="id" value="{{ $data.id }}">
                     <input type="hidden" name="logname" value="{{ $data.name }}">
                     <div class="ibox float-e-margins m-t">

@@ -10,19 +10,12 @@ class YuShenController extends AuthController {
         $map=array(
             'uuid'=>$id
         );
-
         $model   =   D('YuYue')->relation(true)->where($map)->find();
-
-       
-
-
-
         if($model) {
             $this->data =  $model;// 模板变量赋值
         }else{
             return $this->error(lang('数据错误','handle'));
         }
-
         $this->display();
     }
     //查看确诊，针对病人
@@ -70,7 +63,7 @@ class YuShenController extends AuthController {
                      print_r($data);
                       exit();*/
                     M()->commit();
-                    add_log($this->onname.'：'.$this->logname.'更新成功');
+                    add_log($this->onname.'：更新成功',I('post.user_id'));
                     $msg=lang('更新成功','handle');
 
                     
@@ -79,7 +72,7 @@ class YuShenController extends AuthController {
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
                     M()->rollback();
-                    add_log($this->onname.'：'.$data['name'].'更新失败');
+                    add_log($this->onname.'：更新失败',I('post.user_id'));
                     $msg=lang('更新失败','handle');
                     return $this->success($msg);
                     //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
@@ -119,16 +112,16 @@ class YuShenController extends AuthController {
                 if($result ) {
 
                   
-                    add_log($this->onname.'：'.$data['name'].'更新照片成功');
+                    add_log($this->onname.'：更新照片成功',$data['user_id']);
                     $msg=lang('更新照片成功','handle');
 
-                    add_log($this->onname.'：'.$data['name'].'更新照片成功');
+                    
 
                     return $this->success($msg );
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
                    
-                    add_log($this->onname.'：'.$data['name'].'照片一样，无需更新');
+                    add_log($this->onname.'：照片一样，无需更新',$data['user_id']);
                     $msg=lang('照片一样，无需更新','handle');
                     return $this->success($msg);
                     //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
@@ -156,13 +149,13 @@ class YuShenController extends AuthController {
                   
                     $msg=lang('更新背景成功','handle');
 
-                    add_log($this->onname.'：'.$data['name'].'更新背景成功');
+                    add_log($this->onname.'：更新背景成功');
 
                     return $this->success($msg );
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
                    
-                    add_log($this->onname.'：'.$data['name'].'照片一样，无需更新');
+                    add_log($this->onname.'：照片一样，无需更新');
                     $msg=lang('照片一样，无需更新','handle');
                     return $this->success($msg);
                     //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
@@ -181,10 +174,7 @@ class YuShenController extends AuthController {
     }
     public function index()
     {
-       
-        //print_r(session('group'));
         $this->check_group('yishenjz');
-
         $map = array();
         $this->assign('is_search',I('get.is_search'));
         $stpl="YuYue:so:yushenOn";
@@ -358,6 +348,7 @@ class YuShenController extends AuthController {
     
             jz.jz_smcontent as jz_smcontent,
             jz.id as qz_id,
+            jz.kd_total as kd_total,
             ssys.name as ysz_name,
             fz.name as fzname,
 
@@ -475,11 +466,11 @@ class YuShenController extends AuthController {
                 break;
             case "kaidan":
                     $menu_list = array(
-                         'td-1' => array('name' => lang('预约号'), 'filed'=>'ynumber','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                         'td-1' => array('name' => lang('收费号'), 'filed'=>'kd_number','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          'td-3' => array('name' => lang('开单时间'), 'filed'=>'kd_time','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                         'td-4' => array('name' => lang('合计总价'), 'filed'=>'price_total','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                         'td-5' => array('name' => lang('付款金额'), 'filed'=>'pay_total','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                         'td-4' => array('name' => lang('成交价'), 'filed'=>'price_oktotal','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                         'td-5' => array('name' => lang('付款金额'), 'filed'=>'pay_price','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          'td-6' => array('name' => lang('开单人'), 'filed'=>'kd_name','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          'td-7' => array('name' => lang('收费项目'), 'filed'=>'price_show','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          'td-8' => array('name' => lang('收费状态'), 'filed'=>'sf_status','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
@@ -575,7 +566,7 @@ class YuShenController extends AuthController {
                 if($result && $yresult) {
                     D('User')->updateCount($data['user_id'],'jz_total');
                     M()->commit();
-                    add_log($this->onname.'：'.$this->logname.'添加成功');
+                    add_log($this->onname.'：添加成功',$data['user_id']);
                     $msg=lang('添加成功','handle');
 
                     
@@ -584,7 +575,7 @@ class YuShenController extends AuthController {
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
                     M()->rollback();
-                    add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
+                    add_log($this->onname.'：添加失败',$data['user_id']);
                     $msg=lang('添加失败','handle');
                     return $this->success($msg,$backurl );
                     //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
@@ -623,6 +614,13 @@ class YuShenController extends AuthController {
         $this->onname='开单';
         $this->check_group("kaidan_add");
         if(IS_POST){
+            if(!check_token(I('post.token')))
+            {
+                $msg=lang('操作错误');
+                //$backurl = U("Admin/");
+                return  $this->error($msg );
+            }
+
             M()->startTrans();
             $model =D('KaiDan');
             $post=I('post.');
@@ -630,8 +628,6 @@ class YuShenController extends AuthController {
                 $data['admin_id']=session('admin_id');
                 $data['jz_id']=$post['qz_id'];//接诊表ID
                 $data['yy_id']=$post['yy_id'];//预约ID
-               
-
                 //统计类别下的数量
                 $fid_arr=$post['price_fid'];
                 $hj_arr=$post['price_heji'];
@@ -650,25 +646,34 @@ class YuShenController extends AuthController {
                 //消费各个类别合计计算
                 $dataList=array();
                 $data['price_type']=json_encode($price_type);
-
-              
                 $dataList=array();
                 //更新预约表
-             
                 $ydata['status']=4;//状态
                 $ydata['kdtime']=$post['ykd_time'];
                 //$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yy_id'];
-               
                 $yresult=M('YuYue')->data($ydata)->save();
-
                 $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
+                
+                //更新接诊开单总数
+                $jz_m=M('JieZhen')->find($post['qz_id']);
+                $jz_data['kd_total']=$jz_m['kd_total']+1;//开单删除要减掉
+                $jz_data['id']=$post['qz_id'];
+                M('JieZhen')->data($jz_data)->save();
+                
+                //开单号记录
+                $data['kd_number']=$post['ynumber']."-".get_kaidan_number_sort($post['qz_id']);
+                $data['kd_id_sort']=get_kaidan_number_sort($post['qz_id']);
+                //echo get_kaidan_number_sort($post['qz_id']);
+                //print_r($data);
+                //print_r($ydata);
+                //return '';
 
                 $result =    $model->add($data);
                 if($result) {
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
-                    add_log($this->onname.'：'.$this->logname.'添加成功');
+                    add_log($this->onname.'：添加成功',$data['user_id']);
                     $msg=lang('添加成功','handle');
 
                    
@@ -676,7 +681,7 @@ class YuShenController extends AuthController {
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
                     M()->rollback();
-                    add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
+                    add_log($this->onname.'：添加失败',$data['user_id']);
                     $msg=lang('添加失败','handle');
                     return $this->success($msg,$backurl );
                     //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
@@ -704,15 +709,13 @@ class YuShenController extends AuthController {
         $result=$model->where($map)->delete();
         if($result)
         {
-            add_log($this->onname.'：'.$data['name'].'删除成功');
+            add_log($this->onname.'：删除成功',$data['user_id']);
             return  $this->success(lang('删除成功','handle'));;
         }
-        add_log($this->onname.'：'.$data['name'].'删除失败');
+        add_log($this->onname.'：删除失败',$data['user_id']);
         return $this->error(lang('删除失败','handle'));;
     }
     public function kaidanList(){
-
-        
         $this->onname="开单列表";
         $this->assign('onname',$this->onname);
         $this->check_group('kaidan');
@@ -743,6 +746,7 @@ class YuShenController extends AuthController {
         $join[] = 'LEFT JOIN __LAN_MU__ ly3 ON yy.lytt_id = ly3.id';
         //区域
         $join[] = 'LEFT JOIN __AREA__ ae1 ON yy.area_id = ae1.id';
+        $join[] = 'LEFT JOIN __AREA__ ae2 ON yy.areat_id = ae2.id';
     
         $page=1;
         if(isset($_GET['p']))
@@ -750,17 +754,20 @@ class YuShenController extends AuthController {
             $page=$_GET['p'];
         }
          $filed = '
+            kd.kd_number as kd_number,
             kd.sf_status as sf_status,
             kd.id as id,
             kdys_id as kdys_id,
             kd.jz_id as jz_id,
             kd.uuid as uuid,
             kd.kd_time as kd_time,
-            kd.sf_status,
             kd.js_status,
             kd.price_show,
             kd.price_total,
             kd.pay_ways,
+            kd.price_oktotal,
+            kd.price_zhekou,
+            kd.pay_price as pay_price,
             jzys.name as sy_name,
             u1.name as user_name,
             ys.name as kd_name,
@@ -776,7 +783,8 @@ class YuShenController extends AuthController {
             jz.jz_smcontent as jz_smcontent,
             ly1.name as ly_name,
             ae1.name as ae_name,
-            a1.name as admin_name
+            a1.name as admin_name,
+            ae2.name as ae2_name
          ';
         //是否只能看到自己开的单
         if(check_group('root'))
@@ -822,7 +830,7 @@ class YuShenController extends AuthController {
 
                 if($result) {
 
-                    add_log($this->onname.'：'.$this->logname.'更新成功');
+                    add_log($this->onname.'：更新成功',$data['user_id']);
                     $msg=lang('更新成功','handle');
                     $backurl=U('Admin/YuShen/kaidanList');
                     
@@ -897,11 +905,11 @@ class YuShenController extends AuthController {
         if($result)
         {
              M()->commit();
-            add_log($this->onname.'：'.$data['name'].'删除成功');
+            add_log($this->onname.'：删除成功',$data['user_id']);
             return  $this->success(lang('删除成功','handle'));;
         }
          M()->rollback();
-        add_log($this->onname.'：'.$data['name'].'删除失败');
+        add_log($this->onname.'：删除失败',$data['user_id']);
         return $this->error(lang('删除失败','handle'));;
     }
 }

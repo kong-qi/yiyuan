@@ -441,13 +441,13 @@ class YuYueController extends AuthController
                         {
                             M()->commit();
                             D('User')->updateCount($data['user_id'],'yy_total');
-                            add_log($this->onname . '：' . $data['name'] . '添加成功');
+                            add_log($this->onname . '：添加成功',$data['user_id']);
                             $msg = lang('添加成功', 'handle');
                             return $this->success($msg . "预约号为：" . $data['ynumber'], $backurl);
                         }else
                         {
                             M()->rollback();
-                            add_log($this->onname . '：' . $data['name'] . '添加失败');
+                            add_log($this->onname . '：添加失败',$data['user_id']);
                             $msg = lang('添加失败', 'handle');
                             return $this->success($msg);
                         }
@@ -461,7 +461,7 @@ class YuYueController extends AuthController
                         if ($result && $uresult) {
                             M()->commit();
                             D('User')->updateCount($data['user_id'],'yy_total');
-                            add_log($this->onname . '：' . $data['name'] . '添加成功');
+                            add_log($this->onname . '：添加成功',$data['user_id']);
                             $msg = lang('添加成功', 'handle');
                             return $this->success($msg . "预约号为：" . $data['ynumber'], $backurl);
                             //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
@@ -469,13 +469,14 @@ class YuYueController extends AuthController
 
                         } else {
                             M()->rollback();
-                            add_log($this->onname . '：' . $data['name'] . '添加失败', $backurl);
+                            add_log($this->onname . '：添加失败', $data['user_id']);
                             $msg = lang('添加失败', 'handle');
                             return $this->success($msg);
                         }
                     }
                 }else
                 {
+                    $this->onname='添加咨询';
                     //不是预约，则添加进咨询，且入口user
                     if ($has_user_id != ''){
                         $zdata['user_id']=$udata['id']=$has_user_id;
@@ -483,15 +484,16 @@ class YuYueController extends AuthController
                         $uresult=$user->save($udata);
                         if($zresult && $uresult)
                         {
+
                             M()->commit();
-                            D('User')->updateCount($data['user_id'],'zx_total');
-                            add_log($this->onname . '：' . $data['name'] . '添加成功');
+                            D('User')->updateCount($has_user_id,'zx_total');
+                            add_log($this->onname . '：添加成功',$has_user_id);
                             $msg = lang('添加咨询成功', 'handle');
                             return $this->success($msg , $backurl);
                         }else
                         {
                             M()->rollback();
-                            add_log($this->onname . '：' . $data['name'] . '添加失败');
+                            add_log($this->onname . '：添加失败',$zdata['user_id']);
                             $msg = lang('添加咨询失败', 'handle');
                             return $this->success($msg);
                         }
@@ -505,8 +507,8 @@ class YuYueController extends AuthController
                         $zresult = $zixun->add($zdata);
                         if ($zresult && $uresult) {
                             M()->commit();
-                            D('User')->updateCount($data['user_id'],'zx_total');
-                            add_log($this->onname . '：' . $data['name'] . '添加成功');
+                            D('User')->updateCount($zdata['user_id'],'zx_total');
+                            add_log($this->onname . '：添加成功',$zdata['user_id']);
                             $msg = lang('添加咨询成功', 'handle');
                             return $this->success($msg , $backurl);
                             //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
@@ -514,7 +516,7 @@ class YuYueController extends AuthController
 
                         } else {
                             M()->rollback();
-                            add_log($this->onname . '：' . $data['name'] . '添加失败', $backurl);
+                            add_log($this->onname . '：添加失败', $zdata['user_id']);
                             $msg = lang('添加咨询失败', 'handle');
                             return $this->success($msg);
                         }
@@ -626,7 +628,7 @@ class YuYueController extends AuthController
                 $result = $model->save($data);
 
                 if ($result) {
-                    add_log($this->onname . '：' . $data['name'] . '更新成功');
+                    add_log($this->onname . '：更新成功',$data['user_id']);
                     $msg = lang('更新成功', 'handle');
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.lo</script>";
                     return $this->success($msg,$this->burl);
@@ -710,10 +712,10 @@ class YuYueController extends AuthController
         if($result)
         {
             D('User')->updateCount($data['user_id'],'yy_total');
-            add_log($this->onname.'：'.$data['name'].'删除成功');
+            add_log($this->onname.'：删除成功',$data['user_id']);
             return  $this->success(lang('删除成功','handle'));;
         }
-        add_log($this->onname.'：'.$data['name'].'删除失败');
+        add_log($this->onname.'：删除失败',$data['user_id']);
         return $this->error(lang('删除失败','handle'));;
     }
 
@@ -913,7 +915,7 @@ class YuYueController extends AuthController
                 $result = $model->save($data);
 
                 if ($result) {
-                    add_log($this->onname . '：' . $data['name'] . '更新成功');
+                    add_log($this->onname . '：更新成功',$user['id']);
                     $msg = lang('更新成功', 'handle');
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.lo</script>";
                     return $this->success($msg);
@@ -1005,7 +1007,7 @@ class YuYueController extends AuthController
                 if ($result) {
                     M()->commit();
                     D('User')->updateCount($data['user_id'],'yy_total');
-                    add_log($this->onname . '：' . $data['name'] . '成功');
+                    add_log($this->onname . '：成功',$data['user_id']);
                     $msg = lang('预约成功', 'handle');
 
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.lo</script>";
@@ -1045,6 +1047,7 @@ class YuYueController extends AuthController
         //网站更新信息
         $this->burl = U('Admin/YuYue/zxindex');
         if (IS_POST) {
+
             $model = D('ZiXun');
             $user=D('User');
             $postdata = I('post.');
@@ -1076,7 +1079,7 @@ class YuYueController extends AuthController
                 if ($result) {
                     M()->commit();
                     D('User')->updateCount($data['user_id'],'zx_total');
-                    add_log($this->onname . '：' . $data['name'] . '成功');
+                    add_log($this->onname . '：成功',$data['user_id']);
                     $msg = lang('咨询添加成功', 'handle');
 
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.lo</script>";
@@ -1123,10 +1126,10 @@ class YuYueController extends AuthController
         if($result)
         {
             D('User')->updateCount($data['user_id'],'zx_total');
-            add_log($this->onname.'：'.$data['name'].'删除成功');
+            add_log($this->onname.'：删除成功',$data['user_id']);
             return  $this->success(lang('删除成功','handle'));;
         }
-        add_log($this->onname.'：'.$data['name'].'删除失败');
+        add_log($this->onname.'：删除失败',$data['user_id']);
         return $this->error(lang('删除失败','handle'));;
     }
   

@@ -151,9 +151,9 @@ class QianTaiJieZhenController extends AuthController {
                 $getdata['dzstime'] .= " 00:00:00";
                 $getdata['dzetime'] .= " 23:59:59";
 
-                $timestr2 = strtotime($getdata['dzstime']) . "," . strtotime($getdata['dzetime']);
+                $timestr3 = strtotime($getdata['dzstime']) . "," . strtotime($getdata['dzetime']);
 
-                $map['y1.dztime'] = array('between', $timestr2);
+                $map['y1.dztime'] = array('between', $timestr3);
 
             }
 
@@ -225,6 +225,7 @@ class QianTaiJieZhenController extends AuthController {
             ys.name as ys_name,
     
             jz.jz_smcontent as jz_smcontent,
+            jz.kd_total as kd_total,
             ssys.name as ysz_name,
             fz.name as fzname,
 
@@ -537,13 +538,13 @@ class QianTaiJieZhenController extends AuthController {
                         if($result && $uresult)
                         {
                             M()->commit();
-                            add_log($this->onname . '：' . $data['name'] . '添加成功');
+                            add_log($this->onname . '：添加成功',$data['user_id']);
                             $msg = lang('添加成功', 'handle');
                             return $this->success($msg, $backurl);
                         }else
                         {
                             M()->rollback();
-                            add_log($this->onname . '：' . $data['name'] . '添加失败');
+                            add_log($this->onname . '：添加失败',$data['user_id']);
                             $msg = lang('添加失败', 'handle');
                             return $this->success($msg);
                         }
@@ -556,7 +557,7 @@ class QianTaiJieZhenController extends AuthController {
                         $result = $model->add($data);
                         if ($result && $uresult) {
                             M()->commit();
-                            add_log($this->onname . '：' . $data['name'] . '添加成功');
+                            add_log($this->onname . '：添加成功',$data['user_id']);
                             $msg = lang('添加成功', 'handle');
                             return $this->success($msg, $backurl);
                             //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');</script>";
@@ -564,7 +565,7 @@ class QianTaiJieZhenController extends AuthController {
 
                         } else {
                             M()->rollback();
-                            add_log($this->onname . '：' . $data['name'] . '添加失败', $backurl);
+                            add_log($this->onname . '：添加失败',$data['user_id'], $backurl);
                             $msg = lang('添加失败', 'handle');
                             return $this->success($msg);
                         }
@@ -612,7 +613,7 @@ class QianTaiJieZhenController extends AuthController {
                 $result =   $model->save($data);
                
                 if($result) {
-                    add_log($this->onname.'：'.$data['name'].'成功');
+                    add_log($this->onname.'：成功',$data['user_id']);
                     $msg=lang('更新成功','handle');
                   
                     echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."'); parent.window.location.reload();</script>";
@@ -676,12 +677,12 @@ class QianTaiJieZhenController extends AuthController {
         if($result)
         {
             M()->commit();
-            add_log($this->onname.'：'.$data['name'].'删除成功');
+            add_log($this->onname.'：删除成功',$data['user_id']);
             $msg=lang('删除成功');
             return  $this->success($msg);
         }
          M()->rollback();
-        add_log($this->onname.'：'.$data['name'].'删除失败');
+        add_log($this->onname.'：删除失败',$data['user_id']);
         $msg=lang('删除成功');
         return $this->error($msg);
     }

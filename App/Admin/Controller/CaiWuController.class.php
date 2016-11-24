@@ -39,6 +39,7 @@ class CaiWuController extends AuthController
             $join[] = 'LEFT JOIN __LAN_MU__ ly3 ON yy.lytt_id = ly3.id';
             //区域
             $join[] = 'LEFT JOIN __AREA__ ae1 ON yy.area_id = ae1.id';
+            $join[] = 'LEFT JOIN __AREA__ ae2 ON yy.areat_id = ae2.id';
 
             $order_sort='kd.kd_time desc';
             $page=1;
@@ -59,6 +60,7 @@ class CaiWuController extends AuthController
                 kd.pay_ways as pay_ways,
                 kd.pay_price as pay_price,
                 kd.sf_time as sf_time,
+                kd.kd_number as kd_number,
                 jzys.name as sy_name,
                 u1.name as user_name,
                 ys.name as kd_name,
@@ -72,9 +74,11 @@ class CaiWuController extends AuthController
                 k4.name as bz_name,
                 zx.name as zx_name,
                 jz.jz_smcontent as jz_smcontent,
+                jz.jztime as jztime,
                 ly1.name as ly_name,
                 ae1.name as ae_name,
                 a1.name as admin_name,
+                ae2.name as ae2_name,
                 u1.id as user_id,
                 kd.yy_id as yid,
                 (kd.price_total-kd.true_price-youhui_price) as sx_price
@@ -317,12 +321,12 @@ class CaiWuController extends AuthController
             default:
                 $menu_list = array(
                         'td-0' => array('name' => lang('开单时间'), 'filed'=>'kd_time','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                         'td-1' => array('name' => lang('预约号'), 'filed'=>'ynumber','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                         'td-1' => array('name' => lang('收费号'), 'filed'=>'kd_number','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          'td-3' => array('name' => lang('付款类型'), 'filed'=>'pay_ways','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         
 
-                         'td-4' => array('name' => lang('付款金额'), 'filed'=>'pay_total','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                         'td-4' => array('name' => lang('付款金额'), 'filed'=>'pay_price','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          'td-5' => array('name' => lang('开单人'), 'filed'=>'kd_name','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         
                          'td-6' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
@@ -505,7 +509,7 @@ class CaiWuController extends AuthController
     public function add()
     {
         //权限选择
-        //$this->check_group($this->rule_qz."_check");
+        $this->check_group("shouyin_check");
         if (IS_POST) {
             $m=D('KaiDan');
             if(!check_token(I('post.token')))
@@ -516,6 +520,7 @@ class CaiWuController extends AuthController
             }
             $data=$m->create();
             $data['true_price']=$data['cash_price']+$data['shuaka_price']+$data['other_price'];
+            $data['pay_mehtod']=implode(",",I('post.pay_mehtod'));
             //付了金额
             foreach ($data as $key => $value) {
                 if($value=='')
@@ -536,9 +541,8 @@ class CaiWuController extends AuthController
                 $data['sf_status']=3;
                 $data['yf_money']=$data['true_price'];
             }
-
-           /* print_r($data);
-            exit();*/
+            //print_r($data);
+            //exit();
             $result = M('KaiDan')->save($data);
             if ($result) {
                 //更新优惠券
@@ -557,13 +561,13 @@ class CaiWuController extends AuthController
                 return  $this->success(lang( $msg,'handle'),$backurl);
             } else {
 
-                $msg = lang('数据一样无更新', 'handle');
+                $msg = lang('收费失败', 'handle');
                 return  $this->error(lang( $msg,'handle'));
                 //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);;parent.layer.close(index)</script>";
             }
 
         } else {
-            $uid = I('get.id');
+            $uid = I('get.uuid');
             $map = array();
             $model = M('KaiDan');
             $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
@@ -575,7 +579,8 @@ class CaiWuController extends AuthController
                 kd.id as id,
                 kd.yy_id as yy_id,
                 kd.uuid as uuid,
-                             
+                kd.price_oktotal,
+                kd.price_zhekou,             
                 kd.kd_time as kd_time,
                 kd.sf_status as sf_status,
                 kd.sf_status,
@@ -592,7 +597,7 @@ class CaiWuController extends AuthController
                
              ';
 
-            $m = $model->alias('kd')->field($filed)->join($join)->where(array('kd.id' => $uid))->find();
+            $m = $model->alias('kd')->field($filed)->join($join)->where(array('kd.uuid' => $uid))->find();
             //print_r($m);
             $this->data = $m;
 
@@ -822,7 +827,7 @@ class CaiWuController extends AuthController
         }
 
         
-        $map['y1.status']=3;
+        $map['y1.status']=array('in',array(3,4));
         $model = M('YuYue');
         $filed = '
             ly1.name as ly_name,
@@ -972,16 +977,24 @@ class CaiWuController extends AuthController
     }
     //收费POST
     public function addKaiDanPricePost(){
+        $this->onname="开单收费";
         if(IS_POST){
             M()->startTrans();
             $model =D('KaiDan');
             $post=I('post.');
             if($data=$model->create()) {
+                if(!check_token(I('post.token')))
+                {
+                    $msg=lang('操作错误');
+                    //$backurl = U("Admin/");
+                    return  $this->error($msg );
+                }
+
                 $data['admin_id']=session('admin_id');
                 $data['jz_id']=$post['qz_id'];//接诊表ID
                 $data['yy_id']=$post['yy_id'];//预约ID
                
-
+                $data['pay_mehtod']=implode(",",I('post.pay_mehtod'));
                 //统计类别下的数量
                 $fid_arr=$post['price_fid'];
                 $hj_arr=$post['price_heji'];
@@ -1036,9 +1049,22 @@ class CaiWuController extends AuthController
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 $backurl=U("Admin/CaiWu/kaidanList");
+                //更新接诊开单总数
+                $jz_m=M('JieZhen')->find($post['qz_id']);
+                $jz_data['kd_total']=$jz_m['kd_total']+1;//开单删除要减掉
+                $jz_data['id']=$post['qz_id'];
+                M('JieZhen')->data($jz_data)->save();
+
+                 //开单号记录
+                $data['kd_number']=$post['ynumber']."-".get_kaidan_number_sort($post['qz_id']);
+                $data['kd_id_sort']=get_kaidan_number_sort($post['qz_id']);
 
                 $result =    $model->add($data);
-               
+                //print_r($data);
+                //print_r($jz_data);
+                //print_r($ydata);
+                //return '';
+
                 if($result) {
                     //更新优惠券
                     if ($data['youhui_id'] != '') {
@@ -1050,7 +1076,7 @@ class CaiWuController extends AuthController
                         M('Card')->where(array('id' => $data['youhui_id']))->save($yhq_data);
                     }
                     M()->commit();
-                    add_log($this->onname.'：'.$this->logname.'添加成功');
+                    add_log($this->onname.'：添加成功',$data['user_id']);
                     $msg=lang('添加成功','handle');
 
                    
@@ -1058,7 +1084,7 @@ class CaiWuController extends AuthController
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
                     M()->rollback();
-                    add_log($this->onname.'：'.$data['name'].'添加失败','/Admin/add');
+                    add_log($this->onname.'：添加失败',$data['user_id']);
                     $msg=lang('添加失败','handle');
                     return $this->success($msg,$backurl );
                     //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");

@@ -1,6 +1,6 @@
 <php>if($v['sf_status']==0){</php>
     <if condition="check_group('shouyin_check')">
-        <a href="{{ :U('Admin/CaiWu/add',array('id'=>$v['id'])) }}"
+        <a href="{{ :U('Admin/CaiWu/add',array('uuid'=>$v['uuid'])) }}"
            data-title="{{ :lang('收费') }}" class="btn btn-primary "><span class="fa fa-plus-circle btn-font" data-name="{{ :lang('收费') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
     </if>
     <if condition="check_group('kaidan_edit')">

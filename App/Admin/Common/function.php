@@ -334,10 +334,11 @@ function lang($cn,$type=''){
     
 }
 //操作日志
-function add_log($content){
+function add_log($content,$user_id=''){
 
     $log=M('log');
     $data['admin_id']=session('admin_id');
+    $data['user_id']=$user_id;
     $data['ctime']=time();
     $data['content']=$content;
     $log->add($data);
@@ -740,7 +741,7 @@ function get_doc($where=array(),$echo=1,$checked=''){
                     $check='';
                 }
 
-                $str.="<option $check value='".$v['id']."'>".$v['realname']."</option>";
+                $str.="<option $check value='".$v['id']."'>".$v['name']."</option>";
             }
         }
         return  $str;
@@ -1526,4 +1527,14 @@ function getlastMonthDays($date){
   $firstday=date('Y-m-01',strtotime(date('Y',$timestamp).'-'.(date('m',$timestamp)-1).'-01'));
   $lastday=date('Y-m-d',strtotime("$firstday +1 month -1 day"));
   return array($firstday,$lastday);
+}
+
+//取得开单的序号
+function get_kaidan_number_sort($jz_id){
+    $m=M('KaiDan')->where(array('jz_id'=>$jz_id))->find();
+    if(count($m)>0)
+    {
+        return ($m['kd_id_sort']+1);
+    }
+    return 1;
 }
