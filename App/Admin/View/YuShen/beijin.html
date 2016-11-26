@@ -1,92 +1,33 @@
-<extend name="Layout:index"/>
-<block name="add_js">
-    <script src="__JS__/jquery.validate.js"></script>
-</block>
-<block name="right">
-    <div class="right-box">
-
-
-        <div class="box">
-            
-            <div class="box-content">
-                <div class="form-warp">
-
-                    <form action="{{ :U('Admin/YuShen/beijin') }}" method="post" id="validate">
-                        <input type="hidden" name="id" value="{{ $data.id }}">
-
-                       
-                        <div class="tab-box">
-                            <table width="100%" border="0" cellpadding="8" cellspacing="0" class="table "
-                                   style="background: #fff">
-                                <tbody>
-                                <tr>
-                                    <td align="right">{{ :lang('修改背景') }}</td>
-                                    <td>
-                                        <div class="input-group m-b" style="margin-bottom:5px;">
-
-
-                                            <textarea name="edit_content" id="mark" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['edit_content']) }}</textarea>
-                                        </div>
-
-                                    </td>
-
-
-                                </tbody>
-                                <tfooter>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <input type="submit" value="{{ :lang('提交','handle') }}" class="btn">
-                                        </td>
-                                    </tr>
-                                </tfooter>
-                            </table>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="cl"></div>
+<div class="well well-sm none" id="yorder_msg" style="background: rgb(255, 255, 255); display: block;">
+    <input type="hidden" value="30" name="base_price_total">
+    <input type="hidden" value="name=&quot;base_price_zhekou&quot;">
+    <input type="hidden" value="18" name="base_oktotal">
+    <input type="hidden" value="18" name="base_pay_price">
+    <input type="hidden" value="45" name="base_order_id">
+    <input type="hidden" value="120009-15" name="base_order_number">
+    <div class="col-xs-3" style="margin-bottom: 0">
+        <div class="input-group  ">
+            <div class="input-group-addon">付费类型</div>
+            <div class="form-control text-success" style="font-size: 16px;"></div>
         </div>
-
-
     </div>
-</block>
-<block name="add_foot_js">
-    
-    {{ :load_ueditor() }}
-
-    <script>
-         bd_ueditor('mark',120);
-     
-        $.validator.setDefaults({
-            highlight: function (e) {
-                $(e).closest("td").removeClass("has-success").addClass("has-error")
-            }, success: function (e) {
-                e.closest("td").removeClass("has-error").addClass("has-success")
-            }, errorElement: "span", errorPlacement: function (e, r) {
-                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
-            }, errorClass: "error", validClass: "no-error"
-
-        });
-        $().ready(function () {
-            // validate the comment form when it is submitted
-            var e = "<i class='fa fa-times-circle'></i> ";
-
-            // validate signup form on keyup and submit
-            $("#validate").validate({
-
-                submitHandler: function (form) {
-                    //设置表单参数
-                    //最终区域
-
-                    return_pic_json(".enmoreinsert_file .itempic", "thumbs", 1);
-                    //return false;
-                    form.submit();;
-                }
-            });
-
-           
-        });
-
-    </script>
-</block>
+    <div class="col-xs-3" style="margin-bottom: 0">
+        <div class="input-group  ">
+            <div class="input-group-addon">已收金额</div>
+            <div class="form-control text-danger" style="font-size: 16px;" id="ypay_price" data-price="vnlist"> 18</div>
+        </div>
+    </div>
+    <div class="col-xs-3" style="margin-bottom: 0">
+        <div class="input-group  ">
+            <div class="input-group-addon">总价</div>
+            <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist"> 30</div>
+        </div>
+    </div>
+    <div class="col-xs-3" style="margin-bottom: 0">
+        <div class="input-group  ">
+            <div class="input-group-addon">开单人</div>
+            <div class="form-control text-success" style="font-size: 16px;">bbb</div>
+        </div>
+    </div>
+    <div class="cl"></div>
+</div>

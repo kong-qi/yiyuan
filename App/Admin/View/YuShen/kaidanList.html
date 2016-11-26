@@ -102,6 +102,23 @@
 
                                     <php>}elseif($v['sf_status']==1){</php>
                                         <a href="{{ :U('Admin/YuShen/kaidanPrint',array('id'=>$v['jz_id'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-print btn-font" data-name="{{ :lang('打印') }}" data-btn="handle"></span><span class="js-data-name"></a>
+
+                                    <php>}elseif($v['sf_status']==8 || $v['sf_status']==7 || $v['sf_status']==9){</php>
+                                        <a data-w="90%" data-h="500px" href="{{ :U('Admin/YuShen/kaidantui_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-edit btn-font" data-name="{{ :lang('修改') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+                                        <if condition="check_group('kaidan_del')">
+                                            
+                                            <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
+                                                <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></a>
+                                           
+                                        </if>
+                                    <php>}elseif($v['sf_status']==11 || $v['sf_status']==12){</php>
+                                        <a data-w="90%" data-h="500px" href="{{ :U('Admin/YuShen/kaidanbujiao_edit',array('id'=>$v['uuid'])) }}" class="btn btn-white"><span class="fa fa-edit btn-font" data-name="{{ :lang('修改') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+                                        <if condition="check_group('kaidan_del')">
+                                            
+                                            <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
+                                                <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></a>
+                                           
+                                        </if>
                                     <php>}</php>
                                     
                                    
@@ -145,7 +162,7 @@
                                                 <span class="{{ :btn_color($v['sf_status']) }}" >{{ :sf_status($v['sf_status']) }}</span>
                                             <elseif condition="$mv['filed'] eq pay_ways"/>  
                                                 
-                                                <span class="{{ :btn_yycolor($v['pay_ways']) }}" >{{ :pay_wasy($v['pay_ways'],0) }}</span>
+                                                <span class="{{ :btn_yycolor($v['pay_ways']) }}" >{{ :pay_wasyall($v['pay_ways'],0) }}</span>
                                             <elseif condition="$mv['filed'] eq user_name"/>
                                                 
                                                      <a href="javascript:void(0)" class=" js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.yuuid }}" > {{ $v[$mv['filed']] }}</a>

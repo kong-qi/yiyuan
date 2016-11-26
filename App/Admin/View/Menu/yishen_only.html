@@ -17,6 +17,13 @@
 		<a href="{{ :U('Admin/YuShen/kaidan',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="95%" data-h="95%" data-uuid="{{ $v.user_uuid }}">
 		      <span class="fa fa-plus btn-font" data-name="{{ :lang('开单') }}" data-btn="handle"></span><span class="js-data-name"></span>
 		 </a>
+		 <a href="{{ :U('Admin/YuShen/kaidantui',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="95%" data-h="95%" data-uuid="{{ $v.user_uuid }}">
+		       <span class="fa fa-reply-all btn-font" data-name="{{ :lang('退款') }}" data-btn="handle"></span><span class="js-data-name"></span>
+		  </a>
+		  <a href="{{ :U('Admin/YuShen/kaidanbujiao',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="95%" data-h="95%" data-uuid="{{ $v.user_uuid }}">
+		        <span class=" fa fa-retweet btn-font" data-name="{{ :lang('补交') }}" data-btn="handle"></span><span class="js-data-name"></span>
+		   </a>
+		 
 	 <php>}</php>
 
 </if>

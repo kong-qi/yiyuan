@@ -1200,7 +1200,13 @@ function btn_yycolor($checked=''){
         '3'=>'badge  badge-info',
         '4'=>'badge badge-danger',
         '5'=>'badge badge-success',
-        '6'=>'badge badge-warning'
+        '6'=>'badge badge-warning',
+        '7'=>'badge badge-green',
+        '8'=>'badge badge-primary',
+        '9'=>'badge  badge-info',
+        '10'=>'badge badge-green',
+        '11'=>'badge badge-primary',
+        '12'=>'badge  badge-info',
 
     );
     if($checked!='')
@@ -1218,7 +1224,13 @@ function sf_status($checked=''){
         '3'=>lang('已部分收费'),
         '4'=>lang('已退费'),
         '5'=>lang('已退订金'),
-        '6'=>Lang('部分退费')
+        '6'=>Lang('部分退费'),
+        '7'=>lang('待退费'),
+        '8'=>lang('待退订金'),
+        '9'=>Lang('待部分退费'),
+        '10'=>Lang('已收欠款'),
+        '11'=>Lang('待收费'),
+        '12'=>Lang('待收欠款'),
 
     );
     if($checked!='')
@@ -1232,6 +1244,101 @@ function pay_wasy($checked='',$type_echo=1){
         '1'=>lang('付全款'),
         '2'=>lang('付定金'),
         '3'=>lang('付部分款')
+        );
+    $str='';
+    
+    if($type_echo==1)
+    {
+        foreach ($array as $key => $value) {  
+            $on='';  
+            if($checked!=''){
+                if($key==$checked)
+                {
+                    $on='selected="selected"';
+                }
+            }
+            $str.="<option ".$on." value='".$key."'>".$value."</option>";
+        }
+
+    }else
+    {
+        if($checked!='')
+        {
+            return $array[$checked];
+        }
+    }
+    return $str;
+}
+function pay_wasyall($checked='',$type_echo=1){
+    $array=array(
+        '1'=>lang('付全款'),
+        '2'=>lang('付定金'),
+        '3'=>lang('付部分款'),
+        '4'=>lang('退全款'),
+        '5'=>lang('退订金'),
+        '6'=>lang('退部分费用'),
+        '7'=>lang('补订金余款'),
+        '8'=>lang('补欠款'),
+        );
+    $str='';
+    
+    if($type_echo==1)
+    {
+        foreach ($array as $key => $value) {  
+            $on='';  
+            if($checked!=''){
+                if($key==$checked)
+                {
+                    $on='selected="selected"';
+                }
+            }
+            $str.="<option ".$on." value='".$key."'>".$value."</option>";
+        }
+
+    }else
+    {
+        if($checked!='')
+        {
+            return $array[$checked];
+        }
+    }
+    return $str;
+}
+function pay_wasy2($checked='',$type_echo=1){
+    $array=array(
+        '4'=>lang('退全款'),
+        '5'=>lang('退订金'),
+        '6'=>lang('退部分费用')
+        );
+    $str='';
+    
+    if($type_echo==1)
+    {
+        foreach ($array as $key => $value) {  
+            $on='';  
+            if($checked!=''){
+                if($key==$checked)
+                {
+                    $on='selected="selected"';
+                }
+            }
+            $str.="<option ".$on." value='".$key."'>".$value."</option>";
+        }
+
+    }else
+    {
+        if($checked!='')
+        {
+            return $array[$checked];
+        }
+    }
+    return $str;
+}
+function pay_wasy3($checked='',$type_echo=1){
+    $array=array(
+        '7'=>lang('补订金余款'),
+        '8'=>lang('补欠款'),
+      
         );
     $str='';
     
@@ -1278,7 +1385,13 @@ function btn_color($checked=''){
         '3'=>'badge  badge-info',
         '4'=>'badge badge-danger',
         '5'=>'badge badge-success',
-        '6'=>'badge badge-warning'
+        '6'=>'badge badge-warning',
+        '7'=>'badge badge-green',
+        '8'=>'badge badge-primary',
+        '9'=>'badge  badge-info',
+        '10'=>'badge badge-green',
+        '11'=>'badge badge-primary',
+        '12'=>'badge  badge-info',
 
     );
     if($checked!='')
@@ -1531,7 +1644,7 @@ function getlastMonthDays($date){
 
 //取得开单的序号
 function get_kaidan_number_sort($jz_id){
-    $m=M('KaiDan')->where(array('jz_id'=>$jz_id))->find();
+    $m=M('KaiDan')->where(array('jz_id'=>$jz_id))->order('kd_id_sort desc')->find();
     if(count($m)>0)
     {
         return ($m['kd_id_sort']+1);

@@ -10,6 +10,7 @@ class KaiDanModel extends  RelationModel  {
        
         
     );
+    protected $pk='id';
     protected $_auto = array (
         array('uuid','create_uuid',1,'function') , // 对password字段在新增和编辑的时候使md5函数处理
         array('ctime','time',1,'function'),
@@ -26,4 +27,21 @@ class KaiDanModel extends  RelationModel  {
 
         ),
     );
+
+    public function updateCount($id,$col,$num = 1){
+        $id = (int)$id;
+        $total=0;
+        switch ($col) {
+            case 'kd_total':
+                $total=M('KaiDan')->where(array('jz_id'=>$id))->count();
+                break;
+            
+            
+            default:
+                # code...
+                break;
+        }
+        $first=$this->execute(" update __PREFIX__jie_zhen set {$col} ={$total} where ".$this->pk." = '{$id}' ");
+        
+    }
 }

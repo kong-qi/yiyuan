@@ -607,6 +607,217 @@ class YuShenController extends AuthController {
         $this->data=$m;
         $this->display();
     }
+    public function kaidanbujiao($id,$yid){
+        $this->check_group('kaidan_add');
+         $this->onname="医生开补交单";
+        if(IS_POST){
+            if(!check_token(I('post.token')))
+            {
+                $msg=lang('操作错误');
+                return  $this->error($msg );
+            }
+            M()->startTrans();
+            $model =D('KaiDan');
+            $post=I('post.');
+            if($data=$model->create()) {
+                $data['admin_id']=session('admin_id');
+                $data['jz_id']=$post['qz_id'];//接诊表ID
+                $data['yy_id']=$post['yy_id'];//预约ID
+                //统计类别下的数量
+                $fid_arr=$post['price_fid'];
+                $hj_arr=$post['price_heji'];
+                $news_total=array();
+                foreach ($fid_arr as $key => $value) {
+                    $news_total[$value][]=$hj_arr[$key];
+                }
+                $price_type=array();
+                foreach ($news_total as $key => $value) {
+                    $price_type[]=array(
+                        'fid'=>$key,
+                        'total'=>array_sum($news_total[$key])
+                        );
+                    
+                }
+                //消费各个类别合计计算
+                $dataList=array();
+                $data['price_type']=json_encode($price_type);
+                $dataList=array();
+                $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
+               
+              
+
+                //付款类型
+                switch ($data['pay_ways']) {
+                    case '7'://付定金，计算剩余多少没付
+                        $data['sf_status']=11;
+                        $data['is_dingjing']=1;
+                        $data['price_bujiaodingjing']=$data['pay_price'];//补交金额
+
+                        break;
+                    case '8'://付定金，计算剩余多少没付
+                        $data['sf_status']=12;
+                        $data['is_bufeng']=1;
+                        $data['price_bujiaoyukuan']=$data['pay_price'];//补交金额
+                        break;
+                    
+                }
+
+                //更新接诊开单总数
+                $jz_m=M('JieZhen')->find($post['qz_id']);
+                $jz_data['kd_total']=$jz_m['kd_total']+1;//开单删除要减掉
+                $jz_data['id']=$post['qz_id'];
+                M('JieZhen')->data($jz_data)->save();
+                
+                //开单号记录
+                $data['kd_number']=$post['ynumber']."-".get_kaidan_number_sort($post['qz_id']);
+                $data['kd_id_sort']=get_kaidan_number_sort($post['qz_id']);
+                //echo get_kaidan_number_sort($post['qz_id']);
+                /*print_r($data);
+                print_r($ydata);
+                return '';*/
+
+                $result =    $model->add($data);
+                if($result) {
+                    D('User')->updateCount($data['user_id'],'kd_total');
+                    M()->commit();
+                    add_log($this->onname.'：添加成功',$data['user_id']);
+                    $msg=lang('添加成功','handle');
+
+                   
+                    return $this->success($msg,$backurl );
+                    // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }else{
+                    M()->rollback();
+                    add_log($this->onname.'：添加失败',$data['user_id']);
+                    $msg=lang('添加失败','handle');
+                    return $this->success($msg,$backurl );
+                    //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }
+
+            }
+        }else
+        {
+            $this->check_group('kaidan_add');
+            $this->onname='开单';
+            $this->assign('onname',$this->onname);
+
+            $m=D('JieZhen')->relation(true)->where(array('checked'=>1))->find($id);
+            
+            $data=array(
+
+                );
+            $this->assign($data);
+            $this->data=$m;
+            $this->display();
+        }
+        
+    }
+    //退款
+    public function kaidantui($id,$yid){
+        $this->check_group('kaidan_add');
+        $this->onname="医生开退款单";
+        if(IS_POST)
+        {
+            if(!check_token(I('post.token')))
+            {
+                $msg=lang('操作错误');
+                return  $this->error($msg );
+            }
+
+            M()->startTrans();
+            $model =D('KaiDan');
+            $post=I('post.');
+            if($data=$model->create()) {
+                $data['admin_id']=session('admin_id');
+                $data['jz_id']=$post['qz_id'];//接诊表ID
+                $data['yy_id']=$post['yy_id'];//预约ID
+                //统计类别下的数量
+                $fid_arr=$post['price_fid'];
+                $hj_arr=$post['price_heji'];
+                $news_total=array();
+                foreach ($fid_arr as $key => $value) {
+                    $news_total[$value][]=$hj_arr[$key];
+                }
+                $price_type=array();
+                foreach ($news_total as $key => $value) {
+                    $price_type[]=array(
+                        'fid'=>$key,
+                        'total'=>array_sum($news_total[$key])
+                        );
+                    
+                }
+                //消费各个类别合计计算
+                $dataList=array();
+                $data['price_type']=json_encode($price_type);
+                $dataList=array();
+                $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
+                $data['price_tuikuan']=$data['pay_price'];//退款金额
+                $data['is_tuikuan']=1;
+
+                //付款类型
+                switch ($data['pay_ways']) {
+                    case '4'://付定金，计算剩余多少没付
+                        $data['sf_status']=7;
+                        break;
+                    case '5'://付定金，计算剩余多少没付
+                        $data['sf_status']=8;
+                        break;
+                    case '6'://付部分，计算剩余多少没付
+                        $data['sf_status']=9;
+                        break;
+                }
+
+                //更新接诊开单总数
+                $jz_m=M('JieZhen')->find($post['qz_id']);
+                $jz_data['kd_total']=$jz_m['kd_total']+1;//开单删除要减掉
+                $jz_data['id']=$post['qz_id'];
+                M('JieZhen')->data($jz_data)->save();
+                
+                //开单号记录
+                $data['kd_number']=$post['ynumber']."-".get_kaidan_number_sort($post['qz_id']);
+                $data['kd_id_sort']=get_kaidan_number_sort($post['qz_id']);
+                //echo get_kaidan_number_sort($post['qz_id']);
+               
+
+                $result =    $model->add($data);
+                if($result) {
+                    D('User')->updateCount($data['user_id'],'kd_total');
+                    M()->commit();
+                    add_log($this->onname.'：添加成功',$data['user_id']);
+                    $msg=lang('添加成功','handle');
+
+                   
+                    return $this->success($msg,$backurl );
+                    // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }else{
+                    M()->rollback();
+                    add_log($this->onname.'：添加失败',$data['user_id']);
+                    $msg=lang('添加失败','handle');
+                    return $this->success($msg,$backurl );
+                    //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
+                    //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
+                }
+
+            }
+
+        }else
+        {
+            $this->check_group('kaidan_add');
+            $this->onname='退款开单';
+            $this->assign('onname',$this->onname);
+
+            $m=D('JieZhen')->relation(true)->where(array('checked'=>1))->find($id);
+            
+            $data=array(
+
+                );
+            $this->assign($data);
+            $this->data=$m;
+            $this->display();
+        }
+        
+    }
     //开单
     public function postKaiDan(){
         //更新预约状is_kd为1，开单时间kdtime
@@ -655,6 +866,18 @@ class YuShenController extends AuthController {
                 $yresult=M('YuYue')->data($ydata)->save();
                 $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
                 
+                //付款类型
+                switch ($data['pay_ways']) {
+                    case '2'://付定金，计算剩余多少没付
+                        $data['price_only_price']=$data['price_oktotal']-$data['pay_price'];//成交价-应付价
+                        $data['is_dingjing']=1;
+                        break;
+                    case '3'://付部分，计算剩余多少没付
+                        $data['price_only_price']=$data['price_oktotal']-$data['pay_price'];//成交价-应付价
+                        $data['is_bufeng']=1;
+                        break;
+                }
+
                 //更新接诊开单总数
                 $jz_m=M('JieZhen')->find($post['qz_id']);
                 $jz_data['kd_total']=$jz_m['kd_total']+1;//开单删除要减掉
@@ -665,9 +888,7 @@ class YuShenController extends AuthController {
                 $data['kd_number']=$post['ynumber']."-".get_kaidan_number_sort($post['qz_id']);
                 $data['kd_id_sort']=get_kaidan_number_sort($post['qz_id']);
                 //echo get_kaidan_number_sort($post['qz_id']);
-                //print_r($data);
-                //print_r($ydata);
-                //return '';
+               
 
                 $result =    $model->add($data);
                 if($result) {
@@ -813,6 +1034,172 @@ class YuShenController extends AuthController {
 
         $this->display();
     }
+    public function kaidantui_edit($id){
+
+        $this->check_group('kaidan_edit');
+        $this->onname='医生开单退款更新';
+        $this->assign('onname',$this->onname);
+        if(IS_POST)
+        {
+            $model =D('KaiDan');
+            $post=I('post.');
+            if($model->create()) {
+                $data=$model->create();
+                //统计类别下的数量
+                $fid_arr=$post['price_fid'];
+                $hj_arr=$post['price_heji'];
+                $news_total=array();
+                foreach ($fid_arr as $key => $value) {
+                    $news_total[$value][]=$hj_arr[$key];
+                }
+                $price_type=array();
+                foreach ($news_total as $key => $value) {
+                    $price_type[]=array(
+                        'fid'=>$key,
+                        'total'=>array_sum($news_total[$key])
+                        );
+                    
+                }
+                //消费各个类别合计计算
+                $dataList=array();
+                $data['price_type']=json_encode($price_type);
+                $dataList=array();
+                $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
+                $data['price_tuikuan']=$data['pay_price'];//退款金额
+                $data['is_tuikuan']=1;
+
+                //付款类型
+                switch ($data['pay_ways']) {
+                    case '4'://付定金，计算剩余多少没付
+                        $data['sf_status']=7;
+                        break;
+                    case '5'://付定金，计算剩余多少没付
+                        $data['sf_status']=8;
+                        break;
+                    case '6'://付部分，计算剩余多少没付
+                        $data['sf_status']=9;
+                        break;
+                }
+
+                $result =   $model->save($data);
+
+                if($result) {
+
+                    add_log($this->onname.'：更新成功',$data['user_id']);
+                    $msg=lang('更新成功','handle');
+                    $backurl=U('Admin/YuShen/kaidanList');
+                    
+                    return  $this->success($msg,$backurl);
+                }else{
+
+                    $msg=lang('数据一样无更新','handle');
+                    return  $this->success($msg,$backurl);
+                }
+            }else{
+                return $this->error($model->getError());
+            }
+        }else{
+           
+            $map=array(
+            'uuid'=>$id
+            );
+
+            $model   =  D('KaiDan')->relation(true)->where($map)->find();
+
+          
+            if($model) {
+                $this->data =  $model;// 模板变量赋值
+            }else{
+                return $this->error(lang('数据错误','handle'));
+            }
+            
+            $this->display();
+        }
+    }
+    public function kaidanbujiao_edit($id){
+
+        $this->check_group('kaidan_edit');
+        $this->onname='医生开单补交更新';
+        $this->assign('onname',$this->onname);
+        if(IS_POST)
+        {
+            $model =D('KaiDan');
+            $post=I('post.');
+            if($model->create()) {
+                $data=$model->create();
+
+                //统计类别下的数量
+                $fid_arr=$post['price_fid'];
+                $hj_arr=$post['price_heji'];
+                $news_total=array();
+                foreach ($fid_arr as $key => $value) {
+                    $news_total[$value][]=$hj_arr[$key];
+                }
+                $price_type=array();
+                foreach ($news_total as $key => $value) {
+                    $price_type[]=array(
+                        'fid'=>$key,
+                        'total'=>array_sum($news_total[$key])
+                        );
+                    
+                }
+                //消费各个类别合计计算
+                $dataList=array();
+                $data['price_type']=json_encode($price_type);
+                
+                $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
+
+                //付款类型
+                switch ($data['pay_ways']) {
+                    case '7'://付定金，计算剩余多少没付
+                        $data['sf_status']=11;
+                        $data['is_dingjing']=1;
+                        $data['price_bujiaodingjing']=$data['pay_price'];//补交金额
+
+                        break;
+                    case '8'://付定金，计算剩余多少没付
+                        $data['sf_status']=12;
+                        $data['is_bufeng']=1;
+                        $data['price_bujiaoyukuan']=$data['pay_price'];//补交金额
+                        break;
+                    
+                }
+
+                $result =   $model->save($data);
+
+                if($result) {
+
+                    add_log($this->onname.'：更新成功',$data['user_id']);
+                    $msg=lang('更新成功','handle');
+                    $backurl=U('Admin/YuShen/kaidanList');
+                    
+                    return  $this->success($msg,$backurl);
+                }else{
+
+                    $msg=lang('数据一样无更新','handle');
+                    return  $this->success($msg,$backurl);
+                }
+            }else{
+                return $this->error($model->getError());
+            }
+        }else{
+           
+            $map=array(
+            'uuid'=>$id
+            );
+
+            $model   =  D('KaiDan')->relation(true)->where($map)->find();
+
+          
+            if($model) {
+                $this->data =  $model;// 模板变量赋值
+            }else{
+                return $this->error(lang('数据错误','handle'));
+            }
+            
+            $this->display();
+        }
+    }
     public function kaidan_edit($id){
 
         $this->check_group('kaidan_edit');
@@ -821,11 +1208,39 @@ class YuShenController extends AuthController {
         if(IS_POST)
         {
             $model =D('KaiDan');
-            
+            $post=I('post.');
             if($model->create()) {
                 $data=$model->create();
-               /* print_r($data);
-                exit();*/
+                //统计类别下的数量
+                $fid_arr=$post['price_fid'];
+                $hj_arr=$post['price_heji'];
+                $news_total=array();
+                foreach ($fid_arr as $key => $value) {
+                    $news_total[$value][]=$hj_arr[$key];
+                }
+                $price_type=array();
+                foreach ($news_total as $key => $value) {
+                    $price_type[]=array(
+                        'fid'=>$key,
+                        'total'=>array_sum($news_total[$key])
+                        );
+                    
+                }
+                //消费各个类别合计计算
+                $dataList=array();
+                $data['price_type']=json_encode($price_type);
+                //付款类型
+                switch ($data['pay_ways']) {
+                    case '2'://付定金，计算剩余多少没付
+                        $data['price_only_price']=$data['price_oktotal']-$data['pay_price'];//成交价-应付价
+                        $data['is_dingjing']=1;
+                        break;
+                    case '3'://付部分，计算剩余多少没付
+                        $data['price_only_price']=$data['price_oktotal']-$data['pay_price'];//成交价-应付价
+                        $data['is_bufeng']=1;
+                        break;
+                }
+               
                 $result =   $model->save($data);
 
                 if($result) {
@@ -902,9 +1317,12 @@ class YuShenController extends AuthController {
         $ym=M('YuYue')->save($ydata);
 
         $result=$model->where($map)->delete();
+        //接诊开单数量减少
+        D('KaiDan')->updateCount($data['jz_id'],'kd_total');
+        
         if($result)
         {
-             M()->commit();
+            M()->commit();
             add_log($this->onname.'：删除成功',$data['user_id']);
             return  $this->success(lang('删除成功','handle'));;
         }

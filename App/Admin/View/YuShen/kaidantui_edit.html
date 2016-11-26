@@ -12,23 +12,10 @@
             <div class="ibox">
                 <div class="ibox-content" style="padding-left:10px; padding-right:10px;" id="shoujisf3">
                     <div class="">
-                        <div class="msg_error"></div>
-                        <div class="col-xs-12">
-                            <div class="input-group wb30 pull-left ">
-                                <div class="input-group-addon">{{ :lang('姓名') }}</div>
-                                <div class="form-control "><span class="text-blue">{{ $data.User.name }}</span></div>
-                            </div>
-                            <if condition="check_group('kaidan_yishen') || check_group('root')">
-                                <div class="input-group  wb30 pull-left ">
-                                    <div class="input-group-addon">{{ :lang('开单人') }}</div>
-                                    <select class="form-control" id="kdys_id" name="kdys_id">
-                                        <option value="">{{ :lang('请选择开单人','handle') }}</option>
-                                        {{ :get_doc(array(),1,$data['kdys_id']) }}
-                                    </select>
-                                </div>
-                                <else/>
-                                <input type="hidden" name="kdys_id" value="{{ :session('admin_id') }}">
-                            </if>
+                        <div class="col-xs-12" style="margin-bottom: 5px" ;>
+                            <h2 class="text-center">
+                                    {{ :lang('退费') }}({{ $data.User.name }})
+                            </h2>
                         </div>
                         <div class="cl"></div>
                         <div class="well well-sm" style="background: #fff">
@@ -57,6 +44,40 @@
                             <div class="pager" id="pager" style="padding: 0">
                             </div>
                         </div>
+                        <div class="well well-sm none" id="yorder_msg" style="background: rgb(255, 255, 255); display: block;">
+                            <input type="hidden" value="{{ $data.base_price_total }}" name="base_price_total">
+                            <input type="hidden" value="{{ $data.base_price_zhekou }}" name="base_price_zhekou">
+                            <input type="hidden" value="{{ $data.base_oktotal }}" name="base_oktotal">
+                            <input type="hidden" value="{{ $data.base_pay_price }}" name="base_pay_price">
+                            <input type="hidden" value="{{ $data.base_order_id }}" name="base_order_id">
+                            <input type="hidden" value="{{ $data.base_order_number }}" name="base_order_number">
+                            <div class="col-xs-3" style="margin-bottom: 0">
+                                <div class="input-group  ">
+                                    <div class="input-group-addon">付费类型</div>
+                                    <div class="form-control text-success" style="font-size: 16px;">{{ :pay_wasyall($data['base_pay_ways'],2) }}</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3" style="margin-bottom: 0">
+                                <div class="input-group  ">
+                                    <div class="input-group-addon">已收金额</div>
+                                    <div class="form-control text-danger" style="font-size: 16px;" id="ypay_price" data-price="vnlist">{{ :($data['base_pay_price']) }}</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3" style="margin-bottom: 0">
+                                <div class="input-group  ">
+                                    <div class="input-group-addon">总价</div>
+                                    <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist">{{ :($data['base_price_total']) }}</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-3" style="margin-bottom: 0">
+                                <div class="input-group  ">
+                                    <div class="input-group-addon">开单人</div>
+                                    <div class="form-control text-success" style="font-size: 16px;">{{ :$data['base_kder_name'] }}</div>
+                                </div>
+                            </div>
+                            <div class="cl"></div>
+                        </div>
+
                         <div class="well well-sm" style="background: #fff">
                             <php>
                                 $show=(json_decode(htmlspecialchars_decode($data['price_show']),true));
@@ -96,58 +117,53 @@
                                         </foreach>
                                     </if>
                                 </tbody>
-                                <tfoot>
+                                 <tfoot>
                                     <tr>
                                         <td colspan="6">
                                             <div class="alert alert-warning none" id="error_tips" role="alert"></div>
-                                            <div class="col-xs-12" style="margin-bottom: 0">
-                                                <div class="col-xs-6" style="margin-bottom: 0;padding-left: 0">
-                                                    <div class="col-xs-6">
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                <span class="label  label-primary">{{ :lang('总价','filed') }}</span>
-                                                            </div>
-                                                            <input type="text" required name="price_total" value="{{ $data.price_total }}" size="80" class="form-control" readonly="" data-price="vnlist" id="price_total">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <div class="input-group">
-                                                            <div class="input-group-addon">
-                                                                {{ :lang('折扣','filed') }}
-                                                            </div>
-                                                            <input id="zhekou" type="text" value="{{ $data.price_zhekou }}" range=[0,100] class="form-control" name="price_zhekou" placeholder="{{ :lang('输入数字') }}">
-                                                            <div class="input-group-addon">
-                                                                {{ :lang('%') }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-6">
+                                 
+                                            <div class="col-xs-12">
+                                                <div class="col-xs-4" style="margin-bottom: 0">
                                                     <div class="input-group">
-                                                        <div class="input-group-addon">
-                                                            {{ :lang('成交价','filed') }}
-                                                        </div>
-                                                        <input readonly="" type="text" class="form-control" id="price_oktotal" data-price="vn" name="price_oktotal" value="{{ $data.price_oktotal }}" placeholder="{{ :lang('成交价') }}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12" style="margin-bottom: 0">
-                                                <div class="col-xs-6" style="margin-bottom: 0">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon">{{ :lang('付费类型') }}</div>
+                                                        <div class="input-group-addon">{{ :lang('退款类型') }}</div>
                                                         <select name="pay_ways" id="pay_ways" class="form-control">
-                                                            <option value="">{{ :lang('请选择付费类型','handle') }}</option>
-                                                            {{ :pay_wasy($data['pay_ways']) }}
+                                                            <option value="">{{ :lang('请选择退款类型','handle') }}</option>
+                                                            {{ :pay_wasy2($data['pay_ways']) }}
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-6" style="margin-bottom: 0">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon">{{ :lang('应付') }}</div>
-                                                        <input class="form-control yf_money" data-price="vn" readonly="readonly" required="" name="pay_price"></input>
+                                                <div class="col-xs-4" style="margin-bottom: 0">
+                                                    <div class="input-group  ">
+                                                        <div class="input-group-addon">{{ :lang('退款金额') }}</div>
+                                                        <input class="form-control yf_money" data-price="vn" readonly="readonly" required="" name="pay_price" value="{{ :$data['pay_price'] }}"></input>
                                                     </div>
                                                 </div>
+                                                <div class="col-xs-4" style="margin-bottom: 0;">
+                                                    <if condition="check_group('kaidan_yishen') || check_group('root')">
+                                                        <div class="input-group  ">
+                                                            <div class="input-group-addon">{{ :lang('退款人') }}</div>
+                                                            <select class="form-control" id="kdys_id" name="kdys_id">
+                                                                <option value="">{{ :lang('请选择退款人','handle') }}</option>
+                                                                {{ :get_doc(array(),1,$data['kdys_id']) }}
+                                                            </select>
+                                                        </div>
+                                                        <else/>
+                                                        <input type="hidden" name="kdys_id" value="{{ :session('admin_id') }}">
+                                                    </if>
+                                                </div>
                                             </div>
+                                            <div class="col-xs-12">
+                                                <div class="input-group  ">
+                                                    <div class="input-group-addon">{{ :lang('退款原因') }}</div>
+                                                    <textarea name="tuikuan_content" class="form-control" required="">{{ :echo_html($data['tuikuan_content']) }}</textarea>   
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6">
+                                            
+                                            <div class="col-xs-6"></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -177,7 +193,12 @@
             key: $key
         }, function(res) {
             // console.log(res);
-            $("#zhuti").empty().append(res.content);
+            if (res.content == '') {
+                $("#zhuti").empty().append('<div class="alert alert-warning" role="alert">{{ :lang("no data") }}</div>');
+            } else {
+                $("#zhuti").empty().append(res.content);
+            }
+
             //显示分页
             laypage({
                 cont: 'pager', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
@@ -194,12 +215,15 @@
             });
         });
     }
+
     function go_ajax_kaidan(curr) {
+        $ks_id = $("#ks_id").val();
         $key = $(".js-key-kaidan").val();
         $.getJSON("{{ :U('Admin/Ajax/getKaiDanList') }}", {
             page: curr || 1,
             uid: "{{ $data.user_id }}",
-            key: $key
+            key: $key,
+            type:"tuifei"
         }, function(res) {
             // console.log(res);
             if (res.content == '') {
@@ -226,9 +250,11 @@
     }
     $.validator.setDefaults({
         highlight: function(e) {
-            $(e).closest("td").removeClass("has-success").addClass("has-error")
+            $(e).closest("td").removeClass("has-success").addClass("has-error");
+
         },
         success: function(e) {
+
             e.closest("td").removeClass("has-error").addClass("has-success")
         },
         errorElement: "span",
@@ -244,33 +270,25 @@
     });
 
     function set_yf_money() {
+        unshowmonery();
         pay_ways = $("#pay_ways").val();
+        $ypay_price=$("#ypay_price").text();
 
-        $tprice = $("#price_total").val();
-        //是否有折扣
-        $zhekou = $("#zhekou").val();
-        $zhekou = $zhekou || 0;
-
-        if (!isNaN($zhekou)) {
-            $ok_price = accounting.unformat($tprice);
-            $ok_price = ($ok_price * (100 - $zhekou)) / 100;
-            $ok_price = Math.round($ok_price);
-
-            $v = accounting.formatMoney($ok_price, {
-                symbol: "",
-                format: "%s %v",
-                precision: 0
-            });
-            $(".yf_money").attr('readonly', true);
-            if (pay_ways != 1 && pay_ways != '') {
-                $(".yf_money").attr('readonly', false);
-            } else {
+        switch(pay_ways)
+        {
+            case "4":
+            case "5":
+                $(".yf_money").attr("readonly",true);
+                $v=accounting.formatMoney($ypay_price,{ symbol: "",  format: "%s %v" ,precision:0});
                 $(".yf_money").val($v);
-            }
-
-            $("#price_oktotal").val($v);
+            break;
+            case "6":
+            $(".yf_money").attr("readonly",false);$(".yf_money").val('');
+            break;
         }
+       
     }
+
     $().ready(function() {
         // validate the comment form when it is submitted
 
@@ -291,7 +309,7 @@
                     return false;
                 }
                 if ($("#pay_ways").val() == '') {
-                    layer.msg('{{ :lang("请选择付费类型") }}');
+                    layer.msg('{{ :lang("请选择退款类型") }}');
                     return false;
                 }
 
@@ -308,16 +326,10 @@
                 //return false;
                 unshowmonery();
                 submonery();
-                //还原
-                $tprice = $("#price_total").val();
-                $("#price_total").val(accounting.unformat($tprice));
+                
                 //return false;
                 form.submit();;
             }
-        });
-        $("#zhekou").on("blur change keyup", function() {
-
-            set_yf_money();
         });
         $("#pay_ways").change(function() {
             if ($(this).val() != 1) {
@@ -325,9 +337,18 @@
             }
             set_yf_money();
         });
+        $("#zhekou").on("blur change keyup", function() {
+
+            set_yf_money();
+        });
         $(".go-search").click(function() {
 
             go_ajax(0);
+
+        });
+        $(".go-search-kaidan").click(function() {
+
+            go_ajax_kaidan(0);
 
         });
         $('.js-key').bind('keypress', function(event) {
@@ -335,11 +356,6 @@
                 go_ajax(0);
                 event.preventDefault();
             }
-        });
-        $(".go-search-kaidan").click(function() {
-
-            go_ajax_kaidan(0);
-
         });
         $('.js-key-kaidan').bind('keypress', function(event) {
             if (event.keyCode == "13") {
@@ -388,15 +404,29 @@
             $(this).remove();
         });
         //历史单加入
-        $(document).on("click",".kaidan_item",function(){
-            $price_str=$(this).find(".kaidan_item_price").html();
-            $("#add_price").append($price_str);
-            js_total();
+        $(document).on("click", ".kaidan_item", function() {
+                $price_str = $(this).find(".kaidan_item_price").html();
+                $("#add_price").append($price_str);
+                js_total();
 
-            $(this).remove();
-            $("#zhuti,#pager").empty();
+                $("#zhuti,#pager").empty();
+                $("#yorder_msg").show();
+                $ypay_ways=$(this).attr('data-pay-ways');
+                $ypay_total=$(this).attr('data-total');
+                $ypay_price=$(this).attr('data-pay-price');
+                $kder=$(this).attr('data-kder');
+                $kd_number=$(this).attr('data-kd-number');
+                $ypay_zhekou=$(this).attr("data-zhekou");
+                $ypay_oktotal=$(this).attr("data-oktotal");
+                $kd_id=$(this).attr("data-id");
+                 $ypay_ways_id=$(this).attr('data-pay_ways_id');
+                $ykai_dan_erid=$(this).attr('data-kder-id');
+                $ypay_zhekou=$ypay_zhekou || 0;
+                $out_str='<input type="hidden" value='+$ykai_dan_erid+' name="base_kder_id" /><input type="hidden" value='+$kder+' name="base_kder_name" /><input type="hidden" value='+$ypay_ways_id+' name="base_pay_ways" /><input type="hidden" value='+$ypay_total+' name="base_price_total" /><input type="hidden" value='+$ypay_zhekou+' name="base_price_zhekou" /><input type="hidden" value='+$ypay_oktotal+' name="base_oktotal" /><input type="hidden" value='+$ypay_price+' name="base_pay_price" /><input type="hidden" value='+$kd_id+' name="base_order_id" /><input type="hidden" value='+$kd_number+' name="base_order_number" /><div class="col-xs-3" style="margin-bottom: 0"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("付费类型") }}</div> <div class="form-control text-success" style="font-size: 16px;">'+$ypay_ways+'</div> </div> </div> <div class="col-xs-3" style="margin-bottom: 0"> <div class="input-group  "> <div class="input-group-addon" >{{ :lang("已收金额") }}</div> <div class="form-control text-danger" style="font-size: 16px;" id="ypay_price" data-price="vnlist">'+$ypay_price+'</div> </div> </div> <div class="col-xs-3" style="margin-bottom: 0"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("总价") }}</div> <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist">'+$ypay_total+'</div> </div> </div> <div class="col-xs-3" style="margin-bottom: 0"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("开单人") }}</div> <div class="form-control text-success" style="font-size: 16px;">'+$kder+'</div> </div> </div><div class="cl"></div>'; 
+                $("#yorder_msg").empty().append( $out_str);
+                showmonery();
         })
-        //价格改变
+            //价格改变
         $(document).on('change', '.pr_price', function() {
 
             $pt = $(this).parents(".show_price_all");
@@ -606,7 +636,7 @@
         //
 
 
-        $ysum = 0;
+        /*$ysum = 0;
         pr_price = $("#add_price .pr_price");
         pr_num = $("#add_price .price_num");
         pr_heji = $("#add_price .pr_heji");
@@ -634,9 +664,10 @@
 
         $total.val($ysum);
         //最后显示
-        set_yf_money()
+        set_yf_money()*/
 
 
     }
     </script>
 </block>
+
