@@ -456,7 +456,11 @@ class QianTaiJieZhenController extends AuthController {
         $backurl=U('Admin/QianTaiJieZhen/add');
 
         if (IS_POST) {
-
+            if(!check_token(I('post.token')))
+            {
+                $msg=lang('操作错误');
+                return  $this->error($msg,$backurl );
+            }
             $model = D("YuYue");
             $user=D('User');
             $zixun=D('ZiXun');
@@ -597,6 +601,7 @@ class QianTaiJieZhenController extends AuthController {
 
         if(IS_POST)
         {
+
             $model =D('YuYue');
             $postdata=I('post.');
             if($model->create()) {
