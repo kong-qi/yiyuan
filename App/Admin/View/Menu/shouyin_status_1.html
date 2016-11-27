@@ -1,42 +1,8 @@
 <if condition="check_group('shouyin_jiesuan')">
-<php>if($v['sf_status']==1 && $v['js_status']!=1){</php>
+<php>if($v['js_status']!=1 && in_array($v['sf_status'],array(1,2,3,4,5,6,10))){</php>
     
     	
-        <a href="{{ :U('Admin/CaiWu/setJsStatus',array('id'=>$v['uuid'],'type'=>'true','logname'=>$v['user_name'].lang('已收费'))) }}" date-js='1' class="btn btn-info "><span class="fa fa-check-circle btn-font" data-name="{{ :lang('结算') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+        <a href="{{ :U('Admin/CaiWu/setJsStatus',array('uuid'=>$v['uuid'],'type'=>'true')) }}" date-js='1' class="btn btn-info "><span class="fa fa-check-circle btn-font" data-name="{{ :lang('结算') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
 
-<php>}elseif($v['sf_status']==2 && $v['js_status']!=1){</php>
-
-    	<a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1'
-    	   data-h="550px" data-url="{{ :U('Admin/CaiWu/edit',array('uuid'=>$v['uuid'],'logname'=>$v['user_name'].lang('补交定金'))) }}"
-    	   data-title="{{ :lang('补交定金') }}" class="btn btn-danger "><span class="fa fa-plus btn-font" data-name="{{ :lang('补交定金') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
-        <a href="{{ :U('Admin/CaiWu/setJsStatus',array('id'=>$v['uuid'],'type'=>'true','logname'=>$v['user_name'].lang('定金'))) }}" date-js='1' class="btn btn-info "><span class="fa fa-check-circle btn-font" data-name="{{ :lang('结算') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
- 
-
-
-     <!--    <a href="{{ :U('Admin/CaiWu/tui',array('id'=>$v['uuid'],'type'=>'dingjing','logname'=>$v['user_name'].lang('退定金'))) }}"
-        class="btn btn-white"><span class="fa fa-share btn-font" data-name="{{ :lang('退订金') }}" data-btn="handle"></span><span class="js-data-name"></span></a> -->
-
-  
-    
-<php>}elseif($v['sf_status']==3 && $v['js_status']!=1){</php>
-   
-      <a href="javascript:void(0)" data-layer='1' data-w="800px" data-close='1'
-         data-h="550px" data-url="{{ :U('Admin/CaiWu/edit',array('uuid'=>$v['uuid'],'logname'=>$v['user_name'].lang('部分收费补交'))) }}"
-         data-title="{{ :lang('补交部分收费') }}" class="btn btn-danger "><span class="fa fa-plus btn-font" data-name="{{ :lang('补交部分收费') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
-        <a href="{{ :U('Admin/CaiWu/setJsStatus',array('id'=>$v['uuid'],'type'=>'true','logname'=>$v['user_name'].lang('部分收费'))) }}" date-js='1' class="btn btn-info "><span class="fa fa-check-circle btn-font" data-name="{{ :lang('结算') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
-  
-
-       <!--  <a href="{{ :U('Admin/CaiWu/kaidan_edit',array('id'=>$v['uuid'],'type'=>'bufeng','logname'=>$v['user_name'].lang('退部分'))) }}"
-          class="btn btn-white"><span class="fa fa-share btn-font" data-name="{{ :lang('退部分') }}" data-btn="handle"></span><span class="js-data-name"></span></a> -->
-
- 
-    
 <php>}</php>
-</if>
-<if condition="check_group('kaidan_edit')">
-    <php>if($v['sf_status']>3){</php>
-    
-    <a href="{{ :U('Admin/YuShen/kaidanDel',array('id'=>$v['uuid'])) }}" class="btn btn-xs btn-white" date-del="1">
-        <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></a>
-    <php>}</php>
 </if>

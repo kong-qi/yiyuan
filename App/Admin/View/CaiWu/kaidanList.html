@@ -95,12 +95,7 @@
                                             <input type="checkbox" class="checkbox-select" name="checkbox[]" value="{{ $v.yuuid }}">
                                         </td>
                                         <td class="td-handle">
-                                            <!-- //网站竞价人员 -->
-                                            <div class="box" style="">
-                                                <a href="{{ :U('Admin/CaiWu/addKaiDanPrice',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="80%" data-h="80%" data-uuid="{{ $v.user_uuid }}">
-                                                      <span class="fa fa-plus btn-font" data-name="{{ :lang('开单') }}" data-btn="handle"></span><span class="js-data-name"></span>
-                                                </a>
-                                            </div>
+                                            <include file="Menu:caiwu_kaidan" />
                                            
                                         </td>
                                       

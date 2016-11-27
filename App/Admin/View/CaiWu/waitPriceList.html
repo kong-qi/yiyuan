@@ -20,7 +20,9 @@
              <php>}elseif($handle_tpl=='status_2'){</php>
                  <include file="CaiWu:so:status_2" />
             <php>}elseif($handle_tpl=='status_3'){</php>
-                 <include file="CaiWu:so:status_3" />
+                 <include file="CaiWu:so:ok" />
+            <php>}elseif($handle_tpl=='tui'){</php>
+                 <include file="CaiWu:so:tui" />
             <php>}</php>
         </div>
         </if>
@@ -113,6 +115,8 @@
                                                     <include file="Menu:shouyin_status_2" />
                                                 <php>}elseif($handle_tpl=='status_3'){</php>
                                                      <include file="Menu:shouyin_status_3" />
+                                                <php>}elseif($handle_tpl=='tui'){</php>
+                                                     <include file="Menu:shouyin_tui" />
                                                 <php>}</php>
                                             
                                             </div>
@@ -149,7 +153,7 @@
                                                       </ul>
                                                    <elseif condition="$mv['filed'] eq pay_ways"/>
                                                         <span class="{{ :btn_yycolor($v['pay_ways']) }}">
-                                                        {{ :lang(pay_wasy($v['pay_ways'],0)) }}
+                                                        {{ :lang(pay_wasyall($v['pay_ways'],0)) }}
                                                         </span>
                                                     <elseif condition="$mv['filed'] eq price_total"/>
                                                         <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>

@@ -5,6 +5,7 @@
 <block name="right">
     <div class="right-box">
         <form action="" method="post" id="validate">
+            <input type="hidden" name="backurl" value="{{ :I('get.backurl') }}">
             <input type="hidden" name="logname" value="{{ $data.User.name }}">
             <input type="hidden" name="token" value="{{ :token() }}">
             <input type="hidden" name="id" value="{{ $data.id }}">
@@ -82,7 +83,7 @@
                             <php>
                                 $show=(json_decode(htmlspecialchars_decode($data['price_show']),true));
                             </php>
-                            <table class="table">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <td><span class="m-l"> {{ :lang('收费项目') }}</span></td>
@@ -396,9 +397,9 @@
                 $edit_price_status = ' readonly="readonly" ';
             }
 
-            $str = '<tr class="show_price_all ajax-price-id-' + $id + '"> <td><input type="hidden"  name="ticket_name[]" value="' + $ticket_name + '"> <input type="hidden"  name="price_name[]" value="' + $name + '"> <input type="hidden" name="price_xfname[]" value="' + $xf_name + '"> <input type="hidden" name="price_fid[]" value="' + $xf_id + '"> <input type="hidden" class="input_price"  name="price_id[]" value="' + $id + '"> <input type="hidden" name="price_danwei[]" value="' + $danwei + '"> <input type="hidden" class="input_heji" name="price_heji[]" value="' + $price + '">  <a href="javascript:;" class="m-l pr_name" data-xfname="' + $xf_name + '" data-fid="' + $xf_id + '" data-id="' + $id + '" data-ticket="' + $ticket_name + '">' + $name + '</a></td> <td><input ' + $edit_price_status + ' name="price_price[]" data-price="vn"  type="text" value="' + $price + '" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td> <td> <span class="badge pr_danwei">' + $danwei + '</span></td> <td><input type="text" min="0" value="' + $num + '" name="price_num[]" class="form-control pr_num" style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td> <td><span class="pr_heji" data-price="vnlist">' + $price + '</span></td> <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ :lang('上移 ') }}</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ :lang('下移 ') }}</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> {{ :lang('删除 ') }}</a> </td> </tr>'; //log($str); $("#add_price").append($str);
+            $str = '<tr class="show_price_all ajax-price-id-' + $id + '"> <td width="400"><input type="hidden"  name="ticket_name[]" value="' + $ticket_name + '"> <input type="hidden"  name="price_name[]" value="' + $name + '"> <input type="hidden" name="price_xfname[]" value="' + $xf_name + '"> <input type="hidden" name="price_fid[]" value="' + $xf_id + '"> <input type="hidden" class="input_price"  name="price_id[]" value="' + $id + '"> <input type="hidden" name="price_danwei[]" value="' + $danwei + '"> <input type="hidden" class="input_heji" name="price_heji[]" value="' + $price + '">  <a href="javascript:;" class="m-l pr_name" data-xfname="' + $xf_name + '" data-fid="' + $xf_id + '" data-id="' + $id + '" data-ticket="' + $ticket_name + '">' + $name + '</a></td> <td><input ' + $edit_price_status + ' name="price_price[]" data-price="vn"  type="text" value="' + $price + '" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td> <td> <span class="badge pr_danwei">' + $danwei + '</span></td> <td><input type="text" min="0" value="' + $num + '" name="price_num[]" class="form-control pr_num" style="width: 60px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td> <td><span class="pr_heji" data-price="vnlist">' + $price + '</span></td> <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> {{ :lang('上移 ') }}</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> {{ :lang('下移 ') }}</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> {{ :lang('删除 ') }}</a> </td> </tr>'; //log($str); $("#add_price").append($str);
             //非input显示
-
+            $("#add_price").append($str);
             js_total();
 
             $(this).remove();

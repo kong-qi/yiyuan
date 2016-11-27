@@ -22,8 +22,11 @@
        <li>
            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>3)) }}">{{ :lang('付部分费用列表') }}</a>
        </li> -->
+       <li>
+           <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>'tui')) }}">{{ :lang('退款管理') }}</a>
+       </li>
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/index',array('is_search'=>1)) }}">{{ :lang('已结算列表') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>'ok','is_search'=>1)) }}">{{ :lang('已结算列表') }}</a>
         </li>
         <!-- <li>
             <a class="J_menuItem" href="javascript:void(0)">{{ :lang('收费员每日结账表') }}</a>

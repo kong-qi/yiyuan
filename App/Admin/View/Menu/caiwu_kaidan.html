@@ -1,0 +1,24 @@
+<if condition="$v['ystatus'] eq 3 || $v['ystatus'] eq 4">
+	 
+	 <php>if(check_group('kaidan_add')){</php>
+		<a href="{{ :U('Admin/CaiWu/addKaiDanPrice',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="95%" data-h="95%" data-uuid="{{ $v.user_uuid }}">
+		      <span class="fa fa-plus btn-font" data-name="{{ :lang('开单') }}" data-btn="handle"></span><span class="js-data-name"></span>
+		 </a>
+		 <a href="{{ :U('Admin/CaiWu/kaidantui',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="95%" data-h="95%" data-uuid="{{ $v.user_uuid }}">
+		       <span class="fa fa-reply-all btn-font" data-name="{{ :lang('退款') }}" data-btn="handle"></span><span class="js-data-name"></span>
+		  </a>
+		  <a href="{{ :U('Admin/CaiWu/kaidanbujiao',array('id'=>$v['qz_id'],'yid'=>$v['yid'])) }}" class="btn btn-xs btn-primary"  data-w="95%" data-h="95%" data-uuid="{{ $v.user_uuid }}">
+		        <span class=" fa fa-retweet btn-font" data-name="{{ :lang('补交') }}" data-btn="handle"></span><span class="js-data-name"></span>
+		   </a>
+		 
+	 <php>}</php>
+
+</if>
+ <php>if($v['ystatus']==3 and $v['kd_total']==0){</php>
+ <if condition=" check_group('yishenjz_del')">
+     <a href="{{ :U('Admin/QianTaiJieZhen/del/',array('qzid'=>$v['qz_id'])) }}"
+     class="btn btn-xs btn-white" date-del="1">
+     <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span>
+    </a>
+ </if>
+ <php>}</php>

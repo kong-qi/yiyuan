@@ -129,7 +129,8 @@ class AjaxController extends AuthController
 
 
                     $data=array(
-                        $filed=>$value
+                        $filed=>$value,
+                        'js_time'=>time()
                     );
                 
                 $result=$model->where($map)->save($data);
@@ -970,7 +971,7 @@ class AjaxController extends AuthController
 
         if($type=='bujiao')
         {
-            $map['kd.sf_status']=array('in',array(2,3));
+            $map['kd.sf_status']=array('in',array(1,2,3));
             $map['kd.pay_ways']=array('in',array(2,3));
 
         }
@@ -1009,7 +1010,7 @@ class AjaxController extends AuthController
                     foreach ($show as $key => $sv) {
                         $price_str.='
                             <tr class="show_price_all ajax-price-id-'.urldecode($sv['id']).'">
-                                <td>
+                                <td width="400">
                                     <input type="hidden" name="ticket_name[]" value="'.urldecode($sv['title2']).'">
                                     <input type="hidden" name="price_name[]" value="'.urldecode($sv['title']).'">
                                     <input type="hidden" name="price_xfname[]" value="'.urldecode($sv['xfname']).'">
@@ -1026,7 +1027,7 @@ class AjaxController extends AuthController
                                     <input readonly="readonly" name="price_price[]" data-price="vn" type="text" value="'.urldecode($sv['price']).'" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td>
                                 <td> <span class="badge pr_danwei">'.urldecode($sv['danwei']).'</span></td>
                                 <td>
-                                    <input type="text" min="0" value="'.urldecode($sv['num']).'" name="price_num[]" class="form-control pr_num" style="width: 170px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td>
+                                    <input type="text" min="0" value="'.urldecode($sv['num']).'" name="price_num[]" class="form-control pr_num" style="width: 60px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td>
                                 <td><span class="pr_heji" data-price="vnlist">'.urldecode($sv['total']).'</span></td>
                                 <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> 上移</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> 下移</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> 删除</a> </td>
                             </tr>
@@ -1048,7 +1049,7 @@ class AjaxController extends AuthController
                                         '.($v['sf_status']==1?$v["true_price"]:$v['pay_price']).'
                                     </td>
                                     <td>
-                                        <span class="badge '.btn_color($v['sf_status']).'">'.sf_status($v['sf_status']).'</span>
+                                        <span class="badge '.btn_color($v['pay_ways']).'">'.pay_wasyall($v['pay_ways'],0).'</span>
                                     </td>
                                 </tr>
                             </table>

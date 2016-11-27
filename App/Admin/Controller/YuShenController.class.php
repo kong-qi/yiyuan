@@ -1060,14 +1060,25 @@ class YuShenController extends AuthController {
                         );
                     
                 }
+                foreach ($data as $key => $value) {
+                    if($value=='')
+                    {
+                        unset($data[$key]);
+                    }
+                }
                 //消费各个类别合计计算
                 $dataList=array();
                 $data['price_type']=json_encode($price_type);
                 $dataList=array();
-                $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
+                
                 $data['price_tuikuan']=$data['pay_price'];//退款金额
                 $data['is_tuikuan']=1;
 
+                $backurl=U("Admin/YuShen/kaidanList");
+                if(I('get.backurl')=='kaidan')
+                {
+                    $backurl=U("Admin/CaiWu/waitPriceList");
+                }
                 //付款类型
                 switch ($data['pay_ways']) {
                     case '4'://付定金，计算剩余多少没付
@@ -1087,7 +1098,7 @@ class YuShenController extends AuthController {
 
                     add_log($this->onname.'：更新成功',$data['user_id']);
                     $msg=lang('更新成功','handle');
-                    $backurl=U('Admin/YuShen/kaidanList');
+                    
                     
                     return  $this->success($msg,$backurl);
                 }else{
@@ -1146,8 +1157,18 @@ class YuShenController extends AuthController {
                 //消费各个类别合计计算
                 $dataList=array();
                 $data['price_type']=json_encode($price_type);
-                
-                $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
+
+                $backurl=U("Admin/YuShen/kaidanList");
+                if(I('get.backurl')=='kaidan')
+                {
+                    $backurl=U("Admin/CaiWu/waitPriceList");
+                }
+                foreach ($data as $key => $value) {
+                    if($value=='')
+                    {
+                        unset($data[$key]);
+                    }
+                }
 
                 //付款类型
                 switch ($data['pay_ways']) {
@@ -1171,8 +1192,7 @@ class YuShenController extends AuthController {
 
                     add_log($this->onname.'：更新成功',$data['user_id']);
                     $msg=lang('更新成功','handle');
-                    $backurl=U('Admin/YuShen/kaidanList');
-                    
+                                       
                     return  $this->success($msg,$backurl);
                 }else{
 
@@ -1240,15 +1260,23 @@ class YuShenController extends AuthController {
                         $data['is_bufeng']=1;
                         break;
                 }
-               
+               foreach ($data as $key => $value) {
+                   if($value=='')
+                   {
+                       unset($data[$key]);
+                   }
+               }
                 $result =   $model->save($data);
-
+                $backurl=U("Admin/YuShen/kaidanList");
+                if(I('get.backurl')=='kaidan')
+                {
+                    $backurl=U("Admin/CaiWu/waitPriceList");
+                }
                 if($result) {
 
                     add_log($this->onname.'：更新成功',$data['user_id']);
                     $msg=lang('更新成功','handle');
-                    $backurl=U('Admin/YuShen/kaidanList');
-                    
+                                      
                     return  $this->success($msg,$backurl);
                 }else{
 
