@@ -1,5 +1,5 @@
 <php>if($v['sf_status']==7 || $v['sf_status']==8 || $v['sf_status']==9){</php>
-<if condition="check_group('shouyin_check')">
+<if condition="check_group('shouyin_rollback')">
     <a href="{{ :U('Admin/CaiWu/add',array('uuid'=>$v['uuid'])) }}"
        data-title="{{ :lang('确认退费') }}" class="btn btn-primary "><span class=" fa fa-check-circle-o btn-font" data-name="{{ :lang('确认退费') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
 </if>

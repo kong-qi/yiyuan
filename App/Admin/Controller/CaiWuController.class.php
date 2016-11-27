@@ -640,6 +640,10 @@ class CaiWuController extends AuthController
                 add_log($this->onname . '：收费成功',$m['user_id']);
                 $msg = lang('收费成功');
                 $backurl = U("Admin/CaiWu/waitPriceList");
+                if(in_array($m['sf_status'],array(7,8,9)))
+                {
+                    $backurl = U("Admin/CaiWu/waitPriceList",array('sf_status'=>'tui'));
+                }
                 //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "'); parent.location.reload();;parent.layer.close(index);</script>";
                 return  $this->success(lang( $msg,'handle'),$backurl);
             } else {
