@@ -11,10 +11,45 @@
         <input type="hidden" name="sf_admin_id" value="{{ :session('admin_id') }}">
         <input type="hidden" name="sf_time" value="{{ :time() }}">
         <div class="well" style="">
-            <h2 class="text-center">收费<small>({{ $data.user_name }})</small></h2>
+            <php>
+                $title_name=lang('收费');
+                if(in_array($data['sf_status'],array(11,12)))
+                {
+                    $title_name=lang('补交款收费');
+                }
+                if(in_array($data['sf_status'],array(7,8,9)))
+                {
+                    $title_name=lang('退款确认');
+                }
+            </php>
+            <h2 class="text-center">{{ :$title_name }}<small>({{ $data.user_name }})</small></h2>
             <div class="sf_box">
                 <div class="sf_part">
                     
+                   
+                   
+                        <php>if(in_array($data['sf_status'],array(11,12,7,8,9))){</php>
+                        <div class="col-xs-4" style="margin-bottom: 0">
+                            <div class="input-group  ">
+                                <div class="input-group-addon">{{ :lang('原订单付费类型') }}</div>
+                                <div class="form-control text-success" style="font-size: 16px;">{{ :pay_wasyall($data['base_pay_ways'],2) }}</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4" style="margin-bottom: 0">
+                            <div class="input-group  ">
+                                <div class="input-group-addon">{{ :lang('已收金额') }}</div>
+                                <div class="form-control text-danger" style="font-size: 16px;" id="ypay_price" data-price="vnlist">{{ :($data['base_pay_price']) }}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-xs-4" style="margin-bottom: 0">
+                            <div class="input-group  ">
+                                <div class="input-group-addon">{{ :lang('开单人') }}</div>
+                                <div class="form-control text-success" style="font-size: 16px;">{{ :$data['base_kder_name'] }}</div>
+                            </div>
+                        </div>
+                        <div class="cl"></div>
+                        <php>}</php>
                     
                     <div class="clear"></div>
                     <div style="margin-top: 10px;padding-top: 15px;">
@@ -40,40 +75,76 @@
                 </div>
                 <div class="sf_part ">
                     <div class="col-xs-12">
-                        <div class="col-xs-4">
-                            <div class="input-group  ">
-                                <div class="input-group-addon">{{ :lang('总价') }}</div>
-                                <div class="form-control text-info" data-price="vnlist" style="font-size: 16px;font-weight:bold">{{ $data.price_total }}</div>
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="input-group ">
-                                <div class="input-group-addon">{{ :lang('折扣') }}</div>
-                                <div class="form-control"><span>{{ $data['price_zhekou'] }}</span></div>
-                                <div class="input-group-addon">%</div>
-                            </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="js-tab-price">
-                                <div class="input-group ">
-                                    <div class="input-group-addon">{{ :lang('成交价') }}</div>
-                                    <div class="form-control text-danger pay_price" data-price="vnlist" style="font-size: 16px;font-weight:bold">{{ $data.price_oktotal }}</div>
+                        <php>if(in_array($data['sf_status'],array(7,8,9))){</php>
+                            <div class="col-xs-4">
+                                <div class="input-group  ">
+                                    <div class="input-group-addon">{{ :lang('总价') }}</div>
+                                    <div class="form-control text-info" data-price="vnlist" style="font-size: 16px;font-weight:bold">{{ $data.base_price_total }}</div>
                                 </div>
-                                
                             </div>
-                        </div>
-                        <div class="col-xs-4">
-                            <div class="input-group ">
-                                <div class="input-group-addon">{{ :lang('应付款') }}</div>
-                                <div class="form-control"><span class="js-yhh" data-price="vnlist" style="font-size: 16px;font-weight:bold;color: #f60">{{ $data['pay_price'] }}</span></div>
+                            <div class="col-xs-4">
+                                <div class="input-group ">
+                                    <div class="input-group-addon">{{ :lang('折扣') }}</div>
+                                    <div class="form-control"><span>{{ $data['base_price_zhekou'] }}</span></div>
+                                    <div class="input-group-addon">%</div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="col-xs-4">
+                                <div class="js-tab-price">
+                                    <div class="input-group ">
+                                        <div class="input-group-addon">{{ :lang('成交价') }}</div>
+                                        <div class="form-control text-danger pay_price" data-price="vnlist" style="font-size: 16px;font-weight:bold">{{ $data.base_oktotal }}</div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        <php>}else{</php>
+                            <div class="col-xs-4">
+                                <div class="input-group  ">
+                                    <div class="input-group-addon">{{ :lang('总价') }}</div>
+                                    <div class="form-control text-info" data-price="vnlist" style="font-size: 16px;font-weight:bold">{{ $data.price_total }}</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="input-group ">
+                                    <div class="input-group-addon">{{ :lang('折扣') }}</div>
+                                    <div class="form-control"><span>{{ $data['price_zhekou'] }}</span></div>
+                                    <div class="input-group-addon">%</div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4">
+                                <div class="js-tab-price">
+                                    <div class="input-group ">
+                                        <div class="input-group-addon">{{ :lang('成交价') }}</div>
+                                        <div class="form-control text-danger pay_price" data-price="vnlist" style="font-size: 16px;font-weight:bold">{{ $data.price_oktotal }}</div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        <php>}</php>
                         <div class="col-xs-4">
                             <div class="input-group  ">
-                                <div class="input-group-addon">{{ :lang('付费类型') }}</div>
+                                
+                                <php>if(in_array($data['sf_status'],array(7,8,9))){</php>
+                                    <div class="input-group-addon">{{ :lang('退款类型') }}</div>
+                                <php>}else{</php>
+                                    <div class="input-group-addon">{{ :lang('付费类型') }}</div>
+                                <php>}</php>
                                 <div class="form-control text-success" style="font-size: 16px;">{{ :pay_wasyall($data['pay_ways'],0) }}</div>
                             </div>
                         </div>
+                        <div class="col-xs-4">
+                            <div class="input-group ">
+                                <php>if(in_array($data['sf_status'],array(7,8,9))){</php>
+                                    <div class="input-group-addon">{{ :lang('应退款') }}</div>
+                                <php>}else{</php>
+                                    <div class="input-group-addon">{{ :lang('应付款') }}</div>
+                                <php>}</php>
+                                
+                                <div class="form-control"><span class="js-yhh" data-price="vnlist" style="font-size: 16px;font-weight:bold;color: #f60">{{ $data['pay_price'] }}</span></div>
+                            </div>
+                        </div>
+                        
                         <div class="col-xs-4">
                             <div class="input-group  ">
                                 <div class="input-group-addon">{{ :lang('开单人') }}</div>
@@ -81,9 +152,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" style="padding-left: 10px;">
                         <div class="input-group ">
-                            <div class="input-group-addon">{{ :lang('付款方式') }}</div>
+                            <php>if(in_array($data['sf_status'],array(7,8,9))){</php>
+                                <div class="input-group-addon">{{ :lang('退款方式') }}</div>
+                            <php>}else{</php>
+                                <div class="input-group-addon">{{ :lang('付款方式') }}</div>
+                            <php>}</php>
+                            
                             <div class="form-control">
                                 <label class="checkbox-inline">
                                     <input type="checkbox" checked="" class="pay_method" name="pay_mehtod[]" id="" value="1">{{ :lang('现金方式') }}

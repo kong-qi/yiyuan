@@ -249,7 +249,7 @@
             } else {
                 $("#zhuti").empty().append(res.content);
             }
-
+            showmonery();
             //显示分页
             laypage({
                 cont: 'pager', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
@@ -516,7 +516,7 @@
             $price_str=$(this).find(".kaidan_item_price").html();
             $("#add_price").append($price_str);
             js_total();
-
+            showmonery();
             $(this).remove();
             $("#zhuti,#pager").empty();
         })

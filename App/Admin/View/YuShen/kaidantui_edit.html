@@ -54,25 +54,25 @@
                             <input type="hidden" value="{{ $data.base_order_number }}" name="base_order_number">
                             <div class="col-xs-3" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">付费类型</div>
+                                    <div class="input-group-addon">{{ :lang('付费类型') }}</div>
                                     <div class="form-control text-success" style="font-size: 16px;">{{ :pay_wasyall($data['base_pay_ways'],2) }}</div>
                                 </div>
                             </div>
                             <div class="col-xs-3" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">已收金额</div>
+                                    <div class="input-group-addon">{{ :lang('已收金额') }}</div>
                                     <div class="form-control text-danger" style="font-size: 16px;" id="ypay_price" data-price="vnlist">{{ :($data['base_pay_price']) }}</div>
                                 </div>
                             </div>
                             <div class="col-xs-3" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">总价</div>
+                                    <div class="input-group-addon">{{ :lang('总价') }}</div>
                                     <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist">{{ :($data['base_price_total']) }}</div>
                                 </div>
                             </div>
                             <div class="col-xs-3" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">开单人</div>
+                                    <div class="input-group-addon">{{ :lang('开单人') }}</div>
                                     <div class="form-control text-success" style="font-size: 16px;">{{ :$data['base_kder_name'] }}</div>
                                 </div>
                             </div>
@@ -232,7 +232,7 @@
             } else {
                 $("#zhuti").empty().append(res.content);
             }
-
+            showmonery();
             //显示分页
             laypage({
                 cont: 'pager', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>

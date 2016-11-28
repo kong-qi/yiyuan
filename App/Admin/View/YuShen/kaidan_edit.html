@@ -208,7 +208,7 @@
             } else {
                 $("#zhuti").empty().append(res.content);
             }
-
+            showmonery();
             //显示分页
             laypage({
                 cont: 'pager', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
@@ -450,7 +450,11 @@
             $heji = $price * $num;
             $pt.find(".input_price").val($price);
             $pt.find(".input_heji").val($heji);
-
+            $heji = accounting.formatMoney($heji, {
+                symbol: "",
+                format: "%s %v",
+                precision: 0
+            });
 
             $pt.find(".pr_heji").text($heji);
             js_total();

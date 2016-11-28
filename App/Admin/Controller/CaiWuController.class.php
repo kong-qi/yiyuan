@@ -181,9 +181,11 @@ class CaiWuController extends AuthController
                 kd.price_oktotal as price_oktotal,
                 kd.js_time as js_time,
                 kd.true_price as true_price,
-                
+                kd.base_oktotal as base_oktotal,
+
                 ykd.sf_time as ysf_time,
                 ykd.kd_number as ykd_number,
+
 
                 yy1.dztime as ydztime,
                 yy1.jztime as yjztime,
@@ -385,6 +387,7 @@ class CaiWuController extends AuthController
                     'td-1' => array('name' => lang('开单人'), 'filed'=>'kd_name','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-3' => array('name' => lang('退款类型'), 'filed'=>'pay_ways','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-3' => array('name' => lang('退款金额'), 'filed'=>'pay_price','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-4' => array('name' => lang('退款状态'), 'filed'=>'sf_status','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-5' => array('name' => lang('退款时间'), 'filed'=>'sf_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-6' => array('name' => lang('退款人'), 'filed'=>'sfy_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
@@ -392,7 +395,8 @@ class CaiWuController extends AuthController
                     'td-8' => array('name' => lang('原订单号'), 'filed'=>'ykd_number','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-9' => array('name' => lang('已收金额'), 'filed'=>'pay_price','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-10' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                    'td-11' => array('name' => lang('合计'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-11' => array('name' => lang('成交价'), 'filed'=>'base_oktotal','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    'td-11-1' => array('name' => lang('合计'), 'filed'=>'base_price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                     'td-12' => array('name' => lang('原订单手术医生'), 'filed'=>'yjz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-13' => array('name' => lang('原订单收费日期'), 'filed'=>'ysf_time','diy'=>'', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     'td-14' => array('name' => lang('原订单的到院时间'), 'filed'=>'ydztime','diy'=>'', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
@@ -637,6 +641,13 @@ class CaiWuController extends AuthController
                     # code...
                     break;
             }
+            switch ($m['pay_ways']) {
+                case '2':
+                    $data['sf_status']=2;
+                    break;
+                
+               
+            }
 
             $result = M('KaiDan')->save($data);
             if ($result) {
@@ -649,8 +660,16 @@ class CaiWuController extends AuthController
                     );
                     M('Card')->where(array('id' => $data['youhui_id']))->save($yhq_data);
                 }*/
-                add_log($this->onname . '：收费成功',$m['user_id']);
-                $msg = lang('收费成功');
+                if(in_array($data['sf_status'],array(4,5,6)))
+                {
+                    add_log($this->onname . '：退费成功',$m['user_id']);
+                    $msg = lang('退费成功');
+                }else
+                {
+                    add_log($this->onname . '：收费成功',$m['user_id']);
+                    $msg = lang('收费成功');
+                }
+              
                 $backurl = U("Admin/CaiWu/waitPriceList");
                 if(in_array($m['sf_status'],array(7,8,9)))
                 {
@@ -683,6 +702,12 @@ class CaiWuController extends AuthController
                 kd.sf_status as sf_status,
                 kd.sf_status,
                 kd.js_status,
+                kd.base_pay_ways as base_pay_ways,
+                kd.base_pay_price as base_pay_price,
+                kd.base_kder_name as base_kder_name,
+                kd.base_price_zhekou as base_price_zhekou,
+                kd.base_price_total as base_price_total,
+                kd.base_oktotal as base_oktotal,
             
                 kd.pay_ways as  pay_ways,
                 kd.pay_price as pay_price,

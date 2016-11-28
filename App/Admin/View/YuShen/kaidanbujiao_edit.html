@@ -47,33 +47,33 @@
                         <div class="well well-sm none" id="yorder_msg" style="background: rgb(255, 255, 255); display: block;">
                             <div class="col-xs-4" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">总价</div>
+                                    <div class="input-group-addon">{{ :lang('总价') }}</div>
                                     <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist">{{ :($data['base_price_total']) }}</div>
                                 </div>
                             </div>
                             <div class="col-xs-4" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">折扣</div>
+                                    <div class="input-group-addon">{{ :lang('折扣') }}</div>
                                     <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist">{{ :($data['base_price_zhekou']) }}</div>
                                 </div>
                             </div>
-                            <div class="col-xs-4" style="margin-bottom: 5px"> <div class="input-group  "> <div class="input-group-addon">成交价</div> <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist" id="yoktotal">{{ :($data['base_oktotal']) }}</div> <div class="input-group-addon">%</div> </div> </div>
+                            <div class="col-xs-4" style="margin-bottom: 5px"> <div class="input-group  "> <div class="input-group-addon">{{ :lang('成交价') }}</div> <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist" id="yoktotal">{{ :($data['base_oktotal']) }}</div> <div class="input-group-addon">%</div> </div> </div>
                             <div class="col-xs-4" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">付费类型</div>
+                                    <div class="input-group-addon">{{ :lang('付费类型') }}</div>
                                     <div class="form-control text-success" style="font-size: 16px;">{{ :pay_wasyall($data['base_pay_ways'],2) }}</div>
                                 </div>
                             </div>
                             <div class="col-xs-4" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">已收金额</div>
+                                    <div class="input-group-addon">{{ :lang('已收金额') }}</div>
                                     <div class="form-control text-danger" style="font-size: 16px;" id="ypay_price" data-price="vnlist">{{ :($data['base_pay_price']) }}</div>
                                 </div>
                             </div>
                             
                             <div class="col-xs-4" style="margin-bottom: 0">
                                 <div class="input-group  ">
-                                    <div class="input-group-addon">开单人</div>
+                                    <div class="input-group-addon">{{ :lang('开单人') }}</div>
                                     <div class="form-control text-success" style="font-size: 16px;">{{ :$data['base_kder_name'] }}</div>
                                 </div>
                             </div>
@@ -254,7 +254,7 @@
             } else {
                 $("#zhuti").empty().append(res.content);
             }
-
+            showmonery();
             //显示分页
             laypage({
                 cont: 'pager', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
@@ -298,11 +298,11 @@
 
         $tprice = $("#price_total").val();
         $type=$type || '';
-        if( $("#is_change_price").val()==0)
+        /*if( $("#is_change_price").val()==0)
         {
             $tprice=$("#yoktotal").text();
         }
-        log($tprice);
+        log($tprice);*/
         $yprice=accounting.unformat($("#ypay_price").text());
 
        
@@ -470,6 +470,8 @@
                
                 $out_str='<input type="hidden" value='+$ykai_dan_erid+' name="base_kder_id" /><input type="hidden" value='+$kder+' name="base_kder_name" /><input type="hidden" value='+$ykai_dan_erid+' name="base_kder_id" /><input type="hidden" value='+$kder+' name="base_kder_name" /><input type="hidden" value='+$ypay_ways_id+' name="base_pay_ways" /><input type="hidden" value='+$ypay_total+' name="base_price_total" /><input type="hidden" value='+$ypay_zhekou+' name="base_price_zhekou" /><input type="hidden" value='+$ypay_oktotal+' name="base_oktotal" /><input type="hidden" value='+$ypay_price+' name="base_pay_price" /><input type="hidden" value='+$kd_id+' name="base_order_id" /> <input type="hidden" value='+$kd_number+' name="base_order_number" /> <div class="col-xs-4" style="margin-bottom: 5px"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("总价") }}</div> <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist">'+$ypay_total+'</div> </div> </div> <div class="col-xs-4" style="margin-bottom: 5px"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("折扣") }}</div> <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist">'+$ypay_zhekou+'</div> <div class="input-group-addon">%</div> </div> </div> <div class="col-xs-4" style="margin-bottom: 5px"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("成交价") }}</div> <div class="form-control text-danger" style="font-size: 16px;" data-price="vnlist" id="yoktotal">'+$ypay_oktotal+'</div> <div class="input-group-addon">%</div> </div> </div> <div class="col-xs-4" style="margin-bottom: 5px"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("付费类型") }}</div> <div class="form-control text-success" style="font-size: 16px;">'+$ypay_ways+'</div> </div> </div> <div class="col-xs-4" style="margin-bottom: 5px"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("已收金额") }}</div> <div class="form-control text-danger" style="font-size: 16px;" id="ypay_price" data-price="vnlist">'+$ypay_price+'</div> </div> </div> <div class="col-xs-4" style="margin-bottom: 5px"> <div class="input-group  "> <div class="input-group-addon">{{ :lang("开单人") }}</div> <div class="form-control text-success" style="font-size: 16px;">'+$kder+'</div> </div> </div> <div class="cl"></div>'; 
                 $("#yorder_msg").empty().append( $out_str);
+                //折扣赋值
+                $("#zhekou").val($ypay_zhekou);
                 showmonery();
                 js_total();
                 $("#is_change_price").val('0');
@@ -486,7 +488,7 @@
             $p = accounting.unformat($p);
 
             $t = $pt.find(".pr_heji");
-
+            
             $num = $pt.find(".pr_num").val();
 
             $heji = $num * $p;
@@ -528,7 +530,11 @@
             $heji = $price * $num;
             $pt.find(".input_price").val($price);
             $pt.find(".input_heji").val($heji);
-
+            $heji = accounting.formatMoney($heji, {
+                symbol: "",
+                format: "%s %v",
+                precision: 0
+            });
 
             $pt.find(".pr_heji").text($heji);
             js_total();

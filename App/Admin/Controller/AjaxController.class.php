@@ -962,7 +962,11 @@ class AjaxController extends AuthController
         $map=array();
         $date_str=$date_get!=''?"kd.".$date_get:'kd.ctime';
         $time=str_replace("kd.",'',$date_str);
-       
+        
+        $del_str='<a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> 上移</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> 下移</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> 删除</a>';
+        $num_str='<a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a>';
+        $is_only='';
+
         if($key)
         {
             $map['kd.kd_number']=array('like','%'.$key.'%');                   
@@ -979,6 +983,9 @@ class AjaxController extends AuthController
         {
             $map['kd.sf_status']=array('in',array(1,2,3));
             $map['kd.js_status']=0;
+            $num_str='';
+            $del_str='';
+            $is_only='readonly="readonly"';
         }
 
         if($status=='ok')
@@ -1024,12 +1031,12 @@ class AjaxController extends AuthController
                                     data-id="'.urldecode($sv['id']).'" 
                                     data-ticket="'.urldecode($sv['title2']).'">'.urldecode($sv['title']).'</a></td>
                                 <td>
-                                    <input readonly="readonly" name="price_price[]" data-price="vn" type="text" value="'.urldecode($sv['price']).'" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td>
+                                    <input '.$is_only.' name="price_price[]" data-price="vn" type="text" value="'.urldecode($sv['price']).'" class="form-control pr_price" style="width: 170px; display: inline-block;"> </td>
                                 <td> <span class="badge pr_danwei">'.urldecode($sv['danwei']).'</span></td>
                                 <td>
-                                    <input type="text" min="0" value="'.urldecode($sv['num']).'" name="price_num[]" class="form-control pr_num" style="width: 60px; display: inline-block;"><a href="javascript:;" class="js-add-num m-l"><i class="fa fa-plus-square-o" aria-hidden="true"></i></a> <a href="javascript:;" class="js-del-num m-l"><i class="fa fa-minus-square-o" aria-hidden="true"></i></a></td>
+                                    <input type="text" '.$is_only.' min="0" value="'.urldecode($sv['num']).'" name="price_num[]" class="form-control pr_num" style="width: 60px; display: inline-block;">'.$num_str.'</td>
                                 <td><span class="pr_heji" data-price="vnlist">'.urldecode($sv['total']).'</span></td>
-                                <td> <a href="javascript:;" class="m-r js-handle-up"><i class="fa fa-arrow-up" aria-hidden="true"></i> 上移</a> <a href="javascript:;" class="m-r js-handle-down"><i class="fa fa-arrow-down" aria-hidden="true"></i> 下移</a> <a href="javascript:;" class="m-r js-handle-remove"><i class="fa fa-cut" aria-hidden="true"></i> 删除</a> </td>
+                                <td>'.$del_str.'</td>
                             </tr>
                         ';
                     }
@@ -1045,7 +1052,7 @@ class AjaxController extends AuthController
                                 <tr>
                                     <td>'.date('m-d-Y',$v[$time]).'</td>
                                     <td>'.$v["kd_number"].'</td>
-                                    <td>
+                                    <td data-price="vnlist">
                                         '.($v['sf_status']==1?$v["true_price"]:$v['pay_price']).'
                                     </td>
                                     <td>

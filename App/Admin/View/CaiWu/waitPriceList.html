@@ -158,7 +158,12 @@
                                                     <elseif condition="$mv['filed'] eq price_total"/>
                                                         <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
                                                     <elseif condition="$mv['filed'] eq pay_price"/>
-                                                        <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
+                                                        <php>if(in_array($v['sf_status'],array(1,2,3,4,5,6,10))){</php>
+                                                            <span data-price="vnlist">{{ $v['true_price'] }}</span>
+                                                        <php>}else{</php>
+                                                            <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
+                                                        <php>}</php>
+                                                        
                                                     <elseif condition="$mv['filed'] eq sx_price"/>
                                                         <php>if($v['pay_ways']!='1'){</php>
                                                         <span data-price="vnlist">{{ $v[$mv['filed']] }}</span>
