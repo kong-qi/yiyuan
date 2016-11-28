@@ -314,7 +314,14 @@
         if (!isNaN($zhekou)) {
             $ok_price = accounting.unformat($tprice);
             $ok_price = (($ok_price) * (100 - $zhekou)) / 100;
+
             $ok_price = Math.round($ok_price);
+            $now_oktotal=$ok_price;
+            $now_oktotal = accounting.formatMoney( $now_oktotal, {
+                symbol: "",
+                format: "%s %v",
+                precision: 0
+            });
             $ok_price=$ok_price-$yprice;
 
             $v = accounting.formatMoney($ok_price, {
@@ -329,7 +336,7 @@
                
             }*/
             $(".yf_money").val($v);
-            $("#price_oktotal").val($v);
+            $("#price_oktotal").val($now_oktotal);
         }
         tab_price();
     }

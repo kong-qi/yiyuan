@@ -971,11 +971,11 @@ class AjaxController extends AuthController
         {
             $map['kd.kd_number']=array('like','%'.$key.'%');                   
         }
-        $map['kd.sf_status']=array('in',array(0,1,2,3));
+        $map['kd.sf_status']=array('in',array(0,1,2,3,10));
 
         if($type=='bujiao')
         {
-            $map['kd.sf_status']=array('in',array(1,2,3));
+            $map['kd.sf_status']=array('in',array(1,2,3,10));
             $map['kd.pay_ways']=array('in',array(2,3));
 
         }
