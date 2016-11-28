@@ -145,10 +145,15 @@ class CaiWuController extends AuthController
                 $map['yy.dztime'] = array('between', $timestr2);
 
             }
-            $stime=trim(strtotime(I('get.stime'))." 00:00:00");
-            $etime=trim(strtotime(I('get.etime'))." 23:59:59");
+            $stime=trim((I('get.stime')));
+            $etime=trim((I('get.etime')));
             if($stime!=='' and $etime !='')
             {
+                $stime .=" 00:00:00";
+                $etime.=" 23:59:59";
+                $stime=strtotime($stime);
+                $etime=strtotime($etime);
+
                 $timestr =  $stime. "," .$etime;
                 $map['kd.sf_time'] = array('between', $timestr);
             }
