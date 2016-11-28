@@ -33,7 +33,12 @@ class HuiFangController extends AuthController {
 
             if($model->create())
             {
-                
+                if(!check_token(I('post.token')))
+                {
+                    $msg=lang('操作错误');
+                    $backurl = U("Admin/HuiFang/getlistadd");
+                    return  $this->error($msg ,$backurl);
+                }
                 $data=$model->create();
                 $data['ntime']=time();
                 $data['status']=1;

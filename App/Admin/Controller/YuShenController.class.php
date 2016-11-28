@@ -311,7 +311,7 @@ class YuShenController extends AuthController {
             y1.zx_mark,
             y1.ys_id as ys_id,
             y1.is_kd as is_kd,
-           
+            
             y1.kd_id as kd_id,
             y1.kdtime as kdtime,
             y1.ynumber,
@@ -431,13 +431,14 @@ class YuShenController extends AuthController {
         $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
         $this->display("YuYue:yushen:index");
         
-        
+         
     }
     public function getFiledArray($type){
         switch ($type) {
             case 'only':
             case 'all':
                    $menu_list = array(
+                        'td-1_1' => array('name' => lang('接诊ID'), 'filed'=>'ynumber','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                         'td-1' => array('name' => lang('预约号'), 'filed'=>'ynumber','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                         'td-3' => array('name' => lang('性别'), 'filed'=>'sex','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
@@ -536,6 +537,12 @@ class YuShenController extends AuthController {
 
             if($model->create())
             {
+                if(!check_token(I('post.token')))
+                {
+                    $msg=lang('操作错误');
+                    $backurl = U("Admin/YuShen/add");
+                    return  $this->error($msg ,$backurl);
+                }
                 M()->startTrans();
                 $data=$model->create();
                 $data['admin_id']=session('admin_id');

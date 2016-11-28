@@ -19,7 +19,12 @@ class RenWuController extends AuthController {
             if($model->create())
             {
 
-               
+               if(!check_token(I('post.token')))
+               {
+                   $msg=lang('操作错误');
+                   $backurl = U("Admin/RenWu/add");
+                   return  $this->error($msg ,$backurl);
+               }
                 
                 $data=$model->create();
                 $data['rtime']=strtotime($data['rtime']);
@@ -260,6 +265,7 @@ class RenWuController extends AuthController {
             $model =D('RenWu');
 
             if($model->create()) {
+
                 $data=$model->create();
                 $data['rtime']=strtotime($data['rtime']);
                 $result =   $model->save($data);
