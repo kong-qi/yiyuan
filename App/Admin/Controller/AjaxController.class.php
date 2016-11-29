@@ -1006,10 +1006,11 @@ class AjaxController extends AuthController
         /*print_r($m);
         return '';*/
         $str='';
-        $price_str='';
+        
         if(count($m)>0)
         {
             foreach ($m as $key => $v) {
+                $price_str='';
                 $show=(json_decode(htmlspecialchars_decode($v['price_show']),true));
                 
                  if(count($show)>0)
