@@ -621,7 +621,7 @@ class YuShenController extends AuthController {
             if(!check_token(I('post.token')))
             {
                 $msg=lang('操作错误');
-                return  $this->error($msg );
+                return  $this->error($msg,U('Admin/YuShen/kaidanbujiao',array('id'=>$id,'yid'=>$yid)) );
             }
             M()->startTrans();
             $model =D('KaiDan');
@@ -729,7 +729,7 @@ class YuShenController extends AuthController {
             if(!check_token(I('post.token')))
             {
                 $msg=lang('操作错误');
-                return  $this->error($msg );
+                return  $this->error($msg,U('Admin/YuShen/kaidantui',array('id'=>$id,'yid'=>$yid)) );
             }
 
             M()->startTrans();
@@ -836,7 +836,7 @@ class YuShenController extends AuthController {
             {
                 $msg=lang('操作错误');
                 //$backurl = U("Admin/");
-                return  $this->error($msg );
+                return  $this->error($msg ,U('Admin/YuShen/postKaiDan'));
             }
 
             M()->startTrans();

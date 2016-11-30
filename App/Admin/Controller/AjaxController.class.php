@@ -981,7 +981,7 @@ class AjaxController extends AuthController
         }
         if($type=='tuifei')
         {
-            $map['kd.sf_status']=array('in',array(1,2,3));
+            $map['kd.sf_status']=array('in',array(1,2,3,10));
             $map['kd.js_status']=0;
             $num_str='';
             $del_str='';

@@ -182,6 +182,7 @@ class CaiWuController extends AuthController
                 kd.js_time as js_time,
                 kd.true_price as true_price,
                 kd.base_oktotal as base_oktotal,
+                kd.base_pay_price as base_pay_price,
 
                 ykd.sf_time as ysf_time,
                 ykd.kd_number as ykd_number,
@@ -257,8 +258,8 @@ class CaiWuController extends AuthController
                       'td-11' => array('name' => lang('余款金额'), 'filed'=>'sx_price','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
 
                       'td-12' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                      'td-14' => array('name' => lang('合计'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                      'td-7-1' => array('name' => lang('成交价'), 'filed'=>'price_oktotal','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                      'td-14' => array('name' => lang('合计'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                      'td-7-1' => array('name' => lang('成交价'), 'filed'=>'price_oktotal','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                       'td-9' => array('name' => lang('手术医生'), 'filed'=>'ysz_name','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                       'td-8' => array('name' => lang('到院时间'), 'filed'=>'dztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                       'td-10' => array('name' => lang('开单时间'), 'filed'=>'kd_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
@@ -418,8 +419,8 @@ class CaiWuController extends AuthController
                         
                          'td-6' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
 
-                         'td-7' => array('name' => lang('合计总价'), 'filed'=>'price_total','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
-                         'td-7-1' => array('name' => lang('成交价'), 'filed'=>'price_oktotal','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                         'td-7' => array('name' => lang('合计总价'), 'filed'=>'price_total','diy'=>'','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
+                         'td-7-1' => array('name' => lang('成交价'), 'filed'=>'price_oktotal','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                          
                          'td-8' => array('name' => lang('到院时间'), 'filed'=>'dztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
                          'td-9' => array('name' => lang('接诊时间'), 'filed'=>'jztime','diy'=>'text-blue', 'is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => '1'),
