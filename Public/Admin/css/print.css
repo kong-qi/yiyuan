@@ -4,18 +4,6 @@ body {
   font-family: "Microsoft YaHei" ! important;
   font-size: 14px;
 }
-.container {
-  width: 764px;
-}
-h1 {
-  font-size: 30px;
-}
-p {
-  line-height: 1.428;
-}
-.ft12 {
-  font-size: 12px;
-}
 .table {
   width: 100%;
   max-width: 100%;
@@ -46,15 +34,23 @@ h5 {
   margin-top: 5px;
   font-weight: 600;
 }
-/* .text-right
-{
-    text-align: right;
+.text-right {
+  text-align: right;
 }
-.text-center
-{
-    text-align: center;
+.text-center {
+  text-align: center;
 }
-.text-left
-{
-    text-align: left;
-} */
+.text-left {
+  text-align: left;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  border-top: 1px solid #333;
+  line-height: 1.42857;
+  padding: 6px 6px 6px 4px;
+  vertical-align: middle;
+}

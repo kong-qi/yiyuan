@@ -11,12 +11,14 @@ class PrintController extends AuthController {
         $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kdys_id = ys.id';
         
         $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
-        $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
+       
         $join[] = 'LEFT JOIN __YU_YUE__ yy ON kd.yy_id= yy.id';
+        //接诊医生
+         $join[] = 'LEFT JOIN __ADMIN__ jzys ON yy.ys_id = jzys.id';
         //最终兵种
         $join[] = 'LEFT JOIN __KE_SHI__ k4 ON yy.ksall_id = k4.id';
         //手术医生
-        $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = yy.ysz_id';
+        $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = yy.ysz_id';
         //咨询人员
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON yy.admin_id = a1.id';
         //前台
@@ -70,8 +72,8 @@ class PrintController extends AuthController {
             yjz.name as yjz_name,
 
 
-            jzys.name as sy_name,
-            u1.name as user_name,
+            
+          
             ys.name as kd_name,
             yy.ynumber as ynumber,
             ssys.name as ysz_name,
@@ -89,11 +91,16 @@ class PrintController extends AuthController {
             a1.name as admin_name,
             ae2.name as ae2_name,
             u1.id as user_id,
+            u1.name as user_name,
+            u1.sex as user_sex,
+            u1.birthday as birthday,
             kd.yy_id as yid,
             (kd.price_oktotal-kd.pay_price) as sx_price,
-            sfy.name as  sfy_name
+            sfy.name as  sfy_name,
+            jzys.name as jzys_name
          ';
         $show=$model->alias('kd')->field($filed)->join($join)->where($map)->find();
+       
         $this->assign('show',$show);
         $this->display();
     }

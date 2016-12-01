@@ -1,161 +1,224 @@
-<extend name="Layout:index"/>
+<extend name="Layout:index" />
+
 <block name="add_js">
     <script src="__JS__/LodopFuncs.js"></script>
+    <link rel="stylesheet" type="text/css" href="__CSS__/print.css">
 </block>
 <block name="body_name">
+
     <body style="background: #fff">
 </block>
 <block name="right">
-   
     <div class="container">
         <div class="row">
             <div class="col-xs-12" id="dayin">
-                <div class="text-center">
-                    <h1>
+                <div style="line-height: 1.5;" id="div1">
+                    <div style="font-size: 22pt;" align="center">
                         Phẩu thuật thẩm mỹ quốc tế V.I.P.
-                    </h1>
-                    <p>
-                        <small>
-                            287A Nguyễn Trãi, Phường Nguyễn Cư Trinh, Q1, TP. Hồ Chí Minh<br/>
-                            Điện thoại: (08)6676 2888    Website:thammyvip.com
-                        </small>
-                    </p>
+                    </div>
+                    <div style="font-size: 10pt;" align="center">
+                        287A Nguyễn Trãi, Phường Nguyễn Cư Trinh, Q1, TP. Hồ Chí Minh
+                    </div>
+                    <div style="font-size: 10pt;" align="center">
+                        Điện thoại: (08)6676 2888 Website:thammyvip.com
+                    </div>
+                    <div class="" style="font-size: 16pt;margin-top: 5px;font-weight: bold;" align="center">
+                        {{ :lang('付费票据') }}
+                    </div>
                 </div>
-                
-                <div class="col-xs-12">
-                    <table class="table table-noboer" width="100%">
+                <div class="col-xs-12" style="margin-top: 10px" id="div5">
+                    <table class="table table-noboer ft12" border="0" cellspacing="0" cellpadding="0" width="100%">
                         <tr>
-                            <td>
-                                姓名:LXXXXXXX
+                            <td width="30%" style="font-size: 10pt">
+                                {{ :lang('姓名') }}:{{ $show.user_name }}
                             </td>
-                           
-                            <td align="right">
-                                性别:男
+                            <td align="right" width="30%" style="font-size: 10pt">
+                                {{ :lang('性别') }}:{{ $show.user_sex|lang }}
                             </td>
-                            <td  align="right">
-                                出生年份:  1987
+                            <td align="right" width="40%" style="font-size: 10pt">
+                                {{ :lang('出生年份') }}:
+                                <php>$show['birthday']!=''?date("Y-m-d",$show['birthday']):''</php>
                             </td>
-                            
                         </tr>
                         <tr>
-                            <td colspan="3" align="right">
-                                收费单号: 12036901
+                            <td colspan="3" align="right" style="font-size: 10pt">
+                                {{ :lang('收费单号') }}: {{ $show.kd_number }}
                             </td>
                         </tr>
                     </table>
                 </div>
-                <div class="col-xs-12">
-                    <table class="table table-bordered ft12" width="100%">
+                <div class="col-xs-12" id="div2">
+                    <table border="1" cellspacing="0" cellpadding="1" width="100%" style="border-collapse:collapse" bordercolor="#333333" class="table  ft12">
                         <tr>
-                            <td >序号</td>
-                            <td>收费项目</td>
-                            <td>数量</td>
-                            <td>单价</td>
-                            <td>合计</td>
+                            <td width="10%" style="font-weight:bold;">序号</td>
+                            <td width="45%" style="font-weight:bold;">收费项目</td>
+                            <td width="10%" style="font-weight:bold;">数量</td>
+                            <td width="15%" style="font-weight:bold;">单价</td>
+                            <td width="20%" style="font-weight:bold;">合计</td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Cắt mắt 2 mí</td>
-                      
-                            <td>1</td>
-                            <td>10000000</td>
-                            <td>100000000</td>
-                        </tr>
-                         <tr>
-                            <td>2</td>
-                            <td>Phẫu thuật bọng mỡ mí mắt, căng da mí dưới</td>
-                            <td>1</td>
-                            <td>10000000</td>
-                            <td>100000000</td>
-                        </tr>
-                        <tfoot>
+                        <?php 
+                            $show2=(json_decode(htmlspecialchars_decode($show['price_show']),true));
+                        ?>
+                        <if condition="$show2">
+                            <foreach name="show2" item="sv" key="sk">
+                                <tr>
+                                    <td>{{ :($sk+1) }}</td>
+                                    <td>{{ :urldecode($sv['title']) }}</td>
+                                    <td>{{ :$sv['num'] }}</td>
+                                    <td data-price="vnlist">{{ :$sv['price'] }}</td>
+                                    <td data-price="vnlist">{{ :$sv['total'] }}</td>
+                                </tr>
+                            </foreach>
+                        </if>
+                        <if condition="$show['price_zhekou']">
                             <tr>
-                               <td></td>
-                                <td colspan="3">折扣</td>
-                               
-                                <td>10%</td>
-                            </tr>
-                             <tr>
                                 <td></td>
-                                <td colspan="2">已收定金（已部分收款）：XXXX</td>
-                                <td>本次付款</td>
-                                <td>66666666660</td>
+                                <td colspan="3">{{ :lang('折扣') }}</td>
+                                <td>{{ $show.price_zhekou }}</td>
                             </tr>
-                            <tr>
-                                <td colspan="5" align="right">
-                                    金额大写: Mười một triệu Tám trăm ngàn đồng
-                                </td>
+                        </if>
+                        <tr>
+                            <td></td>
+                            <td colspan="2">
+                                <if condition="$show['ykd_number']">
+                                    {{ :pay_wasyall($show['pay_ways'],0) }}{{ $show.base_pay_price }}
+                                </if>
+                            </td>
+                            <td>{{ :lang('本次付款') }}</td>
+                            <td data-price="vnlist">{{ :($show['price_oktotal']-$show['base_pay_price']) }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" align="right">
+                                {{ :lang('金额大写') }}: {{ :convert_number_to_words(($show['price_oktotal']-$show['base_pay_price'])) }}
+                            </td>
                             </tr>
-                        </tfoot>
                     </table>
                 </div>
-                <div class="col-xs-12">
-                    <table class="table table-noboer" width="100%">
+                <div class="col-xs-12" id="div3">
+                    <table class="table table-noboer" border="0" cellspacing="0" cellpadding="0" width="100%">
                         <tr>
-                            <td>
-                                接诊医生：Lê Phương Thảo   
+                            <td width="33.3%" style="font-size: 10pt">
+                                {{ :lang('接诊医生') }}：{{ $show.jzys_name }}
                             </td>
-                            <td>
-                                收银员：Vũ Thị Thanh Nga
+                            <td width="33.3%" style="font-size: 10pt">
+                                {{ :lang('收银员') }}：{{ $show.sfy_name }}
                             </td>
-                            <td align="right">
-                                收费日期: 24-11-2016
+                            <td align="right" width="33.3%" style="font-size: 10pt">
+                                {{ :lang('收费日期') }}:
+                                <php>echo $show['sf_time']==''?to_time(time()):to_time($show['sf_time'])</php>
                             </td>
                         </tr>
                     </table>
-                    
                 </div>
-                <div class="col-xs-12">
-                    <h3>客户:</h3>
-                    <p>（请签全名）</p>
+                <div class="col-xs-12" id="div4">
+                    <div style="font-size: 12pt">{{ :lang('客户') }}:</div style="font-size: 14pt">
+                    <div style="font-size: 10pt">({{ :lang('请签全名') }})</div>
                 </div>
-                <div class="col-xs-12">
-                    * 备注：概不退款
+                <div id="div6" style="font-size: 10px;">
+                   
+                    <font style="font-size: 10px;">* {{ :lang('备注') }}：{{ :lang('概不退款') }}</font>
                 </div>
             </div>
-            <div class="col-xs-12 text-center no-print">
+            <div class="text-center" style="margin-top: 20px;">
                 <a href="javascript:void(0)" class="btn btn-primary" onclick=" prn1_print() ">打印</a>
-                <a href="javascript:void(0)" class="btn btn-primary" onclick="window.print()">{{ :lang('打印') }}</a>
+               
             </div>
         </div>
     </div>
 </block>
 <block name="add_foot_js">
-    <script language="javascript" type="text/javascript">    
-        function CheckIsInstall() {  
-            try{ 
-                 var LODOP=getLodop(); 
-                if (LODOP.VERSION) {
-                     if (LODOP.CVERSION)
-                     alert("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")"); 
-                     else
-                     alert("本机已成功安装了Lodop控件！\n 版本号:"+LODOP.VERSION); 
+    <script language="javascript" type="text/javascript">
+    function CheckIsInstall() {
+        try {
+            var LODOP = getLodop();
+            if (LODOP.VERSION) {
+                if (LODOP.CVERSION)
+                    alert("当前有C-Lodop云打印可用!\n C-Lodop版本:" + LODOP.CVERSION + "(内含Lodop" + LODOP.VERSION + ")");
+                else
+                    alert("本机已成功安装了Lodop控件！\n 版本号:" + LODOP.VERSION);
 
-                };
-             }catch(err){ 
-             } 
-        }; 
-     
-        function CreateOneFormPage(){
-            LODOP=getLodop();  
-            
-            LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
-          
-           
-            var strBodyStyle="<style>table,td { border: 1 solid #000000;border-collapse:collapse }</style>";
-                 
+            };
+        } catch (err) {}
+    };
 
-            var strFormHtml=strBodyStyle+"<body>"+document.getElementById("dayin").innerHTML+"</body>";
+    function CreateOneFormPage() {
+        LODOP = getLodop();
 
-            LODOP.ADD_PRINT_HTM(10,18,2000,1215,strFormHtml);
-            LODOP.SET_PRINT_PAGESIZE(0,2100,1395,"A4");
-        };
-        function prn1_print(){
+        LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
 
-                CreateOneFormPage();
-                LODOP.PREVIEW();
-            };  
 
-    </script> 
+        var strBodyStyle = "<style>table,td { border: 1 solid #000000;border-collapse:collapse };.ft12 td{ font-size:8pt}</style>";
 
+
+        var strFormHtml = strBodyStyle + "<body>" + document.getElementById("dayin").innerHTML + "</body>";
+
+        LODOP.ADD_PRINT_HTM(10, 18, 2000, 1215, strFormHtml);
+        LODOP.SET_PRINT_PAGESIZE(0, 2100, 1395, "A4");
+    };
+    function prn1_print() { 
+            CreateOnePage();    
+            LODOP.SET_PREVIEW_WINDOW(0,1,0,"800",600,"{{ :lang('开始打印') }}");//打印前弹出选择打印机的对话框 
+            LODOP.SET_PRINT_MODE("AUTO_CLOSE_PREWINDOW",1);//打印后自动关闭预览窗口
+            LODOP.PREVIEW();    
+        };  
+
+    function CreateOnePage() {
+
+        var LODOP = getLodop();
+        LODOP.PRINT_INIT("{{ :lang('收费票据') }}");
+        //LODOP. PRINT_INITA("1cm","1.8cm","21.cm","13.95cm","开始收费");
+        LODOP.SET_PRINT_PAGESIZE(0, "21cm", "13.95cm", "LodopCustomPage");
+        var strStyle = "<style> table,td,th {padding: 2px;font-size: 11pt;}</style>"
+            //头
+        LODOP.ADD_PRINT_HTM(26, "5%", "90%", 109, document.getElementById("div1").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+        LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 1);
+        //数据表格
+        LODOP.ADD_PRINT_TABLE(125, "5%", "90%", 139, strStyle + document.getElementById("div5").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
+        LODOP.ADD_PRINT_TABLE(165, "5%", "90%", 314, strStyle + document.getElementById("div2").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
+        //尾部
+        LODOP.ADD_PRINT_HTM(420, "5%", "90%", 54, document.getElementById("div3").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+        LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 1);
+        LODOP.ADD_PRINT_HTM(438, "5%", "90%", 84, document.getElementById("div4").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+        LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 1);
+        LODOP.ADD_PRINT_HTM(465, "5%", "90%", 54, document.getElementById("div6").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+        LODOP.NewPageA();
+
+
+
+        /* LODOP.NewPageA();
+         LODOP.ADD_PRINT_TABLE(128, "5%", "90%", 328, strStyle + document.getElementById("div2").innerHTML);
+         LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
+         LODOP.ADD_PRINT_HTM(26, "5%", "90%", 80, document.getElementById("div4").innerHTML);
+         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+         LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 4);
+         LODOP.ADD_PRINT_TEXT(460, 96, "76.25%", 20, "真诚祝您好远，欢迎下次再来！(发货单02的表格外“页脚”，紧跟表格)");
+         LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 4);
+         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+         LODOP.SET_PRINT_STYLEA(0, "FontColor", "#FF0000");
+         LODOP.SET_PRINT_STYLEA(0, "Alignment", 2);
+         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+         LODOP.SET_PRINT_STYLEA(0, "Horient", 3);
+         LODOP.ADD_PRINT_HTM(1, 600, 300, 100, "总页号：<font color='#0000ff' format='ChineseNum'><span tdata='pageNO'>第##页</span>/<span tdata='pageCount'>共##页</span></font>");
+
+         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+
+         LODOP.SET_PRINT_STYLEA(0, "Horient", 1);
+         LODOP.ADD_PRINT_TEXT(3, 34, 196, 20, "总页眉：《两个发货单的演示》");
+         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);*/
+        /*LODOP.ADD_PRINT_HTM(1,600,300,100,"TotalPage：<font color='#0000ff' style='font-size:8px' ><span tdata='pageNO'>##</span>/<span tdata='pageCount' style='font-size:8px'>##</span></font>");
+
+                LODOP.SET_PRINT_STYLEA(0,"ItemType",1);
+
+                LODOP.SET_PRINT_STYLEA(0,"Horient",1);  */
+        //LODOP.PRINT_DESIGN();
+       
+
+    };
+    </script>
 </block>
