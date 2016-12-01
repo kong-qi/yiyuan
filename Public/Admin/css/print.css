@@ -1,0 +1,60 @@
+body {
+  color: #000000 !important;
+  width: 100%;
+  font-family: "Microsoft YaHei" ! important;
+  font-size: 14px;
+}
+.container {
+  width: 764px;
+}
+h1 {
+  font-size: 30px;
+}
+p {
+  line-height: 1.428;
+}
+.ft12 {
+  font-size: 12px;
+}
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 5px;
+}
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  border-top: 1px solid #e7eaec;
+  line-height: 1.42857;
+  padding: 6px 6px 6px 4px;
+  vertical-align: middle;
+}
+.table-noboer tbody th,
+.table-noboer tfoot th,
+.table-noboer thead th,
+.table-noboer tbody td,
+.table-noboer tfoot td,
+.table-noboer thead td {
+  border: none !important;
+}
+h3,
+h4,
+h5 {
+  margin-top: 5px;
+  font-weight: 600;
+}
+/* .text-right
+{
+    text-align: right;
+}
+.text-center
+{
+    text-align: center;
+}
+.text-left
+{
+    text-align: left;
+} */

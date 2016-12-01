@@ -224,9 +224,13 @@ select {
 .table-noboer {
   border: none;
 }
-.table-noboer th,
-.table-noboer td {
-  border: none;
+.table-noboer tbody th,
+.table-noboer tfoot th,
+.table-noboer thead th,
+.table-noboer tbody td,
+.table-noboer tfoot td,
+.table-noboer thead td {
+  border: none !important;
 }
 .select-table {
   color: #8F8F8F;

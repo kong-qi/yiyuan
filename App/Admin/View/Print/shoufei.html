@@ -1,0 +1,161 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/LodopFuncs.js"></script>
+</block>
+<block name="body_name">
+    <body style="background: #fff">
+</block>
+<block name="right">
+   
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" id="dayin">
+                <div class="text-center">
+                    <h1>
+                        Phẩu thuật thẩm mỹ quốc tế V.I.P.
+                    </h1>
+                    <p>
+                        <small>
+                            287A Nguyễn Trãi, Phường Nguyễn Cư Trinh, Q1, TP. Hồ Chí Minh<br/>
+                            Điện thoại: (08)6676 2888    Website:thammyvip.com
+                        </small>
+                    </p>
+                </div>
+                
+                <div class="col-xs-12">
+                    <table class="table table-noboer" width="100%">
+                        <tr>
+                            <td>
+                                姓名:LXXXXXXX
+                            </td>
+                           
+                            <td align="right">
+                                性别:男
+                            </td>
+                            <td  align="right">
+                                出生年份:  1987
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="right">
+                                收费单号: 12036901
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-xs-12">
+                    <table class="table table-bordered ft12" width="100%">
+                        <tr>
+                            <td >序号</td>
+                            <td>收费项目</td>
+                            <td>数量</td>
+                            <td>单价</td>
+                            <td>合计</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Cắt mắt 2 mí</td>
+                      
+                            <td>1</td>
+                            <td>10000000</td>
+                            <td>100000000</td>
+                        </tr>
+                         <tr>
+                            <td>2</td>
+                            <td>Phẫu thuật bọng mỡ mí mắt, căng da mí dưới</td>
+                            <td>1</td>
+                            <td>10000000</td>
+                            <td>100000000</td>
+                        </tr>
+                        <tfoot>
+                            <tr>
+                               <td></td>
+                                <td colspan="3">折扣</td>
+                               
+                                <td>10%</td>
+                            </tr>
+                             <tr>
+                                <td></td>
+                                <td colspan="2">已收定金（已部分收款）：XXXX</td>
+                                <td>本次付款</td>
+                                <td>66666666660</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" align="right">
+                                    金额大写: Mười một triệu Tám trăm ngàn đồng
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="col-xs-12">
+                    <table class="table table-noboer" width="100%">
+                        <tr>
+                            <td>
+                                接诊医生：Lê Phương Thảo   
+                            </td>
+                            <td>
+                                收银员：Vũ Thị Thanh Nga
+                            </td>
+                            <td align="right">
+                                收费日期: 24-11-2016
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                <div class="col-xs-12">
+                    <h3>客户:</h3>
+                    <p>（请签全名）</p>
+                </div>
+                <div class="col-xs-12">
+                    * 备注：概不退款
+                </div>
+            </div>
+            <div class="col-xs-12 text-center no-print">
+                <a href="javascript:void(0)" class="btn btn-primary" onclick=" prn1_print() ">打印</a>
+                <a href="javascript:void(0)" class="btn btn-primary" onclick="window.print()">{{ :lang('打印') }}</a>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="add_foot_js">
+    <script language="javascript" type="text/javascript">    
+        function CheckIsInstall() {  
+            try{ 
+                 var LODOP=getLodop(); 
+                if (LODOP.VERSION) {
+                     if (LODOP.CVERSION)
+                     alert("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")"); 
+                     else
+                     alert("本机已成功安装了Lodop控件！\n 版本号:"+LODOP.VERSION); 
+
+                };
+             }catch(err){ 
+             } 
+        }; 
+     
+        function CreateOneFormPage(){
+            LODOP=getLodop();  
+            
+            LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
+          
+           
+            var strBodyStyle="<style>table,td { border: 1 solid #000000;border-collapse:collapse }</style>";
+                 
+
+            var strFormHtml=strBodyStyle+"<body>"+document.getElementById("dayin").innerHTML+"</body>";
+
+            LODOP.ADD_PRINT_HTM(10,18,2000,1215,strFormHtml);
+            LODOP.SET_PRINT_PAGESIZE(0,2100,1395,"A4");
+        };
+        function prn1_print(){
+
+                CreateOneFormPage();
+                LODOP.PREVIEW();
+            };  
+
+    </script> 
+
+</block>
