@@ -413,5 +413,25 @@ class HomeModel extends Model {
         $m= M($name)->field('sum(price_total) as total')->where($where)->find();
         return $m['total']==''?0:$m['total'];
     }
+    //收费合计
+    public function getTotalSum($name='KaiDan',$map=array(),$date=0,$type='sf_time',$all='',$field='true_price'){
+        //回访任务  已完成的回访任务    待回访 新增回访记录
+        $where=array();
+        $where['_string']="FROM_UNIXTIME(".$type.",'%Y-%m-%d') = str_to_date('".get_days($date)."','%Y-%m-%d')";
+        if($all=='')
+        {
+            if(!check_group('root'))
+            {
+                 $where['admin_id']=session('admin_id');
+            }
+        }
+       
+        $where=$map+$where;
+       
+        $m= M($name)->where($where)->sum($field);
+
+        return $m==''?0:$m;
+        
+    }
     
 }

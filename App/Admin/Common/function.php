@@ -1215,6 +1215,22 @@ function btn_yycolor($checked=''){
     }
     return $arr;
 }
+//取得各个人员
+function get_qiantai_er($id="8",$array=0){
+    $m=M()->query("select * from __PREFIX__admin where groupid in (select id from __PREFIX__admin_group where id='".$id."') and checked='1'");
+    $uid=array();
+    if(count($m)>0)
+    {
+        foreach ($m as $key => $value) {
+            $uid[]=$value['id'];
+        }
+    }
+    if($array!=0)
+    {
+        return $m;
+    }
+    return $uid;
+}
 
 function sf_status($checked=''){
     $arr=array(

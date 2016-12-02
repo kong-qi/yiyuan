@@ -1,86 +1,54 @@
 
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5><a class="collapse-link">{{ :home_tjname('预到数据') }}</a></h5>
+                <h5><a class="collapse-link">{{ :lang('预到情况（网电咨询部+市场部）') }}</a></h5>
                 <div class="ibox-tools">
                     <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
                 </div>
             </div>
             <div class="ibox-content">
                 <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>{{ :lang('全部') }}</th>
-                            
-                         
-                            <th>{{ :lang('预到') }}</th>
-                            <th>{{ :lang('已到') }}</th>
-                            
-
-                        </tr>
-                    </thead>
+                   
                     <tbody>
                         <tr>
-                            <td>{{ :lang('今日') }}</td>
+                            <td>{{ :lang('今日预到') }}</td>
                            
                             <td>
-                                <php> echo D('Home')-> getTotal('YuYue',array(),0,'ydatetime')</php>
+                                <php> echo D('Home')-> getTotal('YuYue',array('is_qtadd'=>0),0,'ydatetime',1)</php>
                             </td>
+                            <td>{{ :lang('今日已到') }}</td>
 
                             <td>
-                                <php> echo D('Home')-> getTotal('YuYue',array(),0,'dztime')</php>
+                                <php> echo D('Home')-> getTotal('YuYue',array('is_qtadd'=>0),0,'dztime',1)</php>
                             </td>
                           
-                          
-                        </tr>
-                        <tr>
-                            <td>{{ :lang('明日') }}</td>
+                        
+                            <td>{{ :lang('明日预到') }}</td>
                             
                             <td>
-                                <php> echo D('Home')-> getTotal('YuYue',array(),1,'ydatetime')</php>
+                                <php> echo D('Home')-> getTotal('YuYue',array('is_qtadd'=>0),1,'ydatetime',1)</php>
                             </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('YuYue',array(),1,'dztime')</php>
+                            <td>{{ :lang('本周预到') }}</td>
+                             <td>
+                                <php> echo D('Home')->getTotal_month('YuYue',array('is_qtadd'=>0),'bz','ydatetime',1)</php>
                             </td>
                             
                            
                         </tr>
-                        <tr>
-                            <td>{{ :lang('昨日') }}</td>
-                            
-                            <td>
-                                <php> echo D('Home')-> getTotal('YuYue',array(),-1,'ydatetime')</php>
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('YuYue',array(),-1,'dztime')</php>
-                            </td>
-                            
-                            
-                        </tr>
-                        <tr>
-                            <td>{{ :lang('本周') }}</td>
-                            
-                            <td>
-                                <php> echo D('Home')->getTotal_month('YuYue',array(),'bz','ydatetime')</php>
-                            </td>
-
-                            <td>
-                                <php> echo D('Home')->getTotal_month('YuYue',array(),'bz','dztime')</php>
-                            </td>
+                       <!--  
+                        
+                       <tr>
+                          <td>{{ :lang('本月') }}</td>
                           
-                        </tr>
-                        <tr>
-                            <td>{{ :lang('本月') }}</td>
-                            
-                            <td>
-                                <php> echo D('Home')->getTotal_month('YuYue',array(),'by','ydatetime')</php>
-                            </td>
-
-                            <td>
-                                <php> echo D('Home')->getTotal_month('YuYue',array(),'by','dztime')</php>
-                            </td>
-                          
-                        </tr>
+                          <td>
+                              <php> echo D('Home')->getTotal_month('YuYue',array(),'by','ydatetime')</php>
+                          </td>
+                      
+                          <td>
+                              <php> echo D('Home')->getTotal_month('YuYue',array(),'by','dztime')</php>
+                          </td>
+                        
+                      </tr> -->
                         
                         
                     </tbody>

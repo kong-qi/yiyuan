@@ -2,83 +2,109 @@
 
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5><a class="collapse-link">{{ :home_tjname('待收费') }}</a></h5>
+                <h5><a class="collapse-link">{{ :lang('今日收费情况') }}</a></h5>
                 <div class="ibox-tools">
                     <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
                 </div>
             </div>
             <div class="ibox-content" style="height: 245px;">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>{{ :lang('全部') }}</th>
-                            <th>{{ :lang('回访任务') }}</th>
-                            <th>{{ :lang('已完成的回访任务') }}</th>
-                            <th>{{ :lang('待回访') }}</th>
-                            <th>{{ :lang('新增回访记录') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                {{ :lang('今日') }}
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('RenWu',array(),0,'rtime')</php>
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('RenWu',array(),0,'rtime')</php>
-                            </td>
-                            <td>
-                                <a href="{{ :U('Admin/RenWu/index/',array('status'=>0)) }}">
-                                <php> echo D('Home')-> getTotal('RenWu',array('status'=>0),0,'rtime')</php>
-                                </a>
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('HuiFang')</php>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ :lang('明日') }}
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('RenWu',array(),1,'rtime')</php>
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('RenWu',array(),1,'rtime')</php>
-                            </td>
-                            <td>
-                                <a href="{{ :U('Admin/RenWu/index/',array('status'=>0)) }}">
-                                <php> echo D('Home')-> getTotal('RenWu',array('status'=>0),1,'rtime')</php>
-                                </a>
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('HuiFang',array(),1)</php>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ :lang('昨日') }}
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('RenWu',array(),-1,'rtime')</php>
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('RenWu',array(),-1,'rtime')</php>
-                            </td>
-                            <td>
-                                <a href="{{ :U('Admin/RenWu/index/',array('status'=>0)) }}">
-                                <php> echo D('Home')-> getTotal('RenWu',array('status'=>0),-1,'rtime')</php>
-                                </a>
-                            </td>
-                            <td>
-                                <php> echo D('Home')-> getTotal('HuiFang',array(),-1)</php>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                     
+                      <tr>
+                        <td colspan="10" width="720" align="center">{{ :lang('今日收费情况') }}</td>
+                      </tr>
+                      <tr>
+                        <td>{{ :lang('开单量') }}</td>
+                        <td>{{ :lang('收费合计') }}</td>
+                        <td>{{ :lang('全款') }}</td>
+                        <td>{{ :lang('定金') }}</td>
+                        <td>{{ :lang('部分付款') }}</td>
+                        <td>{{ :lang('补交定金') }}</td>
+                        <td>{{ :lang('补欠费') }}</td>
+                        <td>{{ :lang('现金收费') }}</td>
+                        <td>{{ :lang('刷卡收费') }}</td>
+                        <td>{{ :lang('其他收费') }}</td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <php>echo D('Home')->getTotal('KaiDan',array(),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1,2,3,10))),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1)),'pay_ways'=>array('in',array('1'))),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1,2,3,10)),'pay_ways'=>array('in',array('2'))),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1,2,3,10)),'pay_ways'=>array('in',array('3'))),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1,2,3,10)),'pay_ways'=>array('in',array('7'))),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1,2,3,10)),'pay_ways'=>array('in',array('8'))),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1,2,3,10))),0,'sf_time',1,'cash_price')</php>
+                          </td>
+                          <td>
+                               <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1,2,3,10))),0,'sf_time',1,'shuaka_price')</php>
+                          </td>
+                          <td>
+                               <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(1,2,3,10))),0,'sf_time',1,'other_price')</php>
+                          </td>
+                      </tr>
+                    </table>
+                </div>
+               
+            </div>
+        </div>
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :lang('今日退费情况') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="height: 245px;">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                     
+                      <tr>
+                        <td colspan="10" width="720" align="center">{{ :lang('今日退费情况') }}</td>
+                      </tr>
+                      <tr>
+                        <td>{{ :lang('退款数量') }}</td>
+                        <td>{{ :lang('退款金额合计') }}</td>
+                        <td>{{ :lang('退全款') }}</td>
+                        <td>{{ :lang('退订金') }}</td>
+                        <td>{{ :lang('退部分款') }}</td>
+                       
+                      </tr>
+                      <tr>
+                          <td>
+                              <php>echo D('Home')->getTotal('KaiDan',array('sf_status'=>array('in',array(4,5,6))),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(4,5,6))),0,'sf_time',1)</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(4)),'pay_ways'=>array('in',array(4))),0,'sf_time',1,'cash_price')</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(5)),'pay_ways'=>array('in',array(5))),0,'sf_time',1,'cash_price')</php>
+                          </td>
+                          <td>
+                              <php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(6)),'pay_ways'=>array('in',array(6))),0,'sf_time',1,'cash_price')</php>
+                          </td>
+                          
+                      </tr>
+                    </table>
+                </div>
                
             </div>
         </div>

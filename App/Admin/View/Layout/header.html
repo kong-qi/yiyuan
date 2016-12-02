@@ -18,11 +18,7 @@
         <div class="page-tabs-content">
             <php>$home_url=U('Admin/Home/homeTongJi');</php>
             <if condition="check_group('root') neq true">
-                <if condition="check_group('login_website_caiwu')">
-                       
-                     <php>$home_url=U('Admin/CaiWu/waitPriceList');</php>
-
-                </if>
+                
                 <if condition="check_group('login_website_kefu')">
                      <php>$home_url=U('Admin/RenWu/index/',array('status'=>0));</php>
                      

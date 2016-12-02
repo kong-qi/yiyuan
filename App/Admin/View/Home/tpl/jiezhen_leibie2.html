@@ -1,0 +1,138 @@
+
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5><a class="collapse-link">{{ :home_tjname('前台接待数据') }}</a></h5>
+        <div class="ibox-tools">
+            <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+        </div>
+    </div>
+    <div class="ibox-content" >
+        <div class="table-responsive">
+            <php>$leibie=yuyue_leibie();$leibie_total=count($leibie)</php>
+            <php>$zxer=get_qiantai_er(11,1);$zxer_total=count($zxer)</php>
+            <table class="table table-bordered table-striped table-hover">
+
+              <tr>
+                <th colspan="2" width="144" class="text-center">{{ :lang('前台') }}</th>
+                <th colspan="{{ $leibie_total }}" width="360" class="text-center">{{ :lang('来院类别') }}</th>
+                <th colspan="3" width="216" class="text-center">{{ :lang('来源部门') }}</th>
+                <th colspan="{{ $zxer_total }}" width="216" class="text-center">{{ :lang('前台接待员') }}</th>
+              </tr>
+              <tr>
+                <td width="80">{{ :lang('日期') }}</td>
+                <td>{{ :lang('总量') }}</td>
+                
+                <if condition="$leibie">
+                    <foreach name="leibie" item="lb" >
+                         <td>{{ :lang($lb) }}</td>
+                    </foreach>
+                </if>
+               
+                <td>{{ :lang('网电咨询') }}</td>
+                <td>{{ :lang('市场部') }}</td>
+                <td>{{ :lang('前台登记') }}</td>
+                <if condition="$zxer">
+                    <foreach name="zxer" item="zxer_er" key="zxkey">
+                        <td><php>echo $zxer_er['name']</php></td>
+                    </foreach>
+                </if>
+              </tr>
+              <tr>
+                <td>{{ :lang('今日') }}</td>
+                <td><php>echo D('Home')->getTotal('YuYue',array('is_qtadd'=>1),0,'dztime',1)</php></td>
+                <if condition="$leibie">
+                    <foreach name="leibie" item="lb" key="lbkey">
+                         <td><php>echo D('Home')->getTotal('YuYue',array('leibie'=>$lbkey),0,'dztime',1)</php></td>
+                    </foreach>
+                </if>
+                <td>
+                    <php>echo D('Home')->getTotal('YuYue',array('admin_id'=>array('in',get_qiantai_er(8))),0,'dztime',1)</php>
+                </td>
+                <td>
+                     <php>echo D('Home')->getTotal('YuYue',array('admin_id'=>array('in',get_qiantai_er(10))),0,'dztime',1)</php>
+                </td>
+                <td>
+                     <php>echo D('Home')->getTotal('YuYue',array('admin_id'=>array('in',get_qiantai_er(11))),0,'dztime',1)</php>
+                </td>
+                <if condition="$zxer">
+                    <foreach name="zxer" item="zxer_er" key="zxkey">
+                        <td><php>echo D('Home')->getTotal('YuYue',array('admin_id'=>$zxer_er['id'],'is_qtadd'=>1),0,'dztime',1)</php></td>
+                    </foreach>
+                </if>
+              </tr>
+              <tr>
+                <td>{{ :lang('昨日') }}</td>
+                <td><php>echo D('Home')->getTotal('YuYue',array('is_qtadd'=>1),-1,'dztime',1)</php></td>
+                <if condition="$leibie">
+                    <foreach name="leibie" item="lb" key="lbkey">
+                         <td><php>echo D('Home')->getTotal('YuYue',array('leibie'=>$lbkey),-1,'dztime',1)</php></td>
+                    </foreach>
+                </if>
+                <td>
+                    <php>echo D('Home')->getTotal('YuYue',array('admin_id'=>array('in',get_qiantai_er(8))),-1,'dztime',1)</php>
+                </td>
+                <td>
+                     <php>echo D('Home')->getTotal('YuYue',array('admin_id'=>array('in',get_qiantai_er(10))),-1,'dztime',1)</php>
+                </td>
+                <td>
+                     <php>echo D('Home')->getTotal('YuYue',array('admin_id'=>array('in',get_qiantai_er(11))),-1,'dztime',1)</php>
+                </td>
+                <if condition="$zxer">
+                    <foreach name="zxer" item="zxer_er" key="zxkey">
+                        <td><php>echo D('Home')->getTotal('YuYue',array('admin_id'=>$zxer_er['id'],'is_qtadd'=>1),-1,'dztime',1)</php></td>
+                    </foreach>
+                </if>
+              </tr>
+              <tr>
+                <td>{{ :lang('本周') }}</td>
+                <td><php> echo D('Home')->getTotal_month('YuYue',array('is_qtadd'=>1),'bz','dztime',1)</php></td>
+                <if condition="$leibie">
+                    <foreach name="leibie" item="lb" key="lbkey">
+                         <td><php>echo D('Home')->getTotal_month('YuYue',array('leibie'=>$lbkey),"bz",'dztime',1)</php></td>
+                    </foreach>
+                </if>
+                <td>
+                    <php>echo D('Home')->getTotal_month('YuYue',array('admin_id'=>array('in',get_qiantai_er(8))),"bz",'dztime',1)</php>
+                    
+                </td>
+                <td>
+                     <php>echo D('Home')->getTotal_month('YuYue',array('admin_id'=>array('in',get_qiantai_er(10))),"bz",'dztime',1)</php>
+                </td>
+                <td>
+                    <php>echo D('Home')->getTotal_month('YuYue',array('admin_id'=>array('in',get_qiantai_er(11))),"bz",'dztime',1)</php>
+                </td>
+                <if condition="$zxer">
+                    <foreach name="zxer" item="zxer_er" key="zxkey">
+                        <td><php>echo D('Home')->getTotal_month('YuYue',array('admin_id'=>$zxer_er['id'],'is_qtadd'=>1),"bz",'dztime',1)</php></td>
+                    </foreach>
+                </if>
+              </tr>
+              <tr>
+                <td>{{ :lang('本月') }}</td>
+                <td><php> echo D('Home')->getTotal_month('YuYue',array('is_qtadd'=>1),'by','dztime',1)</php></td>
+                <if condition="$leibie">
+                    <foreach name="leibie" item="lb" key="lbkey">
+                         <td><php>echo D('Home')->getTotal_month('YuYue',array('leibie'=>$lbkey),"by",'dztime',1)</php></td>
+                    </foreach>
+                </if>
+                <td>
+                    <php>echo D('Home')->getTotal_month('YuYue',array('admin_id'=>array('in',get_qiantai_er(8))),"by",'dztime',1)</php>
+                    
+                </td>
+                <td>
+                     <php>echo D('Home')->getTotal_month('YuYue',array('admin_id'=>array('in',get_qiantai_er(10))),"by",'dztime',1)</php>
+                </td>
+                <td>
+                    <php>echo D('Home')->getTotal_month('YuYue',array('admin_id'=>array('in',get_qiantai_er(11))),"by",'dztime',1)</php>
+                </td>
+                <if condition="$zxer">
+                    <foreach name="zxer" item="zxer_er" key="zxkey">
+                        <td><php>echo D('Home')->getTotal_month('YuYue',array('admin_id'=>$zxer_er['id'],'is_qtadd'=>1),"by",'dztime',1)</php></td>
+                    </foreach>
+                </if>
+              </tr>
+            </table>
+        </div>
+       
+    </div>
+</div>

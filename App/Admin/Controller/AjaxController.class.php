@@ -1042,7 +1042,7 @@ class AjaxController extends AuthController
                         ';
                     }
                  }
-                 $str.='<div class="col-xs-6 kaidan_item" data-kder-id="'.$v['kdys_id'].'" data-pay_ways_id="'.$v['pay_ways'].'" data-oktotal="'.$v['price_oktotal'].'" data-zhekou="'.$v['price_zhekou'].'" data-kd-number="'.$v['kd_number'].'" data-id="'.$v['id'].'" data-kder='.$v['kd_name'].' data-pay-price="'.$v['pay_price'].'" data-total="'.$v['price_total'].'" data-pay-ways="'.pay_wasy($v['pay_ways'],0).'" style="margin-bottom: 0;cursor: pointer;">  
+                 $str.='<div class="col-xs-6 kaidan_item" data-kder-id="'.$v['kdys_id'].'" data-pay_ways_id="'.$v['pay_ways'].'" data-oktotal="'.$v['price_oktotal'].'" data-zhekou="'.$v['price_zhekou'].'" data-kd-number="'.$v['kd_number'].'" data-id="'.$v['id'].'" data-kder='.$v['kd_name'].' data-pay-price="'.$v['pay_price'].'" data-total="'.$v['price_total'].'" data-pay-ways="'.pay_wasyall($v['pay_ways'],0).'" style="margin-bottom: 0;cursor: pointer;">  
                             <table class="table table-bordered">
                                 <tr class="active">
                                     <td>'.lang("日期").'</td>
