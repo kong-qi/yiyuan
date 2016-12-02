@@ -84,11 +84,11 @@
                                 </if>
                             </td>
                             <td>{{ :lang('本次付款') }}</td>
-                            <td data-price="vnlist">{{ :($show['price_oktotal']-$show['base_pay_price']) }}</td>
+                            <td data-price="vnlist">{{ $show['true_price'] }}</td>
                         </tr>
                         <tr>
                             <td colspan="5" align="right">
-                                {{ :lang('金额大写') }}:  {{ :convert_number_to_words(($show['price_oktotal']-$show['base_pay_price'])) }}
+                                {{ :lang('金额大写') }}:  {{ :convert_number_to_words($show['true_price']) }}
                             </td>
                         </tr>
                     </table>
