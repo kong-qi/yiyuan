@@ -82,7 +82,9 @@
                                 <if condition="$show['ykd_number']">
                                     {{ :sf_status($show['ysf_status'],0) }}: <span data-price="vnlist"> {{ $show.base_pay_price }}</span>
                                     <else/>
+                                    <if condition="$show['pay_ways'] neq 1">
                                     {{ :pay_wasyall($show['pay_ways'],0) }}: <span data-price="vnlist"> {{ $show.pay_price }}</span>
+                                    </if>
                                 </if>
 
                             </td>
