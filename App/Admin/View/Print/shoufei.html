@@ -81,7 +81,10 @@
                             <td colspan="2">
                                 <if condition="$show['ykd_number']">
                                     {{ :sf_status($show['ysf_status'],0) }}: <span data-price="vnlist"> {{ $show.base_pay_price }}</span>
+                                    <else/>
+                                    {{ :pay_wasyall($show['pay_ways'],0) }}: <span data-price="vnlist"> {{ $show.pay_price }}</span>
                                 </if>
+
                             </td>
                             <td>{{ :lang('本次付款') }}</td>
                             <td data-price="vnlist">{{ $show['true_price'] }}</td>

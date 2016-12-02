@@ -13,7 +13,7 @@
             <table class="table table-bordered table-striped table-hover">
 
               <tr>
-                <th colspan="2" width="144" class="text-center">{{ :lang('前台') }}</th>
+                <th colspan="2" width="144" class="text-center">{{ :lang('到院总量') }}</th>
                 <th colspan="{{ $leibie_total }}" width="360" class="text-center">{{ :lang('来院类别') }}</th>
                 <th colspan="3" width="216" class="text-center">{{ :lang('来源部门') }}</th>
                 <th colspan="{{ $zxer_total }}" width="216" class="text-center">{{ :lang('前台接待员') }}</th>
@@ -39,7 +39,7 @@
               </tr>
               <tr>
                 <td>{{ :lang('今日') }}</td>
-                <td><php>echo D('Home')->getTotal('YuYue',array('is_qtadd'=>1),0,'dztime',1)</php></td>
+                <td><php>echo D('Home')->getTotal('YuYue',array(),0,'dztime',1)</php></td>
                 <if condition="$leibie">
                     <foreach name="leibie" item="lb" key="lbkey">
                          <td><php>echo D('Home')->getTotal('YuYue',array('leibie'=>$lbkey),0,'dztime',1)</php></td>
@@ -62,7 +62,7 @@
               </tr>
               <tr>
                 <td>{{ :lang('昨日') }}</td>
-                <td><php>echo D('Home')->getTotal('YuYue',array('is_qtadd'=>1),-1,'dztime',1)</php></td>
+                <td><php>echo D('Home')->getTotal('YuYue',array(),-1,'dztime',1)</php></td>
                 <if condition="$leibie">
                     <foreach name="leibie" item="lb" key="lbkey">
                          <td><php>echo D('Home')->getTotal('YuYue',array('leibie'=>$lbkey),-1,'dztime',1)</php></td>
@@ -85,7 +85,7 @@
               </tr>
               <tr>
                 <td>{{ :lang('本周') }}</td>
-                <td><php> echo D('Home')->getTotal_month('YuYue',array('is_qtadd'=>1),'bz','dztime',1)</php></td>
+                <td><php> echo D('Home')->getTotal_month('YuYue',array(),'bz','dztime',1)</php></td>
                 <if condition="$leibie">
                     <foreach name="leibie" item="lb" key="lbkey">
                          <td><php>echo D('Home')->getTotal_month('YuYue',array('leibie'=>$lbkey),"bz",'dztime',1)</php></td>
@@ -109,7 +109,7 @@
               </tr>
               <tr>
                 <td>{{ :lang('本月') }}</td>
-                <td><php> echo D('Home')->getTotal_month('YuYue',array('is_qtadd'=>1),'by','dztime',1)</php></td>
+                <td><php> echo D('Home')->getTotal_month('YuYue',array(),'by','dztime',1)</php></td>
                 <if condition="$leibie">
                     <foreach name="leibie" item="lb" key="lbkey">
                          <td><php>echo D('Home')->getTotal_month('YuYue',array('leibie'=>$lbkey),"by",'dztime',1)</php></td>
