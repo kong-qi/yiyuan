@@ -672,6 +672,12 @@ class CaiWuController extends AuthController
                 }
               
                 $backurl = U("Admin/CaiWu/waitPriceList");
+                if(I('post.print')==1)
+                {
+                    $backurl=U("Admin/Print/shoufei",array('id'=>$uuid));
+
+                    return  $this->success(lang( $msg,'handle'),$backurl);
+                }
                 if(in_array($m['sf_status'],array(7,8,9)))
                 {
                     $backurl = U("Admin/CaiWu/waitPriceList",array('sf_status'=>'tui'));
@@ -1192,7 +1198,12 @@ class CaiWuController extends AuthController
                     add_log($this->onname.'：添加成功',$data['user_id']);
                     $msg=lang('添加成功','handle');
 
-                   
+                    if(I('post.print')==1)
+                    {
+                        $backurl=U("Admin/Print/shoufei",array('id'=>$data['uuid']));
+
+                        return  $this->success(lang( $msg,'handle'),$backurl);
+                    }
                     return $this->success($msg,$backurl );
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
@@ -1290,7 +1301,13 @@ class CaiWuController extends AuthController
                     add_log($this->onname.'：添加成功',$data['user_id']);
                     $msg=lang('添加成功','handle');
 
-                   
+                    if(I('post.print')==1)
+                    {
+                        $backurl=U("Admin/Print/shoufei",array('id'=>$data['uuid']));
+
+                        return  $this->success(lang( $msg,'handle'),$backurl);
+                    }
+                    
                     return $this->success($msg,$backurl );
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";
                 }else{
@@ -1407,6 +1424,12 @@ class CaiWuController extends AuthController
                     add_log($this->onname.'：添加成功',$data['user_id']);
                     $msg=lang('添加成功','handle');
 
+                   if(I('post.print')==1)
+                   {
+                       $backurl=U("Admin/Print/shoufei",array('id'=>$data['uuid']));
+
+                       return  $this->success(lang( $msg,'handle'),$backurl);
+                   }
                    
                     return $this->success($msg,$backurl );
                     // echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";

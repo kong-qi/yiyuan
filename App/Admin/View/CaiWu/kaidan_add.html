@@ -18,6 +18,7 @@
             <input type="hidden" name="sf_time" value="{{ :time() }}">
             <input type="hidden" name="sf_admin_id" value="{{ :session('admin_id') }}">
             <input type="hidden" name="ykd_time" value="{{ :$data['Yyue']['kdtime']==''?time():$data['Yyue']['kdtime'] }}">
+            <input type="hidden" name="print" value="0" id="print_input">
             <div class="ibox">
                 <div class="ibox-content" style="padding-left:10px; padding-right:10px; border: none; border-width: 0;border-style:none;" id="shoujisf3">
                     <div class="col-xs-12" style="margin-bottom: 5px";>
@@ -190,6 +191,7 @@
                         </div>
                         <div class="col-xs-12 text-center">
                             <input type="submit" value="{{ :lang('提交','handle') }}" class="btn btn-success">
+                             <a href="#" class="btn btn-white" id="add_print" >{{ :lang('提交并打印') }}</a>
                             
                         </div>
                         <div class="cl"></div>
@@ -359,6 +361,10 @@
         // validate the comment form when it is submitted
 
         // validate signup form on keyup and submit
+        $("#add_print").on("click",function(){
+            $("#print_input").val(1);
+            $("#validate").submit();
+        })
         $("#validate").validate({
 
             //JSON保存这些开单数据

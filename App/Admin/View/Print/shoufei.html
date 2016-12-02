@@ -1,5 +1,4 @@
 <extend name="Layout:index" />
-
 <block name="add_js">
     <script src="__JS__/LodopFuncs.js"></script>
     <link rel="stylesheet" type="text/css" href="__CSS__/print.css">
@@ -50,11 +49,11 @@
                 <div class="col-xs-12" id="div2">
                     <table border="1" cellspacing="0" cellpadding="1" width="100%" style="border-collapse:collapse" bordercolor="#333333" class="table  ft12">
                         <tr>
-                            <td width="10%" style="font-weight:bold;">序号</td>
-                            <td width="45%" style="font-weight:bold;">收费项目</td>
-                            <td width="10%" style="font-weight:bold;">数量</td>
-                            <td width="15%" style="font-weight:bold;">单价</td>
-                            <td width="20%" style="font-weight:bold;">合计</td>
+                            <td width="10%" style="font-weight:bold;">{{ :lang('序号') }}</td>
+                            <td width="45%" style="font-weight:bold;">{{ :lang('收费项目') }}</td>
+                            <td width="10%" style="font-weight:bold;">{{ :lang('数量') }}</td>
+                            <td width="15%" style="font-weight:bold;">{{ :lang('单价') }}</td>
+                            <td width="20%" style="font-weight:bold;">{{ :lang('合计') }}</td>
                         </tr>
                         <?php 
                             $show2=(json_decode(htmlspecialchars_decode($show['price_show']),true));
@@ -81,7 +80,7 @@
                             <td></td>
                             <td colspan="2">
                                 <if condition="$show['ykd_number']">
-                                    {{ :pay_wasyall($show['pay_ways'],0) }}{{ $show.base_pay_price }}
+                                    {{ :pay_wasyall($show['pay_ways'],0) }}:{{ $show.base_pay_price }}
                                 </if>
                             </td>
                             <td>{{ :lang('本次付款') }}</td>
@@ -91,7 +90,7 @@
                             <td colspan="5" align="right">
                                 {{ :lang('金额大写') }}: {{ :convert_number_to_words(($show['price_oktotal']-$show['base_pay_price'])) }}
                             </td>
-                            </tr>
+                        </tr>
                     </table>
                 </div>
                 <div class="col-xs-12" id="div3">
@@ -115,13 +114,11 @@
                     <div style="font-size: 10pt">({{ :lang('请签全名') }})</div>
                 </div>
                 <div id="div6" style="font-size: 10px;">
-                   
                     <font style="font-size: 10px;">* {{ :lang('备注') }}：{{ :lang('概不退款') }}</font>
                 </div>
             </div>
             <div class="text-center" style="margin-top: 20px;">
                 <a href="javascript:void(0)" class="btn btn-primary" onclick=" prn1_print() ">打印</a>
-               
             </div>
         </div>
     </div>
@@ -141,42 +138,45 @@
         } catch (err) {}
     };
 
-    function CreateOneFormPage() {
-        LODOP = getLodop();
+  
 
-        LODOP.PRINT_INIT("打印控件功能演示_Lodop功能_表单一");
+    function prn1_print() {
+        CreateOnePage();
+        LODOP.SET_PREVIEW_WINDOW(2, 1, 0, "800", 600, "{{ :lang('开始打印') }}",0,0); //打印前弹出选择打印机的对话框 
+        LODOP.SET_PRINT_MODE("AUTO_CLOSE_PREWINDOW", 1); //打印后自动关闭预览窗口
+        LODOP.PREVIEW();
+        // LODOP.PRINTA(); 
+      /*  if (LODOP.CVERSION) {
+            CLODOP.On_Return = function(TaskID, Value) {
+                if (Value) alert("已发出实际打印命令！");
+                else alert("放弃打印！");
+            };
+            LODOP.PRINT();
+            return;
+        };
+        //控件返回结果用语句本身：
+        if (LODOP.PRINT())
+            alert("已发出实际打印命令！");
+        else
+            alert("放弃打印！");*/
 
-
-        var strBodyStyle = "<style>table,td { border: 1 solid #000000;border-collapse:collapse };.ft12 td{ font-size:8pt}</style>";
-
-
-        var strFormHtml = strBodyStyle + "<body>" + document.getElementById("dayin").innerHTML + "</body>";
-
-        LODOP.ADD_PRINT_HTM(10, 18, 2000, 1215, strFormHtml);
-        LODOP.SET_PRINT_PAGESIZE(0, 2100, 1395, "A4");
     };
-    function prn1_print() { 
-            CreateOnePage();    
-            LODOP.SET_PREVIEW_WINDOW(0,1,0,"800",600,"{{ :lang('开始打印') }}");//打印前弹出选择打印机的对话框 
-            LODOP.SET_PRINT_MODE("AUTO_CLOSE_PREWINDOW",1);//打印后自动关闭预览窗口
-            LODOP.PREVIEW();    
-        };  
 
     function CreateOnePage() {
 
         var LODOP = getLodop();
         LODOP.PRINT_INIT("{{ :lang('收费票据') }}");
         //LODOP. PRINT_INITA("1cm","1.8cm","21.cm","13.95cm","开始收费");
-        LODOP.SET_PRINT_PAGESIZE(0, "21cm", "13.95cm", "LodopCustomPage");
+        LODOP.SET_PRINT_PAGESIZE(0, "20.8cm", "13.75cm", "LodopCustomPage");
         var strStyle = "<style> table,td,th {padding: 2px;font-size: 11pt;}</style>"
             //头
         LODOP.ADD_PRINT_HTM(26, "5%", "90%", 109, document.getElementById("div1").innerHTML);
         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
         LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 1);
         //数据表格
-        LODOP.ADD_PRINT_TABLE(125, "5%", "90%", 139, strStyle + document.getElementById("div5").innerHTML);
+        LODOP.ADD_PRINT_TABLE(125, "5%", "90%", 149, strStyle + document.getElementById("div5").innerHTML);
         LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
-        LODOP.ADD_PRINT_TABLE(165, "5%", "90%", 314, strStyle + document.getElementById("div2").innerHTML);
+        LODOP.ADD_PRINT_TABLE(170, "5%", "90%", 314, strStyle + document.getElementById("div2").innerHTML);
         LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
         //尾部
         LODOP.ADD_PRINT_HTM(420, "5%", "90%", 54, document.getElementById("div3").innerHTML);
@@ -217,7 +217,7 @@
 
                 LODOP.SET_PRINT_STYLEA(0,"Horient",1);  */
         //LODOP.PRINT_DESIGN();
-       
+
 
     };
     </script>

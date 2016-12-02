@@ -10,6 +10,7 @@
         <input type="hidden" name="token" value="{{ :token() }}">
         <input type="hidden" name="sf_admin_id" value="{{ :session('admin_id') }}">
         <input type="hidden" name="sf_time" value="{{ :time() }}">
+        <input type="hidden" name="print" value="0" id="print_input">
         <div class="well" style="">
             <php>
                 $title_name=lang('收费');
@@ -198,7 +199,7 @@
                 <div class="sf_part no_print">
                     <p class="text-center no_print">
                         <button type="submit" class="btn btn-success">{{ :lang('提交') }}</button>
-                        <a href="#" class="btn btn-white" onclick="javascript:window.print();return false;">{{ :lang('打印') }}</a>
+                        <a href="#" class="btn btn-white" id="add_print" >{{ :lang('提交并打印') }}</a>
                     </p>
                 </div>
                 <div class="cl"></div>
@@ -285,6 +286,10 @@
         var e = "<i class='fa fa-times-circle'></i> ";
 
         // validate signup form on keyup and submit
+        $("#add_print").on("click",function(){
+            $("#print_input").val(1);
+            $("#validate").submit();
+        })
         $("#validate").validate({
 
             //JSON保存这些开单数据

@@ -15,6 +15,7 @@
     
     	
         <a href="{{ :U('Admin/CaiWu/setJsStatus',array('uuid'=>$v['uuid'],'type'=>'true')) }}" date-js='1' class="btn btn-info "><span class="fa fa-check-circle btn-font" data-name="{{ :lang('结算') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+         <a href="{{ :U('Admin/Print/shoufei',array('id'=>$v['uuid'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-print btn-font" data-name="{{ :lang('打印') }}" data-btn="handle"></span><span class="js-data-name"></a>
 
 <php>}</php>
 </if>
