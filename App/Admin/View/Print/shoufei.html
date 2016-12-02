@@ -80,7 +80,7 @@
                             <td></td>
                             <td colspan="2">
                                 <if condition="$show['ykd_number']">
-                                    {{ :pay_wasyall($show['pay_ways'],0) }}:{{ $show.base_pay_price }}
+                                    {{ :sf_status($show['ysf_status'],0) }}: <span data-price="vnlist"> {{ $show.base_pay_price }}</span>
                                 </if>
                             </td>
                             <td>{{ :lang('本次付款') }}</td>
@@ -88,7 +88,7 @@
                         </tr>
                         <tr>
                             <td colspan="5" align="right">
-                                {{ :lang('金额大写') }}: {{ :convert_number_to_words(($show['price_oktotal']-$show['base_pay_price'])) }}
+                                {{ :lang('金额大写') }}:  {{ :convert_number_to_words(($show['price_oktotal']-$show['base_pay_price'])) }}
                             </td>
                         </tr>
                     </table>

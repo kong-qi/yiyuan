@@ -65,6 +65,7 @@ class PrintController extends AuthController {
 
             ykd.sf_time as ysf_time,
             ykd.kd_number as ykd_number,
+            ykd.sf_status as ysf_status,
 
 
             yy1.dztime as ydztime,
