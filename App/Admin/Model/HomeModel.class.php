@@ -483,5 +483,116 @@ class HomeModel extends Model {
         return $m==''?0:$m;
         
     }
+    //开单接诊类型，
+    public function getKaiDanTotal($map=array(),$date=0,$type_time='jz.jztime',$date_type='day',$all=''){
+        $model=M('JieZhen');
+        $join[] = 'LEFT JOIN __YU_YUE__ yy ON jz.yy_id= yy.id';
+        $filed = 'jz.*';
+        $where=array();
+        if($date_type=='day')
+        {
+            $where['_string']="FROM_UNIXTIME(".$type_time.",'%Y-%m-%d') = str_to_date('".get_days($date)."','%Y-%m-%d')";
+        }else
+        {
+            switch ($date_type) {
+                case 'by':
+                    $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), 1, date("Y")));
+                    $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("t"), date("Y")));
+                    break;
+                
+                case 'sy':
+                    $fistday = date("Y-m-d", mktime(0, 0, 0, date("m") - 1, 1, date("Y")));
+                    $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), 0, date("Y")));
+                    break;
+                case "zq":
+                    $arr=prev_week();
+                    $fistday=$arr['firstday'];
+                    $lastday=$arr['lastday'];
+                break;
+                case "bz":
+                    if (date("w", time()) == 0) {
+                        $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1 - 7, date("Y")));
+                        $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7 - 7, date("Y")));
+                    } else {
+                        $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1, date("Y")));
+                        $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7, date("Y")));
+                    }
+                break;
+                    
+                default:
+                    
+                    break;
+            }
+            $where['_string']="FROM_UNIXTIME(".$type_time.",'%Y-%m-%d') >= str_to_date('".$fistday."','%Y-%m-%d') and FROM_UNIXTIME(".$type_time.",'%Y-%m-%d') <= str_to_date('".$lastday."','%Y-%m-%d')";
+        }
+        
+        if($all=='')
+        {
+            if(!check_group('root'))
+            {
+                 $where['jz.admin_id']=session('admin_id');
+            }
+        }
+        $where=$map+$where;
+        $model=$model->alias('jz')->where($where)
+        ->field($filed)->join($join)->count();
+        return $model;
+    }
+    //成交率
+    //开单接诊类型，
+    public function getKaiDanTotalOk($map=array(),$date=0,$type_time='kd.sf_time',$date_type='day',$all=''){
+        $model=M('KaiDan');
+        $join[] = 'LEFT JOIN __YU_YUE__ yy ON kd.yy_id= yy.id';
+        $filed = 'kd.*';
+        $where=array();
+        if($date_type=='day')
+        {
+            $where['_string']="FROM_UNIXTIME(".$type_time.",'%Y-%m-%d') = str_to_date('".get_days($date)."','%Y-%m-%d')";
+        }else
+        {
+            switch ($date_type) {
+                case 'by':
+                    $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), 1, date("Y")));
+                    $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("t"), date("Y")));
+                    break;
+                
+                case 'sy':
+                    $fistday = date("Y-m-d", mktime(0, 0, 0, date("m") - 1, 1, date("Y")));
+                    $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), 0, date("Y")));
+                    break;
+                case "zq":
+                    $arr=prev_week();
+                    $fistday=$arr['firstday'];
+                    $lastday=$arr['lastday'];
+                break;
+                case "bz":
+                    if (date("w", time()) == 0) {
+                        $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1 - 7, date("Y")));
+                        $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7 - 7, date("Y")));
+                    } else {
+                        $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1, date("Y")));
+                        $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7, date("Y")));
+                    }
+                break;
+                    
+                default:
+                    
+                    break;
+            }
+            $where['_string']="FROM_UNIXTIME(".$type_time.",'%Y-%m-%d') >= str_to_date('".$fistday."','%Y-%m-%d') and FROM_UNIXTIME(".$type_time.",'%Y-%m-%d') <= str_to_date('".$lastday."','%Y-%m-%d')";
+        }
+        
+        if($all=='')
+        {
+            if(!check_group('root'))
+            {
+                 $where['kd.kdys_id']=session('admin_id');
+            }
+        }
+        $where=$map+$where;
+        $model=$model->alias('kd')->where($where)
+        ->field($filed)->join($join)->count();
+        return $model;
+    }
     
 }

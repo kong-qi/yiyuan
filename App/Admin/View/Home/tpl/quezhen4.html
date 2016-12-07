@@ -1,0 +1,96 @@
+<php>
+    $pay_class=array(
+        '1'=>lang('付全款'),
+        '2'=>lang('付定金'),
+        '3'=>lang('付部分款'),
+        '7'=>lang('补订金余款'),
+        '8'=>lang('补欠款'),
+        
+    );
+</php>
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5><a class="collapse-link">{{ :lang('各接诊医生今日接诊情况') }}</a></h5>
+        <div class="ibox-tools">
+            <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+             
+              <tr>
+                <td width="43">　</td>
+                <td colspan="2" width="96" align="center">{{ :lang('接诊开单量') }}</td>
+                <td colspan="5" width="225" align="center">{{ :lang('各付款类型的数量') }}</td>
+                <td colspan="8" width="472" align="center">{{ :lang('开单金额和收费金额') }}</td>
+               
+              </tr>
+              <tr>
+                <td width="43">{{ :lang('日期') }}</td>
+                <td width="48">{{ :lang('接诊量') }}</td>
+                <td width="48">{{ :lang('开单量') }}</td>
+                <if condition="$pay_class">
+                    <foreach name="pay_class" item="pv" key="pkey">
+                        <td width="45">{{ :lang($pv) }}</td>
+                
+                    </foreach>
+                </if>
+                <td width="60">{{ :lang('开单总金额') }}</td>
+                <td width="60">{{ :lang('成交总金额') }}</td>
+                <td width="60">{{ :lang('实收总金额') }}</td>
+                <td width="60">{{ :lang('收全款') }}</td>
+                <td width="60">{{ :lang('收订金') }}</td>
+                <td width="60">{{ :lang('收部分费用') }}</td>
+                <td width="52">{{ :lang('收订金余款') }}</td>
+                <td width="60">{{ :lang('收欠款') }}</td>
+            
+              </tr>
+              
+                <php>
+                  $jz_doc=get_doc(array(),0);
+
+                </php>
+                <php>if($jz_doc){</php>
+
+                  <foreach name="jz_doc" item="jz_v">
+                      <tr>
+                      <td>{{ $jz_v['name'] }}</td>
+                       <td width="48"><php>echo D('Home')->getTotal('JieZhen',array('admin_id'=>$jz_v['id']),0,'jztime',1)</php></td>
+                       <td width="48"><php>echo D('Home')->getTotal('KaiDan',array(),0,'kd_time')</php></td>
+                       <php>if($pay_class){</php>
+                           <foreach name="pay_class" item="pv" key="pkey">
+                               <td width="45"><php>echo D('Home')->getTotal('KaiDan',array('pay_ways'=>$pkey,'admin_id'=>$jz_v['id']),0,'kd_time')</php></td>
+                       
+                           </foreach>
+                       <php>}</php>
+                       <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'sf_status'=>array('in',array(0,1,2,3,10,11,12))),0,'kd_time','1','price_total')</php></td>
+
+                       <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'sf_status'=>array('in',array(0,1,2,3,10,11,12))),0,'kd_time','1','price_oktotal')</php></td>
+
+                       <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'sf_status'=>array('in',array(0,1,2,3,10,11,12))),0,'kd_time','1','true_price')</php></td>
+
+                       <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'pay_ways'=>1,'sf_status'=>array('in',array(1,2,3,10))),0,'sf_time','1','true_price')</php></td>
+
+                       <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'pay_ways'=>2,'sf_status'=>array('in',array(1,2,3,10))),0,'sf_time','1','true_price')</php></td>
+
+                       <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'pay_ways'=>3,'sf_status'=>array('in',array(1,2,3,10))),0,'sf_time','1','true_price')</php></td>
+
+                       <td width="52" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'pay_ways'=>7,'sf_status'=>array('in',array(1,2,3,10))),0,'sf_time','1','true_price')</php></td>
+                       <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'pay_ways'=>8,'sf_status'=>array('in',array(1,2,3,10))),0,'sf_time','1','true_price')</php></td>
+                       </tr>
+                  </foreach>
+                <php>}</php>
+                
+                
+                
+              
+              
+              
+              
+            </table>
+        </div>
+
+       
+    </div>
+</div>

@@ -6,7 +6,7 @@ return array(
     'TMPL_TEMPLATE_SUFFIX'  =>  '.html',
     'SITE_NAME'=>'网站管理系统',
     'URL_MODEL'=>2,
-    'DEFAULT_TIMEZONE'      =>  'Etc/GMT-7',
+    //'DEFAULT_TIMEZONE'      =>  'Etc/GMT-7',
     'UPLOAD'=>WEB_ROOT."/upload",
     'UPLOAD_URL'=>"/upload",
     'FILE_PAGES'=>'20',

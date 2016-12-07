@@ -1,0 +1,69 @@
+<php>
+   $leibie_array=array(
+
+        '1'=>lang('初诊'),
+        '2'=>lang('复诊'),
+        '3'=>lang('复查'),
+       
+    );
+</php>
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5><a class="collapse-link" >{{ :lang('各接诊医生今日接诊情况') }}</a></h5>
+        <div class="ibox-tools">
+            <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+             
+              <tr>
+                <td width="43">　</td>
+               
+                <td colspan="9" width="500" align="center">{{ :lang('开单和来院类别') }}</td>
+              </tr>
+              <tr>
+                
+                <td width="60">{{ :lang('初诊') }}</td>
+                <td width="50">{{ :lang('初诊成交率') }}</td>
+                <td width="60">{{ :lang('复诊') }}</td>
+                <td width="60">{{ :lang('复诊成交率') }}</td>
+                <td width="60">{{ :lang('复查') }}</td>
+                <td width="52">{{ :lang('复查成交率') }}</td>
+                <td width="60">{{ :lang('再消费') }}</td>
+                <td width="52">{{ :lang('其他') }}</td>
+                <td width="46">{{ :lang('总成交率') }}</td>
+              </tr>
+              <php>
+                $jz_doc=get_doc(array(),0);
+
+              </php>
+              <php>if($jz_doc){</php>
+                <foreach name="jz_doc" item="jz_v">
+                  <tr>
+                   
+                    <foreach name="leibie_array" item="v" key="lbkey">
+                        <td width="60"><php>echo $cz1=D('Home')->getKaiDanTotal(array('jz.admin_id'=>$jz_v['id'],'yy.leibie'=>$lbkey),0,'jz.jztime','day','1')</php></td>
+                      
+                        <td width="50"><php>$czok1=D('Home')->getKaiDanTotalOk(array('kd.kdys_id'=>$jz_v['id'],'yy.leibie'=>$lbkey,'kd.sf_status'=>1),0,'kd.kd_time','day','1');echo round( ($czok1/$cz1) * 100 , 2) . "％";</php></td>
+                       
+                    </foreach>
+                    
+                    <td width="60"><php>echo $cz1=D('Home')->getKaiDanTotal(array('jz.admin_id'=>$jz_v['id'],'yy.leibie'=>4),0,'jz.jztime','day',1)</php></td>
+                    <td width="52"><php>echo $cz1=D('Home')->getKaiDanTotal(array('jz.admin_id'=>$jz_v['id'],'yy.leibie'=>5),0,'jz.jztime','day','1')</php></td>
+                    <td width="46">
+                        <php>$cztotal1=D('Home')->getKaiDanTotal(array('jz.admin_id'=>$jz_v['id'],'yy.leibie'=>array('in',array('1','2','3','4'))),0,'jz.jztime','day',1)</php>
+                        <php>$czoktotal1=D('Home')->getKaiDanTotalOk(array('kd.kdys_id'=>$jz_v['id'],'yy.leibie'=>array('in',array('1','2','3','4')),'kd.sf_status'=>1),0,'kd.kd_time','day',1);echo round( ($czoktotal1/$cztotal1) * 100 , 2) . "％";</php>
+                    </td>
+                  </tr>
+                </foreach>
+              <php>}</php>
+              
+              
+            </table>
+        </div>
+
+       
+    </div>
+</div>
