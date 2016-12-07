@@ -433,5 +433,55 @@ class HomeModel extends Model {
         return $m==''?0:$m;
         
     }
+    //收费合计月份
+    public function getTotalSumMonth($name='KaiDan',$map=array(),$date_type='bz',$type_time='sf_time',$all='',$field='true_price'){
+        //回访任务  已完成的回访任务    待回访 新增回访记录
+        $where=array();
+        switch ($date_type) {
+            case 'by':
+                $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), 1, date("Y")));
+                $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("t"), date("Y")));
+                break;
+            
+            case 'sy':
+                $fistday = date("Y-m-d", mktime(0, 0, 0, date("m") - 1, 1, date("Y")));
+                $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), 0, date("Y")));
+                break;
+            case "zq":
+                $arr=prev_week();
+                $fistday=$arr['firstday'];
+                $lastday=$arr['lastday'];
+            break;
+            case "bz":
+                if (date("w", time()) == 0) {
+                    $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1 - 7, date("Y")));
+                    $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7 - 7, date("Y")));
+                } else {
+                    $fistday = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d") - date("w") + 1, date("Y")));
+                    $lastday = date("Y-m-d", mktime(23, 59, 59, date("m"), date("d") - date("w") + 7, date("Y")));
+                }
+            break;
+                
+            default:
+                # code...
+                break;
+        }
+
+        if($all=='')
+        {
+            if(!check_group('root'))
+            {
+                 $where['admin_id']=session('admin_id');
+            }
+        }
+        $where['_string']="FROM_UNIXTIME(".$type_time.",'%Y-%m-%d') >= str_to_date('".$fistday."','%Y-%m-%d') and FROM_UNIXTIME(".$type_time.",'%Y-%m-%d') <= str_to_date('".$lastday."','%Y-%m-%d')";
+        
+        $where=$map+$where;
+       
+        $m= M($name)->where($where)->sum($field);
+
+        return $m==''?0:$m;
+        
+    }
     
 }
