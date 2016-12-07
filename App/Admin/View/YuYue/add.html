@@ -478,13 +478,13 @@
 
                 if (data.content != '') {
 
-                    $str = '<option value="">{{ :lang("请选择") }}</option>';
+                    $str = '';
                     $str += data.content;
 
                     $("#" + $next_id).empty().append($str);
 
                 } else {
-                    $str = "<option value=''>{{ :lang('无') }}</option>";
+                    $str = "";
                     $("#" + $next_id).empty();
                     $($closeid).empty().append($str);
 

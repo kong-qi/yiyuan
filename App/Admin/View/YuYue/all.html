@@ -63,21 +63,21 @@
                                                 <label class="col-sm-12">{{ :lang('科室') }}</label>
                                                 <div class="col-sm-4" >
 
-                                                    <select class="form-control" name="ks_id" id="ks_id" onchange="get_tks(this.value)" >
+                                                    <select class="form-control" disabled="" name="ks_id" id="ks_id" onchange="get_tks(this.value)" >
                                                         <option value="">{{ :lang('请选择科室') }}</option>
                                                         {{ :get_keshi('0','1',$data['ks_id'] ) }}
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-4" >
 
-                                                    <select class="form-control" id="kst_id" name="kst_id" onchange="get_tks2(this.value)" >
+                                                    <select class="form-control" disabled="" id="kst_id" name="kst_id" onchange="get_tks2(this.value)" >
                                                         <option value="">{{ :lang('请选择二级科室') }}</option>
 
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-4" >
                                                     
-                                                    <select class="form-control" id="kstt_id" name="kstt_id" >
+                                                    <select class="form-control" disabled="" id="kstt_id" name="kstt_id" >
                                                         <option value="">{{ :lang('请选择具体病种') }}</option>
 
                                                     </select>

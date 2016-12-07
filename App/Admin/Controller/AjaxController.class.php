@@ -300,11 +300,12 @@ class AjaxController extends AuthController
         
 
         $rule=M('KeShi')->where(array('checked'=>1,'type'=>'keshi','fid'=>$id))->select();
-        $str='';//<option value>'.lang('请选择').'</option>
+        
         
 
         if(count($rule)>0)
         {
+            $str='<option value>'.lang('请选择').'</option>';
             foreach ($rule as $k=>$v)
             {
                 $checked='';
@@ -319,6 +320,9 @@ class AjaxController extends AuthController
                 $str.="<option ".$checked." value='".$v['id']."'>".$v['name']."</option>";
 
             }
+        }else
+        {
+            $str.='<option value>'.lang('无').'</option>';
         }
         $arr=array(
             'first_id'=>$first_id,
