@@ -384,6 +384,7 @@ class AjaxController extends AuthController
         $str='';
         if(count($rule)>0)
         {
+             $str='<option value>'.lang('请选择').'</option>';
             foreach ($rule as $k=>$v)
             {
                 if($k==0)
@@ -410,6 +411,9 @@ class AjaxController extends AuthController
               
 
             }
+        }else
+        {
+            $str.='<option value>'.lang('无').'</option>';
         }
         $arr=array(
             'first_id'=>$first_id,
@@ -430,6 +434,7 @@ class AjaxController extends AuthController
         $str='';
         if(count($rule)>0)
         {
+            $str='<option value>'.lang('请选择').'</option>';
             foreach ($rule as $k=>$v)
             {
                 if($k==0)
@@ -456,6 +461,9 @@ class AjaxController extends AuthController
 
 
             }
+        }else
+        {
+            $str.='<option value>'.lang('无').'</option>';
         }
         $arr=array(
             'first_id'=>$first_id,
