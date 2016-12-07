@@ -682,8 +682,15 @@ class YuShenController extends AuthController {
                 /*print_r($data);
                 print_r($ydata);
                 return '';*/
+                //更新预约表
+                $ydata['status']=4;//状态
+                $ydata['kdtime']=$post['ykd_time'];
+                //$data['kd_time']=time();//开单时间
+                $ydata['id']=$post['yy_id'];
+                $yresult=M('YuYue')->data($ydata)->save();
 
                 $result =    $model->add($data);
+
                 if($result) {
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
@@ -785,6 +792,12 @@ class YuShenController extends AuthController {
                 $data['kd_number']=$post['ynumber']."-".get_kaidan_number_sort($post['qz_id']);
                 $data['kd_id_sort']=get_kaidan_number_sort($post['qz_id']);
                 //echo get_kaidan_number_sort($post['qz_id']);
+                //更新预约表
+                $ydata['status']=4;//状态
+                $ydata['kdtime']=$post['ykd_time'];
+                //$data['kd_time']=time();//开单时间
+                $ydata['id']=$post['yy_id'];
+                $yresult=M('YuYue')->data($ydata)->save();
                
 
                 $result =    $model->add($data);
