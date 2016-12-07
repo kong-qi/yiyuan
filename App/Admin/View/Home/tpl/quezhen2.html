@@ -1,0 +1,171 @@
+<php>
+    $pay_class=array(
+        '1'=>lang('付全款'),
+        '2'=>lang('付定金'),
+        '3'=>lang('付部分款'),
+        '7'=>lang('补订金余款'),
+        '8'=>lang('补欠款'),
+        
+    );
+</php>
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        <h5><a class="collapse-link">{{ :home_tjname('接诊情况') }}</a></h5>
+        <div class="ibox-tools">
+            <a class="collapse-link"> <i class="fa fa-chevron-down"></i> </a>
+        </div>
+    </div>
+    <div class="ibox-content" style="">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+             
+              <tr>
+                <td width="43">　</td>
+                <td colspan="2" width="96">{{ :lang('接诊开单量') }}</td>
+                <td colspan="5" width="225">{{ :lang('各付款类型的数量') }}</td>
+                <td colspan="8" width="472">{{ :lang('开单金额和收费金额') }}</td>
+                <td colspan="9" width="500">{{ :lang('开单和来院类别') }}</td>
+              </tr>
+              <tr>
+                <td width="43">{{ :lang('日期') }}</td>
+                <td width="48">{{ :lang('接诊量') }}</td>
+                <td width="48">{{ :lang('开单量') }}</td>
+                <if condition="$pay_class">
+                    <foreach name="pay_class" item="pv" key="pkey">
+                        <td width="45">{{ :lang($pv) }}</td>
+                
+                    </foreach>
+                </if>
+                <td width="60">{{ :lang('开单总金额') }}</td>
+                <td width="60">{{ :lang('成交总金额') }}</td>
+                <td width="60">{{ :lang('实收总金额') }}</td>
+                <td width="60">{{ :lang('收全款') }}</td>
+                <td width="60">{{ :lang('收订金') }}</td>
+                <td width="60">{{ :lang('收部分费用') }}</td>
+                <td width="52">{{ :lang('收订金余款') }}</td>
+                <td width="60">{{ :lang('收欠款') }}</td>
+                <td width="60">{{ :lang('初诊') }}</td>
+                <td width="50">{{ :lang('初诊成交率') }}</td>
+                <td width="60">{{ :lang('复诊') }}</td>
+                <td width="60">{{ :lang('复诊成交率') }}</td>
+                <td width="60">{{ :lang('复查') }}</td>
+                <td width="60">{{ :lang('再消费') }}</td>
+                <td width="52">{{ :lang('复查成交率') }}</td>
+                <td width="52">{{ :lang('其他') }}</td>
+                <td width="46">{{ :lang('总成交率') }}</td>
+              </tr>
+              <tr>
+                <td width="43">今日</td>
+                <td width="48"><php>echo D('Home')->getTotal('JieZhen',array(),0,'jztime')</php></td>
+                <td width="48"><php>echo D('Home')->getTotal('KaiDan',array(),0,'kd_time')</php></td>
+                <if condition="$pay_class">
+                    <foreach name="pay_class" item="pv" key="pkey">
+                        <td width="45"><php>echo D('Home')->getTotal('KaiDan',array('pay_ways'=>$pkey),0,'kd_time')</php></td>
+                
+                    </foreach>
+                </if>
+                <td width="60"><php>echo D('Home')->getTotalSum('KaiDan',array('sf_status'=>array('in',array(0,1,2,3,10))),0,'sf_time','',price_total)</php></td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="52">　</td>
+                <td width="60">　</td>
+                <td width="60">接诊量（开单量）</td>
+                <td width="50">　</td>
+                <td width="60">接诊量（开单量）</td>
+                <td width="60">　</td>
+                <td width="60">接诊量</td>
+                <td width="60">接诊量</td>
+                <td width="52">　</td>
+                <td width="52">接诊量（开单量）</td>
+                <td width="46">　</td>
+              </tr>
+              <tr>
+                <td width="43">昨日</td>
+                <td width="48">　</td>
+                <td width="48">　</td>
+                <td width="42">　</td>
+                <td width="42">　</td>
+                <td width="42">　</td>
+                <td width="48">　</td>
+                <td width="51">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="52">　</td>
+                <td width="60">　</td>
+                <td width="60">接诊量（开单量）</td>
+                <td width="50">　</td>
+                <td width="60">接诊量（开单量）</td>
+                <td width="60">　</td>
+                <td width="60">接诊量</td>
+                <td width="60">接诊量</td>
+                <td width="52">　</td>
+                <td width="52">接诊量（开单量）</td>
+                <td width="46">　</td>
+              </tr>
+              <tr>
+                <td width="43">本周</td>
+                <td width="48">　</td>
+                <td width="48">　</td>
+                <td width="42">　</td>
+                <td width="42">　</td>
+                <td width="42">　</td>
+                <td width="48">　</td>
+                <td width="51">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="52">　</td>
+                <td width="60">　</td>
+                <td width="60">接诊量（开单量）</td>
+                <td width="50">　</td>
+                <td width="60">接诊量（开单量）</td>
+                <td width="60">　</td>
+                <td width="60">接诊量</td>
+                <td width="60">接诊量</td>
+                <td width="52">　</td>
+                <td width="52">接诊量（开单量）</td>
+                <td width="46">　</td>
+              </tr>
+              <tr>
+                <td width="43">本月</td>
+                <td width="48">　</td>
+                <td width="48">　</td>
+                <td width="42">　</td>
+                <td width="42">　</td>
+                <td width="42">　</td>
+                <td width="48">　</td>
+                <td width="51">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="60">　</td>
+                <td width="52">　</td>
+                <td width="60">　</td>
+                <td width="60">接诊量（开单量）</td>
+                <td width="50">　</td>
+                <td width="60">接诊量（开单量）</td>
+                <td width="60">　</td>
+                <td width="60">接诊量</td>
+                <td width="60">接诊量</td>
+                <td width="52">　</td>
+                <td width="52">接诊量（开单量）</td>
+                <td width="46">　</td>
+              </tr>
+            </table>
+        </div>
+
+       
+    </div>
+</div>

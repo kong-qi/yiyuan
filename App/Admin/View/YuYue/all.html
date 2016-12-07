@@ -63,21 +63,21 @@
                                                 <label class="col-sm-12">{{ :lang('科室') }}</label>
                                                 <div class="col-sm-4" >
 
-                                                    <select class="form-control" name="ks_id" id="ks_id" onchange="get_tks(this.value)" disabled>
+                                                    <select class="form-control" name="ks_id" id="ks_id" onchange="get_tks(this.value)" >
                                                         <option value="">{{ :lang('请选择科室') }}</option>
                                                         {{ :get_keshi('0','1',$data['ks_id'] ) }}
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-4" >
 
-                                                    <select class="form-control" id="kst_id" name="kst_id" onchange="get_tks2(this.value)" disabled>
+                                                    <select class="form-control" id="kst_id" name="kst_id" onchange="get_tks2(this.value)" >
                                                         <option value="">{{ :lang('请选择二级科室') }}</option>
 
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-4" >
-
-                                                    <select class="form-control" id="kstt_id" name="kstt_id" disabled>
+                                                    
+                                                    <select class="form-control" id="kstt_id" name="kstt_id" >
                                                         <option value="">{{ :lang('请选择具体病种') }}</option>
 
                                                     </select>
@@ -118,7 +118,7 @@
                                             <div class="form-group">
                                                 <label class="col-sm-12">{{ :lang('网站来源') }}</label>
                                                 <div class="col-sm-12">
-                                                    <select class="form-control" name="web_id" id="" disabled>
+                                                    <select class="form-control" name="web_id" id="" >
                                                         <option>{{ :lang('无') }}</option>
                                                         <php>echo get_lanmu_onelist('website',1,'first','',$data['web_id']);</php>
                                                     </select>
@@ -473,6 +473,7 @@
         });
 
         <?php
+       
         if($data['ks_id']!='')
         {
             echo "get_tks('".$data['ks_id']."');";
@@ -494,30 +495,31 @@
             echo "get_area('".$data['area_id']."');";
         }
         ?>
-        function get_tks($id){
+         function get_tks($id){
             $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
-            $tfid='{{ :I("get.kst_id") }}';
+            $tfid='{{ $data["kst_id"] }}';
             log($tfid);
             $str = "<option value=''>{{ :lang('无') }}</option>";
             if($id=='')
             {
                 $("#kstt_id").empty().append( $str);
             }
-            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+            $.getJSON($url, {'id': $id,'tfid':$tfid,'is_edit':'1'}, function(json, textStatus) {
                 $("#kst_id").show().empty().append(json.content);
             });
-            get_tks2('');
+            
         }
         function get_tks2($id){
             $str = "<option value=''>{{ :lang('无') }}</option>";
             $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
-            $tfid='{{ :I("get.kstt_id") }}';
-            log($tfid);
+            $tfid='{{ :$data["kstt_id"] }}';
+            
             if($id=='')
             {
                 $("#kstt_id").empty().append( $str);
             }
-            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+            $.getJSON($url, {'id': $id,'tfid':$tfid,'is_edit':'1'}, function(json, textStatus) {
+                
                 if(json.content!='')
                 {
 

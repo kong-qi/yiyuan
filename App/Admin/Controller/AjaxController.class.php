@@ -297,14 +297,17 @@ class AjaxController extends AuthController
         }
         $first_id=$id;
         $tfid=I('get.tfid');
+        
 
         $rule=M('KeShi')->where(array('checked'=>1,'type'=>'keshi','fid'=>$id))->select();
-        $str='';
-        $checked='';
+        $str='';//<option value>'.lang('请选择').'</option>
+        
+
         if(count($rule)>0)
         {
             foreach ($rule as $k=>$v)
             {
+                $checked='';
                 if($k==0)
                 {
                     $first_id=$v['id'];
@@ -312,18 +315,6 @@ class AjaxController extends AuthController
                 if($tfid==$v['id'])
                 {
                     $checked="selected='selected'";
-                }else
-                {
-                    $checked='';
-                    if($checked=='')
-                    {
-                        if($k==0)
-                        {
-                            $checked="selected='selected'";
-                        }
-                        $checked='';
-                    }
-
                 }
                 $str.="<option ".$checked." value='".$v['id']."'>".$v['name']."</option>";
 
