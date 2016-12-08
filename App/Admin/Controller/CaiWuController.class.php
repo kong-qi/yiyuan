@@ -1190,6 +1190,7 @@ class CaiWuController extends AuthController
                         unset($data[$key]);
                     }
                 }
+                
                
                 $result =    $model->add($data);
                 if($result) {
