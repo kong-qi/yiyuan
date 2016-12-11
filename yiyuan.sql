@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: 2016-11-25 02:26:30
+-- Generation Time: 2016-12-12 02:29:00
 -- 服务器版本： 5.6.21
 -- PHP Version: 5.6.14
 
@@ -62,7 +62,8 @@ INSERT INTO `tp_admin` (`id`, `uuid`, `ctime`, `sort`, `name`, `pwd`, `uniqid`, 
 (23, '713f7164eed3b315680e45f721a80cfe', '1478329654', 0, 'jiedai', '7c4a8d09ca3762af61e59520943dc26494f8941b', '5155cc604952f4ccc8eddd8c08ec4a6325ec323d', NULL, 1, '11', '接待', NULL, NULL, NULL, NULL, NULL),
 (24, '678d917831ea5502e1e8caffe890826c', '1478330113', 0, 'doc', '7c4a8d09ca3762af61e59520943dc26494f8941b', '9ef3136157cbace48cd3f55e2a968e3b10cd19cb', NULL, 1, '12', 'doc', NULL, NULL, NULL, NULL, NULL),
 (25, 'd4a9275e14ab3c8a625cce2620c8a2fa', '1478421181', 0, 'kefu', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'cc235163cac96a633bc179fe1478d767ab832edd', NULL, 1, '15', 'kefu', NULL, NULL, NULL, NULL, NULL),
-(26, 'c6b1d9a5fab110b77ca4c4309e981b1a', '1479025147', 0, 'sf', '7c4a8d09ca3762af61e59520943dc26494f8941b', '638f677699f6ab0eae2656102824876e12e2afef', NULL, 1, '14', 'sf', NULL, NULL, NULL, NULL, NULL);
+(26, 'c6b1d9a5fab110b77ca4c4309e981b1a', '1479025147', 0, 'sf', '7c4a8d09ca3762af61e59520943dc26494f8941b', '638f677699f6ab0eae2656102824876e12e2afef', NULL, 1, '14', 'sf', NULL, NULL, NULL, NULL, NULL),
+(27, '7fd8cdf58d6609a5290e9dfe959c2e0b', '1480696336', 0, 'OIU', '7c4a8d09ca3762af61e59520943dc26494f8941b', 'f1354075c9d286d566986f5c0df33682d877a229', NULL, 1, '11', '123456', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -97,7 +98,7 @@ INSERT INTO `tp_admin_group` (`id`, `uuid`, `ctime`, `sort`, `name`, `checked`, 
 (11, '5c80adb2812c097fca6f2e90d966e8fb', '1476962575', 0, '前台接诊咨询人员', 1, NULL, 'yuyue_add,yuyue_show,huifangset,huifangset_edit,huifangset_del,huifangset_list,hfrenwu,hfrenwu_add,hfrenwu_edit,hfrenwu_del,huihfrenwu_list,qiantaijz,qiantaijz_add,qiantaijz_edit,qiantaijz_del,login_website_jiezhen,btn_huifang', NULL, 0, 0),
 (12, '0aaf0f2040429c5d177394d4ed7d666f', '1476962610', 0, '医生人员', 1, NULL, 'yuyue_show,huifangset,huifangset_add,huifangset_edit,huifangset_only,huifangset_list,hfrenwu,hfrenwu_add,hfrenwu_edit,huihfrenwu_list,yishenjz,yishenjz_add,yishenjz_edit,yishenjz_del,yishenjz_only,yishenjz_only_list,kaidan,kaidan_add,kaidan_edit,kaidan_del,login_website_doc', NULL, 0, 1),
 (13, '2d729989c513f714e4ba3d09e2885f9a', '1477053156', 0, 'aa', 1, NULL, 'yuyue_show,yishenjz,yishenjz_add,yishenjz_edit,yishenjz_del,dingjing', '68,69,70,71', 1, 1),
-(14, '292eb4648bef8a0f701a528c4086f699', '1477067826', 0, '收费员', 1, NULL, 'shouyin,shouyin_check,shouyin_jiesuan,dingjing,login_website_caiwu', NULL, 0, 0),
+(14, '292eb4648bef8a0f701a528c4086f699', '1477067826', 0, '收费员', 1, NULL, 'shouyin,shouyin_check,shouyin_jiesuan,shouyin_rollback,kaidan_add,kaidan_edit,kaidan_del,kaidan_yishen,login_website_caiwu', NULL, 0, 0),
 (15, 'eefc34e527b0b2b5ad0777b6e4101114', '1478421162', 0, '客服部', 1, NULL, 'yuyue_show,huifangset,huifangset_add,huifangset_edit,huifangset_del,huifangset_list,hfrenwu,hfrenwu_add,hfrenwu_edit,hfrenwu_del,huihfrenwu_list,login_website_kefu,btn,btn_huifang_add,btn_sms,btn_renwu_add,kefu', NULL, 0, 1);
 
 -- --------------------------------------------------------
@@ -189,7 +190,6 @@ INSERT INTO `tp_admin_rule` (`id`, `fid`, `name`, `path`, `ename`, `mark`, `uuid
 (102, 0, '收银权限', '', 'shouyin', '', '168b4c9a2b9cd87b1bf9fa37e26477f4', 23),
 (103, 102, '收费', '', 'shouyin_check', '', 'c48f4e504ef48dbcc8844e6c125e9ed3', 0),
 (104, 102, '结算收银', '', 'shouyin_jiesuan', '', '9dcf926672cbbce1ca47a8eff1b169d3', 0),
-(106, 102, '退定金', '', 'dingjing', '', '0311a758fff03e8259eec86d44583551', 0),
 (107, 0, '统计', '', 'tongji', '', '2aaa4209dadc2f87615094ac7b2ceee5', 0),
 (108, 0, '开单操作', '', 'kaidan', '', 'd8435154fada668f71c608b57669370e', 24),
 (109, 108, '添加开单操作', '', 'kaidan_add', '', '2e6bf2613a3f5689ecb78a1506519c09', 0),
@@ -227,7 +227,12 @@ INSERT INTO `tp_admin_rule` (`id`, `fid`, `name`, `path`, `ename`, `mark`, `uuid
 (142, 108, '只能操作自己的', '', 'kaidan_only', '', '2da7ab0701984e573e434f907c128788', 0),
 (143, 0, '客服人员', '', 'kefu', '', '21a0f1bb27d80240aaead7b680a4cf8f', 0),
 (144, 102, '退费', '', 'shouyin_rollback', '', '01f8abee1a1070baf5f9a6e95ac2b733', 0),
-(145, 113, '广告部入口', '', 'login_adv_shichang', '', 'a442b7d265defd72903cc07c21934122', 0);
+(145, 113, '广告部入口', '', 'login_adv_shichang', '', 'a442b7d265defd72903cc07c21934122', 0),
+(146, 0, '手术管理', '', 'shousu', '', '65a9a53c3950e98b591d6ad0f0d396ed', 0),
+(147, 146, '添加手术管理', '', 'shousu_add', '', '6d81f3c38c2666a30fb0b151db056ee2', 0),
+(148, 146, '编辑手术管理', '', 'shousu_edit', '', 'bcf3fb8613f73a1024c59e386194c4b7', 0),
+(149, 146, '只能查看自己的信息', '', 'shousu_only', '', '7dd9e648eab3508e37efbd0bd3aab678', 0),
+(150, 146, '手术管理删除', '', 'shousu_del', '', 'c57b2b549a5e8d3efd9f77227f5a070f', 0);
 
 -- --------------------------------------------------------
 
@@ -1236,14 +1241,6 @@ CREATE TABLE `tp_hui_fang` (
   `content` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `tp_hui_fang`
---
-
-INSERT INTO `tp_hui_fang` (`id`, `uuid`, `sort`, `user_id`, `renwu_id`, `name`, `type`, `ways`, `result_cont`, `status`, `goplace`, `ntime`, `ctime`, `admin_id`, `content`) VALUES
-(1, '8a90415f05de63332378dc0d18633385', NULL, 11, '', '确定预约时间', '44', '36', '127', 1, '61', '1480010745', '1480010745', 7, '&lt;p&gt;dfdsff&lt;/p&gt;'),
-(2, '43386fdea28e3f265afcf90d31cfb968', NULL, 11, '', '去电详细咨询沟通', '44', '36', '127', 1, '61', '1480010894', '1480010894', 7, '');
-
 -- --------------------------------------------------------
 
 --
@@ -1280,10 +1277,20 @@ CREATE TABLE `tp_jie_zhen` (
 --
 
 INSERT INTO `tp_jie_zhen` (`id`, `uuid`, `sort`, `checked`, `yy_id`, `user_id`, `admin_id`, `jztime`, `jzedtime`, `ctime`, `jz_content`, `jz_smcontent`, `edit_content`, `thumbs`, `zl_id`, `ks_id`, `kst_id`, `kstt_id`, `jzks_id`, `ysz_id`, `ys_id`, `kd_total`) VALUES
-(2, 'fb73225fb91342118f6b024ad305c96b', NULL, 1, '1', '1', '7', '1479912500', NULL, '1479912500', '', '瓜子脸', NULL, '[]', '15', '1', '4', '12', NULL, '22', '24', 4),
-(4, 'abedc9243aad9d598ef110471c16cba1', NULL, 1, '2', '2', '7', '1479983676', NULL, '1479983676', '&lt;p&gt;klkkkl;;k&lt;/p&gt;', '瓜子脸', NULL, '[]', '15', '1', '4', '12', NULL, '21', '17', 9),
-(5, 'ad48b903c8759568fd871a5decbf7143', NULL, 1, '3', '3', '7', '1479999390', NULL, '1479999390', '', '瓜子脸', NULL, '[]', '15', '1', '4', '12', NULL, '23', '17', 4),
-(6, 'de61f79a23016ec27d5a419a935cc73c', NULL, 1, '10', '11', '7', '1480009775', NULL, '1480009775', '', '假体隆胸', NULL, '[]', '16', '1', '5', '14', NULL, '21', '17', 2);
+(1, '4ead7dbe3066c7311d0bc91d5829ecd5', NULL, 1, '1', '1', '7', '1480241847', NULL, '1480241847', '&lt;p&gt;3233&lt;/p&gt;', '无', NULL, '[]', '15', '2', '7', '', NULL, '21', '17', 14),
+(2, '916d41dd7e5ff31237a2fdf56902d1e6', NULL, 1, '2', '2', '7', '1480249433', NULL, '1480249433', '', '假体隆胸', NULL, '[]', '15', '1', '5', '14', NULL, '21', '21', 13),
+(3, '53e3f4f6c9a7db1c726d2dbf3dcd1f6f', NULL, 1, '3', '6', '7', '1480349891', NULL, '1480349891', '&lt;p&gt;22&lt;/p&gt;', '瓜子脸', NULL, '[]', '17', '1', '4', '12', NULL, '22', '17', 9),
+(4, '77a911c72cfbd94d6bb825ca9d2ea890', NULL, 1, '5', '8', '24', '1480730003', NULL, '1480730003', '', '无', NULL, '[]', '15', '1', '4', '', NULL, '21', '24', 1),
+(5, '00212e62a775b6a56ef5beddd142ad64', NULL, 1, '10', '13', '17', '1481127910', NULL, '1481127910', '&lt;p&gt;23&lt;/p&gt;', '无', NULL, '[]', '15', '2', '28', '', NULL, '21', '17', 1),
+(6, '5725a77480dcfcec7a746e042c794fc9', NULL, 1, '7', '10', '17', '1481206565', NULL, '1481206565', '&lt;p&gt;23232&lt;br/&gt;&lt;/p&gt;', '瓜子脸', NULL, '[]', '16', '1', '4', '12', NULL, '21', '17', 1),
+(7, 'd9532043d91e9e95aba57008e8ac739e', NULL, 1, '9', '12', '17', '1481206839', NULL, '1481206839', '&lt;p&gt;3232231&lt;/p&gt;', '瓜子脸', NULL, '[]', '16', '1', '4', '12', NULL, '22', '17', 1),
+(8, '24f36af8a15611bdd011ec490db5a1ab', NULL, 1, '11', '14', '17', '1481208153', NULL, '1481208153', '', '瓜子脸', NULL, '[]', '17', '1', '4', '12', NULL, '22', '17', 1),
+(9, '5111743245454933a71c43ee0782cff6', NULL, 1, '6', '9', '17', '1481208898', NULL, '1481208898', '', '请选择', NULL, '[]', '16', '1', '5', '', NULL, '21', '17', 4),
+(10, 'c74d49630b37281d6ed5d948d0669d7c', NULL, 1, '12', '15', '17', '1481209749', NULL, '1481209749', '', '无', NULL, '[]', '15', '2', '7', '', NULL, '25', '17', 1),
+(11, '72ddb19a09f3222fcd8783c88ac93cdd', NULL, 1, '13', '16', '7', '1481128184', NULL, '1481128184', '', '假体隆胸', NULL, '[]', '16', '1', '5', '14', NULL, '23', '17', 1),
+(12, '15f7dacd285845d278df918e4bae9941', NULL, 1, '14', '17', '7', '1481128385', NULL, '1481128385', '', '假体隆胸', NULL, '[]', '16', '1', '5', '14', NULL, '22', '21', 1),
+(13, '3c5eee8a57a8b4064a855747afcd5fd6', NULL, 1, '15', '18', '7', '1481382207', '1481382254', '1481382207', '', '瓜子脸', NULL, '[]', '16', '1', '4', '12', NULL, '23', '17', 1),
+(14, '837fc03ca923c7785a8f440a6e4f5f6d', NULL, 1, '16', '19', '7', '1481382522', NULL, '1481382522', '', '瓜子脸', NULL, '[]', '16', '1', '4', '12', NULL, '23', '17', 1);
 
 -- --------------------------------------------------------
 
@@ -1361,24 +1368,82 @@ CREATE TABLE `tp_kai_dan` (
   `true_price` bigint(20) DEFAULT NULL,
   `price_zhekou` varchar(20) DEFAULT NULL COMMENT '折扣比例',
   `price_oktotal` bigint(20) DEFAULT NULL,
-  `pay_mehtod` varchar(120) DEFAULT NULL COMMENT '付款方式'
+  `price_tuikuan` bigint(20) DEFAULT '0',
+  `price_bujiaodingjing` bigint(20) DEFAULT '0',
+  `price_bujiaoyukuan` bigint(20) DEFAULT '0',
+  `price_only_price` bigint(20) DEFAULT '0',
+  `base_order_number` varchar(120) DEFAULT NULL,
+  `pay_mehtod` varchar(120) DEFAULT NULL COMMENT '付款方式',
+  `base_order_id` bigint(20) DEFAULT NULL,
+  `is_tuikuan` tinyint(4) DEFAULT '0',
+  `is_dingjing` tinyint(4) DEFAULT '0',
+  `is_bufeng` tinyint(4) DEFAULT '0',
+  `tuikuan_content` text COMMENT '退款原因',
+  `base_oktotal` bigint(20) DEFAULT NULL,
+  `base_pay_price` bigint(20) DEFAULT NULL,
+  `base_price_total` bigint(20) DEFAULT NULL,
+  `base_price_zhekou` bigint(20) DEFAULT NULL,
+  `base_pay_ways` tinyint(4) DEFAULT NULL,
+  `base_kder_name` varchar(255) DEFAULT NULL,
+  `base_kder_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 转存表中的数据 `tp_kai_dan`
 --
 
-INSERT INTO `tp_kai_dan` (`id`, `kd_number`, `kd_id_sort`, `uuid`, `ctime`, `sort`, `user_id`, `yy_id`, `jz_id`, `ysz_id`, `price_show`, `price_type`, `price_total`, `admin_id`, `sf_admin_id`, `sf_status`, `js_status`, `pay_ways`, `sf_time`, `js_time`, `ys_id`, `kd_time`, `kdys_id`, `kd_kstid`, `yf_money`, `bq_money`, `edit_admin_id`, `edit_time`, `youhui_code`, `youhui_price`, `youhui_id`, `shuaka_price`, `other_price`, `cash_price`, `pay_price`, `true_price`, `price_zhekou`, `price_oktotal`, `pay_mehtod`) VALUES
-(13, 'WL120001-1', 1, '9dfeb7d633af063ef91b818e6eb67fa7', '1479985779', NULL, '2', '2', '4', '21', '[{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;},{&quot;title&quot;:&quot;%E4%BA%8C%E6%81%B6%E7%83%B7&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;20&quot;},{&quot;title&quot;:&quot;%E5%90%8C%E6%A0%B7%E5%AE%B9%E6%98%93&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;19&quot;}]', '[{"fid":90,"total":530}]', 530, '7', NULL, 0, 0, 1, NULL, NULL, '17', '1479985771', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 530, NULL, '', 530, NULL),
-(14, 'WL120001-2', 2, '889460d5a7e1bcfd4a419ffeb5f56cfb', '1479986279', NULL, '2', '2', '4', '21', '[{&quot;title&quot;:&quot;44&quot;,&quot;title2&quot;:&quot;55&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;6&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;32&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;uuic&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;28&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":18},{"fid":90,"total":12}]', 30, '7', '7', 1, 0, 1, '1480005076', NULL, '17', '1479986272', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 30, 30, 30, '', 30, '1'),
-(15, '120002-1', 1, '3f7d7580401ed67511ec9002f10f3a36', '1479999482', NULL, '3', '3', '5', '23', '[{&quot;title&quot;:&quot;44&quot;,&quot;title2&quot;:&quot;55&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;6&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;32&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;uuic&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;28&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":18},{"fid":90,"total":12}]', 30, '7', '7', 1, 0, 1, '1480004483', NULL, '17', '1479999473', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 27, 27, 27, '10', 27, '1'),
-(19, '120002-2', 2, 'b74db074882ab2d98ada3b8f1ac1be63', '1480006899', NULL, '3', '3', '5', '23', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;},{&quot;title&quot;:&quot;%E4%BA%8C%E6%81%B6%E7%83%B7&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;20&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":30}]', 30, '7', '7', 1, 0, 1, '1480006889', NULL, '17', '1480006889', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 30, 30, 30, NULL, 30, NULL),
-(20, '120002-2', 2, 'fa412c737f2ea182a90f064f2466ca25', '1480007498', NULL, '3', '3', '5', '23', '[{&quot;title&quot;:&quot;%E4%BA%8C%E6%81%B6%E7%83%B7&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;20&quot;},{&quot;title&quot;:&quot;%E5%90%8C%E6%A0%B7%E5%AE%B9%E6%98%93&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;19&quot;}]', '[{"fid":90,"total":512}]', 512, '7', '7', 1, 0, 1, '1480007487', NULL, '17', '1480007487', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 512, 512, 512, NULL, 512, NULL),
-(21, '120002-2', 2, '60cd5ad2124cd0f381cb9915c923690f', '1480007722', NULL, '3', '3', '5', '23', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":18}]', 18, '7', NULL, 0, 0, 1, NULL, NULL, '17', '1480007716', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 4, NULL, '80', 4, NULL),
-(22, 'WL120001-2', 2, '7e2638cc53fc9bf04ec1542b6451ef62', '1480007786', NULL, '2', '2', '4', '21', '[{&quot;title&quot;:&quot;333&quot;,&quot;title2&quot;:&quot;22&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;44&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;24&quot;},{&quot;title&quot;:&quot;444&quot;,&quot;title2&quot;:&quot;5&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;6&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;33&quot;},{&quot;title&quot;:&quot;ii&quot;,&quot;title2&quot;:&quot;op&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;p&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;23&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":18}]', 18, '7', '7', 1, 0, 1, '1480007773', NULL, '17', '1480007773', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 18, 18, 18, NULL, 18, NULL),
-(23, 'WL120001-2', 2, 'ac112a99e0394d0771e6a6498030891a', '1480007833', NULL, '2', '2', '4', '21', '[{&quot;title&quot;:&quot;%E5%90%8C%E6%A0%B7%E5%AE%B9%E6%98%93&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;19&quot;}]', '[{"fid":90,"total":500}]', 500, '7', '7', 1, 0, 1, '1480007824', NULL, '17', '1480007824', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 500, 500, 500, NULL, 500, NULL),
-(24, '120009-1', 1, '09ce9cfff996c7fc5d19c19ecc05b758', '1480010488', NULL, '11', '10', '6', '21', '[{&quot;title&quot;:&quot;uq&quot;,&quot;title2&quot;:&quot;y&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;oo&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;25&quot;},{&quot;title&quot;:&quot;333&quot;,&quot;title2&quot;:&quot;22&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;44&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;24&quot;},{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":18}]', 18, '7', NULL, 0, 0, 1, NULL, NULL, '17', '1480010456', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 18, NULL, '', 18, NULL),
-(25, '120009-2', 2, 'ad14163548cc8c6851edaf180fb2caf3', '1480010603', NULL, '11', '10', '6', '21', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;},{&quot;title&quot;:&quot;%E4%BA%8C%E6%81%B6%E7%83%B7&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;20&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":30}]', 30, '7', '7', 1, 0, 1, '1480010502', NULL, '17', '1480010502', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 30, 30, 30, NULL, 30, NULL);
+INSERT INTO `tp_kai_dan` (`id`, `kd_number`, `kd_id_sort`, `uuid`, `ctime`, `sort`, `user_id`, `yy_id`, `jz_id`, `ysz_id`, `price_show`, `price_type`, `price_total`, `admin_id`, `sf_admin_id`, `sf_status`, `js_status`, `pay_ways`, `sf_time`, `js_time`, `ys_id`, `kd_time`, `kdys_id`, `kd_kstid`, `yf_money`, `bq_money`, `edit_admin_id`, `edit_time`, `youhui_code`, `youhui_price`, `youhui_id`, `shuaka_price`, `other_price`, `cash_price`, `pay_price`, `true_price`, `price_zhekou`, `price_oktotal`, `price_tuikuan`, `price_bujiaodingjing`, `price_bujiaoyukuan`, `price_only_price`, `base_order_number`, `pay_mehtod`, `base_order_id`, `is_tuikuan`, `is_dingjing`, `is_bufeng`, `tuikuan_content`, `base_oktotal`, `base_pay_price`, `base_price_total`, `base_price_zhekou`, `base_pay_ways`, `base_kder_name`, `base_kder_id`) VALUES
+(1, 'WL120000-1', 1, '4d733c181611bca3f00c7ef6a5f96d89', '1480241868', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":150}]', 150, '7', '7', 1, 1, 1, '1480241926', '1481414443', '17', '1480241861', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 150, 150, 150, '', 150, 0, 0, 0, 0, NULL, '1', NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'WL120000-2', 2, 'e5ce1cd68ace4c0b23a9fcb9914602f0', '1480241883', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":150}]', 150, '7', '7', 1, 1, 1, '1480241922', '1481414443', '17', '1480241872', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 135, 135, 135, '10', 135, 0, 0, 0, 0, NULL, '1', NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'WL120000-3', 3, '5ec35c52390ceb4b34ed4491ae2d4d3b', '1480241897', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":150}]', 150, '7', '7', 1, 1, 2, '1480241916', '1481414443', '17', '1480241887', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 120, 120, 120, '', 150, 0, 0, 0, 30, NULL, '1', NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'WL120000-4', 4, '8334e2e294952b19a8d00400274e08d5', '1480241954', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":150}]', NULL, '7', NULL, 5, 0, 5, '1480241943', NULL, '17', '1480241943', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 120, 120, 120, NULL, NULL, 120, 0, 0, 0, 'WL120000-3', NULL, 3, 1, 0, 0, '020220', 150, 120, 150, NULL, 2, 'bbb', 17),
+(5, 'WL120000-5', 5, '787b96ee4c226f3fe90d6caed02cedc1', '1480242047', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":450}]', NULL, '7', NULL, 4, 0, 4, '1480242037', NULL, '17', '1480242037', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 150, 150, 150, NULL, NULL, 150, 0, 0, 0, 'WL120000-1', NULL, 1, 1, 0, 0, '豆腐干', 150, 150, 150, NULL, 1, 'bbb', 17),
+(6, 'WL120000-6', 6, '7d10f2841baa9aa8a2e7f2378307a7b4', '1480242426', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":300}]', NULL, '7', '7', 4, 1, 4, '1480242412', '1480243108', '17', '1480242412', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '135', '0', 0, 135, 135, NULL, NULL, 135, 0, 0, 0, 'WL120000-2', NULL, 2, 1, 0, 0, 'xdzfd', 135, 135, 150, 10, 1, 'bbb', 17),
+(7, 'WL120000-7', 7, '830a7a7279118d1fed87393b293e5077', '1480242642', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;%E5%90%8C%E6%A0%B7%E5%AE%B9%E6%98%93&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;19&quot;}]', '[{"fid":89,"total":18},{"fid":90,"total":500}]', 518, '7', NULL, 0, 0, 1, NULL, NULL, '17', '1480242637', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 518, NULL, '', 518, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 'WL120000-8', 8, '34817effc444a46306d0ead35f875903', '1480242667', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":300}]', NULL, '7', '26', 4, 0, 4, '1480244546', NULL, '17', '1480242660', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 135, 135, 135, NULL, NULL, 135, 0, 0, 0, 'WL120000-2', '1', 2, 1, 0, 0, '0121121', 135, 135, 150, 10, 1, 'bbb', 17),
+(9, 'WL120000-9', 9, '916ff39dc514b012351f1b4bda2ece57', '1480244058', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":450}]', NULL, '17', '26', 4, 0, 4, '1480244244', NULL, '17', '1480244047', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '150', '0', 0, 150, 150, NULL, NULL, 150, 0, 0, 0, 'WL120000-1', '2', 1, 1, 0, 0, '10000', 150, 150, 150, NULL, 1, 'bbb', 17),
+(10, 'WL120000-10', 10, '3aaf041aca449c15763c22a565438792', '1480244143', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E4%BA%8C%E6%81%B6%E7%83%B7&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;20&quot;},{&quot;title&quot;:&quot;%E5%90%8Crtt&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;27&quot;}]', '[{"fid":89,"total":150},{"fid":90,"total":512}]', 662, '17', '26', 1, 1, 7, '1480244557', '1481414443', '17', '1480244104', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 476, 476, 476, '10', 476, 0, 476, 0, 0, 'WL120000-3', '1', 3, 0, 1, 0, NULL, 150, 120, 150, NULL, 2, 'bbb', 17),
+(11, 'WL120000-11', 11, 'cef58e6c7fa34d54b04817ae8b8c8fe3', '1480244342', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;333&quot;,&quot;title2&quot;:&quot;22&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;44&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;24&quot;},{&quot;title&quot;:&quot;ii&quot;,&quot;title2&quot;:&quot;op&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;p&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;23&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;%E5%90%8C%E6%A0%B7%E5%AE%B9%E6%98%93&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;19&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":168},{"fid":90,"total":500}]', 668, '26', '26', 1, 1, 1, '1480244327', '1481414443', '17', '1480244327', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '601', '0', 0, 601, 601, '10', 601, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 'WL120000-12', 12, 'c60fb6592589341e2fb7dbff0c69bbd9', '1480244369', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;333&quot;,&quot;title2&quot;:&quot;22&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;44&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;24&quot;},{&quot;title&quot;:&quot;ii&quot;,&quot;title2&quot;:&quot;op&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;p&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;23&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;%E5%90%8C%E6%A0%B7%E5%AE%B9%E6%98%93&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;19&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":318},{"fid":90,"total":500}]', NULL, '26', '26', 4, 0, 4, '1480244361', NULL, '17', '1480244361', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 120, 120, 120, NULL, NULL, 120, 0, 0, 0, 'WL120000-3', NULL, 3, 1, 0, 0, '25432554663', 150, 120, 150, NULL, 2, 'bbb', 17),
+(13, '120001-1', 1, '7e3a41abcca1bd1c971c7329c8918dbb', '1480249438', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;44&quot;,&quot;title2&quot;:&quot;55&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;6&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;32&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;uuic&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;28&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":18},{"fid":90,"total":12}]', 30, '7', NULL, 0, 0, 1, NULL, NULL, '21', '1480249434', '21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 30, NULL, '', 30, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, '120001-2', 2, '7a07585c51dbf42cf970e0343b945645', '1480338284', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;100&quot;,&quot;total&quot;:100000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":100000}]', 100000, '7', '7', 1, 1, 2, '1480339136', '1481414443', '21', '1480338271', '21', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1000, 1000, 1000, '', 100000, 0, 0, 0, 99000, NULL, '1', NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, 'WL120000-13', 13, 'b08896dd908158928934b6e9834e9cf3', '1480338732', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;333&quot;,&quot;title2&quot;:&quot;22&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;44&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;24&quot;},{&quot;title&quot;:&quot;ii&quot;,&quot;title2&quot;:&quot;op&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;p&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;23&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;%E5%90%8C%E6%A0%B7%E5%AE%B9%E6%98%93&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;19&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E4%BA%8C%E6%81%B6%E7%83%B7&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;20&quot;},{&quot;title&quot;:&quot;%E5%90%8Crtt&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;27&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":618},{"fid":90,"total":1012}]', NULL, '7', '7', 4, 0, 4, '1480338721', NULL, '17', '1480338721', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 135, 135, 135, NULL, NULL, 135, 0, 0, 0, 'WL120000-2', NULL, 2, 1, 0, 0, '2333', 135, 135, 150, 10, 1, 'bbb', 17),
+(16, 'WL120000-14', 14, 'b4cdd4e231d61f664ad7aaab219bfe2c', '1480339295', NULL, '1', '1', '1', '21', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;10000&quot;,&quot;total&quot;:180000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":180000}]', 180000, '7', '7', 2, 1, 2, '1480339303', '1481412385', '17', '1480339284', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 10000, 10000, 10000, '', 180000, 0, 0, 0, 170000, NULL, '1', NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, '120001-3', 3, '72756bdf4c9377d5a16d5774a98f112e', '1480339350', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;5&quot;,&quot;total&quot;:5000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":5000}]', 5000, '7', '7', 2, 1, 2, '1480339324', '1481414443', '21', '1480339324', '21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 1000, 1000, 1000, NULL, 5000, 0, 0, 0, 4000, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, '120001-4', 4, 'aa4f187a4eb904e8750608d51a46fd24', '1480339492', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;5&quot;,&quot;total&quot;:5000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":5000}]', 5000, '7', '7', 10, 1, 8, '1480339468', '1481414443', '21', '1480339468', '21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 4000, 4000, 4000, NULL, 4000, 0, 0, 4000, 0, '120001-3', NULL, 17, 0, 0, 1, NULL, 5000, 1000, 5000, NULL, 2, 'niuniu', 21),
+(19, '120001-5', 5, 'f8b7f3ded5aa1e8eba973d72c2ddbfa7', '1480339936', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;5&quot;,&quot;total&quot;:5000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;100&quot;,&quot;total&quot;:100000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;44&quot;,&quot;title2&quot;:&quot;55&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;6&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;32&quot;},{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;uuic&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;2&quot;,&quot;total&quot;:24,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;28&quot;}]', '[{"fid":89,"total":105018},{"fid":88,"total":0},{"fid":90,"total":24}]', 105042, '7', NULL, 0, 0, 2, NULL, NULL, '21', '1480339909', '21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 10000, NULL, '', 105042, 0, 0, 0, 95042, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(20, '120001-6', 6, '9901c42a932b9902f9a86bbf6f7fa9e5', '1480342069', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;10&quot;,&quot;total&quot;:10000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":10000}]', 10000, '7', '7', 2, 1, 2, '1480342097', '1481414443', '21', '1480342053', '21', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 5000, 5000, 5000, '', 10000, 0, 0, 0, 5000, NULL, '1', NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, '120001-7', 7, '93587b8137c278abe66f2a2f8177d161', '1480342280', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;10&quot;,&quot;total&quot;:10000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":10000}]', 10000, '7', '7', 1, 1, 3, '1480342346', '1481412377', '21', '1480342257', '21', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 800, 800, 800, '12', 8800, 0, 0, 0, 8000, NULL, '1', NULL, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(22, '120001-8', 8, '4203dc76f1ecca14d4fba9bc00c39bb7', '1480342430', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;15&quot;,&quot;total&quot;:15000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":15000}]', 15000, '7', '7', 1, 1, 7, '1480345261', '1481414443', '21', '1480342380', '21', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 12300, 12400, 12300, '12', 12400, 0, 12400, 0, 0, '120001-7', '1', 21, 0, 1, 0, NULL, 8800, 800, 10000, 12, 3, 'niuniu', 21),
+(23, '120001-9', 9, '4c363a10bff67ba698348f560d8a54ac', '1480343947', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;10&quot;,&quot;total&quot;:10000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":10000}]', NULL, '7', '7', 6, 1, 6, '1480345239', '1480345363', '21', '1480343938', '21', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 700, 800, 700, NULL, NULL, 800, 0, 0, 0, '120001-7', '1', 21, 1, 0, 0, '21321', 8800, 800, 10000, 12, 3, 'niuniu', 21),
+(24, '120001-10', 10, '4e1a9636a148be71d1aa0caf1506b137', '1480345386', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;15&quot;,&quot;total&quot;:15000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":15000}]', NULL, '7', '7', 4, 0, 4, '1480345372', NULL, '21', '1480345372', '21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 12400, 12400, 12400, NULL, NULL, 12400, 0, 0, 0, '120001-8', NULL, 22, 1, 0, 0, '323', 12400, 12400, 15000, 12, 7, 'niuniu', 21),
+(25, '120001-11', 11, 'ba4bef4ca732a9fcfac6902fff929b2d', '1480345402', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;15&quot;,&quot;total&quot;:15000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;10&quot;,&quot;total&quot;:10000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;10&quot;,&quot;total&quot;:10000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":35000}]', NULL, '7', '7', 4, 0, 4, '1480345406', NULL, '21', '1480345395', '21', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 5000, 5000, 5000, NULL, NULL, 5000, 0, 0, 0, '120001-6', '1', 20, 1, 0, 0, '132', 10000, 5000, 10000, NULL, 2, 'niuniu', 21),
+(26, '120001-12', 12, '13207338f342134eacda5e688a006ca3', '1480345452', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;15&quot;,&quot;total&quot;:15000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;10&quot;,&quot;total&quot;:10000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;10&quot;,&quot;total&quot;:10000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":35000}]', NULL, '7', '7', 4, 1, 4, '1480345457', '1481422075', '21', '1480345447', '21', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 5000, 5000, 5000, NULL, NULL, 5000, 0, 0, 0, '120001-6', '1', 20, 1, 0, 0, '31321', 10000, 5000, 10000, NULL, 2, 'niuniu', 21),
+(27, '120002-1', 1, 'f3067185b7f5a87ff69bdb1252a7a655', '1480349907', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;4&quot;,&quot;total&quot;:4000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":4000}]', 4000, '7', '7', 1, 1, 1, '1480610686', '1481414443', '17', '1480349892', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 4000, 4000, 4000, '', 4000, 0, 0, 0, 0, NULL, '1', NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(28, '120002-2', 2, '548539b679235dafb1ab9352abf3c75f', '1480349929', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":151}]', 1150, '7', '7', 2, 1, 2, '1480511633', '1481414434', '17', '1480349919', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 150, 150, 150, '', 1150, 0, 0, 0, 1000, NULL, '1', NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(29, '120001-13', 13, '5051d46475e91c01e56e0098eddf26ee', '1480511068', NULL, '2', '2', '2', '21', '[{&quot;title&quot;:&quot;%E5%90%8Crtt&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;27&quot;},{&quot;title&quot;:&quot;uq&quot;,&quot;title2&quot;:&quot;y&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;oo&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;25&quot;},{&quot;title&quot;:&quot;333&quot;,&quot;title2&quot;:&quot;22&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;44&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;24&quot;}]', '[{"fid":90,"total":500},{"fid":88,"total":0}]', 500, '7', '7', 10, 1, 8, '1480511057', '1481414443', '21', '1480511057', '21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 500, 500, 500, NULL, 500, 0, 0, 500, 0, NULL, NULL, NULL, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(30, '120002-3', 3, 'f2e332b9b36f4c9991a53160447290b7', '1480511671', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":1}]', 1000, '7', '7', 1, 1, 3, '1480511688', '1481412394', '17', '1480511658', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 500, 500, 500, '', 1000, 0, 0, 0, 500, NULL, '1', NULL, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(31, '120002-4', 4, '297c4b27957cb8d6a79876e821782bdc', '1480512190', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":1000}]', 1000, '7', '7', 10, 1, 8, '1480512203', '1481414432', '17', '1480512180', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 500, 500, 500, '', 1000, 0, 0, 500, 0, '120002-3', '1', 30, 0, 0, 1, NULL, 1000, 500, 1000, NULL, 3, 'bbb', 17),
+(32, '120002-5', 5, '408b721acc2caa21a27ea07603cc3317', '1480698146', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;uuic&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;28&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":90,"total":30}]', 30, '26', '26', 1, 1, 1, '1480698137', '1481414430', '17', '1480698137', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '30', 0, 30, 30, NULL, 30, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(33, '120002-6', 6, '7f8a71e3f001b3ee9525d943daab0468', '1480698480', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":1000}]', 1000, '26', '26', 1, 1, 7, '1480698471', '1481414443', '17', '1480698471', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 500, 500, 500, NULL, 1000, 0, 500, 0, 0, '120002-3', NULL, 30, 0, 1, 0, NULL, 1000, 500, 1000, NULL, 3, 'bbb', 17),
+(34, '120002-7', 7, '6188a4b56ce555e187483cd02e5d76a4', '1480698868', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;title2&quot;:&quot;%E5%BC%80%E5%88%80%E8%B4%B9&quot;,&quot;price&quot;:150,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:150,&quot;danwei&quot;:&quot;次数&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;6&quot;}]', '[{"fid":89,"total":1150}]', 1150, '26', '26', 1, 1, 7, '1480698861', '1481412295', '17', '1480698861', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1000', '0', 0, 1000, 1000, NULL, 1150, 0, 1000, 0, 0, '120002-2', NULL, 28, 0, 1, 0, NULL, 1150, 150, 1150, NULL, 2, 'bbb', 17),
+(35, '120002-8', 8, '1e6e87d5eeca425f6971798af481d5c2', '1480699125', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;uuic&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;28&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":90,"total":30}]', NULL, '26', '26', 4, 1, 4, '1480699116', '1481421931', '17', '1480699116', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 30, 30, 30, NULL, NULL, 30, 0, 0, 0, '120002-5', NULL, 32, 1, 0, 0, '121', 30, 30, 30, NULL, 1, 'bbb', 17),
+(36, '120002-9', 9, 'dadb24e4960a11691b54494444f2ff6f', '1480699600', NULL, '6', '3', '3', '22', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":1000}]', NULL, '26', '26', 6, 1, 6, '1480699587', '1481421927', '17', '1480699587', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 500, 500, 500, NULL, NULL, 500, 0, 0, 0, '120002-6', NULL, 33, 1, 0, 0, '100', 1000, 500, 1000, NULL, 7, 'bbb', 17),
+(37, '120004-1', 1, '6cab3f225560f490b40194b3184b4824', '1480730418', NULL, '8', '5', '4', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":89,"total":1}]', 1000, '24', NULL, 0, 0, 1, NULL, NULL, '24', '1480730404', '24', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1000, NULL, '', 1000, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(38, 'WL120009-1', 1, 'f752a662841e646e57529b23beece44f', '1481128066', NULL, '13', '10', '5', '21', '[{&quot;title&quot;:&quot;ii&quot;,&quot;title2&quot;:&quot;op&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;p&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;23&quot;},{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;}]', '[{"fid":88,"total":0},{"fid":89,"total":1}]', 1000, '17', '7', 1, 1, 1, '1481130500', '1481412398', '17', '1481128056', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 1000, 1000, 1000, '', 1000, 0, 0, 0, 0, NULL, '1', NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(39, 'WL120008-1', 1, 'a36438b0b79d13cae06fad0299e2febc', '1481207751', NULL, '12', '9', '7', '22', '[{&quot;title&quot;:&quot;ii&quot;,&quot;title2&quot;:&quot;op&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;p&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;23&quot;},{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E5%90%8Crtt&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;27&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":500}]', 500, '17', '7', 1, 1, 1, '1481207887', '1481414425', '17', '1481207744', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 500, 500, 500, '', 500, 0, 0, 0, 0, NULL, '1', NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(40, '120006-1', 1, '679af188b42af405b66fe9d91e48a6f8', '1481208697', NULL, '10', '7', '6', '21', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E4%BB%81%E5%92%8C%E5%8F%AF%E7%AB%8B%E5%85%8B&quot;,&quot;title2&quot;:&quot;%E4%BB%81%E5%92%8C%E5%8F%AF%E7%AB%8B%E5%85%8B&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;15&quot;}]', '[{"fid":89,"total":1},{"fid":90,"total":12}]', 1012, '17', NULL, 0, 0, 1, NULL, NULL, '17', '1481208682', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1012, NULL, '', 1012, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(41, '120005-1', 1, '5e99926da68c0c3a024e27418fb83e0b', '1481127642', NULL, '9', '6', '9', '21', '[{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;},{&quot;title&quot;:&quot;uuic&quot;,&quot;title2&quot;:&quot;4454&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;28&quot;},{&quot;title&quot;:&quot;%E5%90%8Crtt&quot;,&quot;title2&quot;:&quot;tertiary&quot;,&quot;price&quot;:500,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:500,&quot;danwei&quot;:&quot;10&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;27&quot;}]', '[{"fid":89,"total":18},{"fid":90,"total":512}]', 530, '7', NULL, 11, 0, 7, NULL, NULL, '17', '1481127637', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 530, NULL, '', 530, 0, 530, 0, 0, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(42, '120005-2', 2, '662877d53d7c02db0dec3ec2de11140a', '1481127914', NULL, '9', '6', '9', '21', '[{&quot;title&quot;:&quot;%E9%A2%9Dfgg%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;29&quot;}]', '[{"fid":89,"total":18}]', 18, '7', NULL, 12, 0, 8, NULL, NULL, '17', '1481127908', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 18, NULL, '', 18, 0, 0, 18, 0, NULL, NULL, NULL, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(43, '120005-3', 3, '23e278d17c06ac62c0a6e1cfe2cc804b', '1481127931', NULL, '9', '6', '9', '21', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":18}]', 18, '7', NULL, 12, 0, 8, NULL, NULL, '17', '1481127924', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 18, NULL, '', 18, 0, 0, 18, 0, NULL, NULL, NULL, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(45, 'WL120011-1', 1, '951bb31a07f62dd2da5ca302d8f52c6f', '1481128019', NULL, '15', '12', '10', '25', '[{&quot;title&quot;:&quot;ii&quot;,&quot;title2&quot;:&quot;op&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;p&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;23&quot;},{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":18}]', 18, '7', '7', 1, 0, 7, '1481460969', NULL, '17', '1481128012', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 18, 18, 18, '', 18, 0, 18, 0, 0, NULL, '1', NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, '120005-4', 4, '975bcfcefaa95625f411cbf9d2365a39', '1481128028', NULL, '9', '6', '9', '21', '[{&quot;title&quot;:&quot;333&quot;,&quot;title2&quot;:&quot;22&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;44&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;24&quot;},{&quot;title&quot;:&quot;ii&quot;,&quot;title2&quot;:&quot;op&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;p&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;23&quot;},{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;}]', '[{"fid":88,"total":0}]', 0, '7', NULL, 11, 0, 7, NULL, NULL, '17', '1481128023', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, '', 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tp_kai_dan` (`id`, `kd_number`, `kd_id_sort`, `uuid`, `ctime`, `sort`, `user_id`, `yy_id`, `jz_id`, `ysz_id`, `price_show`, `price_type`, `price_total`, `admin_id`, `sf_admin_id`, `sf_status`, `js_status`, `pay_ways`, `sf_time`, `js_time`, `ys_id`, `kd_time`, `kdys_id`, `kd_kstid`, `yf_money`, `bq_money`, `edit_admin_id`, `edit_time`, `youhui_code`, `youhui_price`, `youhui_id`, `shuaka_price`, `other_price`, `cash_price`, `pay_price`, `true_price`, `price_zhekou`, `price_oktotal`, `price_tuikuan`, `price_bujiaodingjing`, `price_bujiaoyukuan`, `price_only_price`, `base_order_number`, `pay_mehtod`, `base_order_id`, `is_tuikuan`, `is_dingjing`, `is_bufeng`, `tuikuan_content`, `base_oktotal`, `base_pay_price`, `base_price_total`, `base_price_zhekou`, `base_pay_ways`, `base_kder_name`, `base_kder_id`) VALUES
+(47, 'WL120010-1', 1, 'ae609b0acb37ef879f50e4478a8fffde', '1481128109', NULL, '14', '11', '8', '22', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":18}]', NULL, '7', NULL, 7, 0, 4, NULL, NULL, '17', '1481128102', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, '1321', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(48, '120012-1', 1, 'bdcfefbf8050d66871a34f16e256bca2', '1481128328', NULL, '16', '13', '11', '23', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":18}]', 18, '7', '7', 10, 1, 8, '1481128318', '1481412281', '17', '1481128318', '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '18', 0, 18, 18, NULL, 18, 0, 0, 18, 0, NULL, NULL, NULL, 0, 0, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(49, '120013-1', 1, '8815f500d3eee52da71c4b38a8b9f0b4', '1481128451', NULL, '17', '14', '12', '22', '[{&quot;title&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;title2&quot;:&quot;%E9%81%BF%E5%AD%95%E6%89%8B%E6%9C%AF&quot;,&quot;price&quot;:1000,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:1000,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;89&quot;,&quot;xfname&quot;:&quot;手术费&quot;,&quot;id&quot;:&quot;5&quot;},{&quot;title&quot;:&quot;%E4%BB%81%E5%92%8C%E5%8F%AF%E7%AB%8B%E5%85%8B&quot;,&quot;title2&quot;:&quot;%E4%BB%81%E5%92%8C%E5%8F%AF%E7%AB%8B%E5%85%8B&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;15&quot;}]', '[{"fid":89,"total":1},{"fid":90,"total":12}]', NULL, '7', '7', 4, 1, 4, '1481128430', '1481415659', '21', '1481128430', '21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 0, 0, NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, '32\r\n3', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(50, '120014-1', 1, '1e84a2abf9d84b2203d0b5c7f00b5da1', '1481382408', NULL, '18', '15', '13', '23', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":18}]', 18, '7', '7', 1, 1, 1, '1481385473', '1481414427', '17', '1481382345', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 18, 18, 18, '', 18, 0, 0, 0, 0, NULL, '1', NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(51, '120015-1', 1, '95ef883eec066bf4223f834fb90f9b61', '1481382590', NULL, '19', '16', '14', '23', '[{&quot;title&quot;:&quot;pp&quot;,&quot;title2&quot;:&quot;56&quot;,&quot;price&quot;:0,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:0,&quot;danwei&quot;:&quot;66q&quot;,&quot;fid&quot;:&quot;88&quot;,&quot;xfname&quot;:&quot;治疗费&quot;,&quot;id&quot;:&quot;22&quot;},{&quot;title&quot;:&quot;%E9%A2%9D%E5%A4%96%E4%BB%8D%E7%84%B6&quot;,&quot;title2&quot;:&quot;%E6%8A%BC%E5%A4%B4%E9%9F%B5&quot;,&quot;price&quot;:18,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:18,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;21&quot;},{&quot;title&quot;:&quot;%E4%BB%81%E5%92%8C%E5%8F%AF%E7%AB%8B%E5%85%8B&quot;,&quot;title2&quot;:&quot;%E4%BB%81%E5%92%8C%E5%8F%AF%E7%AB%8B%E5%85%8B&quot;,&quot;price&quot;:12,&quot;num&quot;:&quot;1&quot;,&quot;total&quot;:12,&quot;danwei&quot;:&quot;元&quot;,&quot;fid&quot;:&quot;90&quot;,&quot;xfname&quot;:&quot;产品费&quot;,&quot;id&quot;:&quot;15&quot;}]', '[{"fid":88,"total":0},{"fid":90,"total":30}]', 30, '7', '7', 1, 1, 1, '1481385463', '1481411738', '17', '1481382581', '17', NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, '0', '0', 30, 30, 30, '', 30, 0, 0, 0, 0, NULL, '1', NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1719,14 +1784,273 @@ CREATE TABLE `tp_log` (
 --
 
 INSERT INTO `tp_log` (`id`, `admin_id`, `user_id`, `name`, `content`, `encontent`, `ctime`) VALUES
-(31, 7, NULL, NULL, '回访记录：更新成功', NULL, '1480010775'),
-(32, 7, '11', NULL, '回访记录：更新成功', NULL, '1480010881'),
-(33, 7, '11', NULL, '回访记录：添加成功', NULL, '1480010894'),
-(34, 7, '', NULL, '回访任务：删除成功', NULL, '1480010909'),
-(35, 7, '11', NULL, '回访任务：添加成功', NULL, '1480011049'),
-(36, 7, NULL, NULL, '回访任务：更新成功', NULL, '1480011068'),
-(37, 7, '11', NULL, '回访任务：更新成功', NULL, '1480011102'),
-(38, 7, '11', NULL, '回访任务：删除成功', NULL, '1480011124');
+(1, 7, '1', NULL, '添加预约：添加成功', NULL, '1480241802'),
+(2, 7, '1', NULL, '分配医生：成功', NULL, '1480241837'),
+(3, 7, '1', NULL, '医生接诊：添加成功', NULL, '1480241847'),
+(4, 7, '1', NULL, '开单：添加成功', NULL, '1480241868'),
+(5, 7, '1', NULL, '开单：添加成功', NULL, '1480241883'),
+(6, 7, '1', NULL, '开单：添加成功', NULL, '1480241897'),
+(7, 7, '1', NULL, '收费：收费成功', NULL, '1480241920'),
+(8, 7, '1', NULL, '收费：收费成功', NULL, '1480241924'),
+(9, 7, '1', NULL, '收费：收费成功', NULL, '1480241927'),
+(10, 7, '1', NULL, '收费员开退款收费：添加成功', NULL, '1480241954'),
+(11, 7, '1', NULL, '收费员开退款收费：添加成功', NULL, '1480242047'),
+(12, 7, '1', NULL, '收费员开退款收费：添加成功', NULL, '1480242427'),
+(13, 7, '1', NULL, '开单：添加成功', NULL, '1480242642'),
+(14, 7, '1', NULL, '医生开退款单：添加成功', NULL, '1480242667'),
+(15, 7, '1', NULL, '收费：结算成功', NULL, '1480243108'),
+(16, 7, '', NULL, '权限规则：退定金更新成功', NULL, '1480243924'),
+(17, 17, '', NULL, 'bbb登录成功', NULL, '1480244036'),
+(18, 17, '1', NULL, '医生开退款单：添加成功', NULL, '1480244059'),
+(19, 17, '1', NULL, '医生开补交单：添加成功', NULL, '1480244143'),
+(20, 17, '', NULL, '退出成功', NULL, '1480244176'),
+(21, 26, '', NULL, 'sf登录成功', NULL, '1480244183'),
+(22, 7, '', NULL, '管理组：收费员更新成功', NULL, '1480244226'),
+(23, 26, '', NULL, '退出成功', NULL, '1480244232'),
+(24, 26, '', NULL, 'sf登录成功', NULL, '1480244238'),
+(25, 26, '1', NULL, '收费：收费成功', NULL, '1480244247'),
+(26, 7, '', NULL, '管理组：收费员更新成功', NULL, '1480244310'),
+(27, 26, '', NULL, '退出成功', NULL, '1480244314'),
+(28, 26, '', NULL, 'sf登录成功', NULL, '1480244320'),
+(29, 26, '1', NULL, '收费员开单收费：添加成功', NULL, '1480244342'),
+(30, 26, '1', NULL, '收费员开退款收费：添加成功', NULL, '1480244369'),
+(31, 26, '1', NULL, '收费：收费成功', NULL, '1480244548'),
+(32, 26, '1', NULL, '收费：收费成功', NULL, '1480244558'),
+(33, 7, '', NULL, 'admin登录成功', NULL, '1480249226'),
+(34, 7, '2', NULL, '添加预约：添加成功', NULL, '1480249406'),
+(35, 7, '2', NULL, '分配医生：成功', NULL, '1480249421'),
+(36, 7, '2', NULL, '医生接诊：添加成功', NULL, '1480249433'),
+(37, 7, '2', NULL, '开单：添加成功', NULL, '1480249438'),
+(38, 7, '1', NULL, '收费：结算成功', NULL, '1480249571'),
+(39, 7, '3', NULL, '添加咨询：添加成功', NULL, '1480250492'),
+(40, 7, '4', NULL, '添加咨询：添加成功', NULL, '1480250499'),
+(41, 7, '5', NULL, '添加咨询：添加成功', NULL, '1480250508'),
+(42, 7, '', NULL, '收费项目：eee333添加成功', NULL, '1480250617'),
+(43, 7, '', NULL, '收费项目：eeeeeeee添加成功', NULL, '1480250628'),
+(44, 7, '', NULL, '收费项目：ddd添加成功', NULL, '1480251008'),
+(45, 7, '', NULL, '收费项目：ddd删除成功', NULL, '1480253853'),
+(46, 7, '', NULL, 'admin登录成功', NULL, '1480338171'),
+(47, 7, '2', NULL, '开单：添加成功', NULL, '1480338284'),
+(48, 7, '1', NULL, '收费：结算成功', NULL, '1480338445'),
+(49, 7, '1', NULL, '收费员开退款收费：添加成功', NULL, '1480338732'),
+(50, 7, '2', NULL, '收费：收费成功', NULL, '1480339138'),
+(51, 7, '1', NULL, '开单：添加成功', NULL, '1480339295'),
+(52, 7, '1', NULL, '收费：收费成功', NULL, '1480339305'),
+(53, 7, '2', NULL, '收费员开单收费：添加成功', NULL, '1480339350'),
+(54, 7, '2', NULL, '医生开补交单：添加成功', NULL, '1480339492'),
+(55, 7, '2', NULL, '开单：添加成功', NULL, '1480339936'),
+(56, 7, '2', NULL, '开单：添加成功', NULL, '1480342069'),
+(57, 7, '2', NULL, '收费：收费成功', NULL, '1480342099'),
+(58, 7, '2', NULL, '开单：添加成功', NULL, '1480342280'),
+(59, 7, '2', NULL, '收费：收费成功', NULL, '1480342347'),
+(60, 7, '2', NULL, '医生开补交单：添加成功', NULL, '1480342430'),
+(61, 7, '2', NULL, '医生开退款单：添加成功', NULL, '1480343947'),
+(62, 7, '2', NULL, '收费：收费成功', NULL, '1480345243'),
+(63, 7, '2', NULL, '收费：收费成功', NULL, '1480345266'),
+(64, 7, '2', NULL, '收费：结算成功', NULL, '1480345363'),
+(65, 7, '2', NULL, '收费员开退款收费：添加成功', NULL, '1480345386'),
+(66, 7, '2', NULL, '医生开退款单：添加成功', NULL, '1480345402'),
+(67, 7, '2', NULL, '收费：收费成功', NULL, '1480345407'),
+(68, 7, '2', NULL, '医生开退款单：添加成功', NULL, '1480345452'),
+(69, 7, '2', NULL, '收费：退费成功', NULL, '1480345459'),
+(70, 7, '', NULL, 'admin登录成功', NULL, '1480349783'),
+(71, 7, '6', NULL, '添加预约：添加成功', NULL, '1480349821'),
+(72, 7, '6', NULL, '分配医生：成功', NULL, '1480349868'),
+(73, 7, '6', NULL, '医生接诊：添加成功', NULL, '1480349891'),
+(74, 7, '6', NULL, '开单：添加成功', NULL, '1480349907'),
+(75, 7, '6', NULL, '开单：添加成功', NULL, '1480349929'),
+(76, 7, '', NULL, 'admin登录成功', NULL, '1480510789'),
+(77, 7, '2', NULL, '医生开补交单：添加成功', NULL, '1480511068'),
+(78, 7, '6', NULL, '收费：收费成功', NULL, '1480511639'),
+(79, 7, '6', NULL, '开单：添加成功', NULL, '1480511671'),
+(80, 7, '6', NULL, '收费：收费成功', NULL, '1480511689'),
+(81, 7, '6', NULL, '医生开补交单：添加成功', NULL, '1480512190'),
+(82, 7, '6', NULL, '收费：收费成功', NULL, '1480512204'),
+(83, 7, '', NULL, 'admin登录成功', NULL, '1480601837'),
+(84, 7, '6', NULL, '收费：收费成功', NULL, '1480610687'),
+(85, 7, '', NULL, 'admin登录成功', NULL, '1480688432'),
+(86, 8, '', NULL, 'kongqi登录成功', NULL, '1480689271'),
+(87, 8, '', NULL, '退出成功', NULL, '1480689341'),
+(88, 23, '', NULL, 'jiedai登录成功', NULL, '1480689348'),
+(89, 7, '7', NULL, '添加预约：添加成功', NULL, '1480690033'),
+(90, 7, '8', NULL, '添加预约：添加成功', NULL, '1480690066'),
+(91, 7, '9', NULL, '接诊登记：添加成功', NULL, '1480690131'),
+(92, 23, '10', NULL, '接诊登记：添加成功', NULL, '1480692054'),
+(93, 7, '', NULL, '管理员：OIU添加成功', NULL, '1480696336'),
+(94, 23, '', NULL, '退出成功', NULL, '1480696691'),
+(95, 17, '', NULL, 'bbb登录成功', NULL, '1480696750'),
+(96, 17, '', NULL, '退出成功', NULL, '1480696790'),
+(97, 26, '', NULL, 'sf登录成功', NULL, '1480696795'),
+(98, 26, '6', NULL, '收费员开单收费：添加成功', NULL, '1480698146'),
+(99, 26, '6', NULL, '医生开补交单：添加成功', NULL, '1480698480'),
+(100, 26, '6', NULL, '医生开补交单：添加成功', NULL, '1480698868'),
+(101, 26, '6', NULL, '收费员开退款收费：添加成功', NULL, '1480699125'),
+(102, 26, '6', NULL, '收费员开退款收费：添加成功', NULL, '1480699600'),
+(103, 24, '', NULL, 'doc登录成功', NULL, '1480728711'),
+(104, 7, '8', NULL, '分配医生：成功', NULL, '1480729974'),
+(105, 24, '8', NULL, '医生接诊：添加成功', NULL, '1480730003'),
+(106, 24, '8', NULL, '开单：添加成功', NULL, '1480730418'),
+(107, 7, '', NULL, 'admin登录成功', NULL, '1481116544'),
+(108, 7, '', NULL, '退出成功', NULL, '1481116555'),
+(109, 7, '', NULL, 'admin登录成功', NULL, '1481116567'),
+(110, 7, '11', NULL, '添加咨询：添加成功', NULL, '1481119868'),
+(111, 7, '12', NULL, '添加预约：添加成功', NULL, '1481119939'),
+(112, 7, '12', NULL, '添加预约：更新成功', NULL, '1481119994'),
+(113, 7, '12', NULL, '接诊登记：添加成功', NULL, '1481120078'),
+(114, 7, '13', NULL, '接诊登记：添加成功', NULL, '1481120266'),
+(115, 7, '13', NULL, '添加预约：更新成功', NULL, '1481124023'),
+(116, 7, '12', NULL, '添加预约：更新成功', NULL, '1481124089'),
+(117, 17, '', NULL, 'bbb登录成功', NULL, '1481125055'),
+(118, 17, '13', NULL, '医生接诊：添加成功', NULL, '1481127910'),
+(119, 17, '13', NULL, '开单：添加成功', NULL, '1481128066'),
+(120, 7, '13', NULL, '收费：收费成功', NULL, '1481130501'),
+(121, 7, '', NULL, 'admin登录成功', NULL, '1481205198'),
+(122, 17, '', NULL, 'bbb登录成功', NULL, '1481205286'),
+(123, 17, '10', NULL, '医生接诊：添加成功', NULL, '1481206565'),
+(124, 17, '12', NULL, '医生接诊：添加成功', NULL, '1481206839'),
+(125, 17, '12', NULL, '开单：添加成功', NULL, '1481207751'),
+(126, 7, '12', NULL, '收费：收费成功', NULL, '1481207888'),
+(127, 7, '14', NULL, '接诊登记：添加成功', NULL, '1481208138'),
+(128, 17, '14', NULL, '医生接诊：添加成功', NULL, '1481208153'),
+(129, 17, '10', NULL, '开单：添加成功', NULL, '1481208698'),
+(130, 17, '9', NULL, '医生接诊：添加成功', NULL, '1481208898'),
+(131, 7, '15', NULL, '添加预约：添加成功', NULL, '1481209701'),
+(132, 7, '15', NULL, '分配医生：成功', NULL, '1481209729'),
+(133, 17, '15', NULL, '医生接诊：添加成功', NULL, '1481209749'),
+(134, 7, '9', NULL, '医生开补交单：添加成功', NULL, '1481127643'),
+(135, 7, '9', NULL, '医生开补交单：添加成功', NULL, '1481127914'),
+(136, 7, '9', NULL, '医生开补交单：添加成功', NULL, '1481127931'),
+(137, 7, '15', NULL, '医生开补交单：添加成功', NULL, '1481128019'),
+(138, 7, '9', NULL, '医生开补交单：添加成功', NULL, '1481128029'),
+(139, 7, '14', NULL, '医生开退款单：添加成功', NULL, '1481128109'),
+(140, 7, '16', NULL, '接诊登记：添加成功', NULL, '1481128170'),
+(141, 7, '16', NULL, '医生接诊：添加成功', NULL, '1481128184'),
+(142, 7, '16', NULL, '医生开补交单：添加成功', NULL, '1481128328'),
+(143, 7, '17', NULL, '接诊登记：添加成功', NULL, '1481128360'),
+(144, 7, '17', NULL, '医生接诊：添加成功', NULL, '1481128385'),
+(145, 7, '17', NULL, '收费员开退款收费：添加成功', NULL, '1481128451'),
+(146, 7, '', NULL, 'admin登录成功', NULL, '1481340859'),
+(147, 17, '', NULL, 'bbb登录成功', NULL, '1481341304'),
+(148, 17, '', NULL, '退出成功', NULL, '1481341320'),
+(149, 17, '', NULL, 'bbb登录成功', NULL, '1481341331'),
+(150, 7, '18', NULL, '接诊登记：添加成功', NULL, '1481382169'),
+(151, 7, '18', NULL, '医生接诊：添加成功', NULL, '1481382207'),
+(152, 7, '18', NULL, '医生接诊：更新成功', NULL, '1481382254'),
+(153, 7, '18', NULL, '开单：添加成功', NULL, '1481382408'),
+(154, 7, '19', NULL, '接诊登记：添加成功', NULL, '1481382502'),
+(155, 7, '19', NULL, '医生接诊：添加成功', NULL, '1481382522'),
+(156, 7, '19', NULL, '开单：添加成功', NULL, '1481382590'),
+(157, 7, '19', NULL, '收费：收费成功', NULL, '1481385465'),
+(158, 7, '18', NULL, '收费：收费成功', NULL, '1481385474'),
+(159, 7, '19', NULL, '收费：结算成功', NULL, '1481411738'),
+(160, 7, '16', NULL, '收费：结算成功', NULL, '1481412281'),
+(161, 7, '6', NULL, '收费：结算成功', NULL, '1481412295'),
+(162, 7, '2', NULL, '收费：结算成功', NULL, '1481412377'),
+(163, 7, '1', NULL, '收费：结算成功', NULL, '1481412385'),
+(164, 7, '6', NULL, '收费：结算成功', NULL, '1481412394'),
+(165, 7, '13', NULL, '收费：结算成功', NULL, '1481412398'),
+(166, 7, '12', NULL, '收费：结算成功', NULL, '1481414425'),
+(167, 7, '18', NULL, '收费：结算成功', NULL, '1481414427'),
+(168, 7, '6', NULL, '收费：结算成功', NULL, '1481414430'),
+(169, 7, '6', NULL, '收费：结算成功', NULL, '1481414432'),
+(170, 7, '6', NULL, '收费：结算成功', NULL, '1481414434'),
+(171, 7, '', NULL, 'onname：,,,,,,,,,,,,设置状态成功', NULL, '1481414443'),
+(172, 7, '17', NULL, '收费：结算成功', NULL, '1481415659'),
+(173, 7, '6', NULL, '收费：结算成功', NULL, '1481421927'),
+(174, 7, '6', NULL, '收费：结算成功', NULL, '1481421931'),
+(175, 7, '2', NULL, '收费：结算成功', NULL, '1481422075'),
+(176, 7, '', NULL, 'admin登录成功', NULL, '1481428297'),
+(177, 7, '', NULL, '权限规则：手术管理添加成功', NULL, '1481428702'),
+(178, 7, '', NULL, '权限规则：添加手术管理添加成功', NULL, '1481428719'),
+(179, 7, '', NULL, '权限规则：编辑手术管理添加成功', NULL, '1481428740'),
+(180, 7, '19', NULL, '回访任务：添加成功', NULL, '1481431527'),
+(181, 7, NULL, NULL, '手术管理：手术管理添加失败', NULL, '1481432249'),
+(182, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481432571'),
+(183, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481432908'),
+(184, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481432919'),
+(185, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481433047'),
+(186, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481433107'),
+(187, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481433265'),
+(188, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481433304'),
+(189, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481433322'),
+(190, 7, '19', NULL, '手术管理：手术管理添加失败', NULL, '1481433328'),
+(191, 7, '19', NULL, '医生接诊：手术管理添加失败', NULL, '1481433436'),
+(192, NULL, NULL, '333', NULL, NULL, NULL),
+(193, 7, '6', NULL, '手术管理：手术管理添加成功', NULL, '1481433641'),
+(194, 7, '19', NULL, '手术管理：手术管理添加成功', NULL, '1481433907'),
+(195, 7, '19', NULL, '手术管理：手术管理添加成功', NULL, '1481442618'),
+(196, 7, '18', NULL, '疗程管理：疗程管理添加成功', NULL, '1481442654'),
+(197, 7, '', NULL, '权限规则：只能查看自己的信息添加成功', NULL, '1481443670'),
+(198, 7, '1', NULL, '手术管理：手术管理添加成功', NULL, '1481447523'),
+(199, 7, '', NULL, '权限规则：手术管理删除添加成功', NULL, '1481448962'),
+(200, 7, '15', NULL, '收费：收费成功', NULL, '1481460971'),
+(201, 7, NULL, NULL, '医生接诊：手术管理更新成功', NULL, '1481464918'),
+(202, 7, NULL, NULL, '医生接诊：手术管理更新成功', NULL, '1481465024'),
+(203, 7, NULL, NULL, '医生接诊：手术管理更新成功', NULL, '1481465052'),
+(204, 7, NULL, NULL, '医生接诊：手术管理更新成功', NULL, '1481465138'),
+(205, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481473182'),
+(206, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473292'),
+(207, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473295'),
+(208, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473382'),
+(209, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473387'),
+(210, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473391'),
+(211, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473514'),
+(212, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473526'),
+(213, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473634'),
+(214, 7, '18', NULL, '医生接诊：添加治疗记录失败', NULL, '1481473682'),
+(215, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481473887'),
+(216, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481473905'),
+(217, 7, '19', NULL, '疗程管理：疗程管理添加成功', NULL, '1481473979'),
+(218, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481473989'),
+(219, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474007'),
+(220, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474110'),
+(221, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474123'),
+(222, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474139'),
+(223, 7, '18', NULL, '疗程管理：疗程管理添加成功', NULL, '1481474591'),
+(224, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474692'),
+(225, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474733'),
+(226, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474848'),
+(227, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474851'),
+(228, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481474859'),
+(229, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475108'),
+(230, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475118'),
+(231, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475155'),
+(232, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475251'),
+(233, 7, '18', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475320'),
+(234, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475397'),
+(235, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475401'),
+(236, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475405'),
+(237, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475408'),
+(238, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475410'),
+(239, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475473'),
+(240, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475476'),
+(241, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475478'),
+(242, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475482'),
+(243, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481475484'),
+(244, 7, '', NULL, '医生接诊：删除失败', NULL, '1481476925'),
+(245, 7, '', NULL, '医生接诊：删除失败', NULL, '1481476966'),
+(246, 7, '', NULL, '医生接诊：删除成功', NULL, '1481476979'),
+(247, 7, '', NULL, '医生接诊：删除成功', NULL, '1481477022'),
+(248, 7, '19', NULL, '疗程管理：疗程管理添加成功', NULL, '1481477060'),
+(249, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481477068'),
+(250, 7, '19', NULL, '医生接诊：添加治疗记录成功', NULL, '1481477072'),
+(251, 7, '', NULL, '医生接诊：删除成功', NULL, '1481477092'),
+(252, 7, '19', NULL, '手术管理：手术管理添加成功', NULL, '1481477222'),
+(253, 7, '', NULL, '医生接诊：删除手术成功', NULL, '1481477229'),
+(254, 7, '19', NULL, '疗程管理：疗程管理添加成功', NULL, '1481477285'),
+(255, 7, NULL, NULL, '医生接诊：手术管理更新失败', NULL, '1481477683'),
+(256, 7, NULL, NULL, '医生接诊：手术管理更新失败', NULL, '1481477745'),
+(257, 7, NULL, NULL, '医生接诊：手术管理更新失败', NULL, '1481477767'),
+(258, 7, NULL, NULL, '医生接诊：手术管理更新失败', NULL, '1481477799'),
+(259, 7, '18', NULL, '手术管理：手术管理添加成功', NULL, '1481477869'),
+(260, 7, NULL, NULL, '医生接诊：手术管理更新成功', NULL, '1481477889'),
+(261, 7, NULL, NULL, '医生接诊：手术管理更新成功', NULL, '1481477906'),
+(262, 7, NULL, NULL, '医生接诊：手术管理更新失败', NULL, '1481478035'),
+(263, 7, NULL, NULL, '医生接诊：手术管理更新失败', NULL, '1481478100'),
+(264, 7, NULL, NULL, '医生接诊：手术管理更新失败', NULL, '1481478106'),
+(265, 7, NULL, NULL, '医生接诊：手术管理更新成功', NULL, '1481478363'),
+(266, 7, '12', NULL, '手术管理：手术管理添加成功', NULL, '1481480542'),
+(267, 7, '15', NULL, '手术管理：手术管理添加成功', NULL, '1481480801');
 
 -- --------------------------------------------------------
 
@@ -1819,7 +2143,9 @@ INSERT INTO `tp_price` (`id`, `fid`, `price_code`, `base_code`, `is_update`, `uu
 (28, 90, 3017, 17, 1, '1ff69610fcd9a0f3476cffa735a0f95a', 0, '1478456535', 1, 'uuic', 12, NULL, '4454', '元', 'ERE', NULL, NULL, NULL, 7),
 (29, 89, 2018, 18, 1, '71d533a570c7b6c12b6ea90a3f01eb1a', 0, '1478456535', 1, '额fgg外仍然', 18, NULL, '押头韵', '元', 'D', NULL, NULL, NULL, 7),
 (32, 88, 1019, 19, 0, 'fe95383df5d523763876987323eef9bf', 0, '1479385926', 1, '44', 0, NULL, '55', '6', '5', NULL, NULL, NULL, NULL),
-(33, 88, 1020, 20, 1, '312494cd72cd3e0c040dcd980e94eba7', 0, '1479385942', 1, '444', 0, NULL, '5', '6', '77', NULL, NULL, NULL, NULL);
+(33, 88, 1020, 20, 1, '312494cd72cd3e0c040dcd980e94eba7', 0, '1479385942', 1, '444', 0, NULL, '5', '6', '77', NULL, NULL, NULL, NULL),
+(34, 88, 100021, 21, 0, '078dc0c655dcbefb5163974c7ea21dfa', 0, '1480250617', 1, 'eee333', 0, NULL, 'eee', 'ww', 'eee', NULL, NULL, NULL, NULL),
+(35, 90, 300022, 22, 0, '4e2e4f101bab292bb5d4dd515679f9f9', 0, '1480250628', 1, 'eeeeeeee', 0, NULL, 'eee', 'eee', 'eee', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1842,6 +2168,69 @@ CREATE TABLE `tp_ren_wu` (
   `status` tinyint(1) DEFAULT '0',
   `admin_id` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `tp_ren_wu`
+--
+
+INSERT INTO `tp_ren_wu` (`id`, `uuid`, `sort`, `user_id`, `name`, `type_text`, `type_id`, `handle_id`, `ctime`, `rtime`, `hftime`, `status`, `admin_id`) VALUES
+(1, '9919a9a59e961f11dc87929ac51c03e1', NULL, 19, 'tyty', NULL, NULL, NULL, '1481431527', '', NULL, 0, '7');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `tp_shousu_log`
+--
+
+CREATE TABLE `tp_shousu_log` (
+  `id` bigint(20) NOT NULL,
+  `uuid` varchar(120) DEFAULT NULL,
+  `shous_id` varchar(120) DEFAULT NULL,
+  `user_id` varchar(120) DEFAULT NULL,
+  `kd_id` varchar(120) DEFAULT NULL,
+  `ctime` varchar(120) DEFAULT NULL,
+  `admin_id` varchar(120) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `shouys_id` varchar(120) DEFAULT NULL,
+  `mark` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `tp_shou_su`
+--
+
+CREATE TABLE `tp_shou_su` (
+  `id` bigint(20) NOT NULL,
+  `user_id` varchar(120) DEFAULT NULL,
+  `yy_id` varchar(120) DEFAULT NULL,
+  `kd_id` varchar(120) DEFAULT NULL,
+  `shous_type` varchar(120) DEFAULT NULL,
+  `shouys_id` varchar(120) DEFAULT NULL,
+  `shous_ytime` varchar(120) DEFAULT NULL,
+  `limit_time` varchar(120) DEFAULT NULL,
+  `shous_oktime` varchar(120) DEFAULT NULL,
+  `shous_etime` varchar(120) DEFAULT NULL,
+  `shous_status` tinyint(4) DEFAULT NULL,
+  `shous_times` varchar(120) DEFAULT NULL,
+  `shous_hastimes` varchar(120) DEFAULT NULL,
+  `name` varchar(600) DEFAULT NULL,
+  `mark` text,
+  `admin_id` varchar(120) DEFAULT NULL,
+  `ctime` varchar(120) DEFAULT NULL,
+  `uuid` varchar(120) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 转存表中的数据 `tp_shou_su`
+--
+
+INSERT INTO `tp_shou_su` (`id`, `user_id`, `yy_id`, `kd_id`, `shous_type`, `shouys_id`, `shous_ytime`, `limit_time`, `shous_oktime`, `shous_etime`, `shous_status`, `shous_times`, `shous_hastimes`, `name`, `mark`, `admin_id`, `ctime`, `uuid`) VALUES
+(10, '19', '16', '51', 'lc', '23', NULL, '1481731200', NULL, '1481478363', 5, '5', '5', '瓜子脸', NULL, '7', '1481477285', 'f87d1cbb36fcd9cffd4bcd36054299c8'),
+(11, '18', '15', '50', 'ss', '24', '1481731200', NULL, '1481477886', NULL, 1, NULL, NULL, '瓜子脸', '', '7', '1481477869', 'ed88d173692f2a05442940fa3610aedc'),
+(12, '12', '9', '39', 'ss', '24', '1481562000', NULL, NULL, NULL, 0, NULL, NULL, '瓜子脸', NULL, '7', '1481480542', 'c8e4cdf8d3f7d4abb1fdb0d74dd87de4'),
+(13, '15', '12', '45', 'ss', '24', '1482253200', NULL, NULL, NULL, 0, NULL, NULL, '无', NULL, '7', '1481480801', '09367d602a99e2fc00926669b614b277');
 
 -- --------------------------------------------------------
 
@@ -1997,17 +2386,25 @@ CREATE TABLE `tp_user` (
 --
 
 INSERT INTO `tp_user` (`id`, `uuid`, `admin_id`, `ctime`, `sort`, `name`, `true_name`, `ytimes`, `nickname`, `email`, `sex`, `age`, `is_jiehun`, `birthday`, `zhiye`, `xueli`, `tel2`, `sfcard`, `othetel`, `tel`, `phone`, `qq`, `weixin`, `address`, `checked`, `pwd`, `uniqueid`, `type`, `openid`, `token`, `picurl`, `level`, `level_card`, `facebook`, `phone_bank`, `bingshi`, `intro_name`, `zalo`, `hf_total`, `rw_total`, `jz_total`, `kd_total`, `yy_total`, `zx_total`) VALUES
-(1, '7472341b975de2e46232ae195da813d9', 7, '1479912292', 0, '5656', NULL, '1', NULL, NULL, '男', '17', NULL, '1999-11-05', NULL, NULL, NULL, NULL, NULL, '546546', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '938daa69b8c87e6a20080de7d4ef8db9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 4, 1, NULL),
-(2, '7d9b7a3897c04cc24c036c865d7ead0e', 7, '1479983479', 0, '李四', NULL, '1', NULL, NULL, '女', '21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '89498498', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 2, 0, NULL),
-(3, '09b2ebee06f61e901d43e54061c4d048', 7, '1479999345', 0, 'ee', NULL, '1', NULL, NULL, '女', '10', '112', '2006-11-14', '96', '104', NULL, NULL, NULL, '4543535', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'd298dc33d38fa7b1ca7d3ab39a345b03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 4, 1, NULL),
-(4, '032655007415fb202220c8dff7f6d2e1', 7, '1480008164', 0, '666', NULL, '1', NULL, NULL, '女', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '66', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'a1919a583c1acbdf9fa66e8f1dd28afb', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL),
-(5, 'f134d7924dcc1dc6308b2516c4f07678', 7, '1480009118', 0, '777777', NULL, '1', NULL, NULL, '男', '18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '777', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'd63a0d6dff567a8e5670c91d97a2c407', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, 5),
-(6, '8edcce702c69eaa44899f8cb9e3b6adb', 7, '1480008465', 0, '666', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '666', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '02cf3f97bd09c58136c5b345573512c8', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL),
-(7, '95fb3e6b2de416136ab7691f558e2104', 7, '1480008602', 0, '555', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '555', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '47dfbc9199d37771092f4bc86a6539af', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL),
-(8, '5d98e31b55b8d579b7db9c7d92be17ae', 7, '1480009096', 0, '55', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '76', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '5bf0f4b2db30ea49d67815464b13f1ff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1),
-(9, 'e55213449ee080646060621b76e0e710', 7, '1480009153', 0, '888', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0009', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '03c9a8dff558313dd913363ba7623c9f', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL),
-(10, '17da4957873d0d44be9a1739558e8ae2', 7, '1480009282', 0, '55', NULL, '1', NULL, NULL, '女', '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '55', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, 0, NULL),
-(11, 'd5d8679e6770736ed89f2408dee66a2d', 7, '1480009534', 0, '5656546', NULL, '1', NULL, NULL, '女', '10', NULL, '2006-11-28', NULL, NULL, NULL, NULL, NULL, '7878', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 1, 1, 0, NULL);
+(1, '1c3be7c9be402e5364b2a7c4148aadfa', 7, '1480241802', 0, '空气', NULL, '1', NULL, NULL, '男', '23', '112', '1993-11-10', '97', '104', NULL, NULL, NULL, '13420454614', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'b9da25b0f529b3257544ab85b0e1f9b9', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 14, 1, NULL),
+(2, 'ea7b82ab0dde977a585aff7169f452bd', 7, '1480249406', 0, '555', NULL, '1', NULL, NULL, '女', '', NULL, '', NULL, NULL, NULL, NULL, NULL, '5444', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'c9c60226474505793f95ce2977d688b8', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 13, 1, NULL),
+(3, 'a89a52843c52cc7787da853f8804ede9', 7, '1480250492', 0, 'rrrre', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fff', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'e5434647793977d473c882795884bccc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1),
+(4, '3b21cc2d25cd3e7106ae0156880a0ee0', 7, '1480250499', 0, 'ppp', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, ']]]]', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '11010b256174e226a991aaf826e1252f', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1),
+(5, '87882e53293ec0b5e06285e9920b8c57', 7, '1480250508', 0, '000', NULL, '1', NULL, NULL, '女', NULL, NULL, '00', NULL, NULL, NULL, NULL, NULL, '000', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'a24b70299c4b83099beb14df4ac11f38', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1),
+(6, '3f746c53c7c96f405476e79bdadbde99', 7, '1480349821', 0, '987654', NULL, '1', NULL, NULL, '女', '21', NULL, '', NULL, NULL, NULL, NULL, NULL, '987654321', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '0c7dc624e5863a6be7d185f676f0af74', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 9, 1, NULL),
+(7, '12775bd5bd53925140137cee1e91a0aa', 7, '1480690033', 0, '5463455', NULL, '1', NULL, NULL, '男', '10', NULL, '2006-11-29', NULL, NULL, NULL, NULL, NULL, '54654654', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'bf6be62068d64693c0b4b26e026ec6b5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL),
+(8, '27f15e95b97d3193b2460a2cfac1b7c9', 7, '1480690066', 0, '44423', NULL, '1', NULL, NULL, '女', '10', NULL, '', NULL, NULL, NULL, NULL, NULL, '111', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '7d52466270d86c25dc14bab4576a9512', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL),
+(9, '8aeb38f0b72f55d795d92aa4ce0ef4ed', 7, '1480690131', 0, '66', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '66', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'b65d9a73c4e77dce077767abfabb8e11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 4, 0, NULL),
+(10, '2499544bf8ee7bd030f99589de4e37cf', 23, '1480692054', 0, '11', NULL, '1', NULL, NULL, '女', '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '7a47ec6eaf823ece1dbc1757653c1689', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, NULL),
+(11, 'a079c219e3c2147427434204cb6c7501', 7, '1481119868', 0, '999', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '998', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'cae5619c25b3621cdaaebbd984a30931', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1),
+(12, '73b3c28b7cfeeea9b7580ec872b81275', 16, '1481120078', 0, '78787787', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7878', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'a66d0e62a803ce7dda192a27683f132e', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL),
+(13, '0de6678b50cb0ff509723388482dccde', 8, '1481120266', 0, '787878', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '87787', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'a80acf1420537a00cfcedb9daf3919ad', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, NULL),
+(14, 'dc9539d3623bc3176cea409c8e088d74', 7, '1481208138', 0, '454545', NULL, '1', NULL, NULL, '女', '10', NULL, '2006-12-01', NULL, NULL, NULL, NULL, NULL, '456', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'd206586a53ddf934c69775ad435f9512', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, NULL),
+(15, '3d91844ffbe96b7256cf271bab532335', 7, '1481209701', 0, '4545', NULL, '1', NULL, NULL, '女', '14', NULL, '', NULL, NULL, NULL, NULL, NULL, '65654654', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '53124ace38ede0af9c739e3a4ba50926', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL),
+(16, '1bf8a9344bce850c2fb2bca4a0ae5019', 7, '1481128170', 0, 'fdgf', NULL, '1', NULL, NULL, '女', '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3132112323', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '4a1a78ba6568cdc16f8cc6945d813ac3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, NULL),
+(17, 'be4de92141f0350c21b654543db0f1c0', 7, '1481128360', 0, '113321', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5865656', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'ec3cb21d412b60c6c2987090f2ba1d54', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, NULL),
+(18, '1d05347c539616fa05717631550544f8', 7, '1481382169', 0, '0909', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '90909', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '1e132e8ddb50d3e204187e148a8933fa', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 0, NULL),
+(19, '30478b1480358fbe5f3e37c7f48a0a82', 7, '1481382502', 0, '90909', NULL, '1', NULL, NULL, '女', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '987897789', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 'e4154e6e7338fcee1476b259c276acfc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -2107,15 +2504,22 @@ CREATE TABLE `tp_yu_yue` (
 --
 
 INSERT INTO `tp_yu_yue` (`id`, `uuid`, `sort`, `ctime`, `admin_id`, `user_id`, `name`, `ks_id`, `kst_id`, `kstt_id`, `ksall_id`, `zx_id`, `ly_id`, `lyt_id`, `lyall_id`, `lytt_id`, `is_fz`, `zx_mark`, `fz_mark`, `fz_id`, `zx_content`, `jz_content`, `area_id`, `areaall_id`, `areat_id`, `mark`, `ytime`, `ydate`, `ycode_qz`, `ydatetime`, `ynumber`, `web_id`, `web_url`, `web_key`, `web_name`, `web_onname`, `ys_id`, `ysz_id`, `jzks_id`, `yx_id`, `dz_id`, `status`, `gqctime`, `jztime`, `dztime`, `kdtime`, `is_kd`, `qz_id`, `kd_id`, `sf_status`, `leibie`, `is_qtadd`) VALUES
-(1, '2a51cb97ab25b201957097ffd4c1e2b4', NULL, '1479912292', '16', '1', '5656', '1', '4', '12', NULL, '11', '69', '75', '75', '', NULL, NULL, NULL, '7', NULL, NULL, '3', '105', '105', '', '09:00:00', '2016-11-24', NULL, '1479952800', 'WL120000', NULL, NULL, NULL, NULL, NULL, '24', '22', NULL, '65', '15', '4', NULL, '1479912500', '1479912405', '1479912505', NULL, '2', NULL, NULL, '1', 0),
-(2, '35af8735b8eb7beac89fbb4d91b643b6', NULL, '1479983479', '16', '2', '李四', '1', '4', '12', '12', '13', '69', '74', '74', NULL, NULL, NULL, NULL, '7', NULL, NULL, '3', '106', '106', NULL, '17:29:54', '2016-11-24', NULL, '1479983394', 'WL120001', NULL, NULL, NULL, NULL, NULL, '17', '21', NULL, '65', '15', '4', NULL, '1479983676', '1479983394', '1479983687', NULL, '4', NULL, NULL, '1', 1),
-(3, 'c24a6df6bef9a68c3e552d5e481a60ee', NULL, '1479999345', '16', '3', 'ee', '1', '4', '12', '12', '13', '70', NULL, '', '', NULL, NULL, NULL, '7', NULL, NULL, '7', '142', '142', '', '00:00:00', '2016-11-25', NULL, '1480006800', '120002', NULL, NULL, NULL, NULL, NULL, '17', '23', NULL, '65', '15', '4', NULL, '1479999390', '1479999361', '1479999473', NULL, '5', NULL, NULL, '1', 0),
-(4, '91a4739c45162ebe81142456dba06eef', NULL, '1480008164', '16', '4', '666', NULL, NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '00:00:00', '2016-11-25', NULL, '1480006800', '120003', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '65', NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', 0),
-(5, '755144b08c00467f80d758a9e4950786', NULL, '1480008205', '8', '5', '777', NULL, NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '00:00:00', '2016-11-25', NULL, '1480006800', '120004', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '66', NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 0),
-(6, 'ac8a54fcb6bae2bf913bfa14c32c5ca8', NULL, '1480008503', '16', '5', '777777', '1', '4', '12', '12', '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09:00:00', '2016-11-26', NULL, '1480125600', '120005', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '66', NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', 0),
-(7, 'd3df4520400b481e4aa112c4a987eae7', NULL, '1480009118', '20', '5', '777777', NULL, NULL, NULL, NULL, '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '00:00:00', '2016-11-26', NULL, '1480093200', '120006', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '66', NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', 0),
-(9, 'e4ea225c0ae68e072051dad33aa0ee13', NULL, '1480009282', '8', '10', '55', '1', '4', '12', '4', '11', '68', NULL, '68', NULL, NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, NULL, '00:39:33', '2016-11-25', NULL, '1480009173', '120008', NULL, NULL, NULL, NULL, NULL, '17', '24', NULL, '65', '15', '2', NULL, '1480010152', '1480009173', NULL, NULL, '', NULL, NULL, '1', 1),
-(10, 'd25d3b713512d53cf7b9e0dcb7cf719a', NULL, '1480009534', '16', '11', '5656546', '1', '5', '14', '14', '12', '68', '72', '86', '86', NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, '', '00:42:10', '2016-11-25', NULL, '1480009330', '120009', NULL, NULL, NULL, NULL, NULL, '17', '21', NULL, '65', '16', '4', NULL, '1480009775', '1480009330', '1480010456', NULL, '6', NULL, NULL, '1', 1);
+(1, '2da5ba27f9bc4701e10260f31160469c', NULL, '1480241802', '16', '1', '空气', '2', '7', '', '', '14', '69', '75', '75', '', NULL, '苏打粉', NULL, '7', '&lt;p&gt;大法萨芬大撒旦撒&lt;/p&gt;', NULL, '4', '119', '119', '&lt;p&gt;33333&lt;/p&gt;', '10:00:00', '2016-11-27', NULL, '1480215600', 'WL120000', '27', NULL, NULL, NULL, NULL, '17', '21', NULL, '66', '15', '4', NULL, '1480241847', '1480241817', '1480241861', NULL, '1', NULL, NULL, '1', 0),
+(2, '79116c010fe5a3a9ec41918e245f580d', NULL, '1480249406', '8', '2', '555', '1', '5', '14', NULL, '12', '68', '72', '72', '', NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, '', '09:00:00', '2016-11-28', NULL, '1480298400', '120001', NULL, NULL, NULL, NULL, NULL, '21', '21', NULL, NULL, '15', '4', NULL, '1480249433', '1480249417', '1480249434', NULL, '2', NULL, NULL, '1', 0),
+(3, '522c0a3647c428ba87f367315e387aff', NULL, '1480349821', '16', '6', '987654', '1', '4', '12', '12', '11', '69', '75', '75', '', NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, '', '09:00:00', '2016-11-29', NULL, '1480384800', '120002', NULL, NULL, NULL, NULL, NULL, '17', '22', NULL, NULL, '17', '4', NULL, '1480349891', '1480349851', '1480349892', NULL, '3', NULL, NULL, '1', 0),
+(4, 'f660f2c297ae13ad606b312f3d35cc12', NULL, '1480690033', '8', '7', '5463455', NULL, NULL, NULL, NULL, '12', '68', '73', '73', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', '104', '104', NULL, '09:00:00', '2016-12-03', NULL, '1480730400', '120003', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '65', NULL, '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', 0),
+(5, '1b98e48466354baa61f7f74fcfb42f2e', NULL, '1480690066', '8', '8', '44423', '1', '4', '', NULL, '12', '68', '72', '86', '86', NULL, NULL, NULL, '7', NULL, NULL, '3', '104', '104', '', '09:00:00', '2016-12-02', NULL, '1480644000', '120004', NULL, NULL, NULL, NULL, NULL, '24', '21', NULL, '65', '15', '4', NULL, '1480730003', '1480729965', '1480730404', NULL, '4', NULL, NULL, '1', 0),
+(6, '756e7525801a2d2d32d487bb11c23a30', NULL, '1480690131', '8', '9', '66', '1', '5', '', '13', '11', '68', '72', '86', NULL, NULL, NULL, '&lt;p&gt;444&lt;/p&gt;', '7', NULL, NULL, '2', '94', '94', NULL, '21:48:30', '2016-12-02', NULL, '1480690110', '120005', NULL, NULL, NULL, NULL, NULL, '17', '21', NULL, '65', '16', '4', NULL, '1481208898', '1480690110', '1481128023', NULL, '9', NULL, NULL, '2', 1),
+(7, '5a2d1f33009aff02a84812a45c0de284', NULL, '1480692054', '23', '10', '11', '1', '4', '12', '28', '11', '68', '72', '86', NULL, NULL, NULL, '&lt;p&gt;大幅反弹幅度&lt;/p&gt;', '23', NULL, NULL, '3', '105', '105', NULL, '22:20:29', '2016-12-02', NULL, '1480692029', '120006', NULL, NULL, NULL, NULL, NULL, '17', '21', NULL, '65', '16', '4', NULL, '1481206565', '1480692029', '1481208682', NULL, '6', NULL, NULL, '3', 1),
+(8, 'a218d1f7b728a5f3884e064b3ce1578b', NULL, '1481119939', '8', '12', '78787', '1', '4', '12', '12', '13', '68', '72', '129', '129', NULL, NULL, NULL, NULL, NULL, NULL, '2', '95', '95', NULL, '10:00:00', '2016-12-07', NULL, '1481079600', '120007', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
+(9, '2959be6f540402de82737b169e2ea43f', NULL, '1481120078', '16', '12', '78787787', '1', '4', '12', '12', '14', '69', '75', '75', NULL, NULL, NULL, NULL, '7', NULL, NULL, '3', '105', '105', NULL, '21:14:14', '2016-12-07', NULL, '1481120054', 'WL120008', NULL, NULL, NULL, NULL, NULL, '17', '22', NULL, '65', '16', '4', NULL, '1481206839', '1481120054', '1481207744', NULL, '7', NULL, NULL, '1', 1),
+(10, 'c513a59800cc75e106c0a59acc1f4cd8', NULL, '1481120266', '8', '13', '787878', '2', '28', '', '28', '12', '69', '75', '75', NULL, NULL, NULL, NULL, '7', NULL, NULL, '2', '95', '95', NULL, '21:17:25', '2016-12-07', NULL, '1481120245', 'WL120009', NULL, NULL, NULL, NULL, NULL, '17', '21', NULL, '66', '15', '4', NULL, '1481127910', '1481120245', '1481128056', NULL, '5', NULL, NULL, '2', 1),
+(11, 'c763ff2d4934fa805dc63b1e88182790', NULL, '1481208138', '8', '14', '454545', '1', '4', '12', '12', '11', '69', '76', '76', NULL, NULL, NULL, '&lt;p&gt;455&lt;/p&gt;', '7', NULL, NULL, '2', '95', '95', NULL, '22:41:56', '2016-12-08', NULL, '1481208116', 'WL120010', NULL, NULL, NULL, NULL, NULL, '17', '22', NULL, '65', '17', '4', NULL, '1481208153', '1481208116', '1481128102', NULL, '8', NULL, NULL, '1', 1),
+(12, '32020d47838ce4f8598759a51b61fcf4', NULL, '1481209701', '16', '15', '4545', '2', '7', '', '7', '12', '69', '74', '74', '', NULL, NULL, NULL, '7', NULL, NULL, '2', '94', '94', '', '10:00:00', '2016-12-10', NULL, '1481335200', 'WL120011', NULL, NULL, NULL, NULL, NULL, '17', '25', NULL, '65', '15', '4', NULL, '1481209749', '1481209723', '1481128012', NULL, '10', NULL, NULL, '4', 0),
+(13, '69acbe108b0bbf89ed2f453fbce750dd', NULL, '1481128170', '16', '16', 'fdgf', '1', '5', '14', '14', '11', '68', '72', '131', NULL, NULL, NULL, NULL, '7', NULL, NULL, '3', '110', '110', NULL, '00:29:03', '2016-12-08', NULL, '1481128143', '120012', NULL, NULL, NULL, NULL, NULL, '17', '23', NULL, '65', '16', '4', NULL, '1481128184', '1481128143', '1481128318', NULL, '11', NULL, NULL, '1', 1),
+(14, '229f75dcae53f54477eecaa7bc603464', NULL, '1481128360', '8', '17', '113321', '1', '5', '14', '14', '11', '70', NULL, '70', NULL, NULL, NULL, NULL, '7', NULL, NULL, '3', '106', '106', NULL, '00:32:21', '2016-12-08', NULL, '1481128341', '120013', NULL, NULL, NULL, NULL, NULL, '21', '22', NULL, '65', '16', '4', NULL, '1481128385', '1481128341', '1481128430', NULL, '12', NULL, NULL, '4', 1),
+(15, '1b3744a4a8139ee3917b9bb558d60860', NULL, '1481382169', '20', '18', '0909', '1', '4', '12', '12', '12', '70', NULL, '70', NULL, NULL, NULL, '&lt;p&gt;KJ&lt;/p&gt;', '7', NULL, NULL, '3', '105', '105', NULL, '22:02:17', '2016-12-10', NULL, '1481382137', '120014', NULL, NULL, NULL, NULL, NULL, '17', '23', NULL, '65', '16', '4', NULL, '1481382207', '1481382137', '1481382345', NULL, '13', NULL, NULL, '2', 1),
+(16, 'ddbd2e4b3d56e3c0571348d0c19d63ce', NULL, '1481382502', '16', '19', '90909', '1', '4', '12', '12', '11', '68', '73', '73', NULL, NULL, NULL, NULL, '7', NULL, NULL, '2', '93', '93', NULL, '22:07:51', '2016-12-10', NULL, '1481382471', '120015', NULL, NULL, NULL, NULL, NULL, '17', '23', NULL, '65', '16', '4', NULL, '1481382522', '1481382471', '1481382581', NULL, '14', NULL, NULL, '1', 1);
 
 -- --------------------------------------------------------
 
@@ -2134,16 +2538,22 @@ CREATE TABLE `tp_yu_yue_number` (
 --
 
 INSERT INTO `tp_yu_yue_number` (`id`, `ctime`, `admin_id`) VALUES
-(120000, '1479912292', '7'),
-(120001, '1479983479', '7'),
-(120002, '1479999345', '7'),
-(120003, '1480008165', '7'),
-(120004, '1480008205', '7'),
-(120005, '1480008503', '7'),
-(120006, '1480009118', '7'),
-(120007, '1480009153', '7'),
-(120008, '1480009282', '7'),
-(120009, '1480009535', '7');
+(120000, '1480241802', '7'),
+(120001, '1480249406', '7'),
+(120002, '1480349821', '7'),
+(120003, '1480690033', '7'),
+(120004, '1480690066', '7'),
+(120005, '1480690131', '7'),
+(120006, '1480692054', '23'),
+(120007, '1481119939', '7'),
+(120008, '1481120078', '7'),
+(120009, '1481120266', '7'),
+(120010, '1481208138', '7'),
+(120011, '1481209701', '7'),
+(120012, '1481128170', '7'),
+(120013, '1481128360', '7'),
+(120014, '1481382169', '7'),
+(120015, '1481382502', '7');
 
 -- --------------------------------------------------------
 
@@ -2189,14 +2599,10 @@ CREATE TABLE `tp_zi_xun` (
 --
 
 INSERT INTO `tp_zi_xun` (`id`, `uuid`, `ctime`, `admin_id`, `name`, `user_id`, `ks_id`, `kst_id`, `kstt_id`, `zx_id`, `ly_id`, `lyt_id`, `lyall_id`, `lytt_id`, `is_fz`, `zx_mark`, `zx_content`, `jz_content`, `area_id`, `areaall_id`, `areat_id`, `mark`, `web_id`, `web_url`, `web_key`, `web_name`, `web_onname`, `status`, `leibie`, `yx_id`) VALUES
-(1, '38a81e46d2ce6d16a7f70d5ea3cde5e5', '1480008465', '16', '666', '6', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, '6bbee0b139e194ce900fe3a8a31d9bd0', '1480008602', '8', '555', '7', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'ee1fceed57160e6042ed0e195d2bdf4d', '1480008622', '20', '777777', '5', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(4, '27938247896d30f489fa3040c2d90a0f', '1480008693', '8', '777777', '5', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(5, 'f9abba0550b347375796f69cec39e546', '1480008740', '16', '777777', '5', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(6, 'df727b69d1939d5bee45d284e322a905', '1480008766', '16', '777777', '5', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(7, '14e142218de8cbe2bbd4d10399b9e5fb', '1480008896', '8', '777777', '5', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, 'd47814119d035edf637ff86cce849b97', '1480009096', '8', '55', '8', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 'b9522fdffa2d8815da6891f9eafca79f', '1480250492', '8', 'rrrre', '3', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'c6d96b1df03aa821abe5d0b0ad5c48f4', '1480250499', '8', 'ppp', '4', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, '541b80c987eb53306f594e2cea7599bd', '1480250508', '16', '000', '5', NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, '45d0311d87b578ffd93fd073d717c6a1', '1481119868', '20', '999', '11', '2', '29', NULL, '13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2356,6 +2762,18 @@ ALTER TABLE `tp_ren_wu`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `tp_shousu_log`
+--
+ALTER TABLE `tp_shousu_log`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tp_shou_su`
+--
+ALTER TABLE `tp_shou_su`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tp_show_price`
 --
 ALTER TABLE `tp_show_price`
@@ -2422,7 +2840,7 @@ ALTER TABLE `tp_zxfs`
 -- 使用表AUTO_INCREMENT `tp_admin`
 --
 ALTER TABLE `tp_admin`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- 使用表AUTO_INCREMENT `tp_admin_group`
 --
@@ -2432,7 +2850,7 @@ ALTER TABLE `tp_admin_group`
 -- 使用表AUTO_INCREMENT `tp_admin_rule`
 --
 ALTER TABLE `tp_admin_rule`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 --
 -- 使用表AUTO_INCREMENT `tp_area`
 --
@@ -2462,12 +2880,12 @@ ALTER TABLE `tp_gzl`
 -- 使用表AUTO_INCREMENT `tp_hui_fang`
 --
 ALTER TABLE `tp_hui_fang`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- 使用表AUTO_INCREMENT `tp_jie_zhen`
 --
 ALTER TABLE `tp_jie_zhen`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- 使用表AUTO_INCREMENT `tp_ji_gou`
 --
@@ -2477,7 +2895,7 @@ ALTER TABLE `tp_ji_gou`
 -- 使用表AUTO_INCREMENT `tp_kai_dan`
 --
 ALTER TABLE `tp_kai_dan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 --
 -- 使用表AUTO_INCREMENT `tp_ke_shi`
 --
@@ -2502,7 +2920,7 @@ ALTER TABLE `tp_lan_mu_extends`
 -- 使用表AUTO_INCREMENT `tp_log`
 --
 ALTER TABLE `tp_log`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
 --
 -- 使用表AUTO_INCREMENT `tp_man_ban`
 --
@@ -2517,12 +2935,22 @@ ALTER TABLE `tp_nav`
 -- 使用表AUTO_INCREMENT `tp_price`
 --
 ALTER TABLE `tp_price`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 --
 -- 使用表AUTO_INCREMENT `tp_ren_wu`
 --
 ALTER TABLE `tp_ren_wu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- 使用表AUTO_INCREMENT `tp_shousu_log`
+--
+ALTER TABLE `tp_shousu_log`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+--
+-- 使用表AUTO_INCREMENT `tp_shou_su`
+--
+ALTER TABLE `tp_shou_su`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- 使用表AUTO_INCREMENT `tp_show_price`
 --
@@ -2542,7 +2970,7 @@ ALTER TABLE `tp_sms_log`
 -- 使用表AUTO_INCREMENT `tp_user`
 --
 ALTER TABLE `tp_user`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- 使用表AUTO_INCREMENT `tp_xiao_fei`
 --
@@ -2552,17 +2980,17 @@ ALTER TABLE `tp_xiao_fei`
 -- 使用表AUTO_INCREMENT `tp_yu_yue`
 --
 ALTER TABLE `tp_yu_yue`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- 使用表AUTO_INCREMENT `tp_yu_yue_number`
 --
 ALTER TABLE `tp_yu_yue_number`
-  MODIFY `id` bigint(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120010;
+  MODIFY `id` bigint(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120016;
 --
 -- 使用表AUTO_INCREMENT `tp_zi_xun`
 --
 ALTER TABLE `tp_zi_xun`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- 使用表AUTO_INCREMENT `tp_zxfs`
 --
