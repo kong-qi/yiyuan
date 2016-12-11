@@ -389,8 +389,8 @@ class YuShenController extends AuthController {
         $join[] = 'LEFT JOIN __AREA__ ae2 ON y1.areat_id = ae2.id';
         //接诊
         $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON y1.id = jz.yy_id';
-        //手术医生
-        $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = y1.ysz_id';
+        //接诊医生
+        $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = y1.ysz_id';
 
         //关联学历
         $join[] = 'LEFT JOIN __LAN_MU__ xueli ON u1.xueli = xueli.id';
@@ -500,6 +500,24 @@ class YuShenController extends AuthController {
                         
                      );
                 break;
+            case "has_price":
+                //收费单号，姓名，收费时间，已收金额，收费状态，付费类型，收费项目，合计总价。
+                $menu_list = array(
+                     'td-1' => array('name' => lang('收费号'), 'filed'=>'kd_number','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                    
+                     'td-2' => array('name' => lang('姓名'), 'filed'=>'user_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                     'td-3' => array('name' => lang('收费时间'), 'filed'=>'sf_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                     
+                     'td-4' => array('name' => lang('已收金额'), 'filed'=>'true_price','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                     'td-5' => array('name' => lang('收费状态'), 'filed'=>'sf_status','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                     'td-6' => array('name' => lang('付费类型'), 'filed'=>'pay_ways','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+
+                      'td-7' => array('name' => lang('消费项目'), 'filed'=>'price_show','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                      'td-8' => array('name' => lang('合计总价'), 'filed'=>'price_total','diy'=>'', 'is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                     
+                      
+                 );
+            break;
             
             default:
                 $menu_list = array(
@@ -590,7 +608,7 @@ class YuShenController extends AuthController {
                 }
             }else
             {
-                $this->error($model->getError());
+                $this->error($model->getError(),$backurl);
             }
         }else
         {
@@ -792,12 +810,12 @@ class YuShenController extends AuthController {
                 $data['kd_number']=$post['ynumber']."-".get_kaidan_number_sort($post['qz_id']);
                 $data['kd_id_sort']=get_kaidan_number_sort($post['qz_id']);
                 //echo get_kaidan_number_sort($post['qz_id']);
-                //更新预约表
+               /* //更新预约表
                 $ydata['status']=4;//状态
                 $ydata['kdtime']=$post['ykd_time'];
                 //$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yy_id'];
-                $yresult=M('YuYue')->data($ydata)->save();
+                $yresult=M('YuYue')->data($ydata)->save();*/
                
 
                 $result =    $model->add($data);
@@ -973,7 +991,7 @@ class YuShenController extends AuthController {
         //最终兵种
         $join[] = 'LEFT JOIN __KE_SHI__ k4 ON yy.ksall_id = k4.id';
         //手术医生
-        $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = yy.ysz_id';
+        $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = yy.ysz_id';
         //咨询人员
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON yy.admin_id = a1.id';
         //前台
@@ -1377,5 +1395,306 @@ class YuShenController extends AuthController {
          M()->rollback();
         add_log($this->onname.'：删除失败',$data['user_id']);
         return $this->error(lang('删除失败','handle'));;
+    }
+    public function waitPriceList(){
+
+            $type_arr='has_price';
+            $handle_tpl='yishen_has';
+            $this->onname="已收费列表";
+            $this->check_group('yishenjz');
+            $map=array();
+            $model=M('KaiDan');
+            $join[] = 'LEFT JOIN __USER__ u1 ON kd.user_id = u1.id';
+            $join[] = 'LEFT JOIN __ADMIN__ ys ON kd.kdys_id = ys.id';
+            
+            $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON kd.jz_id = jz.id';
+            $join[] = 'LEFT JOIN __KE_SHI__ jzys ON jz.ysz_id = jzys.id';
+            $join[] = 'LEFT JOIN __YU_YUE__ yy ON kd.yy_id= yy.id';
+            //最终兵种
+            $join[] = 'LEFT JOIN __KE_SHI__ k4 ON yy.ksall_id = k4.id';
+            //手术医生
+            $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = yy.ysz_id';
+            //咨询人员
+            $join[] = 'LEFT JOIN __ADMIN__ a1 ON yy.admin_id = a1.id';
+            //前台
+            //分证人
+            $join[] = 'LEFT JOIN __ADMIN__ fz ON yy.fz_id = fz.id';
+            //关咨询方式
+            $join[] = 'LEFT JOIN __LAN_MU__ zx ON yy.zx_id = zx.id';
+            //病人来源
+            $join[] = 'LEFT JOIN __LAN_MU__ ly1 ON yy.ly_id = ly1.id';
+            $join[] = 'LEFT JOIN __LAN_MU__ ly2 ON yy.lyt_id = ly2.id';
+            $join[] = 'LEFT JOIN __LAN_MU__ ly3 ON yy.lytt_id = ly3.id';
+            //区域
+            $join[] = 'LEFT JOIN __AREA__ ae1 ON yy.area_id = ae1.id';
+            $join[] = 'LEFT JOIN __AREA__ ae2 ON yy.areat_id = ae2.id';
+            
+            //原订单
+            $join[] = 'LEFT JOIN __KAI_DAN__ ykd ON kd.base_order_id = ykd.id';
+            //原订单预约
+            $join[] = 'LEFT JOIN __YU_YUE__ yy1 ON ykd.yy_id = yy1.id';
+            //原订单接诊医生
+            $join[] = 'LEFT JOIN __ADMIN__ yjz ON yy1.ys_id = yjz.id';
+            //收费员
+            $join[] = 'LEFT JOIN __ADMIN__ sfy ON kd.sf_admin_id = sfy.id';
+
+            $order_sort='kd.kd_time desc';
+            $page=1;
+            if(isset($_GET['p']))
+            {
+                $page=$_GET['p'];
+            }
+            //查询条件
+            //是否只能看到自己开的单
+            //是否只能看到自己开的单
+            if(check_group('root'))
+            {
+
+            }else
+            {
+                if(check_group("yishenjz_only_list"))
+                {
+
+                    $map['kd.kdys_id']=session('admin_id');
+                }
+            }
+            $map['kd.sf_status']=array('in',array(1,3));
+            $sf_status=I('get.sf_status');
+            $where_str=array();
+            $sbtn=U('Admin/YuShen/waitPriceList',array('is_search'=>1));
+
+            if($sf_status!=''){
+                switch ($sf_status) {
+                    
+
+                   
+                    default:
+                        $map['kd.sf_status']=$sf_status;
+
+                        break;
+                }
+            }
+            if(I('get.kdys_id')!='')
+            {
+                $map['kd.kdys_id']=I('get.kdys_id');
+            }
+            if(I('get.sf_admin_id')!='')
+            {
+                $map['kd.sf_admin_id']=I('get.sf_admin_id');
+            }
+            if (I('get.keyword') != '') {
+                $key = I('get.keyword');
+                $where_str[]= "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or kd.kd_number like '%" . $key . "%' ";
+            }
+            if(I('get.pay_ways')!='')
+            {
+                $map['kd.pay_ways']=I('get.pay_ways');
+            }
+            if(I('get.ys_id')!='')
+            {
+                $map['yy.ys_id']=I('get.ys_id');
+            }
+            if(I('get.ys_id')!='')
+            {
+                $map['yy.ys_id']=I('get.ys_id');
+            }
+            if(I('get.ysz_id')!='')
+            {
+                $map['yy.ysz_id']=I('get.ysz_id');
+            }
+
+            if(I('get.js_status')!='')
+            {
+                $map['kd.js_status']=I('get.js_status');
+            }
+            $getdata = I('get.');
+            if ($getdata['dzstime'] != '' && $getdata['dzetime'] != '') {
+                $getdata['dzstime'] .= " 00:00:00";
+                $getdata['dzetime'] .= " 23:59:59";
+
+                $timestr2 = strtotime($getdata['dzstime']) . "," . strtotime($getdata['dzetime']);
+               
+                $map['yy.dztime'] = array('between', $timestr2);
+
+            }
+            $stime=trim((I('get.stime')));
+            $etime=trim((I('get.etime')));
+            if($stime!=='' and $etime !='')
+            {
+                $stime .=" 00:00:00";
+                $etime.=" 23:59:59";
+                $stime=strtotime($stime);
+                $etime=strtotime($etime);
+
+                $timestr =  $stime. "," .$etime;
+                $map['kd.sf_time'] = array('between', $timestr);
+            }
+            //合并字符搜索
+            if(count($where_str)>0)
+            {
+                $map['_string']=implode($where_str, " and ");
+            }
+            //查询END------------------
+            $filed = '
+                kd.sf_status as sf_status,
+                kd.id as id,
+                kd.kdys_id as kdys_id,
+                kd.jz_id as jz_id,
+                kd.uuid as uuid,
+                kd.kd_time as kd_time,
+                kd.js_status,
+                kd.price_show,
+                kd.price_total,
+                kd.pay_ways as pay_ways,
+                kd.pay_price as pay_price,
+                kd.sf_time as sf_time,
+                kd.kd_number as kd_number,
+                kd.price_zhekou as price_zhekou,
+                kd.price_oktotal as price_oktotal,
+                kd.js_time as js_time,
+                kd.true_price as true_price,
+                kd.base_oktotal as base_oktotal,
+                kd.base_pay_price as base_pay_price,
+
+                ykd.sf_time as ysf_time,
+                ykd.kd_number as ykd_number,
+
+
+                yy1.dztime as ydztime,
+                yy1.jztime as yjztime,
+                yjz.name as yjz_name,
+
+
+                jzys.name as sy_name,
+                u1.name as user_name,
+                ys.name as kd_name,
+                yy.ynumber as ynumber,
+                ssys.name as ysz_name,
+                fz.name as fzname,
+                yy.ydatetime as ydatetime,
+                yy.ctime as yctime,
+                yy.dztime as dztime,
+                yy.leibie as leibie,
+                k4.name as bz_name,
+                zx.name as zx_name,
+                jz.jz_smcontent as jz_smcontent,
+                jz.jztime as jztime,
+                ly1.name as ly_name,
+                ae1.name as ae_name,
+                a1.name as admin_name,
+                ae2.name as ae2_name,
+                u1.id as user_id,
+                kd.yy_id as yid,
+                (kd.price_oktotal-kd.pay_price) as sx_price,
+                sfy.name as  sfy_name
+             ';
+            $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
+            $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+            $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order($order_sort)->page( $page.','.$pagesize)->select();
+            $this->assign('list',$list);// 赋值数据集
+
+
+            $assing_data=array(
+                'onname'=>'onname',
+                'adminer'=>get_sfadder('kai_dan'),
+                'createer'=>get_kdadder('kai_dan'),
+                'is_search'=>I('get.is_search'),
+               
+            );
+            $this->assign('sbtn',$sbtn);
+            $this->assign('handle_tpl',$handle_tpl);
+            $this->assign('page',page($count, $map, $pagesize));
+            $menu_list = $this->getFiledArray($type_arr);
+            $this->menu_list = $menu_list;
+            $this->assign($assing_data);
+            $this->display();
+
+            
+            
+    }
+    //手术管理
+    public function add_shousu($uuid){
+        $this->check_group('shousu_add');
+        $this->onname='手术管理';
+        $this->assign('onname',$this->onname);
+        if(IS_POST)
+        {
+            $model =D('KaiDan');
+            $post=I('post.');
+            if($model->create()) {
+                $data=$model->create();
+                //统计类别下的数量
+                $fid_arr=$post['price_fid'];
+                $hj_arr=$post['price_heji'];
+                $news_total=array();
+                foreach ($fid_arr as $key => $value) {
+                    $news_total[$value][]=$hj_arr[$key];
+                }
+                $price_type=array();
+                foreach ($news_total as $key => $value) {
+                    $price_type[]=array(
+                        'fid'=>$key,
+                        'total'=>array_sum($news_total[$key])
+                        );
+                    
+                }
+                //消费各个类别合计计算
+                $dataList=array();
+                $data['price_type']=json_encode($price_type);
+                //付款类型
+                switch ($data['pay_ways']) {
+                    case '2'://付定金，计算剩余多少没付
+                        $data['price_only_price']=$data['price_oktotal']-$data['pay_price'];//成交价-应付价
+                        $data['is_dingjing']=1;
+                        break;
+                    case '3'://付部分，计算剩余多少没付
+                        $data['price_only_price']=$data['price_oktotal']-$data['pay_price'];//成交价-应付价
+                        $data['is_bufeng']=1;
+                        break;
+                }
+               foreach ($data as $key => $value) {
+                   if($value=='')
+                   {
+                       unset($data[$key]);
+                   }
+               }
+                $result =   $model->save($data);
+                $backurl=U("Admin/YuShen/kaidanList");
+                if(I('get.backurl')=='kaidan')
+                {
+                    $backurl=U("Admin/CaiWu/waitPriceList");
+                }
+                if($result) {
+
+                    add_log($this->onname.'：更新成功',$data['user_id']);
+                    $msg=lang('更新成功','handle');
+                                      
+                    return  $this->success($msg,$backurl);
+                }else{
+
+                    $msg=lang('数据一样无更新','handle');
+                    return  $this->success($msg,$backurl);
+                }
+            }else{
+                return $this->error($model->getError());
+            }
+        }else{
+           
+            $map=array(
+            'uuid'=>$uuid
+            );
+
+            $model   =  D('KaiDan')->relation(true)->where($map)->find();
+
+          
+            if($model) {
+                $this->data =  $model;// 模板变量赋值
+            }else{
+                return $this->error(lang('数据错误','handle'));
+            }
+            
+            $this->display("ShouSu:add");
+        }
+        
     }
 }

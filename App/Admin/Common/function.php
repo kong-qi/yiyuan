@@ -1818,3 +1818,82 @@ function convert_number_to_words( $number )
 
     return $string ;
 }
+function shousu_status($checked=''){
+    //治疗已到期
+    $arr=array(
+            0=>'待手术',
+            1=>'已完成',
+            2=>'已取消',
+            4=>'治疗中',
+            5=>'治疗完成',
+            6=>'治疗已到期',
+            7=>'治疗异常结束'
+        );
+
+    if($checked!='')
+    {
+        return $arr[$checked];
+    }
+    return $arr;
+}
+
+//手术状态
+function get_shousu($checkid='',$echo=1){
+    $rule=array(
+        0=>'待手术',
+        1=>'已完成',
+        2=>'已取消',
+        );
+    $str='';
+    $check='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checkid==$k)
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option ". $check." value='".$k."'>".$v."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}
+function get_shousu2($checkid='',$echo=1){
+    $rule=array(
+        4=>'治疗中',
+                    5=>'治疗完成',
+                    6=>'治疗已到期',
+                    7=>'治疗异常结束'
+        );
+    $str='';
+    $check='';
+    if($echo)
+    {
+        if(count($rule)>0)
+        {
+            foreach ($rule as $k=>$v)
+            {
+                if($checkid==$k)
+                {
+                    $check='selected="selected"';
+                }else
+                {
+                    $check='';
+                }
+                $str.="<option ". $check." value='".$k."'>".$v."</option>";
+            }
+        }
+        return  $str;
+
+    }
+    return $rule;
+}

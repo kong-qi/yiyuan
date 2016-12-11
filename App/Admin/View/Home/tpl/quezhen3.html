@@ -3,7 +3,7 @@
 
         '1'=>lang('初诊'),
         '2'=>lang('复诊'),
-        '3'=>lang('复查'),
+        
        
     );
 </php>
@@ -30,8 +30,9 @@
                 <td width="60">{{ :lang('复诊') }}</td>
                 <td width="60">{{ :lang('复诊成交率') }}</td>
                 <td width="60">{{ :lang('复查') }}</td>
-                <td width="52">{{ :lang('复查成交率') }}</td>
+               
                  <td width="60">{{ :lang('再消费') }}</td>
+                  <td width="52">{{ :lang('复查成交率') }}</td>
                 <td width="52">{{ :lang('其他') }}</td>
                 <td width="46">{{ :lang('总成交率') }}</td>
               </tr>
@@ -43,8 +44,12 @@
                     <td width="50"><php>$czok1=D('Home')->getKaiDanTotalOk(array('yy.leibie'=>$lbkey,'kd.sf_status'=>1),0,'kd.kd_time');echo round( ($czok1/$cz1) * 100 , 2) . "％";</php></td>
                    
                 </foreach>
-                
-                <td width="60"><php>echo $cz1=D('Home')->getKaiDanTotal(array('yy.leibie'=>4),0,'jz.jztime')</php></td>
+                <td width="60"><php>echo $cz3=D('Home')->getKaiDanTotal(array('yy.leibie'=>3),0,'jz.jztime')</php></td>
+                <td width="60"><php>echo $cz4=D('Home')->getKaiDanTotal(array('yy.leibie'=>4),0,'jz.jztime')</php></td>
+              
+                <td width="60"><php>echo round( ($cz4/($cz4+$cz3)) * 100 , 2) . "％";</php></td>
+
+
                 <td width="52"><php>echo $cz1=D('Home')->getKaiDanTotal(array('yy.leibie'=>5),0,'jz.jztime')</php></td>
                 <td width="46">
                     <php>$cztotal1=D('Home')->getKaiDanTotal(array('yy.leibie'=>array('in',array('1','2','3','4'))),0,'jz.jztime')</php>
@@ -62,8 +67,18 @@
                         echo '<td width="50">'.round( ($czok2/$cz2) * 100 , 2) . "％"."</td>";
                      }
                  </php>
-                <td width="60"><php>echo D('Home')->getKaiDanTotal(array('yy.leibie'=>4),-1,'jz.jztime')</php></td>
+                
+                <td width="60"><php>echo $cz31=D('Home')->getKaiDanTotal(array('yy.leibie'=>3),-1,'jz.jztime')</php></td>
+                <td width="60"><php>echo $cz41=D('Home')->getKaiDanTotal(array('yy.leibie'=>4),-1,'jz.jztime')</php></td>
+                
+                <td width="60"><php>echo round( ($cz41/($cz41+$cz31)) * 100 , 2) . "％";</php></td>
+
+                
+                
+
+
                 <td width="52"><php>echo D('Home')->getKaiDanTotal(array('yy.leibie'=>5),-1,'jz.jztime')</php></td>
+
                 <td width="46">
                     <php>$cztotal2=D('Home')->getKaiDanTotal(array('yy.leibie'=>array('in',array('1','2','3','4'))),-1,'jz.jztime')</php>
                     <php>$czoktotal2=D('Home')->getKaiDanTotalOk(array('yy.leibie'=>array('in',array('1','2','3','4')),'kd.sf_status'=>1),-1,'kd.kd_time');echo round( ($czoktotal2/$cztotal2) * 100 , 2) . "％";</php>
@@ -80,7 +95,12 @@
                        echo '<td width="50">'.round( ($czok2/$cz2) * 100 , 2) . "％"."</td>";
                     }
                 </php>
-                <td width="60"><php>echo D('Home')->getKaiDanTotal(array('yy.leibie'=>4),-1,'jz.jztime','bz')</php></td>
+                <td width="60"><php>echo $zxf=D('Home')->getKaiDanTotal(array('yy.leibie'=>3),-1,'jz.jztime','bz')</php></td>
+
+                <td width="60"><php>echo $zxfn=D('Home')->getKaiDanTotal(array('yy.leibie'=>4),-1,'jz.jztime','bz')</php></td>
+
+                <td width="60"><php>echo round( ($zxf/($zxf+$zxfn)) * 100 , 2) . "％";</php></td>
+
                 <td width="52"><php>echo D('Home')->getKaiDanTotal(array('yy.leibie'=>5),-1,'jz.jztime','bz')</php></td>
                 <td width="46">
                     <php>$cztotal2=D('Home')->getKaiDanTotal(array('yy.leibie'=>array('in',array('1','2','3','4'))),-1,'jz.jztime','by')</php>
@@ -98,7 +118,13 @@
                        echo '<td width="50">'.round( ($czok2/$cz2) * 100 , 2) . "％"."</td>";
                     }
                 </php>
-                <td width="60"><php>echo D('Home')->getKaiDanTotal(array('yy.leibie'=>4),-1,'jz.jztime','by')</php></td>
+                 <td width="60"><php>echo $zxf1=D('Home')->getKaiDanTotal(array('yy.leibie'=>3),-1,'jz.jztime','by')</php></td>
+
+                <td width="60"><php>echo $zxfn1=D('Home')->getKaiDanTotal(array('yy.leibie'=>4),-1,'jz.jztime','by')</php></td>
+                
+                <td width="60"><php>echo round( ($zxf1/($zxf1+$zxfn1)) * 100 , 2) . "％";</php></td>
+
+
                 <td width="52"><php>echo D('Home')->getKaiDanTotal(array('yy.leibie'=>5),-1,'jz.jztime','by')</php></td>
                 <td width="46">
                     <php>$cztotal2=D('Home')->getKaiDanTotal(array('yy.leibie'=>array('in',array('1','2','3','4'))),-1,'jz.jztime','by')</php>

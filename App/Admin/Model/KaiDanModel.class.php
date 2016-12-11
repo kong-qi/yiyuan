@@ -23,8 +23,11 @@ class KaiDanModel extends  RelationModel  {
             'mapping_type'      => self::BELONGS_TO,
             'class_name'        => 'User',
             'foreign_key'=>'user_id',
-
-
+        ),
+        'Jiez'=>array(
+            'mapping_type'      => self::BELONGS_TO,
+            'class_name'        => 'JieZhen',
+            'foreign_key'=>'jz_id',
         ),
     );
 

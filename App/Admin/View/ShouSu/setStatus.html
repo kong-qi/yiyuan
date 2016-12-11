@@ -1,0 +1,69 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+  
+</block>
+<block name="right">
+    <div class="right-box">
+
+        
+        <div class="animated fadeInUp">
+               <h3 class="text-center">{{ :lang('更改状态') }}</h3>
+                <div class="col-sm-12">
+
+                    <form action="" method="post" id="validate" class="form-horizontal" enctype="multipart/form-data">
+                        <input type="hidden" name="token" value="{{ :token() }}">
+                        <input type="hidden" name="id" value="{{ $data.id }}">
+                        <input type="hidden" name="shous_times" value="{{ $data.shous_times }}">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-content">
+                               
+                                    <div class="col-xs-6">
+                                        <div class="input-group">
+                                            <label class="input-group-addon">{{ :lang('手术状态') }}</label>
+                                            <select class="form-control " required=""  id="shouys_id" name="shous_status">
+                                                <option value="">{{ :lang('请选择手术状态','handle') }}</option>
+                                                {{ :get_shousu2($data['shous_status']) }}
+                                            </select>
+                                            
+                                        </div>
+
+                                    </div>
+                                     <div class="col-xs-6">
+                                       
+                                        <button class="btn btn-danger" type="submit" name="submit_addhuifang">{{ :lang('更新') }}</button>
+                                    </div>
+                                   
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        </div>
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script>
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.insertBefore(r.parents(".ibox-content"));
+                //e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+         $("#validate").validate({});
+      
+         $("#add_print").on("click",function(){
+             $("#print_input").val(1);
+             $("#validate").submit();
+         })
+
+    </script>
+</block>

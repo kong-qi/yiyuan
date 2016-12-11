@@ -155,7 +155,7 @@ class YuYueController extends AuthController
             wz.name as web_name,
             ae1.name as ae_name,
             ae2.name as ae2_name,
-            ys.realname as ys_name,
+            ys.name as ys_name,
     
             jz.jz_smcontent as jz_smcontent,
             ssys.name as ysz_name,
@@ -197,7 +197,7 @@ class YuYueController extends AuthController
         //接诊
         $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON y1.id = jz.yy_id';
         //手术医生
-        $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = y1.ysz_id';
+        $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = y1.ysz_id';
 
         //关联学历
         $join[] = 'LEFT JOIN __LAN_MU__ xueli ON u1.xueli = xueli.id';
@@ -1311,7 +1311,7 @@ class YuYueController extends AuthController
             wz.name as web_name,
             ae1.name as ae_name,
             ae2.name as ae2_name,
-            ys.realname as ys_name,
+            ys.name as ys_name,
     
             jz.jz_smcontent as jz_smcontent,
             ssys.name as ysz_name,
@@ -1354,7 +1354,7 @@ class YuYueController extends AuthController
         //接诊
         $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON y1.id = jz.yy_id';
         //手术医生
-        $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = y1.ysz_id';
+        $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = y1.ysz_id';
 
         //关联学历
         $join[] = 'LEFT JOIN __LAN_MU__ xueli ON u1.xueli = xueli.id';

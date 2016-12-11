@@ -21,7 +21,7 @@ class CaiWuController extends AuthController
             //最终兵种
             $join[] = 'LEFT JOIN __KE_SHI__ k4 ON yy.ksall_id = k4.id';
             //手术医生
-            $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = yy.ysz_id';
+            $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = yy.ysz_id';
             //咨询人员
             $join[] = 'LEFT JOIN __ADMIN__ a1 ON yy.admin_id = a1.id';
             //前台
@@ -450,7 +450,7 @@ class CaiWuController extends AuthController
             //最终兵种
             $join[] = 'LEFT JOIN __KE_SHI__ k4 ON yy.ksall_id = k4.id';
             //手术医生
-            $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = yy.ysz_id';
+            $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = yy.ysz_id';
             //咨询人员
             $join[] = 'LEFT JOIN __ADMIN__ a1 ON yy.admin_id = a1.id';
             //前台
@@ -1049,7 +1049,7 @@ class CaiWuController extends AuthController
             //接诊
             $join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON y1.id = jz.yy_id';
             //手术医生
-            $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = y1.ysz_id';
+            $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = y1.ysz_id';
 
             //关联学历
             $join[] = 'LEFT JOIN __LAN_MU__ xueli ON u1.xueli = xueli.id';
@@ -1296,11 +1296,11 @@ class CaiWuController extends AuthController
                 print_r($data);
                 return '';*/
                  //更新预约表
-                $ydata['status']=4;//状态
+                /*$ydata['status']=4;//状态
                 $ydata['kdtime']=$post['ykd_time'];
                 //$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yy_id'];
-                $yresult=M('YuYue')->data($ydata)->save();
+                $yresult=M('YuYue')->data($ydata)->save();*/
 
                 $result =    $model->add($data);
                 if($result) {

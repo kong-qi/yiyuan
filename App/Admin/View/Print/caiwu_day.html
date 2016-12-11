@@ -1,0 +1,175 @@
+<extend name="Layout:index" />
+<block name="add_js">
+    <script src="__JS__/LodopFuncs.js"></script>
+    <link rel="stylesheet" type="text/css" href="__CSS__/print.css">
+</block>
+<block name="body_name">
+
+    <body style="background: #fff">
+</block>
+<block name="right">
+    <div class=" m-t m-r m-l m-b">
+        <div class="pr1" id="div1">
+            <div style="font-size: 16pt; margin-bottom: 5px;" align="center">
+                {{ :lang('收费结算报表') }}
+            </div>
+            <div style="font-size: 10pt;" align="right">
+                {{ :date('d-m-Y',time()) }} 00:00:00 ==> {{ :date('d-m-Y',time()) }} 23:59:59
+            </div>
+        </div>
+        <div id="div2">
+        <table border="1" cellspacing="0" cellpadding="1" width="100%" style="border-collapse:collapse" bordercolor="#333333" class="table  ft12">
+            <tr>
+                <td width="45">{{ :lang('序号') }}</td>
+                <td width="120">{{ :lang('姓名') }}</td>
+                <td width="45">{{ :lang('性别') }}</td>
+                <td width="60">{{ :lang('来院类别') }}</td>
+                <td width="160">{{ :lang('接诊小结') }}</td>
+                <td width="60">{{ :lang('咨询师') }}</td>
+                <td width="86">{{ :lang('成交总金额') }}</td>
+                <td width="85">{{ :lang('实收总金额') }}</td>
+                <td width="69">{{ :lang('收全款') }}</td>
+                <td width="64">{{ :lang('收订金') }}</td>
+                <td width="83">{{ :lang('收部分费用') }}</td>
+                <td width="81">{{ :lang('收订金余款') }}</td>
+                <td width="72">{{ :lang('收欠款') }}</td>
+            </tr>
+            <if condition="$list">
+                <foreach name="list" key="k" item="v">
+                    <tr>
+                    <td>{{ :($k+1) }}</td>
+                    <td>{{ $v.user_name }}</td>
+                    <td>{{ :lang($v['user_sex']) }}</td>
+                    <td>{{ :yuyue_leibie($v['leibie']) }}</td>
+                    <td>{{ $v.jz_smcontent }}</td>
+                    <td>{{ $v.admin_name }}</td>
+                    <td data-price="vnlist">{{ $v.price_oktotal }}</td>
+                    <td data-price="vnlist">{{ $v.true_price }}</td>
+                    <td data-price="vnlist"> {{ :$v['pay_ways']==1?$v['true_price']:0 }}</td>
+                    <td data-price="vnlist">
+                        {{ :$v['pay_ways']==2?$v['true_price']:0 }}
+                    </td>
+                    <td data-price="vnlist"> {{ :$v['pay_ways']==3?$v['true_price']:0 }}</td>
+                    <td data-price="vnlist"> {{ :$v['pay_ways']==7?$v['true_price']:0 }}</td>
+                    <td data-price="vnlist"> {{ :$v['pay_ways']==8?$v['true_price']:0 }}</td>    
+                    </tr>
+                </foreach>
+            </if>
+            
+            <tr>
+                <td colspan="3">{{ :lang('初诊') }}：<span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPrice(array('yy.leibie'=>1,'kd.js_status'=>1),0,'kd.js_time','day',1)</php></span></td>
+                <td colspan="2">{{ :lang('复诊') }}：<span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPrice(array('yy.leibie'=>2,'kd.js_status'=>1),0,'kd.js_time','day',1)</php></span></td>
+                <td colspan="3">{{ :lang('复查') }}：<span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPrice(array('yy.leibie'=>3,'kd.js_status'=>1),0,'kd.js_time','day',1)</php></span></td>
+                <td colspan="3">{{ :lang('再消费') }}：<span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPrice(array('yy.leibie'=>4,'kd.js_status'=>1),0,'kd.js_time','day',1)</php></span></td>
+                <td colspan="2">{{ :lang('其他') }}：<span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPrice(array('yy.leibie'=>5,'kd.js_status'=>1),0,'kd.js_time','day',1)</php></span></td>
+            </tr>
+            
+        </table>
+        </div>
+        <div id="div3">
+            <table class="table table-noboer ft12" border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tr>
+                <td colspan="4">{{ :lang('收费员') }}：</td>
+                <td colspan="3">{{ :lang('财务') }}：</td>
+                <td colspan="6">{{ :lang('主任') }}：</td>
+            </tr>
+            </table>
+        </div>
+        <div class="text-center" style="margin-top: 20px; margin-bottom:  20px;">
+            <a href="javascript:void(0)" class="btn btn-primary" onclick=" prn1_print() ">{{ :lang('打印') }}</a>
+        </div>
+    </div>
+</block>
+<block name="add_foot_js">
+    <script language="javascript" type="text/javascript">
+    function CheckIsInstall() {
+        try {
+            var LODOP = getLodop();
+            if (LODOP.VERSION) {
+                if (LODOP.CVERSION)
+                    alert("当前有C-Lodop云打印可用!\n C-Lodop版本:" + LODOP.CVERSION + "(内含Lodop" + LODOP.VERSION + ")");
+                else
+                    alert("本机已成功安装了Lodop控件！\n 版本号:" + LODOP.VERSION);
+
+            };
+        } catch (err) {}
+    };
+
+
+
+    function prn1_print() {
+        CreateOnePage();
+        LODOP.SET_PREVIEW_WINDOW(2, 1, 0, "860", 600, "{{ :lang('开始打印') }}", 0, 0); //打印前弹出选择打印机的对话框 
+        LODOP.SET_PRINT_MODE("AUTO_CLOSE_PREWINDOW", 1); //打印后自动关闭预览窗口
+        LODOP.PREVIEW();
+        // LODOP.PRINTA(); 
+        /*  if (LODOP.CVERSION) {
+              CLODOP.On_Return = function(TaskID, Value) {
+                  if (Value) alert("已发出实际打印命令！");
+                  else alert("放弃打印！");
+              };
+              LODOP.PRINT();
+              return;
+          };
+          //控件返回结果用语句本身：
+          if (LODOP.PRINT())
+              alert("已发出实际打印命令！");
+          else
+              alert("放弃打印！");*/
+
+    };
+
+    function CreateOnePage() {
+
+        var LODOP = getLodop();
+        LODOP.PRINT_INIT("{{ :lang('结算打印') }}");
+        //LODOP. PRINT_INITA("1cm","1.8cm","21.cm","13.95cm","开始收费");
+        LODOP.SET_PRINT_PAGESIZE(1, "28.7cm", "20cm", "LodopCustomPage");
+        var strStyle = "<style> table,td,th {padding: 2px;font-size: 10pt;}</style>"
+            //头
+        LODOP.ADD_PRINT_HTM(26, "5%", "90%", 109, document.getElementById("div1").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+        LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 1);
+        //数据表格
+        LODOP.ADD_PRINT_TABLE(80, "5%", "90%", 420, strStyle + document.getElementById("div2").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
+        
+        //尾部
+        LODOP.ADD_PRINT_HTM("1100", "5%", "90%", 54, document.getElementById("div3").innerHTML);
+        LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+        LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 1);
+        LODOP.NewPageA();
+
+
+
+        /* LODOP.NewPageA();
+         LODOP.ADD_PRINT_TABLE(128, "5%", "90%", 328, strStyle + document.getElementById("div2").innerHTML);
+         LODOP.SET_PRINT_STYLEA(0, "Vorient", 3);
+         LODOP.ADD_PRINT_HTM(26, "5%", "90%", 80, document.getElementById("div4").innerHTML);
+         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+         LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 4);
+         LODOP.ADD_PRINT_TEXT(460, 96, "76.25%", 20, "真诚祝您好远，欢迎下次再来！(发货单02的表格外“页脚”，紧跟表格)");
+         LODOP.SET_PRINT_STYLEA(0, "LinkedItem", 4);
+         LODOP.SET_PRINT_STYLEA(0, "FontSize", 12);
+         LODOP.SET_PRINT_STYLEA(0, "FontColor", "#FF0000");
+         LODOP.SET_PRINT_STYLEA(0, "Alignment", 2);
+         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+         LODOP.SET_PRINT_STYLEA(0, "Horient", 3);
+         LODOP.ADD_PRINT_HTM(1, 600, 300, 100, "总页号：<font color='#0000ff' format='ChineseNum'><span tdata='pageNO'>第##页</span>/<span tdata='pageCount'>共##页</span></font>");
+
+         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);
+
+         LODOP.SET_PRINT_STYLEA(0, "Horient", 1);
+         LODOP.ADD_PRINT_TEXT(3, 34, 196, 20, "总页眉：《两个发货单的演示》");
+         LODOP.SET_PRINT_STYLEA(0, "ItemType", 1);*/
+        /*LODOP.ADD_PRINT_HTM(1,600,300,100,"TotalPage：<font color='#0000ff' style='font-size:8px' ><span tdata='pageNO'>##</span>/<span tdata='pageCount' style='font-size:8px'>##</span></font>");
+
+                LODOP.SET_PRINT_STYLEA(0,"ItemType",1);
+
+                LODOP.SET_PRINT_STYLEA(0,"Horient",1);  */
+        //LODOP.PRINT_DESIGN();
+
+
+    };
+    </script>
+</block>

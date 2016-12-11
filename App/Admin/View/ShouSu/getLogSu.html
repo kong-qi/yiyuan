@@ -1,0 +1,61 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+  
+</block>
+<block name="right">
+    <div class="right-box">
+
+        
+        <div class="animated fadeInUp">
+              
+                <div class="ibox-content">
+                    <if condition="$data">
+                        <table class="table table-bordered">
+                            <tr>
+                                <td width="60">{{ :lang('次数') }}</td>
+                                <td width="170">{{ :lang('时间') }}</td>
+                                <td width="140">{{ :lang('手术医生') }}</td>
+                                <td>{{ :lang('备注') }}</td>
+                            </tr>
+                        
+                        <foreach name="data" item="v" key="k">
+                            <tr>
+                                <td>{{ :lang('第') }}{{ :(count($data)-$k) }}{{ :lang('次') }}</td>
+                                <td>{{ :date('d-m-Y H:i:s',$v['ctime']) }}</td>
+                                <td>{{ :$v['Jzys']['name'] }}</td>
+                                <td>{{ $v.mark }}</td>
+                            </tr>
+                        </foreach>
+                        </table>
+                    </if>
+                    
+                </div>
+        </div>
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+    <script>
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            }, success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success")
+            }, errorElement: "span", errorPlacement: function (e, r) {
+                e.insertBefore(r.parents(".ibox-content"));
+                //e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+            }, errorClass: "error", validClass: "no-error"
+
+        });
+         $("#validate").validate({});
+      
+         $("#add_print").on("click",function(){
+             $("#print_input").val(1);
+             $("#validate").submit();
+         })
+
+    </script>
+</block>

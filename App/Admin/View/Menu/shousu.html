@@ -1,0 +1,33 @@
+<a href="{{ :U('Admin/Print/shousu',array('id'=>$v['id'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-print btn-font" data-name="{{ :lang('打印') }}" data-btn="handle"></span><span class="js-data-name"></a>
+<if condition="check_group('shousu_edit')">
+	
+   		<php>
+   			$edit=1;
+   			if(check_group('root'))
+   			{
+				$edit=1;
+   			}else
+   			{
+				if($v['shous_status']==1)
+				{
+					$edit=0;
+				}
+   			}
+   			
+
+		if($edit==1){
+   		</php>
+        <a data-close="1" data-w="95%" data-title="{{ :lang('修改') }}" data-h="95%" data-layer="1" data-url="{{ :U('Admin/ShouSu/edit?id='.$v['uuid']) }}"
+        class="btn btn-xs btn-white" >
+        <span class="fa fa-edit btn-font" data-name="{{ :lang('修改') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+    	<php>}</php>
+	
+</if>
+<if condition="check_group('shousu_del')">
+	<php>if($v['shous_status']=='0'){</php>
+    <a href="{{ :U('Admin/ShouSu/del',array('id'=>$v['id'])) }}"
+    class="btn btn-xs btn-white" date-del="1">
+    <span class="fa fa-trash btn-font" data-name="{{ :lang('删除') }}" data-btn="handle"></span><span class="js-data-name"></span>
+   </a>
+   	<php>}</php>
+</if>

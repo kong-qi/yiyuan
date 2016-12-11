@@ -25,6 +25,16 @@
         <li>
             <a class="J_menuItem" href="{{ :U('Admin/YuShen/kaidanList') }}">{{ :lang('已开单列表') }}</a>
         </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/ShouSu/waitPriceList') }}">{{ :lang('已收费列表') }}</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/ShouSu/index',array('is_search'=>1,'shous_type'=>'ss')) }}">{{ :lang('手术管理') }}</a>
+        </li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/ShouSu/index',array('is_search'=>1,'shous_type'=>'lc','handle_tpl'=>'shousu_lc')) }}">{{ :lang('管理疗程') }}</a>
+        </li>
+        
         </if>
 
     </ul>

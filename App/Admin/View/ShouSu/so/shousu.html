@@ -1,0 +1,169 @@
+
+<form action='' method="get" id="contact-form">
+    <input type="hidden" name="is_search" value="1">
+    <php>
+        $is_search_on=""; if($is_search==0) { $is_search_on="display: none;"; }
+    </php>
+    <div class="col-sm-12" style="padding:0px; margin-bottom: 0">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><a class="collapse-link">{{ :lang('筛查选项') }}</a></h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content" style="padding-left:0px; padding-right:0px;{{ :$is_search_on }}">
+                <if condition="$limit_day neq ''">
+                    <input type="hidden" name="limit_day" value="no_days">
+                </if>
+                <div class="roww">
+                        <div class="col-sm-4">
+                            <div class="col-sm-6">
+                                <input name="sf_stime" type="text" class="form-control layer-date" value="{{ :I('get.sf_stime') }}" id="start" placeholder="{{ :lang('收费时间') }}" >
+                                </div>
+                            <div class="col-sm-6">
+                                <input name="sf_etime" type="text" class="form-control layer-date" value="{{ :I('get.sf_etime') }}" id="end" placeholder="{{ :lang('收费结束时间') }}" data>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-6">
+                                <input name="su_stime" type="text" class="form-control layer-date" value="{{ :I('get.su_stime') }}" id="start2" placeholder="{{ :lang('预约手术时间') }}" >
+                                </div>
+                            <div class="col-sm-6">
+                                <input name="su_etime" type="text" class="form-control layer-date" value="{{ :I('get.su_etime') }}" id="end2" placeholder="{{ :lang('预约手术结束时间') }}" data>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="col-sm-6">
+                                <input name="kd_stime" type="text" class="form-control layer-date" value="{{ :I('get.kd_stime') }}" id="start3" placeholder="{{ :lang('开单时间') }}" >
+                                </div>
+                            <div class="col-sm-6">
+                                <input name="kd_etime" type="text" class="form-control layer-date" value="{{ :I('get.kd_etime') }}" id="end3" placeholder="{{ :lang('开单结束时间') }}" data>
+                            </div>
+                        </div>
+                </div>
+                <div class="roww">
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon"><font color="">{{ :lang('手术状态','handle') }}</font></span>
+                            <select name="shous_status" class="form-control">
+                                <option value="" {{ :$skey==''?"selected='selected'":"" }}>{{ :lang('全部') }}</option>
+                                <php>
+                                    $arr=array(
+                                        0=>'待手术',
+                                        1=>'已完成',
+                                        2=>'已取消'
+                                    );
+                                </php>
+                                <foreach name="arr" item="sv" key="skey">
+                                    <php>if(I('get.shous_status')==''){</php>
+                                        <option value="{{ $skey }}" >{{ $sv }}</option>
+                                    <php>}else{</php>
+                                        <option value="{{ $skey }}" {{ :$skey==I('get.shous_status')?"selected='selected'":"" }}>{{ $sv }}</option>
+                                    <php>}</php>
+                                    
+                                </foreach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" style="margin-bottom: 2px">
+                        <div class="input-group m-b" style="">
+                            <label class="input-group-addon">{{ :lang('手术医生','handle') }}</label>
+                            <select class="form-control"  id="ysz_id" name="ysz_id">
+                                <option value="">{{ :lang('请选择医生','handle') }}</option>
+                                {{ :get_shyishen($_GET['ysz_id']) }}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3" style="margin-bottom: 2px">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon"><font color="">{{ :lang('开单人','handle') }}</font></span>
+                            <select name="kdys_id" class="form-control">
+                                <option value="">{{ :lang('全部') }}</option>
+                                {{ :arr_to_option($createer,I('get.kdys_id')) }}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-3">
+                        <div class="input-group m-b">
+                            <span class="input-group-addon"><font color="">{{ :lang('关键词','handle') }}</font></span>
+                            <input name="keyword" type="text" value="{{ :I('get.keyword') }}" placeholder="{{ :lang('姓名/手机/收费单号/手术名称') }}" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
+                        <a href="{{ $sbtn }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    var shijian11 = {
+        elem: '#start',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian12.min = datas; //开始日选好后，重置结束日的最小日期
+            shijian12.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var shijian12 = {
+        elem: '#end',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian11.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(shijian11);
+    laydate(shijian12);
+    var shijian22 = {
+        elem: '#start2',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian23.min = datas; //开始日选好后，重置结束日的最小日期
+            shijian23.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var shijian23 = {
+        elem: '#end2',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian22.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(shijian22);
+    laydate(shijian23);
+    var shijian24 = {
+        elem: '#start3',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian25.min = datas; //开始日选好后，重置结束日的最小日期
+            shijian25.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var shijian25 = {
+        elem: '#end3',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian25.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(shijian24);
+    laydate(shijian25);
+</script>

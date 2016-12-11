@@ -27,7 +27,7 @@
                
               </tr>
               <tr>
-                <td width="43">{{ :lang('日期') }}</td>
+                <td width="43">{{ :lang('名字') }}</td>
                 <td width="48">{{ :lang('接诊量') }}</td>
                 <td width="48">{{ :lang('开单量') }}</td>
                 <if condition="$pay_class">
@@ -36,7 +36,7 @@
                 
                     </foreach>
                 </if>
-                <td width="60">{{ :lang('开单总金额') }}</td>
+               
                 <td width="60">{{ :lang('成交总金额') }}</td>
                 <td width="60">{{ :lang('实收总金额') }}</td>
                 <td width="60">{{ :lang('收全款') }}</td>
@@ -57,14 +57,14 @@
                       <tr>
                       <td>{{ $jz_v['name'] }}</td>
                        <td width="48"><php>echo D('Home')->getTotal('JieZhen',array('admin_id'=>$jz_v['id']),0,'jztime',1)</php></td>
-                       <td width="48"><php>echo D('Home')->getTotal('KaiDan',array(),0,'kd_time')</php></td>
+                       <td width="48"><php>echo D('Home')->getTotal('KaiDan',array('admin_id'=>$jz_v['id']),0,'kd_time')</php></td>
                        <php>if($pay_class){</php>
                            <foreach name="pay_class" item="pv" key="pkey">
                                <td width="45"><php>echo D('Home')->getTotal('KaiDan',array('pay_ways'=>$pkey,'admin_id'=>$jz_v['id']),0,'kd_time')</php></td>
                        
                            </foreach>
                        <php>}</php>
-                       <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'sf_status'=>array('in',array(0,1,2,3,10,11,12))),0,'kd_time','1','price_total')</php></td>
+                      
 
                        <td width="60" data-price="vnlist"><php>echo D('Home')->getTotalSum('KaiDan',array('admin_id'=>$jz_v['id'],'sf_status'=>array('in',array(0,1,2,3,10,11,12))),0,'kd_time','1','price_oktotal')</php></td>
 
