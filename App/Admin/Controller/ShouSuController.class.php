@@ -360,7 +360,7 @@ class ShouSuController extends AuthController {
                 $print=I('post.print');
                 if($print==1)
                 {
-                    $backurl = U("Admin/Print/liaocheng",array('id'=>$result));
+                    $backurl = U("Admin/Print/shousu",array('id'=>$result));
                 }
                 return  $this->success(lang( $msg,'handle'),$backurl);
 
@@ -423,7 +423,7 @@ class ShouSuController extends AuthController {
                 $print=I('post.print');
                 if($print==1)
                 {
-                    $backurl = U("Admin/Print/liaocheng",array('id'=>$result));
+                    $backurl = U("Admin/Print/shousu",array('id'=>$result));
                 }
                 return  $this->success(lang( $msg,'handle'),$backurl);
 
@@ -789,7 +789,7 @@ class ShouSuController extends AuthController {
                 $print=I('post.print');
                 if($print==1)
                 {
-                    $backurl = U("Admin/Print/liaocheng",array('id'=>$result));
+                    $backurl = U("Admin/Print/shousu",array('id'=>$result));
                 }
                 echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');parent.window.location.reload();parent.layer.close(index);</script>";
 

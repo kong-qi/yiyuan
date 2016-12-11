@@ -62,7 +62,7 @@
                                             <label class="input-group-addon">{{ :lang('手术完成时间') }}</label>
                                        
                                             <input class="form-control layer-date" required placeholder="YYYY-MM-DD"
-                                                    onclick="laydate({istime: false, format: 'YYYY-MM-DD', min:laydate.now()})" name="shous_oktime" value="{{ :$data['shous_oktime']!=''?date('Y-m-d H:i:s',$data['shous_oktime']):date('Y-m-d H:i:s',time()) }}" id="rw_time">
+                                                    onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})" name="shous_oktime" value="{{ :$data['shous_oktime']!=''?date('Y-m-d H:i:s',$data['shous_oktime']):date('Y-m-d H:i:s',time()) }}" id="rw_time">
                                         </div>
                                     </div>
                                 </div>
