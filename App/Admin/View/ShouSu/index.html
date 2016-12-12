@@ -125,7 +125,7 @@
                                             ?>
                                            
                                             <td {{ :$mv['w']!=''?"width='".$mv['w']."'":'' }} class="{{ $mk }} {{ $mv['diy'] }}" {{ $ishow }}>
-                                                <if condition="$mv['is_time']">{{ :to_time($v[$mv['filed']]) }}
+                                                <if condition="$mv['is_time']">{{ $v[$mv['filed']]==''?'':to_time($v[$mv['filed']]) }}
                                                     <elseif condition="$mv['filed'] eq sf_status"/>
                                                         <span class="{{ :btn_yycolor($v['sf_status']) }}">
                                                         {{ :lang(sf_status($v['sf_status'])) }}

@@ -465,7 +465,14 @@ class ShouSuController extends AuthController {
                 return  $this->error($msg,$backurl );
             }
             if($data=$m->create()){
-                $data['shous_oktime']=strtotime($data['shous_oktime']);
+                
+                if($data['shous_status']==2)
+                {
+                     $data['shous_oktime']='';
+                }else
+                {
+                    $data['shous_oktime']=strtotime($data['shous_oktime']);
+                }
                 $result=$m->save($data);
                 if($result)
                 {
