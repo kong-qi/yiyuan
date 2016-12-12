@@ -37,7 +37,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="form-group wb30 inline">
+                                    <div class="form-group wb50 inline">
                                         <div class="input-group">
                                             <label class="input-group-addon">{{ :lang('手术医生') }}</label>
                                             <select class="form-control " required=""  id="shouys_id" name="shouys_id">
@@ -47,7 +47,7 @@
                                             
                                         </div>
                                     </div>
-                                    <div class="form-group wb30 inline">
+                                    <div class="form-group wb50 inline">
                                         <div class="input-group">
                                             <label class="input-group-addon">{{ :lang('手术状态') }}</label>
                                             <select class="form-control " required=""  id="shouys_id" name="shous_status">
@@ -57,7 +57,15 @@
                                             
                                         </div>
                                     </div>
-                                    <div class="form-group wb30 inline">
+                                    <div class="form-group wb50 inline">
+                                        <div class="input-group">
+                                            <label class="input-group-addon">{{ :lang('手术预约时间') }}</label>
+                                       
+                                            <input class="form-control layer-date" required placeholder="YYYY-MM-DD"
+                                                    onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})" name="shous_ytime" value="{{ :$data['shous_ytime']!=''?date('Y-m-d H:i:s',$data['shous_ytime']):'' }}" id="rw_time">
+                                        </div>
+                                    </div>
+                                    <div class="form-group wb50 inline">
                                         <div class="input-group">
                                             <label class="input-group-addon">{{ :lang('手术完成时间') }}</label>
                                        

@@ -2,19 +2,56 @@
 <block name="add_js">
     <script src="__JS__/LodopFuncs.js"></script>
     <link rel="stylesheet" type="text/css" href="__CSS__/print.css">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
 </block>
 <block name="body_name">
 
     <body style="background: #fff">
 </block>
 <block name="right">
+    <form action='' method="get" id="contact-form">
+        <input type="hidden" name="is_search" value="1">
+        <php>
+            $is_search_on="display: black;";
+        </php>
+        <div class="col-sm-12" style="padding:0px; margin-bottom: 0">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5><a class="collapse-link">{{ :lang('筛查选项') }}</a></h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-down" id="shoujisf2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content" style="padding-left:0px; padding-right:0px;{{ :$is_search_on }}">
+                    
+                    <div class="roww">
+                        <div class="col-sm-4">
+                            <div class="col-sm-6">
+                                <input name="js_stime" type="text" class="form-control layer-date" value="{{ :I('get.js_stime') }}" id="start" placeholder="{{ :lang('结算时间') }}" >
+                                </div>
+                            <div class="col-sm-6">
+                                <input name="js_etime" type="text" class="form-control layer-date" value="{{ :I('get.js_etime') }}" id="end" placeholder="{{ :lang('结算结束时间') }}" data>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary" type="submit">{{ :lang('确定筛选','handle') }}</button>
+                           
+                            <!-- <a href="{{ :U('Admin/YuYue/index',$_SERVER['QUERY_STRING']) }}" class="btn btn-success" type="reset">{{ :lang('清空','handle') }}{{ $_SERVER['QUERY_STRING'] }}</a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     <div class=" m-t m-r m-l">
         <div class="pr1" id="div1">
             <div style="font-size: 16pt; margin-bottom: 5px;" align="center">
                 {{ :lang('退款结算报表') }}
             </div>
             <div style="font-size: 10pt;" align="right">
-                {{ :date('d-m-Y',time()) }} 00:00:00 ==> {{ :date('d-m-Y',time()) }} 23:59:59
+                {{ :I('get.js_stime') }} 00:00:00 ==> {{ :I('get.js_etime') }} 23:59:59
             </div>
         </div>
         <div id="div2">
@@ -103,6 +140,27 @@
             };
         } catch (err) {}
     };
+    var shijian11 = {
+        elem: '#start',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian12.min = datas; //开始日选好后，重置结束日的最小日期
+            shijian12.start = datas //将结束日的初始值设定为开始日
+        }
+    };
+    var shijian12 = {
+        elem: '#end',
+        format: 'YYYY-MM-DD',
+        istime: false,
+        istoday: true,
+        choose: function (datas) {
+            shijian11.max = datas; //结束日选好后，重置开始日的最大日期
+        }
+    };
+    laydate(shijian11);
+    laydate(shijian12);
 
 
 

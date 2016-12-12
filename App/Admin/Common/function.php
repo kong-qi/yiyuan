@@ -1824,6 +1824,7 @@ function shousu_status($checked=''){
             0=>'待手术',
             1=>'已完成',
             2=>'已取消',
+            3=>'待治疗',
             4=>'治疗中',
             5=>'治疗完成',
             6=>'治疗已到期',
@@ -1869,6 +1870,7 @@ function get_shousu($checkid='',$echo=1){
 }
 function get_shousu2($checkid='',$echo=1){
     $rule=array(
+        3=>'待治疗',
         4=>'治疗中',
                     5=>'治疗完成',
                     6=>'治疗已到期',

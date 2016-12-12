@@ -124,7 +124,7 @@
                                                 }
                                             ?>
                                            
-                                            <td class="{{ $mk }} {{ $mv['diy'] }}" {{ $ishow }}>
+                                            <td {{ :$mv['w']!=''?"width='".$mv['w']."'":'' }} class="{{ $mk }} {{ $mv['diy'] }}" {{ $ishow }}>
                                                 <if condition="$mv['is_time']">{{ :to_time($v[$mv['filed']]) }}
                                                     <elseif condition="$mv['filed'] eq sf_status"/>
                                                         <span class="{{ :btn_yycolor($v['sf_status']) }}">
@@ -171,6 +171,8 @@
                                                          <span class="{{ :btn_yycolor($v['shous_status']) }}">
                                                          {{ :lang(shousu_status($v['shous_status'],0)) }}
                                                          </span>
+                                                    <elseif condition="$mv['filed'] eq user_sex"/>
+                                                         {{ :lang($v['user_sex']) }}
                                                     <elseif condition="$mv['filed'] eq user_name"/>
                                                         
                                                              <a href="javascript:void(0)" class=" js-show-url" data-userid="{{ $v.user_id }}" data-yid="{{ $v.yid }}" data-uuid="{{ $v.uid }}" > {{ $v[$mv['filed']] }}</a>

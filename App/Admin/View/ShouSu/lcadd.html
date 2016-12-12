@@ -16,7 +16,7 @@
                          <input type="hidden" name="print" value="0" id="print_input">
                         <input type="hidden" name="kd_id" value="{{ $data.id }}">
                         <input type="hidden" readonly name="admin_id" value="{{ :session('admin_id') }}">
-                        <input type="hidden" name="shous_status" value="4">
+                        <input type="hidden" name="shous_status" value="3">
                         <input type="hidden" name="user_id" value="{{ $data.user_id }}">
                         <input type="hidden" name="shous_type" value="lc">
                       
@@ -61,14 +61,14 @@
                                            
                                         </div>
                                     </div>
-                                    <div class="form-group wb30 inline">
+                                    <!-- <div class="form-group wb30 inline">
                                         <div class="input-group">
                                             <label class="input-group-addon">{{ :lang('疗程有效期') }}</label>
                                        
                                             <input class="form-control layer-date" required placeholder="YYYY-MM-DD"
                                                    value="" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss', min:laydate.now()})" name="limit_time" id="rw_time">
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">

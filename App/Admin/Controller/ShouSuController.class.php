@@ -16,7 +16,7 @@ class ShouSuController extends AuthController {
                      'td-3' => array('name' => lang('性别'), 'filed'=>'user_sex','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      'td-4' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      
-                     'td-6' => array('name' => lang('手术名称'), 'filed'=>'shousu_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                     'td-6' => array('name' => lang('手术名称'), 'filed'=>'shousu_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '250', 'h' => '', 'is_hide' => ''),
                      'td-7' => array('name' => lang('手术医生'), 'filed'=>'sy_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      'td-8' => array('name' => lang('预约做手术的时间'), 'filed'=>'shous_ytime','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      'td-9' => array('name' => lang('手术状态'), 'filed'=>'shous_status','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
@@ -38,7 +38,7 @@ class ShouSuController extends AuthController {
                      'td-3' => array('name' => lang('性别'), 'filed'=>'user_sex','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      'td-4' => array('name' => lang('年龄'), 'filed'=>'age','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      
-                     'td-5' => array('name' => lang('治疗项目名称'), 'filed'=>'shousu_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
+                     'td-5' => array('name' => lang('治疗项目名称'), 'filed'=>'shousu_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '250', 'h' => '', 'is_hide' => ''),
                      'td-6' => array('name' => lang('手术医生'), 'filed'=>'sy_name','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      'td-7' => array('name' => lang('疗程有效期'), 'filed'=>'limit_time','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      'td-8-1' => array('name' => lang('疗程次数'), 'filed'=>'shous_times','diy'=>'text-blue','is_time'=>'','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
@@ -294,6 +294,8 @@ class ShouSuController extends AuthController {
                 a1.name as admin_name,
                 ae2.name as ae2_name,
                 u1.id as user_id,
+                u1.sex as user_sex,
+                u1.age as age,
                 kd.yy_id as yid,
                 (kd.price_oktotal-kd.pay_price) as sx_price,
                 sfy.name as  sfy_name,
@@ -404,6 +406,7 @@ class ShouSuController extends AuthController {
             }
             $data=D('ShouSu')->create();
             $data['limit_time']=strtotime($data['limit_time']);
+            $data['ctime']='';
             foreach ($data as $key => $value) {
                 if($value=='')
                 {
@@ -674,6 +677,8 @@ class ShouSuController extends AuthController {
                 a1.name as admin_name,
                 ae2.name as ae2_name,
                 u1.id as user_id,
+                u1.age as age,
+                u1.sex as user_sex,
                 kd.yy_id as yid,
                 (kd.price_oktotal-kd.pay_price) as sx_price,
                 sfy.name as  sfy_name,
@@ -769,6 +774,10 @@ class ShouSuController extends AuthController {
             $ldata['shous_hastimes']=$on_times;
             
             $ldata['id']=I('post.lc_id');
+            if($on_times==1)
+            {
+                $ldata['ctime']=time();
+            }
             if($on_times<$times_total)
             {
                 
@@ -811,7 +820,7 @@ class ShouSuController extends AuthController {
         }
     }
     public function getLogSu($id=''){
-        $m=D('ShousuLog')->relation(true)->where(array('shous_id'=>$id))->select();
+        $m=D('ShousuLog')->relation(true)->where(array('shous_id'=>$id))->order('id desc')->select();
         $this->assign('data',$m);
         $this->display();
     }

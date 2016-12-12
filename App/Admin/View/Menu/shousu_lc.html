@@ -1,5 +1,5 @@
 <!-- <a href="{{ :U('Admin/Print/shousu',array('id'=>$v['id'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-print btn-font" data-name="{{ :lang('打印') }}" data-btn="handle"></span><span class="js-data-name"></a> -->
-<php>if($v['shous_status']==4){</php>
+<php>if($v['shous_status']==4 || $v['shous_status']==3){</php>
 <a data-close="1" data-w="95%" data-title="{{ :lang('添加疗程记录') }}" data-h="95%" data-layer="1" data-url="{{ :U('Admin/ShouSu/logSu?id='.$v['uuid']) }}"
 class="btn btn-xs btn-white" >
 <span class="fa fa-book btn-font" data-name="{{ :lang('添加疗程记录') }}" data-btn="handle"></span><span class="js-data-name"></span></a>

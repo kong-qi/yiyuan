@@ -649,4 +649,27 @@ class HomeModel extends Model {
         ->join($join)->sum($sumtype);
         return $model;
     }
+    //开单类型之价格
+    public function getKaiDanTotalOkPriceWhere($map=array(),$getdata,$type_time='kd.sf_time',$date_type='day',$all='',$sumtype='true_price'){
+        $model=M('KaiDan');
+        $join[] = 'LEFT JOIN __YU_YUE__ yy ON kd.yy_id= yy.id';
+        
+        $where=array();
+       
+        if ($getdata['js_stime'] != '' && $getdata['js_etime'] != '') {
+            $map['_string']="FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') >= str_to_date('".$getdata['js_stime']."','%Y-%m-%d') and FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') <= str_to_date('".$getdata['js_etime']."','%Y-%m-%d')";
+        }
+        
+        if($all=='')
+        {
+            if(!check_group('root'))
+            {
+                 $where['kd.kdys_id']=session('admin_id');
+            }
+        }
+        $where=$map+$where;
+        $model=$model->alias('kd')->where($where)
+        ->join($join)->sum($sumtype);
+        return $model;
+    }
 }

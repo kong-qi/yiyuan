@@ -168,7 +168,17 @@ class PrintController extends AuthController {
         $map['kd.js_status']=1;
         $map['kd.sf_status']=array('not in',array(0,7,8,9,11,12,4,5,6));
         //结算当天时间
-        $map['_string']="FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') = str_to_date('".get_days(0)."','%Y-%m-%d')";
+        
+
+        $getdata = I('get.');
+        if ($getdata['js_stime'] != '' && $getdata['js_etime'] != '') {
+           
+            $map['_string']="FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') >= str_to_date('".$getdata['js_stime']."','%Y-%m-%d') and FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') <= str_to_date('".$getdata['js_etime']."','%Y-%m-%d')";
+        }else
+        {
+            $map['_string']="FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') = str_to_date('".get_days(0)."','%Y-%m-%d')";
+        }
+
         $type_arr='ok';
         $sbtn=U('Admin/CaiWu/waitPriceList',array('sf_status'=>'ok','is_search'=>1));
         
@@ -227,7 +237,8 @@ class PrintController extends AuthController {
             (kd.price_oktotal-kd.pay_price) as sx_price,
             sfy.name as  sfy_name
          ';
-        $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order($order_sort)->page( $page.','.$pagesize)->select();
+        
+        $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order($order_sort)->select();
         $this->assign('list',$list);// 赋值数据集
 
         $this->display();
@@ -295,7 +306,15 @@ class PrintController extends AuthController {
         $map['kd.js_status']=1;
         $map['kd.sf_status']=array('in',array(6,4,5));
         //结算当天时间
-        $map['_string']="FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') = str_to_date('".get_days(0)."','%Y-%m-%d')";
+        $getdata = I('get.');
+        if ($getdata['js_stime'] != '' && $getdata['js_etime'] != '') {
+            
+            $map['kd.js_time'] = array('between', $timestr2);
+            $map['_string']="FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') >= str_to_date('".$getdata['js_stime']."','%Y-%m-%d') and FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') <= str_to_date('".$getdata['js_etime']."','%Y-%m-%d')";
+        }else
+        {
+            $map['_string']="FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') = str_to_date('".get_days(0)."','%Y-%m-%d')";
+        }
         $type_arr='ok';
         $sbtn=U('Admin/CaiWu/waitPriceList',array('sf_status'=>'ok','is_search'=>1));
         
@@ -354,7 +373,7 @@ class PrintController extends AuthController {
             (kd.price_oktotal-kd.pay_price) as sx_price,
             sfy.name as  sfy_name
          ';
-        $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order($order_sort)->page( $page.','.$pagesize)->select();
+        $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order($order_sort)->select();
         $this->assign('list',$list);// 赋值数据集
 
         $this->display();

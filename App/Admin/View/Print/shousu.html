@@ -52,7 +52,7 @@
                  {{ $data.ysz_name }}
              </td>
              <td align="right">{{ :lang('日期') }}</td>
-             <td colspan="3">{{ :to_time(time()) }} </td>
+             <td colspan="3">{{ :to_time($data['sf_time']) }} </td>
            </tr>
             
         </table>
@@ -107,7 +107,7 @@
         var LODOP = getLodop();
         LODOP.PRINT_INIT("{{ :lang('结算打印') }}");
         //LODOP. PRINT_INITA("1cm","1.8cm","21.cm","13.95cm","开始收费");
-        LODOP.SET_PRINT_PAGESIZE(1, "28.7cm", "20cm", "LodopCustomPage");
+        LODOP.SET_PRINT_PAGESIZE(0, "20.8cm", "13.75cm", "LodopCustomPage");
         var strStyle = "<style> table,td,th {padding: 2px;font-size: 10pt;}</style>"
             //头
         LODOP.ADD_PRINT_HTM(26, "5%", "90%", 109, document.getElementById("div1").innerHTML);

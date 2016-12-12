@@ -29,10 +29,10 @@
             <a class="J_menuItem" href="{{ :U('Admin/CaiWu/waitPriceList',array('sf_status'=>'ok','is_search'=>1)) }}">{{ :lang('已结算列表') }}</a>
         </li>
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/Print/caiwu_day') }}">{{ :lang('收费结算报表') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/Print/caiwu_day',array('js_stime'=>get_days(0),'js_etime'=>get_days(0))) }}">{{ :lang('收费结算报表') }}</a>
         </li>
         <li>
-            <a class="J_menuItem" href="{{ :U('Admin/Print/caiwu_day_tui') }}">{{ :lang('退款结算报表') }}</a>
+            <a class="J_menuItem" href="{{ :U('Admin/Print/caiwu_day_tui',array('js_stime'=>get_days(0),'js_etime'=>get_days(0))) }}">{{ :lang('退款结算报表') }}</a>
         </li>
        
 

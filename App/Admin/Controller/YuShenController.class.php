@@ -705,11 +705,12 @@ class YuShenController extends AuthController {
                 $ydata['kdtime']=$post['ykd_time'];
                 //$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yy_id'];
+                
                 $yresult=M('YuYue')->data($ydata)->save();
-
                 $result =    $model->add($data);
 
-                if($result) {
+                if($result && $yresult) {
+
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
                     add_log($this->onname.'：添加成功',$data['user_id']);
@@ -901,7 +902,7 @@ class YuShenController extends AuthController {
                 $ydata['kdtime']=$post['ykd_time'];
                 //$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yy_id'];
-                $yresult=M('YuYue')->data($ydata)->save();
+               
                 $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
                 
                 //付款类型
@@ -927,9 +928,10 @@ class YuShenController extends AuthController {
                 $data['kd_id_sort']=get_kaidan_number_sort($post['qz_id']);
                 //echo get_kaidan_number_sort($post['qz_id']);
                
-
+                $yresult=M('YuYue')->data($ydata)->save();
                 $result =    $model->add($data);
-                if($result) {
+                if($result && $yresult){
+                    
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
                     add_log($this->onname.'：添加成功',$data['user_id']);
@@ -942,6 +944,7 @@ class YuShenController extends AuthController {
                     M()->rollback();
                     add_log($this->onname.'：添加失败',$data['user_id']);
                     $msg=lang('添加失败','handle');
+                    $backurl=U("Admin/YuShen/index",array('status'=>3,'list_type'=>'only'));
                     return $this->success($msg,$backurl );
                     //$backurl=U(MODULE_NAME."/".CONTROLLER_NAME."/index");
                     //echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('".$msg."');window.location='".$backurl."';</script>";

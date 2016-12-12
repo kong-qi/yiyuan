@@ -1151,7 +1151,7 @@ class CaiWuController extends AuthController
                 $ydata['kdtime']=$post['ykd_time'];
                 //$data['kd_time']=time();//开单时间
                 $ydata['id']=$post['yy_id'];
-                $yresult=M('YuYue')->data($ydata)->save();
+                
                 $backurl=U("Admin/CaiWu/kaidanList");
                 
                 //付款类型
@@ -1191,9 +1191,10 @@ class CaiWuController extends AuthController
                     }
                 }
                 
-               
+                $yresult=M('YuYue')->data($ydata)->save();
                 $result =    $model->add($data);
-                if($result) {
+                if($result && $yresult) {
+
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
                     add_log($this->onname.'：添加成功',$data['user_id']);
@@ -1432,7 +1433,7 @@ class CaiWuController extends AuthController
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 $result =    $model->add($data);
-                if($result) {
+                if($result && $yresult) {
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
                     add_log($this->onname.'：添加成功',$data['user_id']);
