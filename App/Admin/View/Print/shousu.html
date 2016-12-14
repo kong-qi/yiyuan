@@ -21,9 +21,9 @@
                     <td width="10%">{{ :lang('姓名') }}</td>
                     <td colspan="2" width="30%">{{ $data.user_name }}</td>
                     <td width="15%">{{ :lang('性别') }}</td>
-                    <td colspan="2" width="15%">{{ :lang($data['sex']) }}</td>
+                    <td colspan="2" width="15%">{{ :lang($data['user_sex']) }}</td>
                     <td width="15%">{{ :lang('出生年份') }}</td>
-                    <td colspan="2" width="15%">{{ :to_time($data['birthday']) }}</td>
+                    <td colspan="2" width="15%">{{ :to_time(strtotime($data['birthday']),'d-m-Y') }}</td>
                 </tr>
                 <tr>
                     <td>{{ :lang('手术名称') }}</td>

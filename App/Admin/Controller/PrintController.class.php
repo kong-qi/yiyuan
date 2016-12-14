@@ -498,6 +498,7 @@ class PrintController extends AuthController {
         $list =  $model->alias('shousu')->field($filed)->join($join)->where($map)->find();
         $this->assign('data',$list);// 赋值数据集
         
+        
        
         $this->display();
     }
