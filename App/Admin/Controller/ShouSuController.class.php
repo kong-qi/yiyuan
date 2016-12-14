@@ -47,7 +47,7 @@ class ShouSuController extends AuthController {
                      'td-10' => array('name' => lang('疗程开始时间'), 'filed'=>'ctime','diy'=>'text-blue','is_time'=>'1','fun'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                     
                      
-                     'td-11' => array('name' => lang('疗程结束时间'), 'filed'=>'shous_etime','diy'=>'', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
+                     'td-11' => array('name' => lang('疗程结束时间'), 'filed'=>'shous_etime','diy'=>'', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => '1'),
                      'td-12' => array('name' => lang('开单人'), 'filed'=>'kd_name','diy'=>'', 'is_time'=>'','w' => '', 'h' => '', 'is_hide' => ''),
                      'td-13' => array('name' => lang('开单时间'), 'filed'=>'kd_time','diy'=>'', 'is_time'=>'1','w' => '', 'h' => '', 'is_hide' => ''),
                      

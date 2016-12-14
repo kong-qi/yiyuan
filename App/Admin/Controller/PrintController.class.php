@@ -454,6 +454,9 @@ class PrintController extends AuthController {
 
             jzys.name as sy_name,
             u1.name as user_name,
+           
+            u1.sex as user_sex,
+            u1.birthday as birthday,
             ys.name as kd_name,
             yy.ynumber as ynumber,
             ssys.name as ysz_name,

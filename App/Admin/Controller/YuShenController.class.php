@@ -43,7 +43,7 @@ class YuShenController extends AuthController {
                 $ydata['kstt_id']=$data['kstt_id'];
                 $ydata['ysz_id']=$data['ysz_id'];
                 //$ydata['jzks_id']=$data['jzks_id'];//手术科室ID。已去掉
-                $ydata['status']=3;
+               
                 $ydata['dz_id']=$data['zl_id'];//质量评级
                
                 foreach ($ydata as $key => $value) {
