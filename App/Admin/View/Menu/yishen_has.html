@@ -5,5 +5,5 @@
 	<php>if($v['sus_id']=='' and $v['lc_id']==''){</php>
     <a href="{{ :U('Admin/ShouSu/lcadd',array('id'=>$v['uuid'])) }}" date-js='1' class="btn btn-success "><span class="fa fa-sticky-note btn-font" data-name="{{ :lang('疗程管理') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
     <php>}</php>
-    <a href="{{ :U('Admin/Print/shousu',array('id'=>$v['id'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-print btn-font" data-name="{{ :lang('打印') }}" data-btn="handle"></span><span class="js-data-name"></a>
+    <a href="{{ :U('Admin/Print/shousu',array('id'=>$v['sus_id'])) }}" target="_blank" class="btn btn-white"><span class="fa fa-print btn-font" data-name="{{ :lang('打印') }}" data-btn="handle"></span><span class="js-data-name"></a>
 </if>
