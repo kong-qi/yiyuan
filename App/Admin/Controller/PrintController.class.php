@@ -233,6 +233,7 @@ class PrintController extends AuthController {
             a1.name as admin_name,
             ae2.name as ae2_name,
             u1.id as user_id,
+            u1.sex as user_sex,
             kd.yy_id as yid,
             (kd.price_oktotal-kd.pay_price) as sx_price,
             sfy.name as  sfy_name
@@ -256,8 +257,9 @@ class PrintController extends AuthController {
         $join[] = 'LEFT JOIN __YU_YUE__ yy ON kd.yy_id= yy.id';
         //最终兵种
         $join[] = 'LEFT JOIN __KE_SHI__ k4 ON yy.ksall_id = k4.id';
-        //手术医生
-        $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = yy.ysz_id';
+        //接诊医生
+        $join[]= 'LEFT JOIN __ADMIN__ ssys ON ssys.id = yy.ys_id';
+
         //咨询人员
         $join[] = 'LEFT JOIN __ADMIN__ a1 ON yy.admin_id = a1.id';
         //前台
@@ -309,7 +311,7 @@ class PrintController extends AuthController {
         $getdata = I('get.');
         if ($getdata['js_stime'] != '' && $getdata['js_etime'] != '') {
             
-            $map['kd.js_time'] = array('between', $timestr2);
+           
             $map['_string']="FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') >= str_to_date('".$getdata['js_stime']."','%Y-%m-%d') and FROM_UNIXTIME(kd.js_time,'%Y-%m-%d') <= str_to_date('".$getdata['js_etime']."','%Y-%m-%d')";
         }else
         {

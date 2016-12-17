@@ -466,7 +466,7 @@ class ShouSuController extends AuthController {
             }
             if($data=$m->create()){
                 
-                if($data['shous_status']==2)
+                if($data['shous_status']==2 || $data['shous_status']==0)
                 {
                      $data['shous_oktime']='';
                 }else
@@ -784,10 +784,11 @@ class ShouSuController extends AuthController {
             if($on_times==1)
             {
                 $ldata['ctime']=time();
+
             }
             if($on_times<$times_total)
             {
-                
+                 $ldata['shous_status']=4;
                
             }else
             {

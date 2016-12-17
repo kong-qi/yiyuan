@@ -1433,7 +1433,7 @@ class CaiWuController extends AuthController
                 $yresult=M('YuYue')->data($ydata)->save();
 
                 $result =    $model->add($data);
-                if($result && $yresult) {
+                if($result) {
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
                     add_log($this->onname.'：添加成功',$data['user_id']);

@@ -709,7 +709,7 @@ class YuShenController extends AuthController {
                 $yresult=M('YuYue')->data($ydata)->save();
                 $result =    $model->add($data);
 
-                if($result && $yresult) {
+                if($result) {
 
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
@@ -819,7 +819,7 @@ class YuShenController extends AuthController {
                 $yresult=M('YuYue')->data($ydata)->save();*/
                
 
-                $result =    $model->add($data);
+                $result = $model->add($data);
                 if($result) {
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();
@@ -930,7 +930,8 @@ class YuShenController extends AuthController {
                
                 $yresult=M('YuYue')->data($ydata)->save();
                 $result =    $model->add($data);
-                if($result && $yresult){
+              
+                if($result){
                     
                     D('User')->updateCount($data['user_id'],'kd_total');
                     M()->commit();

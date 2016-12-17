@@ -1821,14 +1821,14 @@ function convert_number_to_words( $number )
 function shousu_status($checked=''){
     //治疗已到期
     $arr=array(
-            0=>'待手术',
-            1=>'已完成',
-            2=>'已取消',
-            3=>'待治疗',
-            4=>'治疗中',
-            5=>'治疗完成',
-            6=>'治疗已到期',
-            7=>'治疗异常结束'
+            0=>lang('待手术'),
+            1=>lang('已完成'),
+            2=>lang('已取消'),
+            3=>lang('待治疗'),
+            4=>lang('治疗中'),
+            5=>lang('治疗完成'),
+            6=>lang('治疗已到期'),
+            7=>lang('治疗异常结束')
         );
 
     if($checked!='')
@@ -1841,9 +1841,9 @@ function shousu_status($checked=''){
 //手术状态
 function get_shousu($checkid='',$echo=1){
     $rule=array(
-        0=>'待手术',
-        1=>'已完成',
-        2=>'已取消',
+        0=>lang('待手术'),
+        1=>lang('已完成'),
+        2=>lang('已取消'),
         );
     $str='';
     $check='';
@@ -1870,11 +1870,11 @@ function get_shousu($checkid='',$echo=1){
 }
 function get_shousu2($checkid='',$echo=1){
     $rule=array(
-        3=>'待治疗',
-        4=>'治疗中',
-                    5=>'治疗完成',
-                    6=>'治疗已到期',
-                    7=>'治疗异常结束'
+         3=>lang('待治疗'),
+            4=>lang('治疗中'),
+            5=>lang('治疗完成'),
+            6=>lang('治疗已到期'),
+            7=>lang('治疗异常结束')
         );
     $str='';
     $check='';

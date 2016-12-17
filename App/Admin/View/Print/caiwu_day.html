@@ -62,7 +62,7 @@
                 <td width="45">{{ :lang('性别') }}</td>
                 <td width="60">{{ :lang('来院类别') }}</td>
                 <td width="160">{{ :lang('接诊小结') }}</td>
-                <td width="60">{{ :lang('咨询师') }}</td>
+                <td width="60">{{ :lang('接诊医生') }}</td>
                 <td width="86">{{ :lang('成交总金额') }}</td>
                 <td width="85">{{ :lang('实收总金额') }}</td>
                 <td width="69">{{ :lang('收全款') }}</td>
@@ -74,12 +74,12 @@
             <if condition="$list">
                 <foreach name="list" key="k" item="v">
                     <tr>
-                    <td>{{ $v.id }}</td>
+                    <td>{{ :($k+1) }}</td>
                     <td>{{ $v.user_name }}</td>
                     <td>{{ :lang($v['user_sex']) }}</td>
                     <td>{{ :yuyue_leibie($v['leibie']) }}</td>
                     <td>{{ $v.jz_smcontent }}</td>
-                    <td>{{ $v.admin_name }}</td>
+                    <td>{{ $v.ysz_name }}</td>
                     <td data-price="vnlist">{{ $v.price_oktotal }}</td>
                     <td data-price="vnlist">{{ $v.true_price }}</td>
                     <td data-price="vnlist"> {{ :$v['pay_ways']==1?$v['true_price']:0 }}</td>
@@ -100,13 +100,13 @@
                 <td></td>
                 <td></td>
                 <td>{{ :lang('总计') }} </td>
-                <td ><span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.js_status'=>1),I('get.'),'kd.js_time','day',1,'price_oktotal')</php></span></td>
-                <td ><span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></span></td>
-                <td ><span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>1,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></span></td>
-                <td ><span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>2,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></span></td>
-                <td ><span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>3,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></span></td>
-                <td ><span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>7,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></span></td>
-                <td ><span data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>8,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></span></td>
+                <td ><b data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.js_status'=>1),I('get.'),'kd.js_time','day',1,'price_oktotal')</php></b></td>
+                <td ><b data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></b></td>
+                <td ><b data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>1,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></b></td>
+                <td ><b data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>2,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></b></td>
+                <td ><b data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>3,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></b></td>
+                <td ><b data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>7,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></b></td>
+                <td ><b data-price="vnlist"><php> echo D('Home')->getKaiDanTotalOkPriceWhere(array('kd.pay_ways'=>8,'kd.js_status'=>1),I('get.'),'kd.js_time','day',1)</php></b></td>
             </tr>
             
         </table>
