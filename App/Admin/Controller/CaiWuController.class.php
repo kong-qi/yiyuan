@@ -869,7 +869,7 @@ class CaiWuController extends AuthController
             echo "<script language='javascript'>var index = parent.layer.getFrameIndex(window.name); parent.layer.msg('" . $msg . "');parent.layer.close(index);window.location='" . $backurl . "';</script>";
         }
     }
-    public function kaidanList()
+    public function kaidanList2()
         {
            
             //print_r(session('group'));
@@ -1081,6 +1081,231 @@ class CaiWuController extends AuthController
                 $orderstr='y1.jztime desc,y1.id desc';
             }
             $list = $model->alias('y1')->field($filed)->join($join)->order($orderstr)->where($map)->page($page . ',' . $pagesize)->select();
+            //print_r($list);
+            $this->assign('list', $list);// 赋值数据集
+           
+            
+            $this->menu_list = $menu_list;
+            $this->assign('page', page($count, $map, $pagesize));// 赋值分页输出
+            $this->display("CaiWu:kaidanList");
+            
+            
+        }
+    public function kaidanList()
+        {
+           
+            //print_r(session('group'));
+            $this->check_group('shouyin_check');
+            $map = array();
+            $this->assign('is_search',I('get.is_search'));
+            $stpl="YuYue:so:caiwu";
+            $sbtn=U('Admin/CaiWu/kaidanList',array('is_search'=>1));
+            $onstatus=I('get.stpl');
+            $this->assign('stpl',$stpl);
+            $this->assign('sbtn',$sbtn);
+            //网站来源
+            if (IS_GET) {
+                $getdata = I('get.');
+
+                $y_arr = array(
+                    'ks_id',
+                    'kst_id',
+                    'kstt_id',
+                    'ly_id',
+                    'lyt_id',
+                    'lytt_id',
+                    'area_id',
+                    'areat_id',
+                    'is_fz',
+                    'yx_id',
+                    'zx_id',
+                    'user_id',
+                    'leibie',
+                    'admin_id',
+                    'status'
+
+                );
+               
+                foreach ($getdata as $key => $v) {
+                    if ($v != '') {
+
+                        if (in_array($key, $y_arr)) {
+
+                            $map["y1." . $key] = $v;
+                        }
+                    }
+
+                }
+                //创建时间为预约时间
+                if ($getdata['djstime'] != '' && $getdata['djetime'] != '') {
+                    $getdata['djstime'] .= " 00:00:00";
+
+                    $getdata['djetime'] .= " 23:59:59";
+
+                    $timestr = strtotime($getdata['djstime']) . "," . strtotime($getdata['djetime']);
+
+                    $map['y1.ctime'] = array('between', $timestr);
+
+                }
+                //预约时间为预到时间
+                if ($getdata['ystime'] != '' && $getdata['yetime'] != '') {
+                    $getdata['ystime'] .= " 00:00:00";
+                    $getdata['yetime'] .= " 23:59:59";
+
+                    $timestr2 = strtotime($getdata['ystime']) . "," . strtotime($getdata['yetime']);
+
+                    $map['y1.ydatetime'] = array('between', $timestr2);
+
+                }
+                
+                if ($getdata['dzstime'] != '' && $getdata['dzetime'] != '') {
+                    $getdata['dzstime'] .= " 00:00:00";
+                    $getdata['dzetime'] .= " 23:59:59";
+
+                    $timestr2 = strtotime($getdata['dzstime']) . "," . strtotime($getdata['dzetime']);
+
+                    $map['y1.dztime'] = array('between', $timestr2);
+
+                }
+
+
+                if (I('get.user_id') != '') {
+                    $map['y1.user_id'] = I('get.user_id');
+
+                }
+                if (I('get.keyword') != '') {
+                    $key = I('get.keyword');
+                    $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or y1.ynumber like '%" . $key . "%'";
+                }
+
+            }
+
+            
+            $map['y1.status']=array('in',array(3,4));
+            $model = M('JieZhen');
+            $filed = '
+                ly1.name as ly_name,
+                ly2.name as lyt_name,
+                ly3.name as lytt_name,
+                y1.uuid as yuuid,
+                y1.status as ystatus,
+                y1.zx_content as zx_content,
+                y1.zx_mark,
+                y1.ys_id as ys_id,
+                y1.is_kd as is_kd,
+               
+                y1.kd_id as kd_id,
+                y1.kdtime as kdtime,
+                y1.ynumber,
+                y1.id as yid,
+                y1.admin_id,
+                y1.ydatetime as ydatetime,
+                y1.ctime as yctime,
+                y1.mark as mark,
+                y1.jztime as jztime,
+                y1.dztime as dztime,
+                y1.leibie as leibie,
+
+                u1.name as user_name,
+                u1.age as age,
+                u1.sex,
+                u1.uuid as user_uuid,
+                u1.id as user_id,
+                u1.tel as tel,
+                u1.sfcard as card,
+                u1.birthday as birthday,
+
+                
+                a1.name as admin_name,
+                k1.name as ks_name,
+                k2.name as kst_name,
+                k3.name as kstt_name,
+                k4.name as bz_name,
+                zx.name as zx_name,
+                yx.name as yx_name,
+                wz.name as web_name,
+                ae1.name as ae_name,
+                ae2.name as ae2_name,
+                ys.name as ys_name,
+        
+                jz.jz_smcontent as jz_smcontent,
+                jz.id as qz_id,
+                ssys.name as ysz_name,
+                fz.name as fzname,
+
+                xueli.name as xueli,
+                zhiye.name as zhiye,
+                hunyin.name as jiehun,
+                level.name as  level,
+                phone.name  as pbank
+            ';
+            //管理会员用户
+            //管理会员用户
+            $join[] = 'LEFT JOIN __YU_YUE__ y1 ON jz.yy_id = y1.id';
+            $join[] = 'LEFT JOIN __USER__ u1 ON y1.user_id = u1.id';
+            //$join[] = '__USER__ u1 ON y1.user_id = u1.id';
+            //关联ADMIN
+            $join[] = 'LEFT JOIN __ADMIN__ a1 ON y1.admin_id = a1.id';
+            $join[] = 'LEFT JOIN __ADMIN__ ys ON y1.ys_id = ys.id';
+            //分证人
+            $join[] = 'LEFT JOIN __ADMIN__ fz ON y1.fz_id = fz.id';
+            //关科室1
+            $join[] = 'LEFT JOIN __KE_SHI__ k1 ON y1.ks_id = k1.id';
+            //关科室2
+            $join[] = 'LEFT JOIN __KE_SHI__ k2 ON y1.kst_id = k2.id';
+            //关科室3
+            $join[] = 'LEFT JOIN __KE_SHI__ k3 ON y1.kstt_id = k3.id';
+            //最终兵种
+            $join[] = 'LEFT JOIN __KE_SHI__ k4 ON y1.ksall_id = k4.id';
+            //关咨询方式
+            $join[] = 'LEFT JOIN __LAN_MU__ zx ON y1.zx_id = zx.id';
+            //网站
+            $join[] = 'LEFT JOIN __LAN_MU__ wz ON y1.web_id = wz.id';
+            //意向
+            $join[] = 'LEFT JOIN __LAN_MU__ yx ON y1.zx_id = yx.id';
+            //病人来源
+            $join[] = 'LEFT JOIN __LAN_MU__ ly1 ON y1.ly_id = ly1.id';
+            $join[] = 'LEFT JOIN __LAN_MU__ ly2 ON y1.lyt_id = ly2.id';
+            $join[] = 'LEFT JOIN __LAN_MU__ ly3 ON y1.lytt_id = ly3.id';
+            //区域
+            $join[] = 'LEFT JOIN __AREA__ ae1 ON y1.area_id = ae1.id';
+            //意向
+            $join[] = 'LEFT JOIN __AREA__ ae2 ON y1.areat_id = ae2.id';
+            //接诊
+            //$join[] = 'LEFT JOIN __JIE_ZHEN__ jz ON y1.id = jz.yy_id';
+            //手术医生
+            $join[]= 'LEFT JOIN __KE_SHI__ ssys ON ssys.id = y1.ysz_id';
+
+            //关联学历
+            $join[] = 'LEFT JOIN __LAN_MU__ xueli ON u1.xueli = xueli.id';
+            //职业
+            $join[] = 'LEFT JOIN __LAN_MU__ zhiye ON u1.zhiye = zhiye.id'; 
+            //婚姻
+            $join[] = 'LEFT JOIN __LAN_MU__ hunyin ON u1.is_jiehun = hunyin.id'; 
+            //会员级别
+            $join[] = 'LEFT JOIN __LAN_MU__ level ON u1.level = level.id'; 
+            //手机品牌
+            $join[] = 'LEFT JOIN __LAN_MU__ phone ON u1.phone_bank = phone.id'; 
+
+            $type_arr='all';
+            
+            $menu_list = $this->getFiledArray($type_arr);
+            
+           
+            $count = $model->alias('jz')->join($join)->where($map)->count();// 查询满足要求的总记录数
+            $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+            $page = 1;
+            if (isset($_GET['p'])) {
+                $page = $_GET['p'];
+            }
+            if(I('get.status')=='2')
+            {
+                $orderstr='y1.dztime desc,y1.id desc';
+            }else
+            {
+                $orderstr='y1.jztime desc,y1.id desc';
+            }
+            $list = $model->alias('jz')->field($filed)->join($join)->order($orderstr)->where($map)->page($page . ',' . $pagesize)->select();
             //print_r($list);
             $this->assign('list', $list);// 赋值数据集
            

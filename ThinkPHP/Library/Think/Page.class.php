@@ -21,6 +21,7 @@ class Page{
 
     private $p       = 'p'; //分页参数名
     private $url     = ''; //当前链接URL
+    private $ps      ='pagesize';
     private $nowPage = 1;
 
 	// 分页显示定制
@@ -30,10 +31,11 @@ class Page{
         'next'   => '>>',
         'first'  => '1...',
         'last'   => '...%TOTAL_PAGE%',
-        'theme'  => '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE% %END%',
+        'theme'  => '%HEADER%%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%SELECT2%%SELECT%',
         'rows'=>'%ROWS%',
         'curcard'=>'%CUR_CARD%',
-        'select'=>'%SELECT%'
+        'select'=>'%SELECT%',
+        'select2'=>'%SELECT2%'
 
     );
 
@@ -60,7 +62,8 @@ class Page{
      * @param string $value 设置值
      */
     public function setConfig($name,$value) {
-        if(isset($this->config[$name])) {
+
+       if(isset($this->config[$name])) {
             $this->config[$name] = $value;
         }
     }
@@ -73,17 +76,28 @@ class Page{
     private function url($page){
         return str_replace(urlencode('[PAGE]'), $page, $this->url);
     }
+    private  function  pagesieUrl($page)
+    {
+        echo $this->url."\n";
+        return str_replace(urlencode('[PAGES]'),$page,$this->url);
+    }
+
 
     /**
      * 组装分页链接
      * @return string
      */
     public function show() {
-        if(0 == $this->totalRows) return '';
 
+        if(0 == $this->totalRows) return '';
+        //echo $this->p;
         /* 生成URL */
         $this->parameter[$this->p] = '[PAGE]';
+
+
         $this->url = U(ACTION_NAME, $this->parameter);
+
+        //echo $this->url;
         /* 计算分页信息 */
         $this->totalPages = ceil($this->totalRows / $this->listRows); //总页数
         if(!empty($this->totalPages) && $this->nowPage > $this->totalPages) {
@@ -162,13 +176,42 @@ class Page{
             }
         }
         $link_page2.="</select>";
+        $pagesize_select="<select style='width:120px'  onchange='location.href=this.options[this.selectedIndex].value;'>";
+        $pagesize_arr=array(
+            '10',
+            '20',
+            '30',
+            '40',
+            '50'
+
+        );
+        $a=$this->parameter;
+       
+        foreach ($pagesize_arr as $v)
+        {
+
+            $a['pagesize']=$v;
+            unset($a['p']);
+
+
+            $pagesize_select.="<option value='". U(ACTION_NAME, $a)."'>".$v."card</option>";
+        }
+        $pagesize_select.='</select>';
+        //echo $link_page2;
         //当前条数开始
         $cur_card=(($this->nowPage-1)*$this->listRows)+1;
-        //替换分页内容
-        $page_str = str_replace(
+        //echo $pagesize_select;
+        //替换分页内容hi
+        //echo $this->config['theme'];
+        /*$page_str = str_replace(
             array('%HEADER%', '%NOW_PAGE%', '%UP_PAGE%', '%DOWN_PAGE%', '%FIRST%', '%LINK_PAGE%', '%END%', '%TOTAL_ROW%', '%TOTAL_PAGE%','%ROWS%','%CUR_CARD%','%SELECT%'),
             array($this->config['header'], $this->nowPage, $up_page, $down_page, $the_first, $link_page, $the_end, $this->totalRows, $this->totalPages,$this->listRows,$cur_card,$link_page2),
-            $this->config['theme'],$this->listRows);
+            $this->config['theme']);*/
+        $page_str = str_replace(
+            array('%HEADER%', '%NOW_PAGE%', '%UP_PAGE%', '%DOWN_PAGE%', '%FIRST%', '%LINK_PAGE%', '%END%', '%TOTAL_ROW%', '%TOTAL_PAGE%','%ROWS%','%SELECT%','%SELECT2%'),
+            array($this->config['header'], $this->nowPage, $up_page, $down_page, $the_first, $link_page, $the_end, $this->totalRows, $this->totalPages,$this->listRows,$link_page2,$pagesize_select),
+            $this->config['theme']);
+
         return "<div>{$page_str}</div>";
     }
 }

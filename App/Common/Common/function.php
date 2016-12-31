@@ -72,7 +72,7 @@ function page($count,$map,$pagesize=20,$url=''){
     $Page->setConfig('next', '<span class="icon icon-forward"></span>');
     $Page->setConfig('last', '<span class="icon icon-step-forward"></span>');
     $Page->setConfig('first', '<span class="icon icon-step-backward"></span>');
-    $Page->setConfig('theme', '%HEADER%%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%SELECT%');
+    $Page->setConfig('theme', '%HEADER%%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%SELECT%%SELECT2%');
     $Page->lastSuffix = false;//最后一页不显示为总页数
     return  $Page->show();// 分页显示输出
 }
