@@ -19,6 +19,7 @@ class ShouFeiZiDianController extends AuthController {
 
         $count =  $model->where($map)->count();// 查询满足要求的总记录数
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+        $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
 
         $page=1;
         if(isset($_GET['p']))

@@ -40,6 +40,7 @@ class QianTaiJieZhenController extends AuthController {
         }
 
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'50';
+        $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
 
         $list = $model->alias('jg')->field($filed)->join($join)->order('jg.id desc')->where($map)->page( $page.','.$pagesize)->select();
 
@@ -283,6 +284,7 @@ class QianTaiJieZhenController extends AuthController {
        
         $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+        $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
         $page = 1;
         if (isset($_GET['p'])) {
             $page = $_GET['p'];

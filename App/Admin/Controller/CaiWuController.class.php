@@ -218,6 +218,7 @@ class CaiWuController extends AuthController
              ';
             $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
             $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+            $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
             $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order($order_sort)->page( $page.','.$pagesize)->select();
             $this->assign('list',$list);// 赋值数据集
 
@@ -539,6 +540,7 @@ class CaiWuController extends AuthController
             
             $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
             $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+            $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
             $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order('kd.kd_time desc')->page( $page.','.$pagesize)->select();
             $this->assign('list',$list);// 赋值数据集
             $handle_tpl=$type_arr='ok';
@@ -1069,6 +1071,7 @@ class CaiWuController extends AuthController
            
             $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
             $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+            $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
             $page = 1;
             if (isset($_GET['p'])) {
                 $page = $_GET['p'];
@@ -1294,6 +1297,7 @@ class CaiWuController extends AuthController
            
             $count = $model->alias('jz')->join($join)->where($map)->count();// 查询满足要求的总记录数
             $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+            $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
             $page = 1;
             if (isset($_GET['p'])) {
                 $page = $_GET['p'];

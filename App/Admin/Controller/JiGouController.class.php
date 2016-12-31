@@ -40,7 +40,7 @@ class JiGouController extends AuthController {
         }
 
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'50';
-
+        $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
         $list = $model->alias('jg')->field($filed)->join($join)->order('jg.id desc')->where($map)->page( $page.','.$pagesize)->select();
 
         $this->assign('list',$list);// 赋值数据集

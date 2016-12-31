@@ -48,7 +48,7 @@ class PriceZiDianController extends AuthController {
 
         $count =  D('Price')->where($map)->count();// 查询满足要求的总记录数
         $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'50';
-
+        $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
         $page=1;
         if(isset($_GET['p']))
         {

@@ -407,6 +407,7 @@ class YuShenController extends AuthController {
        
         $count = $model->alias('y1')->join($join)->where($map)->count();// 查询满足要求的总记录数
         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+        $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
         $page = 1;
         if (isset($_GET['p'])) {
             $page = $_GET['p'];
@@ -439,16 +440,16 @@ class YuShenController extends AuthController {
         $map = array();
         $this->assign('is_search',I('get.is_search'));
         $stpl="YuYue:so:yushenOn";
-        $sbtn=U('Admin/YuShen/index',array('status'=>2,'is_search'=>1));
+        $sbtn=U('Admin/YuShen/index2',array('status'=>2,'is_search'=>1));
         $onstatus=I('get.stpl');
         //清空按钮
         if($onstatus=='2')
         {
-            $sbtn=U('Admin/YuShen/index',array('status'=>3,'is_search'=>1,'list_type'=>I('get.list_type')));
+            $sbtn=U('Admin/YuShen/index2',array('status'=>3,'is_search'=>1,'list_type'=>I('get.list_type')));
         }
         if($onstatus=='3')
         {
-            $sbtn=U('Admin/YuShen/index',array('status'=>3,'is_search'=>1,'list_type'=>I('get.list_type')));
+            $sbtn=U('Admin/YuShen/index2',array('status'=>3,'is_search'=>1,'list_type'=>I('get.list_type')));
         }
         $this->assign('stpl',$stpl);
         $this->assign('sbtn',$sbtn);
@@ -669,6 +670,7 @@ class YuShenController extends AuthController {
 
         $count = $model->alias('jz')->join($join)->where($map)->count();// 查询满足要求的总记录数
         $pagesize = (C('PAGESIZE')) != '' ? C('PAGESIZE') : '50';
+        $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
         $page = 1;
         if (isset($_GET['p'])) {
             $page = $_GET['p'];
@@ -1856,6 +1858,7 @@ class YuShenController extends AuthController {
              ';
             $count = $model->alias('kd')->join($join)->where($map)->count();// 查询满足要求的总记录数
             $pagesize=(C('PAGESIZE'))!=''?C('PAGESIZE'):'20';
+            $pagesize=I('get.pagesize')==''?$pagesize:I('get.pagesize');
             $list =  $model->alias('kd')->field($filed)->join($join)->where($map)->order($order_sort)->page( $page.','.$pagesize)->select();
             $this->assign('list',$list);// 赋值数据集
 
