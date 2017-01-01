@@ -27,14 +27,15 @@
                                     <input type="text" class="form-control inline wb50" required name="name" id="telname" placeholder="{{ :lang('客户姓名','handle') }}">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control  inline wb30" name="sex" placeholder="{{ :lang('性别','handle') }}">
+                                    <select class="form-control  inline wb25" name="sex" placeholder="{{ :lang('性别','handle') }}">
                                         <option value="男">{{ :lang('男','handle') }}</option>
                                         <option value="女" selected="selected">{{ :lang('女','handle') }}</option>
                                     </select>
-                                    <select name="age" id="age" class="form-control js-age inline wb30">
+                                    <input type="text" id="birthyear" placeholder="出生年份" name="birthyear" class="form-control inline wb25" id="">
+                                    <select name="age" id="age" class="form-control js-age inline wb25">
                                         <option value="">{{ :lang('年龄') }}</option> {{ :echo_age() }}
                                     </select>
-                                    <input class="form-control js-sz inline wb30" name="birthday" placeholder="{{ :lang('生日','handle') }}" id="shengri">
+                                    <input class="form-control js-sz inline wb25" name="birthday" placeholder="{{ :lang('生日','handle') }}" id="shengri">
                                 </div>
                                
                                 <div class="form-group">
@@ -103,7 +104,7 @@
                                     <textarea name="bingshi" class="form-control" placeholder="{{ :lang('病史') }}"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="mark" class="form-control" placeholder="{{ :lang('个人信息备注') }}"></textarea>
+                                    <textarea name="content" style="height: 120px;" class="form-control" placeholder="{{ :lang('个人信息备注') }}"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -437,18 +438,35 @@
              
           
              $("#age").val($v);
+             $v2=get_year( dates);
+             $("#birthyear").val($v2);
              
          }
      };
 
      laydate(shengri);
    
-     //年龄变化
-    /* $("#age").change(function() {
-         //$year = $("#age").val();
-         //$birthday = get_age_date("-" + $year);
+     $("#age").change(function() {
+         $year = $("#age").val();
+         $birthday = get_age_date("-" + $year,'none');
+         //console.log($birthday);
+          $("#birthyear").val($birthday);
          //$("#shengri").val($birthday);
-     });*/
+     });
+     //birthyear
+     $("#birthyear").blur(function(){
+         $v=$(this).val();
+         var regu =/^[1,2,3]{1}\d{3}$/;
+         var reg = new RegExp(regu);  
+         if(!reg.test($v)){  
+            layer.msg("{{ :lang('年月格式不对') }}");
+            return false;
+         }else
+         {
+             $age=get_year_age($v);
+             $("#age").val($age);   
+         }
+     });
 
 
     $("[data-datachenge='1']").change(function() {

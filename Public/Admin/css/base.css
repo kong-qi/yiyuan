@@ -881,6 +881,10 @@ fieldset[disabled] .btn-green.active {
   width: 32.5% !important;
   box-sizing: border-box;
 }
+.wb25 {
+  width: 24% !important;
+  box-sizing: border-box;
+}
 .wb70 {
   width: 65% !important;
   box-sizing: border-box;

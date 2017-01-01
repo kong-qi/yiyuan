@@ -8,6 +8,9 @@
          <php>}elseif($v['ys_id']!='' && $v['ystatus']==2){</php>
          <a href="javascript:void(0)" data-layer="1" data-url="{{ :U('Admin/QianTaiJieZhen/ysedit?uuid='.$v['yuuid']) }}" data-title="{{ :lang('修改医生') }}" data-w="95%" data-h="95%" data-layer="0" data-uuid="{{ $v.user_uuid }}" class="btn btn-xs btn-info">
               <span class="fa  fa-user btn-font" data-name="{{ :lang('修改医生') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+
+          <include file="Menu:nginx" />
+
     <php>}</php>
 	<!-- <php>if($v['ystatus']==2 and $v['kd_total']==0){</php>
   <if condition=" check_group('zixun_del')">

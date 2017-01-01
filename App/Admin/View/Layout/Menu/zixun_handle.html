@@ -7,7 +7,7 @@
 <if condition="check_group('yuyue_show')">
     <li>
         <a class="J_menuItem"
-           href="{{ :U('Admin/YuYue/index') }}">{{ :lang('全部预约列表','menu') }}</a>
+           href="{{ :U('Admin/YuYue/index',array('dzstime'=>get_days(0),'dzetime'=>get_days(7))) }}">{{ :lang('全部预约列表','menu') }}</a>
     </li>
 </if>
 <if condition="check_group('zixun_show')">

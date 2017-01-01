@@ -14,13 +14,13 @@
                 <input type="hidden" name="fz_id" value="{{ :session('admin_id') }}">
                 <input type="hidden" name="is_qtadd" value="1">
                 <input type="hidden" name="token" value="{{ :token() }}">
-                <div class="col-sm-6" style="padding:0px;">
+                <div class="col-sm-12" style="padding:0px;">
                     <div class="col-sm-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <h5><a class="collapse-link">{{ :lang('基本信息','handle') }}</a></h5>
                                 <div class="ibox-tools" style="margin-top:-8px;">
-                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">{{ :lang('保存内容','handle') }}</button>
+                                    <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">{{ :lang('更新病人','handle') }}</button>
                                     <button class="btn btn-white" type="reset" style="border-radius:3px 3px 0px 0px; border-bottom:0px;">{{ :lang('重置','handle') }}</button>
                                 </div>
                             </div>
@@ -41,17 +41,7 @@
                                     <input class="form-control  inline wb25" name="birthday" placeholder="{{ :lang('生日','handle') }}" id="shengri">
                                 </div>
                                
-                                <div class="form-group">
-                                    <select class="form-control inline wb50" required=""  name="zx_id" id="userinfo0">
-                                        <option value="">{{ :lang('请选择咨询方式') }}</option>
-                                        {{ :get_lanmu_onelist('zixun') }}
-                                    </select>
-                                     <if condition="check_group('root')">
-                                        {{ :onkefu('is_zixun') }}
-                                         <else/>
-                                         {{ :onkefu('is_zixun') }}
-                                     </if>
-                                </div>
+                               
                                    
                                
                             </div>
@@ -107,124 +97,17 @@
                                     <textarea name="bingshi" class="form-control" placeholder="{{ :lang('病史') }}"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <textarea name="content" style="height: 120px;" class="form-control" placeholder="{{ :lang('个人信息备注') }}"></textarea>
+                                    <textarea name="content"  style="height: 200px" class="form-control" placeholder="{{ :lang('个人信息备注') }}"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                    
                 </div>
-                <div class="col-sm-6" style="padding:0px;">
-                    <div class="col-sm-12">
-                        <div class="ibox">
-                            <div class="ibox-title">
-                                <h5><a class="collapse-link">{{ :lang('来源选择','handle') }}</a></h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="form-group">
-                                    <select class="form-control wb30 inline" required=""  id="ly_id" name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id" data-type="ly" data-next="lyt_id" data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
-                                        <option value="">{{ :lang('请选择病人来源','handle') }}</option>
-                                        <?php
-                                                if(check_group('root'))
-                                                {
-                                                    echo get_lanmu_onelist('bingren',1,'first');
-                                                }else
-                                                {
-                                                    echo get_lanmu_onelist('bingren',1,'first',session('brid'),session('brid'));
-                                                }
-                                            ?>
-                                    </select>
-                                    <select class="form-control wb30 inline" id="lyt_id" name="lyt_id" data-datachenge='1' data-close="#lytt_id" data-type="ly" data-next="lytt_id" data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}">
-                                        <option value="">{{ :lang('请选择','handle') }}</option>
-                                    </select>
-                                    <select class="form-control wb30 inline" id="lytt_id">
-                                        <option value="">{{ :lang('请选择','handle') }}</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <select class="form-control wb50 inline"  id="area_id" name="area_id" data-datachenge='1' data-close="#areat_id" data-type="area" data-next="areat_id" data-url="{{ :U('Admin/Ajax/ajaxAreaList') }}">
-                                        <option value="">{{ :lang('请选择区域来源','handle') }}</option>
-                                        <?php
-
-                                                    echo get_area_list(1,'first');
-
-                                            ?>
-                                    </select>
-                                    <select class="form-control wb50 inline"  id="areat_id" name="areat_id" data-next="">
-                                        <option value="">{{ :lang('请选择','handle') }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                      
-                        <div class="ibox">
-                            <div class="ibox-title">
-                                <h5><a class="collapse-link">{{ :lang('预约信息') }}</a></h5>
-                                <div class="ibox-tools">
-                                    <a class="collapse-link">
-                                        <i class="fa fa-chevron-down" id="shoujisf2"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="ibox-content">
-                                <div class="form-group">
-                                    <select class="form-control wb30 inline" required="" name="leibie">
-                                        <option value="">{{ :lang('请选择来院类别','handle') }}</option>
-                                        {{ :yuyue_option_leibie() }}
-                                    </select>
-                                    <select class="form-control wb30 inline" name="yx_id">
-                                        <option value="">{{ :lang('请选择意向评定','handle') }}</option>
-                                        {{ :get_lanmu_onelist('yuyuezl') }}
-                                    </select>
-                                    <select class="form-control wb30 inline" required="required" id="ys_id" name="ys_id">
-                                        <option value="">{{ :lang('请选择医生','handle') }}</option>
-                                        {{ :get_doc(array(),1,$data['ys_id']) }}
-
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    
-                                    <div class="col-sm-12">
-                                        <input type="hidden" name="ydate" value="{{ :date('Y-m-d',time()) }}">
-                                        <input type="hidden" name="ytime" value="{{ :date('H:i:s',time()) }}">
-                                        
-                                        <div class="form-group">
-                                            <select class="form-control inline wb30" required=""  id="ks_id" data-all="ksall_id" name="ks_id" data-datachenge='1' data-close="#kst_id,#kstt_id" data-type="ks" data-next="kst_id" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
-                                                <option value="">{{ :lang('请选择科室','handle') }}</option>
-                                                {{ :get_keshi() }}
-                                            </select>
-                                            <select class="form-control inline wb30"  id="kst_id" data-all="ksall_id" name="kst_id" data-datachenge='1' data-close="#kstt_id" data-type="ks" data-next="kstt_id" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
-                                                <option value="">{{ :lang('请选择二级科室','handle') }}</option>
-                                            </select>
-                                            <select class="form-control inline wb30"  id="kstt_id" data-all="ksall_id" name="kstt_id" data-datachenge='1' data-close="" data-type="ks" data-url="{{ :U('Admin/Ajax/ajaxKeShiList') }}">
-                                                <option value="">{{ :lang('请选择具体病种','handle') }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-
-                                    <div class="ibox-content">
-                                        
-                                        <div class="form-group">
-                                            <label class="col-sm-12">{{ :lang('分诊备注','handle') }}</label>
-                                            <textarea class="" name="fz_mark" id="content"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
+               
                 <div class="col-sm-12">
                    <p class="text-center wbox">
-                       <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao">{{ :lang('保存内容','handle') }}</button>
+                       <button class="btn btn-primary" type="submit" name="submit1" id="endtijiao">{{ :lang('更新病人','handle') }}</button>
                        <button class="btn btn-white" type="reset">{{ :lang('重置','handle') }}</button>
                    </p>
                    
@@ -238,9 +121,9 @@
 </block>
 <block name="add_foot_js">
     <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
-    {{ :load_ueditor() }}
+   
     <script>
-    bd_ueditor('content');
+  
 
     $.validator.setDefaults({
         highlight: function(e) {
@@ -263,57 +146,12 @@
             submitHandler: function(form) {
                 //设置表单参数
                 //最终来源
-                $lyaid = $("#lyall_id");
-                $ly1 = $("#ly_id").val();
-                $ly2 = $("#lyt_id").val();
-                $ly3 = $("#lytt_id").val();
-
-                if ($ly3 != '') {
-                    $lyaid.val($ly3);
-                } else {
-                    if ($ly2 != '') {
-                        $lyaid.val($ly2);
-                    } else {
-                        if ($ly1 != '') {
-                            $lyaid.val($ly1);
-                        }
-                    }
-                }
-                //
-                //最终科室
-                $ksaid = $("#ksall_id");
-                $ks1 = $("#ks_id").val();
-                $ks2 = $("#kst_id").val();
-                $ks3 = $("#kstt_id").val();
-
-                if ($ks3 != '') {
-                    $ksaid.val($ks3);
-                } else {
-                    if ($ks2 != '') {
-                        $ksaid.val($ks2);
-                    } else {
-                        if ($ks1 != '') {
-                            $ksaid.val($ks1);
-                        }
-                    }
-                }
-                //最终区域
-                $areaaid = $("#areaall_id");
-                $area1 = $("#area_id").val();
-                $area2 = $("#areat_id").val();
-                if ($area2 != '') {
-                    $areaaid.val($area2);
-                } else {
-                    if ($area1 != '') {
-                        $areaaid.val($area1);
-                    }
-                }
+                
                 
                 form.submit();;
             }
         });
-        //默认选择来源触发事
-        $("#ly_id").trigger("change");
+        
         //手机号码和姓名用户检测，
         $telname = $("#telname");
         $phone = $("#phone");
@@ -334,7 +172,6 @@
                         if (data) {
                             //循环赋值
                             for(var key in data[0]){
-                                
                                if(data[0][key])
                                {
                                     $("[name='"+key+"']").val(data[0][key]);

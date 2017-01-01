@@ -166,6 +166,9 @@ class QianTaiJieZhenController extends AuthController {
             if (I('get.keyword') != '') {
                 $key = I('get.keyword');
                 $map['_string'] = "u1.name like '%" . $key . "%' or u1.tel like '%" . $key . "%' or y1.ynumber like '%" . $key . "%'";
+                unset($map['y1.dztime']);
+                unset($map['y1.ydatetime']);
+                unserialize($map['y1.ctime']);
             }
 
             if(I('is_search')!='')
@@ -318,6 +321,108 @@ class QianTaiJieZhenController extends AuthController {
         
         
     }
+    public function aginx($yid=''){
+        $this->onname='再次来院登记';
+       
+        if (IS_POST) {
+           
+           if(!check_token(I('post.token')))
+            {
+                $msg=lang('操作错误');
+                return  $this->error($msg,$backurl );
+            }
+            $model = D("YuYue");
+            $user=D('User');
+            $data=$model->create();
+            $udata=$user->create();
+
+            //清空的为空的值
+            foreach ($data as $ak => $av) {
+                if ($av == '') {
+                    unset($data[$ak]);
+                }
+
+            }
+            foreach ($udata as $ak => $av) {
+                if ($av == '') {
+                    unset($udata[$ak]);
+                }
+
+            }
+             $postdata = I('post.');
+            if ($model->create()) {
+
+                M()->startTrans();
+                
+                //先取得用户是否存在
+
+                //判断是否有预约
+               
+                    //预约好前缀获取
+                    $yy_qz = M('LanMu')->where(array('type' => 'bingren', 'id' => $data['ly_id']))->find();
+                    //取得预约号
+                    $data['ynumber'] = $yy_qz['card'] . create_ynumber();
+                    //拼接预约时间
+                    
+                    //判断长度
+                    
+                    $data['ytime'] = date('H') . ":00";
+                  
+                  
+                    $data['ydatetime'] =time(); 
+                    $data['status'] = '2';//已经预约状态
+                    
+                    $has_user_id = $postdata['user_id'];
+
+                    
+                    //用户存在时，更新操作，预约添加操作
+                    if ($has_user_id != ''){
+                        $data['user_id']=$udata['id']=$has_user_id;
+                        //取消更新admin_id
+                       
+                        $result = $model->add($data);
+                        $uresult=$user->save($udata);
+                       
+                        if($result && $uresult)
+                        {
+                            M()->commit();
+                            add_log($this->onname . '：添加成功',$data['user_id']);
+                            $msg = lang('添加成功', 'handle');
+                            return $this->success($msg, $backurl);
+                        }else
+                        {
+                            M()->rollback();
+                            add_log($this->onname . '：添加失败',$data['user_id']);
+                            $msg = lang('添加失败', 'handle');
+                            return $this->success($msg);
+                        }
+                    }else
+                    {
+                        //用户不存在时
+                        //用户添加，返回user_id
+                        
+                            M()->rollback();
+                            add_log($this->onname . '：添加失败',$data['user_id'], $backurl);
+                            $msg = lang('添加失败', 'handle');
+                            return $this->success($msg);
+                        
+                    }
+               
+
+
+            }else {
+
+                $this->error($model->getError());
+            }
+        }else
+        {
+            $m=D('YuYue')->relation(true)->find($yid);
+           
+            $data=array('data'=>$m);
+            $this->assign($data);
+             return $this->display("YuYue:qiantai:aginx");;
+        }
+    }
     public function getFiledArray($type){
         switch ($type) {
             case 'has':
@@ -458,6 +563,7 @@ class QianTaiJieZhenController extends AuthController {
         $backurl=U('Admin/QianTaiJieZhen/add');
 
         if (IS_POST) {
+           
             if(!check_token(I('post.token')))
             {
                 $msg=lang('操作错误');
@@ -468,6 +574,7 @@ class QianTaiJieZhenController extends AuthController {
             $zixun=D('ZiXun');
             $data=$model->create();
             $udata=$user->create();
+            $udata['birthyear']=I('post.birthyear');
 
             $zdata=$zixun->create();
             //清空的为空的值
@@ -595,6 +702,67 @@ class QianTaiJieZhenController extends AuthController {
         }
 
     }
+    public function updateUser(){
+        $this->onname=lang('接诊登记');
+        //权限选择
+        $this->check_group($this->rule_qz);
+        $backurl=U('Admin/QianTaiJieZhen/updateUser');
+
+        if (IS_POST) {
+            $backurl=U('Admin/QianTaiJieZhen/updateUser');
+            if(!check_token(I('post.token')))
+            {
+                $msg=lang('操作错误');
+                return  $this->error($msg,$backurl );
+            }
+            //检查用户是否存在
+            $has_user=M('user')->find($postdata['user_id']);
+            if(count($has_user)<=0)
+            {
+
+                $msg = lang('病人不存在', 'handle');
+                return $this->success($msg, $backurl);
+            }
+            $postdata=I('post.');
+            $user=D('User');
+            
+            
+            $udata=$user->create();
+            $udata['id']=$postdata['user_id'];
+            foreach ($udata as $ak => $av) {
+                if ($av == '') {
+                    unset($udata[$ak]);
+                }
+
+            }
+            
+            
+                $r=$user->save($udata);
+                
+                if($r)
+                {
+                    
+                    add_log('病人更新成功',$udata['id']);
+                    $msg = lang('病人更新成功', 'handle');
+                    return $this->success($msg, $backurl);
+                }else
+                {
+                    add_log('病人更新失败',$udata['id']);
+                    $msg = lang('病人更新失败', 'handle');
+                    return $this->success($msg, $backurl);
+                }
+           
+        } else {
+            //显示添加页面
+            $rule = get_tree_option($this->getList(), 0);
+            $this->assign('rule', $rule);// 赋值数据集
+
+           
+            return $this->display("YuYue:qiantai:updateUser");
+            
+
+        }
+    }
     public function ysedit(){
         //权限选择
         $this->check_group($this->rule_qz.'_edit');
@@ -611,12 +779,11 @@ class QianTaiJieZhenController extends AuthController {
                 $udata=M('User')->create();
                 unset($udata['id']);
                 $udata['id']=$data['user_id'];
-
+                $udata['content']=$postdata['user_content']."\n".date('Y-m-d',time()).":".$postdata['fz_mark'];
                 $data['status']=2;
               
                 M('User')->save($udata);
-                //print_r( $postdata);
-                //exit();
+               
                 $result =   $model->save($data);
                
                 if($result) {
@@ -653,7 +820,7 @@ class QianTaiJieZhenController extends AuthController {
                 return $this->error(lang('数据错误','handle'));
             }
 
-                return $this->display('YuYue:qiantai:edit');
+           return $this->display('YuYue:qiantai:edit');
 
 
         }

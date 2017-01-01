@@ -11,7 +11,7 @@ return array(
     ),
     'MORE_LANG'=>1,
     'ADV_LANMU'=>1,//栏目显示在广告位
-    'PAGESIZE'=>'50',
+    'PAGESIZE'=>'30',
     'INDEX_URL'=>'',
     'CHECK_YZM'=>'0',
      'URL_ROUTER_ON'   => false,

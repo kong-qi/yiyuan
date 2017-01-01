@@ -42,6 +42,7 @@ class YuShenController extends AuthController {
                 $ydata['kst_id']=$data['kst_id'];
                 $ydata['kstt_id']=$data['kstt_id'];
                 $ydata['ysz_id']=$data['ysz_id'];
+                $ydata['leibie']=I('post.leibie');
                 //$ydata['jzks_id']=$data['jzks_id'];//手术科室ID。已去掉
                
                 $ydata['dz_id']=$data['zl_id'];//质量评级
@@ -838,6 +839,7 @@ class YuShenController extends AuthController {
                 $ydata['jztime']=$data['jztime']= time();//接诊时间
                 $ydata['dz_id']=$data['zl_id'];//质量评级
                 $ydata['id']=$data['yy_id'];
+                $ydata['leibie']=I('post.leibie');
 
 
 
@@ -1299,6 +1301,7 @@ class YuShenController extends AuthController {
             u1.name as user_name,
             ys.name as kd_name,
             yy.ynumber as ynumber,
+            yy.id as yid,
             ssys.name as ysz_name,
             fz.name as fzname,
             yy.ydatetime as ydatetime,

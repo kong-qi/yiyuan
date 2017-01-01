@@ -1,0 +1,514 @@
+<extend name="Layout:index"/>
+<block name="add_js">
+    <script src="__JS__/jquery.validate.js"></script>
+</block>
+<block name="right">
+    <div class="right-box">
+        
+        <div class="wrapper wrapper-content">
+            <form action="" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
+               <input type="hidden" name="token" value="{{ :token() }}">
+               <input type="hidden" name="user_id" value="{{ $data.User.id }}" id="user_id">
+               <input type="hidden" name="admin_id" value="{{ :session('admin_id') }}" >
+               <input type="hidden" name="dztime" value="{{ :time() }}" >
+               <input type="hidden" name="lyall_id" id="lyall_id" value="{{ $data.lyall_id }}">
+               <input type="hidden" name="areaall_id" id="areaall_id" value="{{ $data.areaall_id }}">
+               <input type="hidden" name="ksall_id" id="ksall_id" value="{{ $data.ksall_id }}">
+               <div class="col-sm-12">
+                   <div class="ibox-content">
+                       <div class="form-group" style="margin-bottom: 0;padding-bottom: 0">
+                           <div class="col-xs-4" style="padding-bottom: 0">
+                               <div class="input-group m-b" style="">
+                                   <label class="input-group-addon">{{ :lang('接诊医生','handle') }}</label>
+                                   <select class="form-control" required="required" id="ys_id" name="ys_id">
+                                       <option value="">{{ :lang('请选择医生','handle') }}{{ $data['ys_id'] }}</option>
+                                       {{ :get_doc(array(),1,$data['ys_id']) }}
+                                   </select>
+                               </div>
+                           </div>
+                           <div class="col-xs-4" style="padding-bottom: 0">
+                               <div class="input-group m-b" style="">
+                                   <label class="input-group-addon">{{ :lang('来院类别','handle') }}</label>
+                                   <select class="form-control " required="" name="leibie">
+                                       <option value="">{{ :lang('请选择来院类别','handle') }}</option>
+                                       {{ :yuyue_option_leibie(3) }}
+                                   </select>
+                               </div>
+                           </div>
+                           <div class="col-xs-4">
+                               <div class="form-group">
+                                   <select class="form-control inline wb50" required name="zx_id" id="userinfo0">
+                                        <option value="">{{ :lang('请选择咨询方式') }}</option>
+                                          {{ :get_lanmu_onelist('zixun',1,'','',$data['zx_id']) }}
+                                    </select>
+                                   
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-group" style="margin-bottom: 0;padding-bottom: 0">
+                           <div class="col-xs-4">
+                               <div class="input-group m-b" style="">
+                                   <label class="input-group-addon">{{ :lang('客户姓名','handle') }}</label>
+                                   <input type="hidden" name="user_id" value="{{ $data.User.id }}" id="user_id">
+                                   <input type="text" class="form-control" required name="name" value="{{ $data.User.name }}" id="telname">
+                               </div>
+                           </div>
+                           <div class="col-xs-4">
+                               <div class="input-group m-b" style="">
+                               <label class="input-group-addon">{{ :lang('性别','handle') }}</label>
+                               <select class="form-control" name="sex" placeholder="{{ :lang('性别','handle') }}">
+                                   <option value="男" {{ :$data['User']['sex']=='男'?"selected='selected'":"" }}>{{ :lang('男','handle') }}</option>
+                                   <option value="女" {{ :$data['User']['sex']=='女'?"selected='selected'":"" }}>{{ :lang('女','handle') }}</option>
+                               </select>
+                               </div>
+                               
+                           </div>
+                           <div class="col-xs-4">
+                               <div class="input-group m-b" style="">
+                               <label class="input-group-addon">{{ :lang('手机','handle') }}</label>
+                               
+                               <input type="text" class="form-control" required name="tel" value="{{ $data.User.tel }}" id="telname">
+                               </div>
+                           </div>
+                          
+                           <div class="col-xs-4">
+                               <div class="input-group m-b">
+                                   <label class="input-group-addon">{{ :lang('出生年份','handle') }}</label>
+                                   <input type="text" id="birthyear" value="{{ $data.User.birthday }}" placeholder="出生年份" name="birthyear" class="form-control " id="">
+                               </div>
+                           </div>
+                           <div class="col-xs-4">
+                               <div class="input-group m-b" style="">
+                                   <label class="input-group-addon">{{ :lang('年龄','handle') }}</label>
+                                   <select name="age" id="age" class="form-control js-age">
+                                       <option value="">{{ :lang('年龄') }}</option> {{ :echo_age($data['User']['age']) }}
+                                   </select>
+                               </div>
+                           </div>
+                           <div class="col-xs-4">
+                               <div class="input-group m-b" style="">
+                                   <label class="input-group-addon">{{ :lang('纠正生日','handle') }}</label>
+                                   
+                                   <input class="form-control layer-date" name="birthday" placeholder="YYYY-MM-DD" value="{{ $data.User.birthday }}" id="shengri">
+                               </div>
+
+                           </div>
+                          
+                       </div>
+                       <div class="form-group" style="margin-bottom: 0;padding-bottom: 0">
+                           <div class="col-xs-4">
+                               <div class="input-group m-b" style="">
+                                   <label class="input-group-addon">{{ :lang('来源','handle') }}</label>
+                                   <select class="form-control"  required="required" id="ly_id"   name="ly_id" data-datachenge='1' data-close="#lyt_id,#lytt_id"  data-type="ly"  data-next="lyt_id"  data-url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}" >
+
+                                       <option value="">{{ :lang('请选择病人来源','handle') }}</option>
+                                      <?php
+                                              if(check_group('root'))
+                                              {
+                                                  echo get_lanmu_onelist('bingren',1,'first','',$data['ly_id']);
+                                              }else
+                                              {
+                                                  echo get_lanmu_onelist('bingren',1,'first',session('brid'),$data['ly_id']);
+                                              }
+                                          ?>
+                                   </select>
+                               </div>
+                           </div>
+                           <div class="col-xs-4">
+                               <select class="form-control" id="lyt_id" name="lyt_id" onchange="get_ly2(this.value)">
+                                   <option value="">{{ :lang('请选择','handle') }}</option>
+                               </select>
+                           </div>
+                           <div class="col-xs-4">
+                               <select class="form-control" id="lytt_id" name="lytt_id" >
+                                   <option value="">{{ :lang('请选择','handle') }}</option>
+                               </select>
+                           </div>
+                       </div>
+                       <div class="form-group">
+                           <div class="col-xs-4">
+                                <div class="input-group m-b" style="">
+                                    <label class="input-group-addon">{{ :lang('区域','handle') }}</label>
+                                    <select class="form-control" id="area_id" name="area_id" onchange="get_area(this.value)" >
+
+                                         <option value="">{{ :lang('请选择','handle') }}</option>
+                                        <?php
+
+                                                echo get_area_list(1,'first','',$data['area_id']);
+
+                                                ?>
+
+                                    </select>
+                                </div>
+                              
+                           </div>
+                           <div class="col-xs-4">
+                               <select class="form-control" id="areat_id" name="areat_id" data-next="">
+                                    <option value="">{{ :lang('请选择','handle') }}</option>
+
+                               </select>
+                           </div>
+                           
+                       </div>
+                       <div class="form-group">
+                           <div class="col-sm-6">
+                               <div class="input-group m-b" style="margin-bottom:5px;">
+                                   <label class="input-group-addon">{{ :lang('备注','handle') }}</label>
+                                   <textarea name="fz_mark" class="form-control" id="mark" cols="30" rows="10"></textarea>
+                               </div>
+                           </div>
+                           <div class="col-sm-6">
+                               <div class="input-group m-b" style="margin-bottom:5px;">
+                                   <label class="input-group-addon">{{ :lang('个人备注','handle') }}</label>
+                                   <textarea name="user_content" class="form-control" id="mark" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['User']['content']) }}</textarea>
+                               </div>
+                           </div>
+                           
+                       </div>
+                       <div class="form-group" align="center" style="margin-bottom:5px;">
+                           <button class="btn btn-primary" type="submit" name="submit_addhuifang">{{ :lang('提交','handle') }}
+                           </button>
+                       </div>
+                   </div>
+               </div> 
+
+               
+                
+            </form>
+        </div>
+
+
+
+    </div>
+
+</block>
+<block name="add_foot_js">
+    <script src="__JS__/plugins/layer/laydate/laydate.js"></script>
+  
+    <script>
+       
+
+        $.validator.setDefaults({
+            highlight: function (e) {
+                $(e).closest("td").removeClass("has-success").addClass("has-error")
+            },
+            success: function (e) {
+                e.closest("td").removeClass("has-error").addClass("has-success");
+            },
+            errorElement: "span",
+            errorPlacement: function (e, r) {
+                e.appendTo(r.is(":radio") || r.is(":checkbox") ? r.parent().parent().parent() : r.parent())
+                //e.insertBefore(r.parents(".ibox-content"));
+            },
+            errorClass: "error",
+            validClass: "no-error"
+
+        });
+        $().ready(function () {
+            $("#validate").validate(
+                {
+
+
+                    submitHandler:function(form) {
+                        //设置表单参数
+                        //最终来源
+                        $lyaid=$("#lyall_id");
+                        $ly1=$("#ly_id").val();
+                        $ly2=$("#lyt_id").val();
+                        $ly3=$("#lytt_id").val();
+
+                        if($ly3!='')
+                        {
+                            $lyaid.val($ly3);
+                        }else
+                        {
+                            if($ly2!='')
+                            {
+                                $lyaid.val($ly2);
+                            }else
+                            {
+                                if($ly1!='')
+                                {
+                                    $lyaid.val($ly1);
+                                }
+                            }
+                        }
+                        //
+                        //最终科室
+                        $ksaid=$("#ksall_id");
+                        $ks1=$("#ks_id").val();
+                        $ks2=$("#kst_id").val();
+                        $ks3=$("#kstt_id").val();
+
+                        if($ks3!='')
+                        {
+                            $ksaid.val($ks3);
+                        }else
+                        {
+                            if($ks2!='')
+                            {
+                                $ksaid.val($ks2);
+                            }else
+                            {
+                                if($ks1!='')
+                                {
+                                    $ksaid.val($ks1);
+                                }
+                            }
+                        }
+                        //最终区域
+                        $areaaid=$("#areaall_id");
+                        $area1=$("#area_id").val();
+                        $area2=$("#areat_id").val();
+                        if( $area2!='')
+                        {
+                            $areaaid.val($area2);
+                        }else
+                        {
+                            if( $area1!='')
+                            {
+                                $areaaid.val( $area1);
+                            }
+                        }
+                        form.submit();;
+                    }
+                }
+            );
+            //手机号码和姓名用户检测，
+            $telname=$("#telname");
+            $phone=$("#phone");
+            //keydown
+            $phone.blur(function () {
+                $url='{{ :U("Admin/Ajax/check_phone") }}';
+                if($telname.val()!='' && $phone.val()!='')
+                {
+                    $.get($url,{'name':$telname.val(),'phone':$phone.val()},function (data) {
+                        console.log(data);
+                        if(data)
+                        {
+                            if(!data.id=='{{ $data.User.id }}')
+                            {
+
+
+                            $("#user_id").val(data[0].id);
+                            $admin_name=data[0].realname==''?data[0].name:data[0].realname;
+                            $msg='{{ :lang("已被") }} <span style="color: #0000cc;">'+$admin_name+"</span> {{ :lang('客服于') }} <span >"+data[0].ydatetime+'</span><br/>{{ :lang("登记") }} '+data[0].ksname+" {{ :lang('科室') }} "+data[0].kstname+" {{ :lang('疾病项目') }}";
+                            layer.alert($msg, {
+                                skin: 'layui-layer-lan'
+                                ,closeBtn: 0
+                                ,shift: 4 //动画类型
+                            });
+                            }
+                        }
+
+                    })
+                }
+
+            });
+            //快捷预约时间
+            $("[data-settime='1'],[data-setdate='1']").css({
+                'cursor':'pointer'
+            });
+            $("[data-settime='1']").click(function () {
+
+                $v=$(this).attr('data-set');
+                $("#ytime").val($v);
+            });
+            $("[data-setdate='1']").click(function () {
+
+                $v=$(this).attr('data-set');
+                console.log($v);
+                $("#ydate").val(get_date($v));
+            });
+
+            var shengri = {
+                elem: '#shengri',
+                format: 'YYYY-MM-DD',
+                max: laydate.now(-365*10),
+                istime: false,
+                oclear: false,
+                choose: function(dates){ //选择好日期的回调
+
+                        $v=$("#shengri").val();
+                        if($v!='')
+                        {
+                            $("#age").val(get_age($v));
+                        }
+                }
+            };
+
+            laydate(shengri);
+
+            //生日变化
+            $("#age").change(function(){
+                $year=$("#age").val();
+                $birthday=get_age_date("-"+$year);
+                $("#shengri").val($birthday);
+            });
+
+        });
+
+        <?php
+        if($data['ks_id']!='')
+        {
+            echo "get_tks('".$data['ks_id']."');";
+        }
+        if($data['kst_id']!='')
+        {
+            echo "get_tks2('".$data['kst_id']."');";
+        }
+        if($data['ly_id']!='')
+        {
+            echo "get_ly('".$data['ly_id']."');";
+        }
+        if($data['lyt_id']!='')
+        {
+            echo "get_ly2('".$data['lyt_id']."');";
+        }
+        if($data['area_id']!='')
+        {
+            echo "get_area('".$data['area_id']."');";
+        }
+        ?>
+        function get_tks($id){
+            $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
+            $tfid='{{ $data["kst_id"] }}';
+            log($tfid);
+            $str = "<option value=''>{{ :lang('无') }}</option>";
+            if($id=='')
+            {
+                $("#kstt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                $("#kst_id").show().empty().append(json.content);
+            });
+            get_tks2('{{ $data["kst_id"] }}');
+        }
+        function get_tks2($id){
+            $str = "<option value=''>{{ :lang('无') }}</option>";
+            $url="{{ :U('Admin/Ajax/ajaxKeShiList') }}";
+            $tfid='{{ :$data["kstt_id"] }}';
+            log($tfid);
+            if($id=='')
+            {
+                $("#kstt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                if(json.content!='')
+                {
+
+                    $("#kstt_id").show().empty().append(json.content);
+                }else
+                {
+                    $("#kstt_id").empty().append( $str);
+                }
+            });
+        }
+        function get_ly($id){
+            $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
+            $tfid='{{ $data["lyt_id"] }}';
+            log($tfid);
+            $str = "<option value=''>{{ :lang('无') }}</option>";
+            if($id=='')
+            {
+                $("#lyt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                $("#lyt_id").show().empty().append(json.content);
+            });
+            get_ly2('{{ $data["lyt_id"] }}');
+        }
+        function get_ly2($id){
+            $str = "<option value=''>{{ :lang('无') }}</option>";
+            $url="{{ :U('Admin/Ajax/ajaxLaiYuanList') }}";
+            $tfid='{{ $data["lytt_id"] }}';
+            log($tfid);
+            if($id=='')
+            {
+                $("#lytt_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                if(json.content!='')
+                {
+
+                    $("#lytt_id").show().empty().append(json.content);
+                }else
+                {
+                    $("#lytt_id").empty().append( $str);
+                }
+            });
+        }
+        function get_area($id){
+            $url="{{ :U('Admin/Ajax/ajaxAreaList') }}";
+            $tfid='{{ :$data["areat_id"] }}';
+            log($tfid);
+            $str = "<option value=''>{{ :lang('无') }}</option>";
+            if($id=='')
+            {
+                $("#areat_id").empty().append( $str);
+            }
+            $.getJSON($url, {'id': $id,'tfid':$tfid}, function(json, textStatus) {
+                $("#areat_id").show().empty().append(json.content);
+            });
+
+        }
+        
+        $("[data-datachenge='1']").change(function () {
+            $url=$(this).attr('data-url');
+            $ks=$(this).attr('data-type');
+            $next_id=$(this).attr('data-next');
+            $id=$(this).val();
+            $closeid=$(this).attr('data-close');
+            $str="<option value=''>{{ :lang('无') }}</option>";
+            if($id=='')
+            {
+                $($closeid).empty().append($str);
+
+                return false;
+
+
+            }
+            $.ajax({
+                    'url': $url,
+                    type: 'get',
+                    data: {
+                        'id': $id,
+                    },
+                    cache: false,
+
+                    dataType: 'json',
+                    success: function (data) {
+
+                        if(data.content!='')
+                        {
+
+                            $str='';
+                            $str+=data.content;
+
+                            $("#"+$next_id).empty().append($str);
+
+                        }else
+                        {
+                            $str="";
+                            $("#"+$next_id).empty();
+                            $($closeid).empty().append($str);
+
+                           
+
+                        }
+
+                    }
+                });
+        }).trigger("click");
+        function lj_ajax(){
+
+        }
+        function yuyue_hao(){
+            $url="{{ :U('Admin/Ajax/create_number') }}";
+            $.get($url,function ($data) {
+                $(".ynumber").val($data);
+            })
+        }
+
+    </script>
+</block>

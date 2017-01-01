@@ -602,13 +602,37 @@ function get_age(str) {
     }
     return (lang.dateerror);
 }
+function get_year(str){
+   var r = str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
+    if (r == null) return false;
+    var d = new Date(r[1], r[3] - 1, r[4]);
+    
+        return d.getFullYear();
+    
+}
+//出生年算出年龄
+function get_year_age(str) {
+    
+   
+    var d = new Date(str, 1 , 1);
+   
+    input_year=d.getFullYear();
+    now_year=new Date().getFullYear();
+    $age=now_year-input_year;
+    return ($age);
+}
 //根据年龄算出出生年月
-function get_age_date(year) {
+function get_age_date(year,type) {
+    type=type || "-01-01";
+    if(type=='none')
+    {
+        type='';
+    }
     var dd = new Date();
     y = parseInt(dd.getFullYear());
 
     y = y + parseInt(year);
-    return y + "-01-01";
+    return y + type;
 }
 
 $('[ data-layer="1"]').on("click", function() {

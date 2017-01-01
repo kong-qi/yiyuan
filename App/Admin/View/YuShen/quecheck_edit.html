@@ -30,14 +30,18 @@
                                    <td align="right">{{ :lang('病人姓名') }}</td>
                                    <td>
                                         <div class="col-xs-8">
-                                            <input type="text" class="form-control inline wb30" readonly="" value="{{ :$data['User']['name'] }}">
-                                            <select required="" class="form-control inline wb30" name="zl_id" required>
+                                            <input type="text" class="form-control inline wb25" readonly="" value="{{ :$data['User']['name'] }}">
+                                            <select required="" class="form-control inline wb25" name="zl_id" required>
                                                 <option value="">{{ :lang('请先病人质量评定','handle') }}</option>
                                                  {{ :get_lanmu_onelist('daozhen','1','','',$data['zl_id']) }}
                                             </select>
-                                            <select  class="form-control inline wb30" id="ysz_id" name="ysz_id">
+                                            <select  class="form-control inline wb25" id="ysz_id" name="ysz_id">
                                                 <option value="">{{ :lang('请选择手术医生','handle') }}</option>
                                                 {{ :get_shyishen($data['ysz_id']) }}
+                                            </select>
+                                            <select class="form-control wb25 inline" name="leibie">
+                                                <option value="">{{ :lang('请选择来院类别','handle') }}</option>
+                                                {{ :yuyue_option_leibie($data['Yyue']['leibie']) }}
                                             </select>
 
                                         </div>

@@ -3,11 +3,11 @@
     <script src="__JS__/jquery.validate.js"></script>
 </block>
 <block name="right">
-   
+    <php>print_r($data['User'])</php>
     <div class="right-box">
         <div class="animated fadeInUp">
             <form action="{{ :U('Admin/QianTaiJieZhen/ysedit') }}" method="post" id="validate" enctype="multipart/form-data" class="form-horizontal">
-                
+               
                 <input type="hidden" name="fz_id" value="{{ :session('admin_id') }}">
                 <input type="hidden" name="lyall_id" id="lyall_id" value="{{ $data.lyall_id }}">
                 <div class="ibox-content">

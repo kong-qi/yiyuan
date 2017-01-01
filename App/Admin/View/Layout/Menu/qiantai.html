@@ -10,7 +10,11 @@
             <a class="J_menuItem" href="{{ :U('Admin/QianTaiJieZhen/add') }}">{{ :lang('前台登记') }}</a>
 
         </li>
-         <li>
+        <li>
+            <a class="J_menuItem" href="{{ :U('Admin/QianTaiJieZhen/updateUser') }}">{{ :lang('更新病人信息') }}</a>
+
+        </li>
+        <li>
              <a class="J_menuItem"
                 href="{{ :U('Admin/QianTaiJieZhen/index',array('dzstime'=>date('Y-m-d'),'dzetime'=>date('Y-m-d'),'so'=>'dayso','is_qtadd'=>1,'list_type'=>'hasday2','is_search'=>1,'limit_day'=>1)) }}">{{ :lang('今日前台登记','menu') }}</a>
          </li>
