@@ -83,6 +83,16 @@
                                             <textarea name="jz_content" id="mark" cols="30" rows="10"> {{ :htmlspecialchars_decode($data['jz_content']) }}</textarea>
                                         </div>
                                     </div>
+                                    <div class="col-sm-6">
+                                        <textarea name="" class="form-control">
+                                            {{ :$data['User']['content'] }}
+                                        </textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right">{{ :lang('相片') }}</td>
+                                <td>
                                     <div class="col-sm-6 enmoreinsert_file">
                                         <input type="hidden" name="thumbs" value="" size="80" class="input insert_input">
                                         <div class="insert_img_more insert_img_more_en">

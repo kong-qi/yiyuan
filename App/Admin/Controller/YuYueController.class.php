@@ -358,6 +358,7 @@ class YuYueController extends AuthController
             $zixun = D('ZiXun');
             $data = $model->create();
             $udata = $user->create();
+           
 
             $zdata = $zixun->create();
             //清空的为空的值
