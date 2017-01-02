@@ -1,3 +1,4 @@
 <if condition="check_group('shouyin_jiesuan')">
-    <a href="{{ :U('Admin/CaiWu/setJsStatus',array('uuid'=>$v['uuid'],'type'=>'false')) }}" date-js='1' class="btn btn-danger "><span class="fa fa-reply btn-font" data-name="{{ :lang('撤销结算') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
+    <a href="{{ :U('Admin/CaiWu/setJsStatus',array('uuid'=>$v['uuid'],'type'=>'false')) }}" date-js='1' class="btn btn-danger m-r"><span class="fa fa-reply btn-font" data-name="{{ :lang('撤销结算') }}" data-btn="handle"></span><span class="js-data-name"></span></a>
 </if>
+<include file="Menu:nginx" />

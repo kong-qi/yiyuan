@@ -2,6 +2,14 @@
 <include file="Menu:huifang_add" />
 <include file="Menu:huifang_show" />
 <include file="Menu:sms_send" />
+<?php
+if($v['ystatus']=='2' || $v['ystatus']=='3' || $v['ystatus']=='4')
+{
+?>
+<include file="Menu:nginx" />
+<?php
+}
+?>
 <if condition=" check_group($rule_qz.'_edit')">
     <a href="{{ :U('Admin/YuYue/edit?id='.$v['yuuid']) }}"
     class="btn btn-xs btn-white" >

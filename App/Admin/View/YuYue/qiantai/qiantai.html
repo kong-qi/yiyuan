@@ -34,7 +34,7 @@
                                         <option value="男">{{ :lang('男','handle') }}</option>
                                         <option value="女" selected="selected">{{ :lang('女','handle') }}</option>
                                     </select>
-                                    <input type="text" id="birthyear" placeholder="出生年份" name="birthyear" class="form-control inline wb25" id="">
+                                    <input type="text" id="birthyear" placeholder="{{ :lang('出生年份') }}" name="birthyear" class="form-control inline wb25" id="">
                                     <select name="age" id="age" class="form-control inline wb25">
                                         <option value="">{{ :lang('年龄') }}</option> {{ :echo_age() }}
                                     </select>
@@ -409,7 +409,7 @@
             var regu =/^[1,2,3]{1}\d{3}$/;
             var reg = new RegExp(regu);  
             if(!reg.test($v)){  
-               layer.msg("{{ :lang('年月格式不对') }}");
+               layer.msg("{{ :lang('年份格式不对') }}");
                return false;
             }else
             {

@@ -41,14 +41,16 @@
                                     <input type="text" class="form-control inline wb50" value="{{ $data.User.name }}" required name="name" id="telname" placeholder="{{ :lang('客户姓名','handle') }}">
                                 </div>
                                 <div class="form-group">
-                                    <select class="form-control  inline wb30" name="sex" placeholder="{{ :lang('性别','handle') }}">
+                                    <select class="form-control  inline wb25" name="sex" placeholder="{{ :lang('性别','handle') }}">
                                         <option value="男" {{ :set_on2($data['User']['sex'],'男') }}>{{ :lang('男','handle') }}</option>
                                             <option value="女" {{ :set_on2($data['User']['sex'],'女') }}>{{ :lang('女','handle') }}</option>
                                     </select>
-                                    <select name="age" id="age" class="form-control inline wb30">
+                                    <input type="text" id="birthyear" value="{{ :$data[User]['birthyear'] }}" placeholder="{{ :lang('出生年份') }}" name="birthyear" class="form-control inline wb25" id="">
+                                    <select name="age" id="age" class="form-control inline wb25">
                                         <option value="">{{ :lang('年龄') }}</option>} {{ :echo_age($data['User']['age']) }}
                                     </select>
-                                    <input class="form-control  inline wb30" name="birthday" value="{{ :($data['User']['birthday']) }}" placeholder="{{ :lang('生日','handle') }}" id="shengri">
+
+                                    <input class="form-control  inline wb25" name="birthday" value="{{ :($data['User']['birthday']) }}" placeholder="{{ :lang('生日','handle') }}" id="shengri">
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control inline wb50" required name="zx_id" id="userinfo0">
@@ -452,30 +454,48 @@
                 $("#ydate").val(get_date($v));
             });
 
-            var shengri = {
-                elem: '#shengri',
-                format: 'YYYY-MM-DD',
-                max: laydate.now(-365*10),
-                istime: false,
-                oclear: false,
-                choose: function(dates){ //选择好日期的回调
+           var shengri = {
+               elem: '#shengri',
+               format: 'YYYY-MM-DD',
+               max: laydate.now(-365*10),
+               istime: false,
+               oclear: false,
+               choose: function(dates) { //选择好日期的回调
+                  
+                   $v = dates;
+                   $v=(get_age($v));
+                   
+                
+                   $("#age").val($v);
+                   $v2=get_year( dates);
+                   $("#birthyear").val($v2);
+                   
+               }
+           };
 
-                        $v=$("#shengri").val();
-                        if($v!='')
-                        {
-                            $("#age").val(get_age($v));
-                        }
-                }
-            };
-
-            laydate(shengri);
-
-            //生日变化
-            $("#age").change(function(){
-                $year=$("#age").val();
-                $birthday=get_age_date("-"+$year);
-                $("#shengri").val($birthday);
-            });
+           laydate(shengri);
+           
+           $("#age").change(function() {
+               $year = $("#age").val();
+               $birthday = get_age_date("-" + $year,'none');
+               //console.log($birthday);
+                $("#birthyear").val($birthday);
+               //$("#shengri").val($birthday);
+           });
+           //birthyear
+           $("#birthyear").blur(function(){
+               $v=$(this).val();
+               var regu =/^[1,2,3]{1}\d{3}$/;
+               var reg = new RegExp(regu);  
+               if(!reg.test($v)){  
+                  layer.msg("{{ :lang('年份格式不对') }}");
+                  return false;
+               }else
+               {
+                   $age=get_year_age($v);
+                   $("#age").val($age);   
+               }
+           });
 
         });
 

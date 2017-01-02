@@ -61,7 +61,7 @@
                         <div class="col-xs-4">
                             <div class="input-group m-b">
                                 <label class="input-group-addon">{{ :lang('出生年份','handle') }}</label>
-                                <input type="text" id="birthyear" value="{{ $data.User.birthday }}" placeholder="出生年份" name="birthyear" class="form-control " id="">
+                                <input type="text" id="birthyear" value="{{ $data.User.birthday }}" placeholder="{{ :lang('出生年份') }}" name="birthyear" class="form-control " id="">
                             </div>
                         </div>
                         <div class="col-xs-4">
@@ -225,7 +225,7 @@
             var regu =/^[1,2,3]{1}\d{3}$/;
             var reg = new RegExp(regu);  
             if(!reg.test($v)){  
-               layer.msg("{{ :lang('年月格式不对') }}");
+               layer.msg("{{ :lang('年份格式不对') }}");
                return false;
             }else
             {
