@@ -367,7 +367,8 @@ class QianTaiJieZhenController extends AuthController {
                     //判断长度
                     
                     $data['ytime'] = date('H') . ":00";
-                  
+                    
+                    $data['fz_id']=session('admin_id');
                   
                     $data['ydatetime'] =time(); 
                     $data['status'] = '2';//已经预约状态

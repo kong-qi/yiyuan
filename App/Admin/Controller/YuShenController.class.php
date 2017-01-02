@@ -205,9 +205,11 @@ class YuShenController extends AuthController {
         {
             if(I('list_type')=='only')
             {
-                if(!check_group('roor'))
+                if(!check_group('root'))
                 {
-                    $map['y1.ys_id']=session('admin_id');
+                    if (check_group('yishenjz_only_list')) {
+                        $map['y1.ys_id'] = session('admin_id');
+                    }
                 }
                 
             }elseif(I('list_type')=='all')
@@ -467,9 +469,11 @@ class YuShenController extends AuthController {
         {
             if(I('list_type')=='only')
             {
-                if(!check_group('roor'))
+                if(!check_group('root'))
                 {
-                    $map['y1.ys_id']=session('admin_id');
+                    if (check_group('yishenjz_only_list')) {
+                        $map['y1.ys_id'] = session('admin_id');
+                    }
                 }
 
             }elseif(I('list_type')=='all')
