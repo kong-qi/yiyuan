@@ -14,6 +14,15 @@
                <input type="hidden" name="lyall_id" id="lyall_id" value="{{ $data.lyall_id }}">
                <input type="hidden" name="areaall_id" id="areaall_id" value="{{ $data.areaall_id }}">
                <input type="hidden" name="ksall_id" id="ksall_id" value="{{ $data.ksall_id }}">
+               <php>
+                 $qter=get_qiantai_er(11);
+                 if(in_array(session('admin_id'),$qter))
+                 {
+                    echo '  <input type="hidden" name="is_qtadd" value="1">';
+                 }
+                
+
+               </php>
                <div class="col-sm-12">
                    <div class="ibox-content">
                        <div class="form-group" style="margin-bottom: 0;padding-bottom: 0">
